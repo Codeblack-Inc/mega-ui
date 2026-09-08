@@ -1,0 +1,18 @@
+# Mega UI
+
+> React 19 + TypeScript component library. SCSS styles, CSS variable themes, no additional runtime dependencies. Version 0.1.0.
+
+## Documentation
+
+- [Getting started](./getting-started.md): Installation, CSS, themes, accessibility, SSR.
+- [Component API](./components.md): The 22 currently implemented exports and supported props.
+- [AI guide](./ai-guide.md): Composition rules, a form recipe, and limitations.
+- [Roadmap](./roadmap.md): Planned components and acceptance criteria; not implemented APIs.
+
+- [Design direction](./design-direction.md): Toss-inspired patterns, reference sources, and scope.
+
+## Important
+
+Import components from @mega-ui/react and CSS once from @mega-ui/react/styles.css.
+The package has not been published to a registry. Use the locally packed tarball for evaluation.
+Do not invent undocumented exports or props. This index is documentation, not an MCP endpoint.

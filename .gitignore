@@ -1,0 +1,10 @@
+node_modules/
+dist/
+site/
+.DS_Store
+*.tgz
+.codegraph/
+playwright-report/
+test-results/
+.playwright-cli/
+output/

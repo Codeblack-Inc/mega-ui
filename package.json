@@ -1,0 +1,58 @@
+{
+  "name": "@mega-ui/react",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Composable React components for company web applications.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./docs/*": "./docs/*"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "scripts": {
+    "dev": "vite --config vite.docs.config.ts",
+    "build": "vite build && tsc -p tsconfig.build.json && sass --no-source-map --style=compressed src/styles/index.scss dist/styles.css",
+    "build:docs": "vite build --config vite.docs.config.ts",
+    "preview": "vite preview --config vite.docs.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run typecheck && npm run format:check && npm test && npm run build:docs",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "prettier": "^3.9.6",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sass": "^1.104.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  }
+}

@@ -1,0 +1,38 @@
+.mega-heading,
+.mega-text {
+  margin: 0;
+  color: var(--mega-text);
+  overflow-wrap: anywhere;
+}
+.mega-heading {
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  &--sm {
+    font-size: 16px;
+  }
+  &--md {
+    font-size: 20px;
+  }
+  &--lg {
+    font-size: 28px;
+  }
+  &--xl {
+    font-size: clamp(28px, 4vw, 38px);
+  }
+}
+.mega-text {
+  line-height: 1.65;
+  &--sm {
+    font-size: 13px;
+  }
+  &--md {
+    font-size: 16px;
+  }
+  &--lg {
+    font-size: 18px;
+  }
+  &--muted {
+    color: var(--mega-muted);
+  }
+}

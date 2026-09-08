@@ -1,0 +1,71 @@
+.mega-card {
+  min-width: 0;
+  background: var(--mega-surface);
+  color: var(--mega-text);
+  border: 1px solid transparent;
+  border-radius: var(--mega-radius);
+  &--elevated {
+    box-shadow: 0 2px 12px rgb(0 20 50 / 3%);
+  }
+  &--filled {
+    background: var(--mega-fill);
+  }
+  &--outlined {
+    border-color: var(--mega-border);
+  }
+  &--sm {
+    padding: var(--mega-space-4);
+  }
+  &--md {
+    padding: var(--mega-space-5);
+  }
+  &--lg {
+    padding: var(--mega-space-6);
+  }
+}
+.mega-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 600;
+  &--neutral {
+    color: var(--mega-muted);
+    background: var(--mega-fill);
+  }
+  &--brand {
+    color: var(--mega-brand-strong);
+    background: var(--mega-brand-soft);
+  }
+  @each $tone in success, warning, danger {
+    &--#{$tone} {
+      color: var(--mega-#{$tone});
+      background: var(--mega-#{$tone}-soft);
+    }
+  }
+}
+.mega-alert {
+  padding: var(--mega-space-4) var(--mega-space-5);
+  border-radius: var(--mega-radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  &--info {
+    color: var(--mega-brand-strong);
+    background: var(--mega-brand-soft);
+  }
+  @each $tone in success, warning, danger {
+    &--#{$tone} {
+      color: var(--mega-#{$tone});
+      background: var(--mega-#{$tone}-soft);
+    }
+  }
+}
+.mega-separator {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--mega-border);
+  margin: 0;
+}
