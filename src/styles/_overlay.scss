@@ -1,0 +1,360 @@
+@use 'icons';
+
+// ---------- Dialog (TDS centered modal: white, r20, no border, large soft shadow) ----------
+.mega-dialog {
+  --_max: 560px;
+  width: min(calc(100% - 32px), var(--_max));
+  // Beat the UA `dialog:modal { max-width: calc(100% - 6px - 2em) }` cap; the
+  // `width` above is the real bound.
+  max-width: none;
+  max-height: calc(100vh - 64px);
+  // Padding lives on the panel so a backdrop click never lands on the dialog.
+  padding: 0;
+  margin: auto;
+  overflow: hidden auto;
+  color: var(--mega-text);
+  background: var(--mega-surface);
+  border: 0;
+  border-radius: var(--mega-radius-xl);
+  box-shadow: var(--mega-shadow-lg);
+  font-size: 15px;
+  line-height: 1.5;
+  &--sm {
+    --_max: 400px;
+  }
+  &--lg {
+    --_max: 800px;
+  }
+  &::backdrop {
+    background: var(--mega-dim, rgb(23 23 28 / 60%));
+  }
+  &[open] {
+    animation: mega-dialog-in var(--mega-duration) var(--mega-ease);
+  }
+  &[open]::backdrop {
+    animation: mega-overlay-fade var(--mega-duration) var(--mega-ease);
+  }
+}
+
+.mega-dialog__panel {
+  position: relative;
+  padding: var(--mega-space-5);
+  @media (min-width: 720px) {
+    padding: 28px 28px var(--mega-space-5);
+  }
+}
+
+.mega-dialog__title {
+  margin: 0;
+  padding-right: 36px;
+}
+
+.mega-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.mega-dialog__description {
+  margin: var(--mega-space-2) 0 0;
+  color: var(--mega-text-secondary);
+}
+
+.mega-dialog__body {
+  margin-top: var(--mega-space-4);
+}
+
+.mega-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--mega-space-2);
+  margin-top: var(--mega-space-5);
+}
+
+// Mobile bottom sheet
+@media (max-width: 600px) {
+  .mega-dialog[data-sheet] {
+    width: 100%;
+    max-height: 88vh;
+    margin: auto auto 0;
+    border-radius: var(--mega-radius-xl) var(--mega-radius-xl) 0 0;
+    &[open] {
+      animation-name: mega-sheet-in;
+    }
+  }
+}
+
+@keyframes mega-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@keyframes mega-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes mega-overlay-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+// ---------- Menu ----------
+.mega-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.mega-menu__popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 180px;
+  padding: 6px;
+  background: var(--mega-surface-raised);
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+  box-shadow: var(--mega-shadow-md);
+  &[data-align='end'] {
+    right: 0;
+    left: auto;
+  }
+}
+
+.mega-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--mega-space-2);
+  width: 100%;
+  min-height: 34px;
+  padding: 7px 10px;
+  color: var(--mega-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--mega-radius-xs);
+  cursor: pointer;
+  transition: background-color var(--mega-duration) var(--mega-ease);
+  &--danger {
+    color: var(--mega-danger);
+  }
+  &:hover:not(:disabled),
+  &:focus-visible {
+    background: var(--mega-hover);
+    outline: none;
+  }
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--mega-brand);
+  }
+  &:disabled {
+    color: var(--mega-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.mega-menu__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  color: var(--mega-icon);
+  > svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.mega-menu__separator {
+  height: 1px;
+  margin: 6px 0;
+  background: var(--mega-border);
+}
+
+.mega-menu__label {
+  padding: 6px 10px;
+  color: var(--mega-muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.34;
+}
+
+// ---------- Tooltip (CSS-only, no JS positioning) ----------
+.mega-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.mega-tooltip__bubble {
+  position: absolute;
+  left: 50%;
+  z-index: 30;
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 10px;
+  color: var(--mega-surface);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+  background: var(--mega-text-strong);
+  border-radius: var(--mega-radius-xs);
+  box-shadow: var(--mega-shadow-sm);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity 120ms var(--mega-ease);
+  &::after {
+    position: absolute;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: inherit;
+    content: '';
+  }
+}
+
+.mega-tooltip--top .mega-tooltip__bubble {
+  bottom: calc(100% + 8px);
+  &::after {
+    top: 100%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+.mega-tooltip--bottom .mega-tooltip__bubble {
+  top: calc(100% + 8px);
+  &::after {
+    bottom: 100%;
+    transform: translate(-50%, 50%) rotate(45deg);
+  }
+}
+
+.mega-tooltip:hover .mega-tooltip__bubble,
+.mega-tooltip:focus-within .mega-tooltip__bubble {
+  opacity: 1;
+}
+
+// ---------- Toast ----------
+.mega-toast-viewport {
+  position: fixed;
+  bottom: calc(var(--mega-space-5) + env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mega-space-2);
+  padding: 0 var(--mega-space-4);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.mega-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 280px;
+  max-width: 420px;
+  padding: 12px 16px;
+  color: var(--mega-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  background: var(--mega-fill-solid);
+  border-radius: var(--mega-radius-md);
+  box-shadow: var(--mega-shadow-md);
+  pointer-events: auto;
+  animation: mega-toast-in var(--mega-duration) var(--mega-ease);
+  &--success {
+    background: var(--mega-green-100);
+  }
+  &--danger {
+    background: var(--mega-red-100);
+  }
+  &[data-leaving] {
+    animation: mega-toast-out var(--mega-duration) var(--mega-ease) forwards;
+  }
+}
+
+.mega-toast__icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: var(--mega-radius-full);
+  background: var(--mega-muted);
+  .mega-toast--success & {
+    background: var(--mega-success);
+    mask: icons.$check center / 100% no-repeat;
+  }
+  .mega-toast--danger & {
+    background: var(--mega-danger);
+    mask: icons.$alert center / 100% no-repeat;
+  }
+}
+
+.mega-toast__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.mega-toast__title,
+.mega-toast__description {
+  margin: 0;
+}
+
+.mega-toast__description {
+  margin-top: 2px;
+  color: var(--mega-text-secondary);
+  font-weight: 400;
+}
+
+.mega-toast__action {
+  flex: none;
+  margin-top: 1px;
+}
+
+@keyframes mega-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes mega-toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  // 1ms rather than `none`: the exit animation's animationend still fires,
+  // so a leaving toast is still removed from the DOM.
+  .mega-dialog[open],
+  .mega-dialog[open]::backdrop,
+  .mega-toast,
+  .mega-toast[data-leaving] {
+    animation-duration: 1ms;
+  }
+}
+
+@media (forced-colors: active) {
+  .mega-dialog,
+  .mega-menu__popup,
+  .mega-tooltip__bubble,
+  .mega-toast {
+    border: 1px solid CanvasText;
+  }
+  .mega-toast__icon {
+    background: CanvasText;
+  }
+}

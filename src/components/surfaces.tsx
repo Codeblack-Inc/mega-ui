@@ -21,37 +21,65 @@ export function Card({
 }
 
 export interface BadgeProps extends ComponentPropsWithRef<'span'> {
-  tone?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger';
+  tone?:
+    'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'teal' | 'purple';
+  /** weak: tinted (default). solid: filled. dot: small round counter like the red "N". */
+  variant?: 'weak' | 'solid' | 'dot';
 }
 export function Badge({
   tone = 'neutral',
+  variant = 'weak',
   className = '',
   ...props
 }: BadgeProps) {
   return (
     <span
-      className={`mega-badge mega-badge--${tone} ${className}`}
+      className={`mega-badge mega-badge--${tone} ${variant === 'weak' ? '' : `mega-badge--${variant}`} ${variant === 'dot' ? 'mega-badge--solid' : ''} ${className}`}
       {...props}
     />
   );
 }
 
 export interface AlertProps extends ComponentPropsWithRef<'div'> {
-  tone?: 'info' | 'success' | 'warning' | 'danger';
+  tone?: 'info' | 'neutral' | 'success' | 'warning' | 'danger';
+  /** Optional leading icon (inline SVG). */
+  icon?: ReactNode;
 }
-export function Alert({ tone = 'info', className = '', ...props }: AlertProps) {
+export function Alert({
+  tone = 'info',
+  icon,
+  className = '',
+  children,
+  ...props
+}: AlertProps) {
   return (
     <div
       role="status"
       className={`mega-alert mega-alert--${tone} ${className}`}
       {...props}
-    />
+    >
+      {icon ? <span aria-hidden="true">{icon}</span> : null}
+      <div>{children}</div>
+    </div>
   );
 }
 
-export type SeparatorProps = ComponentPropsWithRef<'hr'>;
-export function Separator({ className = '', ...props }: SeparatorProps) {
-  return <hr className={`mega-separator ${className}`} {...props} />;
+export interface SeparatorProps extends ComponentPropsWithRef<'hr'> {
+  /** thick: 12px section gap in the page background. vertical: inline divider. */
+  variant?: 'line' | 'thick' | 'vertical';
+}
+export function Separator({
+  variant = 'line',
+  className = '',
+  ...props
+}: SeparatorProps) {
+  return (
+    <hr
+      className={`mega-separator ${variant === 'line' ? '' : `mega-separator--${variant}`} ${className}`}
+      aria-orientation={variant === 'vertical' ? 'vertical' : undefined}
+      {...props}
+    />
+  );
 }
 
 export interface PageHeaderProps extends Omit<

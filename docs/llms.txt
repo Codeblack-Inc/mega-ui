@@ -1,18 +1,34 @@
 # Mega UI
 
-> React 19 + TypeScript component library. SCSS styles, CSS variable themes, no additional runtime dependencies. Version 0.1.0.
+> React 19 + TypeScript component library styled from measured Toss (TDS) values. SCSS with CSS-variable
+> tokens, no additional runtime dependencies, Korean-first documentation. Version 0.1.0, 83 named exports.
 
 ## Documentation
 
-- [Getting started](./getting-started.md): Installation, CSS, themes, accessibility, SSR.
-- [Component API](./components.md): The 22 currently implemented exports and supported props.
-- [AI guide](./ai-guide.md): Composition rules, a form recipe, and limitations.
-- [Roadmap](./roadmap.md): Planned components and acceptance criteria; not implemented APIs.
+- [Getting started](./getting-started.md): Installation, fonts, the three-layer token structure, theming, desktop vs mobile, accessibility, SSR.
+- [Component API](./components.md): All 83 exports with per-component props tables and usage snippets.
+- [AI guide](./ai-guide.md): Which component to use for what, required wiring (Field, Toast, Dialog, Tabs), limitations.
+- [Design direction](./design-direction.md): Measured basis, palette, radius ladder, control ladder, type roles, component specs.
+- [Roadmap](./roadmap.md): What is implemented and what is still planned.
 
-- [Design direction](./design-direction.md): Toss-inspired patterns, reference sources, and scope.
+## Components
+
+- Layout: Container, Stack, Grid
+- Typography: Heading, Text
+- Controls: Button, IconButton, Chip, Input, Textarea, Select, Checkbox, Radio, Field
+- Forms: AutoComplete, CheckboxGroup, DatePicker, FloatLabel, IconField, IftaLabel, InputColor, InputGroup, InputMask, InputNumber, InputOtp, InputPassword, InputTags, KeyFilter, Knob, Label, Listbox, Rating, Slider, ToggleButton
+- Form aliases: InputText (Input), RadioButton (Radio), ToggleSwitch (Switch), ToggleButtonGroup (SegmentedControl)
+- Surfaces: Card, Badge, Alert, Separator, PageHeader
+- Patterns: ListRow, Switch, SegmentedControl, BottomCTA, ProgressBar, Result
+- Navigation: Tabs, TabPanel, SideNav, SideNavSection, SideNavItem, NavRail, NavRailItem, TopBar, TopBarLink, Breadcrumb, BreadcrumbItem, Pagination
+- Overlay: Dialog, Menu, MenuItem, MenuSeparator, MenuLabel, Tooltip, ToastProvider, useToast
+- Data: Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell, TableEmpty, Stat, Amount, Avatar, AvatarGroup, Skeleton, Banner, EmptyState
 
 ## Important
 
 Import components from @mega-ui/react and CSS once from @mega-ui/react/styles.css.
+Theme by overriding base palette variables (e.g. --mega-blue-600) or the theme-independent semantic
+variables (e.g. --mega-brand, --mega-muted); dark mode is `data-mega-theme="dark"`.
+useToast requires a ToastProvider ancestor. Dialog is controlled via `open` and `onClose`.
 The package has not been published to a registry. Use the locally packed tarball for evaluation.
 Do not invent undocumented exports or props. This index is documentation, not an MCP endpoint.

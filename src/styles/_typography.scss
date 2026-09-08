@@ -4,35 +4,75 @@
   color: var(--mega-text);
   overflow-wrap: anywhere;
 }
+// TDS title roles t1–t5: 30 / 26 / 22 / 20 / 17
 .mega-heading {
   font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: -0.025em;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--mega-text-strong);
   &--sm {
-    font-size: 16px;
+    font-size: 17px;
   }
   &--md {
     font-size: 20px;
   }
   &--lg {
-    font-size: 28px;
+    font-size: 22px;
   }
   &--xl {
-    font-size: clamp(28px, 4vw, 38px);
+    font-size: 26px;
+    line-height: 1.35;
+  }
+  &--2xl {
+    font-size: clamp(28px, 3.5vw, 30px);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 }
+// TDS body roles: 13 / 14 / 15 / 17
 .mega-text {
-  line-height: 1.65;
-  &--sm {
+  line-height: 1.5;
+  &--xs {
     font-size: 13px;
+    line-height: 1.45;
+  }
+  &--sm {
+    font-size: 14px;
+    line-height: 1.43;
   }
   &--md {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.47;
   }
   &--lg {
-    font-size: 18px;
+    font-size: 17px;
+    line-height: 1.53;
+  }
+  &--secondary {
+    color: var(--mega-text-secondary);
   }
   &--muted {
     color: var(--mega-muted);
+  }
+  &--brand {
+    color: var(--mega-brand-strong);
+  }
+  &--danger {
+    color: var(--mega-danger);
+  }
+  &--success {
+    color: var(--mega-success);
+  }
+  &[data-weight='medium'] {
+    font-weight: 500;
+  }
+  &[data-weight='semibold'] {
+    font-weight: 600;
+  }
+  &[data-weight='bold'] {
+    font-weight: 700;
+  }
+  &[data-numeric] {
+    font-variant-numeric: tabular-nums;
   }
 }

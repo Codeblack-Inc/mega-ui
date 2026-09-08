@@ -173,10 +173,8 @@ export function Result({
 }: ResultProps) {
   return (
     <div className={`mega-result mega-result--${tone} ${className}`} {...props}>
-      <span className="mega-result__symbol" aria-hidden="true">
-        {tone === 'success' ? '✓' : tone === 'danger' ? '!' : 'i'}
-      </span>
-      <Heading>{title}</Heading>
+      <span className="mega-result__symbol" aria-hidden="true" />
+      <Heading size="lg">{title}</Heading>
       {description ? <Text tone="muted">{description}</Text> : null}
       {actions ? <div className="mega-result__actions">{actions}</div> : null}
     </div>

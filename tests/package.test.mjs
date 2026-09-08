@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import * as ui from '@mega-ui/react';
 
 test('public package exports render without a browser or bundled React', () => {
-  assert.equal(Object.keys(ui).length, 22);
+  assert.equal(Object.keys(ui).length, 83);
   const html = renderToStaticMarkup(
     h(
       ui.Container,
@@ -138,4 +138,37 @@ test('selection patterns preserve accessible names, native form values and disab
     /<input(?=[^>]*disabled="")(?=[^>]*value="account")[^>]*>/,
   );
   assert.match(html, /aria-label="Budget usage" max="100" value="56"/);
+});
+
+test('navigation, data and overlay components render on the server', () => {
+  const html = renderToStaticMarkup(
+    h(
+      ui.ToastProvider,
+      null,
+      h(ui.Tabs, {
+        label: 'Views',
+        defaultValue: 'a',
+        items: [
+          { value: 'a', label: 'A' },
+          { value: 'b', label: 'B' },
+        ],
+      }),
+      h(
+        ui.Table,
+        null,
+        h(
+          ui.TableBody,
+          null,
+          h(ui.TableRow, null, h(ui.TableCell, { numeric: true }, '1,000')),
+        ),
+      ),
+      h(ui.Dialog, { open: false, title: 'Confirm', onClose() {} }, 'Body'),
+      h(ui.Amount, { value: -4500 }),
+    ),
+  );
+  assert.match(html, /role="tablist"/);
+  assert.match(html, /aria-selected="true"/);
+  assert.match(html, /<table/);
+  assert.match(html, /<dialog(?![^>]*\sopen)/);
+  assert.match(html, /-4,500/);
 });

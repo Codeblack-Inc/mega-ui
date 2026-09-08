@@ -1,0 +1,420 @@
+// ---------- Tabs (TDS underline section tabs + the 차트·호가 pill selector) ----------
+.mega-tabs {
+  display: flex;
+  min-width: 0;
+  // No overflow here: it would clip the -1px indicator and the focus ring.
+  &--underline {
+    gap: 4px;
+    border-bottom: 1px solid var(--mega-border);
+  }
+  &--pill {
+    gap: 2px;
+  }
+  &__item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border: 0;
+    background: transparent;
+    font-size: 14px;
+    line-height: 1.43;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--mega-muted);
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      color var(--mega-duration) var(--mega-ease),
+      background-color var(--mega-duration) var(--mega-ease);
+    &:hover:not(:disabled) {
+      color: var(--mega-text-secondary);
+    }
+    &[aria-selected='true'] {
+      color: var(--mega-text);
+    }
+    &:disabled {
+      color: var(--mega-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  &__panel {
+    min-width: 0;
+  }
+}
+.mega-tabs--lg .mega-tabs__item {
+  font-size: 16px;
+  line-height: 1.5;
+}
+// 2px indicator sits on top of the container's 1px bottom border.
+.mega-tabs--underline .mega-tabs__item[aria-selected='true']::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  border-radius: var(--mega-radius-full);
+  background: var(--mega-grey-a900);
+}
+.mega-tabs--pill .mega-tabs__item {
+  min-height: 36px;
+  border-radius: var(--mega-radius-sm);
+  &:hover:not(:disabled) {
+    background: var(--mega-hover);
+  }
+  &[aria-selected='true'] {
+    background: var(--mega-fill-strong);
+    color: var(--mega-text);
+  }
+}
+
+// ---------- SideNav (tosspayments left sidebar) ----------
+.mega-side-nav {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  &__title {
+    margin: 0;
+    padding: 20px 12px 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--mega-muted);
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 34px;
+    padding: 5px 12px;
+    border: 0;
+    border-radius: var(--mega-radius-sm);
+    background: transparent;
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--mega-text);
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color var(--mega-duration) var(--mega-ease);
+    &:hover {
+      background: var(--mega-hover);
+    }
+    &:active {
+      background: var(--mega-press);
+    }
+    &[aria-current='page'] {
+      background: var(--mega-fill);
+      font-weight: 600;
+    }
+  }
+  &__icon {
+    display: flex;
+    flex: 0 0 20px;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &__badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+}
+
+// ---------- NavRail (the 78px icon rail at the far left) ----------
+.mega-nav-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    width: 56px;
+    min-height: 56px;
+    padding: 4px 0;
+    border: 0;
+    border-radius: var(--mega-radius-md);
+    background: transparent;
+    color: var(--mega-muted);
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color var(--mega-duration) var(--mega-ease);
+    &:hover .mega-nav-rail__icon {
+      background: var(--mega-hover);
+    }
+    &:active .mega-nav-rail__icon {
+      background: var(--mega-press);
+    }
+    &[aria-current='page'] {
+      color: var(--mega-text);
+      .mega-nav-rail__icon {
+        background: var(--mega-fill);
+      }
+    }
+  }
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 30px;
+    border-radius: var(--mega-radius-md);
+    transition: background-color var(--mega-duration) var(--mega-ease);
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  &__label {
+    font-size: 11px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+// ---------- TopBar (tossinvest header) ----------
+.mega-top-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 60px;
+  padding: 0 24px;
+  background: var(--mega-surface);
+  border-bottom: 1px solid var(--mega-border);
+  &__brand {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 0;
+  }
+  &__actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+    margin-inline-start: auto;
+  }
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 8px 12px;
+    border-radius: var(--mega-radius-sm);
+    font-size: 14px;
+    line-height: 1.43;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--mega-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      color var(--mega-duration) var(--mega-ease),
+      background-color var(--mega-duration) var(--mega-ease);
+    &:hover {
+      background: var(--mega-hover);
+      color: var(--mega-text-secondary);
+    }
+    &[aria-current='page'] {
+      color: var(--mega-text);
+    }
+  }
+}
+@media (max-width: 720px) {
+  .mega-top-bar {
+    gap: 8px;
+    padding: 0 16px;
+  }
+  .mega-top-bar__nav {
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+// ---------- Breadcrumb ----------
+.mega-breadcrumb {
+  min-width: 0;
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--mega-muted);
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+    [aria-current='page'] {
+      color: var(--mega-text);
+      font-weight: 500;
+    }
+    // ponytail: separator is CSS, so it never lands in the accessibility tree
+    + .mega-breadcrumb__item::before {
+      content: '/';
+      margin: 0 8px;
+      color: var(--mega-icon-weak);
+    }
+  }
+}
+
+// ---------- Pagination ----------
+.mega-pagination {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  &__page,
+  &__arrow,
+  &__gap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  &__page,
+  &__arrow {
+    padding: 0;
+    border: 0;
+    border-radius: var(--mega-radius-xs);
+    background: transparent;
+    color: var(--mega-text-secondary);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color var(--mega-duration) var(--mega-ease),
+      color var(--mega-duration) var(--mega-ease);
+    &:hover:not(:disabled) {
+      background: var(--mega-hover);
+    }
+    &:active:not(:disabled) {
+      background: var(--mega-press);
+    }
+    &:disabled {
+      color: var(--mega-text-disabled);
+      cursor: not-allowed;
+    }
+  }
+  &__arrow {
+    color: var(--mega-icon);
+  }
+  &__page[aria-current='page'] {
+    background: var(--mega-fill-strong);
+    color: var(--mega-text);
+    font-weight: 600;
+  }
+  &__gap {
+    color: var(--mega-icon-weak);
+  }
+}
+
+// The token file only wires focus rings for controls; navigation gets the same one.
+:where(
+  .mega-tabs__item,
+  .mega-tabs__panel,
+  .mega-side-nav__item,
+  .mega-nav-rail__item,
+  .mega-top-bar__link,
+  .mega-breadcrumb__item a,
+  .mega-pagination__page,
+  .mega-pagination__arrow
+):focus-visible {
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-tabs__item,
+  .mega-side-nav__item,
+  .mega-nav-rail__item,
+  .mega-nav-rail__icon,
+  .mega-top-bar__link,
+  .mega-pagination__page,
+  .mega-pagination__arrow {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .mega-tabs--underline .mega-tabs__item[aria-selected='true'] {
+    border-bottom: 2px solid Highlight;
+    &::after {
+      display: none;
+    }
+  }
+  .mega-tabs--pill .mega-tabs__item[aria-selected='true'],
+  .mega-side-nav__item[aria-current='page'],
+  .mega-nav-rail__item[aria-current='page'],
+  .mega-top-bar__link[aria-current='page'],
+  .mega-pagination__page[aria-current='page'] {
+    outline: 2px solid Highlight;
+  }
+  .mega-top-bar {
+    border-bottom: 1px solid CanvasText;
+  }
+}

@@ -3,59 +3,107 @@
   background: var(--mega-surface);
   color: var(--mega-text);
   border: 1px solid transparent;
-  border-radius: var(--mega-radius);
+  border-radius: var(--mega-radius-xl);
   &--elevated {
-    box-shadow: 0 2px 12px rgb(0 20 50 / 3%);
+    box-shadow: var(--mega-shadow-xs);
   }
   &--filled {
-    background: var(--mega-fill);
+    background: var(--mega-fill-solid);
   }
   &--outlined {
     border-color: var(--mega-border);
   }
   &--sm {
     padding: var(--mega-space-4);
+    border-radius: var(--mega-radius-lg);
   }
   &--md {
     padding: var(--mega-space-5);
   }
   &--lg {
     padding: var(--mega-space-6);
+    border-radius: var(--mega-radius-2xl);
   }
 }
+
+// TDS badge: 12/600, h22, r6; weak (soft) by default, solid on demand, red dot for "N"
 .mega-badge {
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  padding: 4px 8px;
-  border-radius: 6px;
+  gap: 4px;
+  min-height: 22px;
+  padding: 0 7px;
+  border-radius: var(--mega-radius-2xs);
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.34;
   font-weight: 600;
+  white-space: nowrap;
   &--neutral {
-    color: var(--mega-muted);
+    color: var(--mega-text-secondary);
     background: var(--mega-fill);
   }
   &--brand {
     color: var(--mega-brand-strong);
     background: var(--mega-brand-soft);
   }
-  @each $tone in success, warning, danger {
+  @each $tone in 'success', 'warning', 'danger', 'teal', 'purple' {
     &--#{$tone} {
       color: var(--mega-#{$tone});
       background: var(--mega-#{$tone}-soft);
     }
   }
+  &--solid {
+    color: var(--mega-on-brand);
+    &.mega-badge--neutral {
+      background: var(--mega-grey-700);
+    }
+    &.mega-badge--brand {
+      background: var(--mega-brand);
+    }
+    &.mega-badge--success {
+      background: var(--mega-success-fill);
+    }
+    &.mega-badge--danger {
+      background: var(--mega-danger-fill);
+    }
+    &.mega-badge--warning {
+      color: var(--mega-grey-800);
+      background: var(--mega-warning-fill);
+    }
+    &.mega-badge--teal {
+      background: var(--mega-teal-600);
+    }
+    &.mega-badge--purple {
+      background: var(--mega-purple-600);
+    }
+  }
+  &--dot {
+    min-height: 18px;
+    min-width: 18px;
+    padding: 0 5px;
+    border-radius: var(--mega-radius-full);
+    font-size: 11px;
+    justify-content: center;
+  }
 }
+
 .mega-alert {
-  padding: var(--mega-space-4) var(--mega-space-5);
-  border-radius: var(--mega-radius-sm);
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: var(--mega-radius-md);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
   &--info {
     color: var(--mega-brand-strong);
     background: var(--mega-brand-soft);
   }
+  &--neutral {
+    color: var(--mega-text-secondary);
+    background: var(--mega-fill);
+  }
   @each $tone in success, warning, danger {
     &--#{$tone} {
       color: var(--mega-#{$tone});
@@ -63,9 +111,20 @@
     }
   }
 }
+
 .mega-separator {
   width: 100%;
   border: 0;
   border-top: 1px solid var(--mega-border);
   margin: 0;
+  &--thick {
+    border-top-width: 12px;
+    border-top-color: var(--mega-bg);
+  }
+  &--vertical {
+    width: 0;
+    align-self: stretch;
+    border-top: 0;
+    border-left: 1px solid var(--mega-border);
+  }
 }

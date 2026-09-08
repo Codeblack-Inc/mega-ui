@@ -182,6 +182,7 @@ export function SettingsExample() {
             <Grid>
               <Field label="이름" htmlFor="profile-name" required>
                 <Input
+                  variant="box"
                   id="profile-name"
                   name="name"
                   defaultValue="김메가"
@@ -190,6 +191,7 @@ export function SettingsExample() {
               </Field>
               <Field label="이메일" htmlFor="profile-email" required>
                 <Input
+                  variant="box"
                   id="profile-email"
                   name="email"
                   type="email"
@@ -204,6 +206,7 @@ export function SettingsExample() {
               hint="나를 소개하는 한마디를 남겨주세요"
             >
               <Textarea
+                variant="box"
                 id="profile-bio"
                 name="bio"
                 aria-describedby="profile-bio-description"
@@ -224,12 +227,15 @@ export function SettingsExample() {
             <BottomCTA>
               <Button
                 type="reset"
+                size="xl"
                 variant="secondary"
                 onClick={() => setSaved(false)}
               >
                 초기화
               </Button>
-              <Button type="submit">저장하기</Button>
+              <Button type="submit" size="xl">
+                저장하기
+              </Button>
             </BottomCTA>
             {saved ? (
               <Alert tone="success">
@@ -310,7 +316,12 @@ export function PaymentExample() {
             label={method === 'card' ? '카드사' : '은행'}
             htmlFor="payment-provider"
           >
-            <Select id="payment-provider" name="provider" key={method}>
+            <Select
+              variant="box"
+              id="payment-provider"
+              name="provider"
+              key={method}
+            >
               {(method === 'card'
                 ? ['메가카드', '다른 카드']
                 : ['메가뱅크', '다른 은행']
@@ -321,6 +332,7 @@ export function PaymentExample() {
           </Field>
           <Field label="영수증 받을 이메일" htmlFor="payment-email" required>
             <Input
+              variant="box"
               id="payment-email"
               name="email"
               type="email"
@@ -342,7 +354,7 @@ export function PaymentExample() {
             예제 이용 안내를 확인했어요
           </Checkbox>
           <BottomCTA description="실제 금액이 청구되지 않는 UI 예제예요">
-            <Button type="submit" size="lg" disabled={!agreed}>
+            <Button type="submit" size="xl" disabled={!agreed}>
               58,000원 결제 체험하기
             </Button>
           </BottomCTA>

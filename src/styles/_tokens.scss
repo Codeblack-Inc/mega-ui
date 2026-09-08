@@ -1,28 +1,161 @@
-// Toss-inspired visual direction; these are Mega UI's own semantic tokens.
+// Token layers, structured like TDS: base palette (per theme) → semantic (theme-independent).
+// Values are measured from Toss web products; names are Mega UI's own.
+// Fonts are not bundled: consumers load SUIT or IBM Plex Sans KR.
 :root,
 [data-mega-theme] {
   --mega-font:
-    -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR',
-    'Segoe UI', sans-serif;
-  --mega-bg: #f4f6f8;
+    'SUIT Variable', 'SUIT', 'IBM Plex Sans KR', 'Pretendard', -apple-system,
+    BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI',
+    sans-serif;
+
+  // ---- base palette (light) ----
+  --mega-grey-50: #f6f7f9;
+  --mega-grey-100: #f2f4f7;
+  --mega-grey-200: #e8ebf0;
+  --mega-grey-300: #d4d9e1;
+  --mega-grey-400: #b8bdc5;
+  --mega-grey-500: #8f959e;
+  --mega-grey-600: #727780;
+  --mega-grey-700: #4e535c;
+  --mega-grey-800: #333840;
+  --mega-grey-900: #1c1f25;
+  --mega-grey-a50: rgb(13 25 74 / 4%);
+  --mega-grey-a100: rgb(7 25 76 / 5%);
+  --mega-grey-a200: rgb(3 31 63 / 9%);
+  --mega-grey-a300: rgb(2 32 59 / 17%);
+  --mega-grey-a400: rgb(19 30 54 / 30%);
+  --mega-grey-a500: rgb(18 31 51 / 47%);
+  --mega-grey-a600: rgb(22 31 46 / 61%);
+  --mega-grey-a700: rgb(24 31 43 / 77%);
+  --mega-grey-a800: rgb(26 31 41 / 89%);
+  --mega-grey-a900: rgb(28 31 37 / 96%);
+
+  --mega-blue-50: #f2f8ff;
+  --mega-blue-100: #ebf4ff;
+  --mega-blue-200: #dcecfe;
+  --mega-blue-300: #bfdbfd;
+  --mega-blue-400: #93c0fc;
+  --mega-blue-500: #4396fb;
+  --mega-blue-600: #3182f6;
+  --mega-blue-700: #2272eb;
+  --mega-blue-800: #1b59c5;
+  --mega-blue-900: #1c4989;
+  --mega-blue-a100: rgb(26 122 249 / 9%);
+  --mega-blue-a200: rgb(26 122 249 / 14%);
+  --mega-blue-a300: rgb(26 122 249 / 27%);
+
+  --mega-red-100: #ffefef;
+  --mega-red-200: #fee2e2;
+  --mega-red-400: #faa1a0;
+  --mega-red-600: #ef3341;
+  --mega-red-700: #de2b39;
+  --mega-red-a100: rgb(237 40 49 / 8%);
+  --mega-red-a200: rgb(237 40 49 / 13%);
+
+  --mega-green-100: #e7f8f0;
+  --mega-green-200: #d2f3e2;
+  --mega-green-400: #68d4a6;
+  --mega-green-600: #1f9d6f;
+  --mega-green-700: #009467;
+  --mega-green-a100: rgb(0 183 92 / 10%);
+  --mega-green-a200: rgb(0 183 92 / 18%);
+
+  --mega-yellow-100: #fff3ce;
+  --mega-yellow-200: #ffeaac;
+  --mega-yellow-400: #ffbc46;
+  --mega-yellow-600: #e26d00;
+  --mega-yellow-700: #c95c00;
+  --mega-yellow-a100: rgb(251 182 0 / 17%);
+  --mega-yellow-a200: rgb(252 185 0 / 31%);
+
+  --mega-teal-600: #159999;
+  --mega-teal-700: #288a8a;
+  --mega-teal-a100: rgb(34 170 170 / 11%);
+  --mega-purple-600: #a450fc;
+  --mega-purple-700: #9d2aff;
+  --mega-purple-a100: rgb(151 84 226 / 8%);
+
+  --mega-white: #ffffff;
+  --mega-white-a200: rgb(255 255 255 / 19%);
+  --mega-white-a700: rgb(255 255 255 / 75%);
+
+  // ---- theme-only surfaces ----
+  --mega-bg: var(--mega-grey-100);
   --mega-surface: #ffffff;
-  --mega-fill: #f2f4f6;
-  --mega-hover: #e8ebef;
-  --mega-text: #191f28;
-  --mega-muted: #6b7684;
-  --mega-border: #e5e8eb;
-  --mega-brand: #3182f6;
-  --mega-brand-strong: #1b64da;
+  --mega-surface-raised: #ffffff;
+  --mega-dim: rgb(23 23 28 / 60%);
+  --mega-shadow-color: var(--mega-grey-a200);
+  --mega-shadow-color-weak: var(--mega-grey-a100);
+
+  // ---- semantic (theme-independent, resolved through the base palette) ----
+  --mega-text-strong: var(--mega-grey-900);
+  --mega-text: var(--mega-grey-a800);
+  --mega-text-secondary: var(--mega-grey-a700);
+  --mega-muted: var(--mega-grey-a600);
+  --mega-placeholder: var(--mega-grey-a500);
+  --mega-text-disabled: var(--mega-grey-a400);
+  --mega-icon: var(--mega-grey-a600);
+  --mega-icon-weak: var(--mega-grey-a400);
+
+  --mega-fill: var(--mega-grey-a100);
+  --mega-fill-strong: var(--mega-grey-a200);
+  --mega-fill-solid: var(--mega-grey-100);
+  --mega-hover: var(--mega-grey-a100);
+  --mega-press: var(--mega-grey-a200);
+  --mega-border: var(--mega-grey-a200);
+  --mega-border-strong: var(--mega-grey-300);
+  --mega-control: var(--mega-grey-a200);
+  --mega-control-hover: var(--mega-grey-a300);
+  --mega-control-strong: var(--mega-grey-a500);
+  --mega-knob: #ffffff;
+
+  --mega-brand: var(--mega-blue-600);
+  --mega-brand-hover: var(--mega-blue-700);
+  --mega-brand-strong: var(--mega-blue-700);
   --mega-on-brand: #ffffff;
-  --mega-brand-soft: #e8f3ff;
-  --mega-danger: #c92a3a;
-  --mega-danger-soft: #fff0f1;
-  --mega-success: #087f5b;
-  --mega-success-soft: #e8faf3;
-  --mega-warning: #946200;
-  --mega-warning-soft: #fff7df;
-  --mega-radius: 24px;
-  --mega-radius-sm: 12px;
+  --mega-brand-soft: var(--mega-blue-a100);
+  --mega-brand-soft-hover: var(--mega-blue-a200);
+
+  --mega-danger: var(--mega-red-700);
+  --mega-danger-fill: var(--mega-red-600);
+  --mega-danger-fill-hover: var(--mega-red-700);
+  --mega-danger-soft: var(--mega-red-a100);
+  --mega-danger-soft-hover: var(--mega-red-a200);
+  --mega-success: var(--mega-green-700);
+  --mega-success-fill: var(--mega-green-600);
+  --mega-success-soft: var(--mega-green-a100);
+  --mega-warning: var(--mega-yellow-700);
+  --mega-warning-fill: var(--mega-yellow-400);
+  --mega-warning-soft: var(--mega-yellow-a100);
+  --mega-teal: var(--mega-teal-700);
+  --mega-teal-soft: var(--mega-teal-a100);
+  --mega-purple: var(--mega-purple-700);
+  --mega-purple-soft: var(--mega-purple-a100);
+  // Korean market convention: up = red, down = blue
+  --mega-up: var(--mega-red-600);
+  --mega-down: var(--mega-blue-600);
+
+  // ---- shape ----
+  --mega-radius-2xs: 6px;
+  --mega-radius-xs: 8px;
+  --mega-radius-sm: 10px;
+  --mega-radius-md: 12px;
+  --mega-radius-lg: 16px;
+  --mega-radius-xl: 20px;
+  --mega-radius-2xl: 24px;
+  --mega-radius-full: 999px;
+
+  // ---- elevation (TDS xsmall/small/medium/large) ----
+  --mega-shadow-xs: 0 1px 3px 0 var(--mega-shadow-color);
+  --mega-shadow-sm: 0 2px 4px 0 var(--mega-shadow-color);
+  --mega-shadow-md: 0 12px 40px 4px var(--mega-shadow-color);
+  --mega-shadow-lg: 0 18px 80px 4px var(--mega-shadow-color);
+
+  // ---- motion ----
+  --mega-ease: cubic-bezier(0.2, 0, 0, 1);
+  --mega-duration: 160ms;
+
+  // ---- spacing ----
   --mega-space-0: 0;
   --mega-space-1: 4px;
   --mega-space-2: 8px;
@@ -34,39 +167,105 @@
   --mega-space-8: 64px;
   color-scheme: light;
 }
+
+// Dark theme swaps the base palette only; the semantic layer resolves through it.
 [data-mega-theme='dark'] {
-  --mega-bg: #101114;
-  --mega-surface: #1b1d22;
-  --mega-fill: #26292f;
-  --mega-hover: #34383f;
-  --mega-text: #f2f4f6;
-  --mega-muted: #a8b0bb;
-  --mega-border: #33373e;
-  --mega-brand: #4593ff;
-  --mega-brand-strong: #8dbdff;
-  --mega-on-brand: #101f35;
-  --mega-brand-soft: #1c304b;
-  --mega-danger: #ff9ca8;
-  --mega-danger-soft: #44262d;
-  --mega-success: #6dd5ad;
-  --mega-success-soft: #15382b;
-  --mega-warning: #f0cf83;
-  --mega-warning-soft: #3e3520;
+  --mega-grey-50: #202025;
+  --mega-grey-100: #2a2b31;
+  --mega-grey-200: #32343d;
+  --mega-grey-300: #3e3f49;
+  --mega-grey-400: #4f525d;
+  --mega-grey-500: #676c77;
+  --mega-grey-600: #888d97;
+  --mega-grey-700: #b3b8c2;
+  --mega-grey-800: #dadfe9;
+  --mega-grey-900: #ffffff;
+  --mega-grey-a50: rgb(218 223 233 / 4%);
+  --mega-grey-a100: rgb(214 224 239 / 9%);
+  --mega-grey-a200: rgb(213 223 244 / 13%);
+  --mega-grey-a300: rgb(212 223 248 / 19%);
+  --mega-grey-a400: rgb(212 223 246 / 29%);
+  --mega-grey-a500: rgb(211 224 243 / 42%);
+  --mega-grey-a600: rgb(216 223 237 / 59%);
+  --mega-grey-a700: rgb(217 223 235 / 80%);
+  --mega-grey-a800: rgb(242 246 255 / 90%);
+  --mega-grey-a900: rgb(255 255 255 / 96%);
+
+  --mega-blue-50: #1c2331;
+  --mega-blue-100: #212b41;
+  --mega-blue-200: #24334f;
+  --mega-blue-300: #254069;
+  --mega-blue-400: #29518e;
+  --mega-blue-500: #2c69c0;
+  --mega-blue-600: #3182f6;
+  --mega-blue-700: #4896ff;
+  --mega-blue-800: #64adff;
+  --mega-blue-900: #8fc7ff;
+  --mega-blue-a100: rgb(67 122 223 / 20%);
+  --mega-blue-a200: rgb(68 122 213 / 28%);
+  --mega-blue-a300: rgb(60 121 220 / 41%);
+
+  --mega-red-100: #3e2429;
+  --mega-red-200: #52262d;
+  --mega-red-400: #8d222f;
+  --mega-red-600: #dc2e47;
+  --mega-red-700: #f5445a;
+  --mega-red-a100: rgb(219 81 87 / 20%);
+  --mega-red-a200: rgb(216 75 85 / 30%);
+
+  --mega-green-100: #212e2e;
+  --mega-green-200: #213834;
+  --mega-green-400: #1f5c4c;
+  --mega-green-600: #009169;
+  --mega-green-700: #07a978;
+  --mega-green-a100: rgb(61 123 101 / 23%);
+  --mega-green-a200: rgb(55 132 108 / 30%);
+
+  --mega-yellow-100: #312a25;
+  --mega-yellow-200: #3e3123;
+  --mega-yellow-400: #814f1e;
+  --mega-yellow-600: #f29300;
+  --mega-yellow-700: #fcb50c;
+  --mega-yellow-a100: rgb(230 168 86 / 13%);
+  --mega-yellow-a200: rgb(227 158 53 / 19%);
+
+  --mega-teal-600: #188b8c;
+  --mega-teal-700: #02a4a5;
+  --mega-teal-a100: rgb(66 122 127 / 22%);
+  --mega-purple-600: #9451d9;
+  --mega-purple-700: #ac65f2;
+  --mega-purple-a100: rgb(147 98 192 / 21%);
+
+  --mega-bg: #17171c;
+  --mega-surface: #202025;
+  --mega-surface-raised: #2a2b31;
+  --mega-dim: rgb(0 0 0 / 60%);
+  --mega-shadow-color: rgb(0 0 0 / 25%);
+  --mega-shadow-color-weak: rgb(0 0 0 / 12%);
+  --mega-warning-fill: var(--mega-yellow-600);
+  --mega-up: var(--mega-red-700);
+  --mega-down: var(--mega-blue-700);
   color-scheme: dark;
 }
+
 :where([class^='mega-'], [class*=' mega-']) {
   box-sizing: border-box;
   font-family: var(--mega-font);
+  -webkit-font-smoothing: antialiased;
 }
+
 :where(
   .mega-button,
-  .mega-input,
+  .mega-chip,
+  .mega-icon-button,
   .mega-checkbox input,
+  .mega-radio input,
   .mega-switch input
 ):focus-visible {
-  outline: 3px solid var(--mega-brand);
-  outline-offset: 3px;
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
 }
+
 .mega-visually-hidden {
   position: absolute;
   width: 1px;
