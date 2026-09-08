@@ -30,33 +30,26 @@ export function Overview() {
 
 ## 폰트
 
-기본 서체는 SUIT이며 IBM Plex Sans KR로 대체합니다. 라이브러리는 폰트 파일을 번들하지 않으므로
-소비 앱이 둘 중 하나를 직접 불러옵니다.
+기본 서체는 Pretendard입니다. 라이브러리는 폰트 파일을 번들하지 않으므로
+소비 앱이 직접 불러옵니다.
 
 ```css
 --mega-font:
-  'SUIT Variable', 'SUIT', 'IBM Plex Sans KR', 'Pretendard', -apple-system,
-  BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI',
-  sans-serif;
+  'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+  'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
 ```
 
 ```html
-<!-- SUIT Variable (jsDelivr) -->
+<!-- Pretendard Variable dynamic subset (jsDelivr) -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css"
-/>
-
-<!-- 또는 IBM Plex Sans KR (Google Fonts) -->
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap"
+  crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
 />
 ```
 
-자체 호스팅이나 npm 패키지(`suit-font` 등) 설치도 동일하게 동작합니다. `font-family` 이름이
-`'SUIT Variable'` 또는 `'SUIT'`이기만 하면 됩니다.
-라이브러리가 사용하는 굵기는 400/500/600/700뿐입니다(IBM Plex Sans KR에는 800이 없습니다).
+자체 호스팅이나 npm 패키지(`pretendard`)로 설치해도 동일하게 동작합니다.
+라이브러리가 사용하는 굵기는 400/500/600/700입니다.
 `--mega-font`를 다른 서체로 바꾸더라도 이 네 굵기는 제공되어야 합니다.
 
 ## 스타일과 테마

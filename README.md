@@ -53,11 +53,13 @@ export function Welcome() {
 }
 ```
 
-기본 서체는 SUIT이며 IBM Plex Sans KR로 대체합니다. 폰트 파일은 번들하지 않으므로 소비 앱에서 직접 불러오세요.
+기본 서체는 Pretendard입니다. 폰트 파일은 번들하지 않으므로 소비 앱에서 직접 불러오세요.
 불러오는 방법은 [시작하기](docs/getting-started.md)의 폰트 절에 있습니다.
 
 React와 React DOM은 peer dependency로 외부화합니다. 라이브러리 자체의 추가 런타임 의존성은 없습니다.
 ESM만 제공하며, React 19를 지원 대상으로 시작합니다. React 18과 CommonJS는 현재 지원 대상으로 검증하지 않았습니다.
+
+새 컴포넌트의 디자인 규칙과 자동 검사 범위는 [디자인 계약](docs/design-contract.md)에 있습니다.
 
 ## 구조와 선택
 

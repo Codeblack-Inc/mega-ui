@@ -58,7 +58,7 @@
     }
   }
   &[data-zebra] :where(.mega-table__body > .mega-table__row:nth-child(odd)) {
-    background: var(--mega-grey-50);
+    background: var(--mega-fill);
   }
   & &__row[data-selected] {
     background: var(--mega-brand-soft);
@@ -249,18 +249,6 @@
     overflow: hidden;
     background: var(--mega-fill-strong);
     border-radius: var(--mega-radius-xs);
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        var(--mega-grey-a50),
-        transparent
-      );
-      animation: mega-skeleton-shimmer 1.4s ease-in-out infinite;
-    }
   }
   &--text &__line {
     border-radius: var(--mega-radius-2xs);
@@ -277,15 +265,6 @@
     border-radius: 50%;
   }
 }
-@keyframes mega-skeleton-shimmer {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100%);
-  }
-}
-
 .mega-banner {
   display: flex;
   flex-wrap: wrap;
@@ -359,11 +338,6 @@
     margin-top: var(--mega-space-4);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .mega-skeleton__line::after {
-    animation: none;
-  }
-}
 @media (forced-colors: active) {
   .mega-table[data-bordered],
   .mega-table__header-cell,
@@ -380,9 +354,6 @@
   .mega-skeleton__line {
     outline: 1px solid CanvasText;
     outline-offset: -1px;
-  }
-  .mega-skeleton__line::after {
-    display: none;
   }
   .mega-avatar-group > * {
     outline: 2px solid Canvas;

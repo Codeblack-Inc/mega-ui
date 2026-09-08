@@ -52,8 +52,8 @@
   }
   &--primary,
   &--danger {
-    --_overlay-hover: rgb(0 0 0 / 8%);
-    --_overlay-press: rgb(0 0 0 / 16%);
+    --_overlay-hover: var(--mega-hover-overlay);
+    --_overlay-press: var(--mega-press-overlay);
     color: var(--mega-on-brand);
   }
   &--primary {
@@ -86,7 +86,7 @@
     color: var(--mega-brand-strong);
     border-radius: 4px;
     &:hover:not(:disabled) {
-      color: var(--mega-blue-800);
+      color: var(--mega-brand-strong);
       text-decoration: underline;
       text-underline-offset: 3px;
     }
@@ -108,7 +108,7 @@
     );
   }
   &:disabled {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
   &[aria-busy='true'] {
@@ -163,7 +163,7 @@
     background-color: var(--mega-press);
   }
   &:disabled {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -209,10 +209,10 @@
   &[data-selected] {
     background: var(--mega-brand-soft);
     color: var(--mega-brand-strong);
-    box-shadow: inset 0 0 0 1px var(--mega-blue-a300);
+    box-shadow: inset 0 0 0 1px var(--mega-brand-border);
   }
   &:disabled {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -241,7 +241,7 @@
     opacity: 1;
   }
   &:hover:not(:disabled, :focus) {
-    box-shadow: inset 0 0 0 1px var(--mega-blue-300);
+    box-shadow: inset 0 0 0 1px var(--mega-border-brand-soft);
   }
   &:focus {
     outline: 0;
@@ -278,7 +278,7 @@
     background: var(--mega-fill-solid);
     box-shadow: inset 0 0 0 1.5px transparent;
     &:hover:not(:disabled, :focus) {
-      background-color: var(--mega-grey-200);
+      background-color: var(--mega-fill-hover);
       box-shadow: inset 0 0 0 1.5px transparent;
     }
     &:focus {
@@ -367,10 +367,10 @@
   }
   &:hover input:not(:disabled, :checked) {
     border-color: var(--mega-brand);
-    background: var(--mega-blue-50);
+    background: var(--mega-brand-soft);
   }
   &:has(input:disabled) {
-    opacity: 0.45;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -410,17 +410,37 @@
 }
 
 .mega-spinner {
-  width: 14px;
-  height: 14px;
-  border: 2px solid currentColor;
-  border-inline-end-color: transparent;
+  position: relative;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  opacity: 0.9;
-  animation: mega-spin 700ms linear infinite;
+  background: currentColor;
+  animation: mega-loader-pulse 720ms ease-in-out infinite alternate;
+  &::before,
+  &::after {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background: inherit;
+    content: '';
+    animation: inherit;
+  }
+  &::before {
+    left: -7px;
+    animation-delay: -240ms;
+  }
+  &::after {
+    left: 7px;
+    animation-delay: 240ms;
+  }
 }
-@keyframes mega-spin {
+@keyframes mega-loader-pulse {
+  from {
+    opacity: 0.3;
+  }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -56,7 +56,7 @@
   &--solid {
     color: var(--mega-on-brand);
     &.mega-badge--neutral {
-      background: var(--mega-grey-700);
+      background: var(--mega-neutral-fill);
     }
     &.mega-badge--brand {
       background: var(--mega-brand);
@@ -68,14 +68,14 @@
       background: var(--mega-danger-fill);
     }
     &.mega-badge--warning {
-      color: var(--mega-grey-800);
+      color: var(--mega-on-warning);
       background: var(--mega-warning-fill);
     }
     &.mega-badge--teal {
-      background: var(--mega-teal-600);
+      background: var(--mega-teal-fill);
     }
     &.mega-badge--purple {
-      background: var(--mega-purple-600);
+      background: var(--mega-purple-fill);
     }
   }
   &--dot {

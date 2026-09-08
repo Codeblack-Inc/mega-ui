@@ -26,13 +26,13 @@
     --_max: 800px;
   }
   &::backdrop {
-    background: var(--mega-dim, rgb(23 23 28 / 60%));
+    background: var(--mega-dim);
   }
   &[open] {
-    animation: mega-dialog-in var(--mega-duration) var(--mega-ease);
+    animation: mega-dialog-in var(--mega-duration-slow) var(--mega-ease-out);
   }
   &[open]::backdrop {
-    animation: mega-overlay-fade var(--mega-duration) var(--mega-ease);
+    animation: mega-overlay-fade var(--mega-duration-slow) var(--mega-ease);
   }
 }
 
@@ -210,7 +210,7 @@
   opacity: 0;
   pointer-events: none;
   transform: translateX(-50%);
-  transition: opacity 120ms var(--mega-ease);
+  transition: opacity var(--mega-duration-fast) var(--mega-ease);
   &::after {
     position: absolute;
     left: 50%;
@@ -274,10 +274,10 @@
   pointer-events: auto;
   animation: mega-toast-in var(--mega-duration) var(--mega-ease);
   &--success {
-    background: var(--mega-green-100);
+    background: var(--mega-success-soft);
   }
   &--danger {
-    background: var(--mega-red-100);
+    background: var(--mega-danger-soft);
   }
   &[data-leaving] {
     animation: mega-toast-out var(--mega-duration) var(--mega-ease) forwards;

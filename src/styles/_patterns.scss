@@ -74,9 +74,7 @@
       inset: 3px auto auto 3px;
       border-radius: 50%;
       background: var(--mega-knob);
-      box-shadow:
-        0 1px 3px rgb(0 0 0 / 15%),
-        0 2px 6px rgb(0 0 0 / 8%);
+      box-shadow: var(--mega-shadow-sm);
       transition: transform var(--mega-duration) var(--mega-ease);
     }
     &:checked {
@@ -90,7 +88,7 @@
     background: var(--mega-control-hover);
   }
   &:has(:disabled) {
-    opacity: 0.45;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -151,7 +149,7 @@
     input:disabled {
       cursor: not-allowed;
       & + span {
-        opacity: 0.45;
+        opacity: var(--mega-disabled-opacity);
       }
     }
   }
@@ -235,7 +233,7 @@
     mask-image: icons.$info;
   }
   &--danger &__symbol {
-    background: var(--mega-danger-strong);
+    background: var(--mega-danger-fill);
     &::after {
       mask-image: icons.$alert;
     }

@@ -76,7 +76,7 @@
   font-size: 12px;
   cursor: pointer;
   &:disabled {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -132,7 +132,7 @@
   accent-color: var(--mega-brand);
   cursor: pointer;
   &:disabled {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
 }
@@ -160,7 +160,7 @@
     font-weight: 600;
   }
   &:has(:disabled) {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
   }
 }
 .mega-rating {
@@ -197,7 +197,7 @@
     cursor: pointer;
   }
   &:disabled {
-    opacity: 0.4;
+    opacity: var(--mega-disabled-opacity);
     input {
       cursor: not-allowed;
     }
@@ -234,7 +234,7 @@
       cursor: pointer;
       font-size: 18px;
       &:disabled {
-        opacity: 0.4;
+        opacity: var(--mega-disabled-opacity);
         cursor: not-allowed;
       }
     }

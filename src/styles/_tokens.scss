@@ -1,12 +1,11 @@
 // Token layers, structured like TDS: base palette (per theme) → semantic (theme-independent).
 // Values are measured from Toss web products; names are Mega UI's own.
-// Fonts are not bundled: consumers load SUIT or IBM Plex Sans KR.
+// Fonts are not bundled: consumers load Pretendard.
 :root,
 [data-mega-theme] {
   --mega-font:
-    'SUIT Variable', 'SUIT', 'IBM Plex Sans KR', 'Pretendard', -apple-system,
-    BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI',
-    sans-serif;
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Segoe UI', sans-serif;
 
   // ---- base palette (light) ----
   --mega-grey-50: #f6f7f9;
@@ -100,10 +99,15 @@
   --mega-fill: var(--mega-grey-a100);
   --mega-fill-strong: var(--mega-grey-a200);
   --mega-fill-solid: var(--mega-grey-100);
+  --mega-fill-hover: var(--mega-grey-200);
   --mega-hover: var(--mega-grey-a100);
   --mega-press: var(--mega-grey-a200);
+  --mega-hover-overlay: rgb(0 0 0 / 8%);
+  --mega-press-overlay: rgb(0 0 0 / 26%);
+  --mega-disabled-opacity: 0.3;
   --mega-border: var(--mega-grey-a200);
   --mega-border-strong: var(--mega-grey-300);
+  --mega-border-brand-soft: var(--mega-blue-300);
   --mega-control: var(--mega-grey-a200);
   --mega-control-hover: var(--mega-grey-a300);
   --mega-control-strong: var(--mega-grey-a500);
@@ -115,6 +119,7 @@
   --mega-on-brand: #ffffff;
   --mega-brand-soft: var(--mega-blue-a100);
   --mega-brand-soft-hover: var(--mega-blue-a200);
+  --mega-brand-border: var(--mega-blue-a300);
 
   --mega-danger: var(--mega-red-700);
   --mega-danger-fill: var(--mega-red-600);
@@ -129,8 +134,12 @@
   --mega-warning-soft: var(--mega-yellow-a100);
   --mega-teal: var(--mega-teal-700);
   --mega-teal-soft: var(--mega-teal-a100);
+  --mega-teal-fill: var(--mega-teal-600);
   --mega-purple: var(--mega-purple-700);
   --mega-purple-soft: var(--mega-purple-a100);
+  --mega-purple-fill: var(--mega-purple-600);
+  --mega-neutral-fill: var(--mega-grey-700);
+  --mega-on-warning: var(--mega-grey-800);
   // Korean market convention: up = red, down = blue
   --mega-up: var(--mega-red-600);
   --mega-down: var(--mega-blue-600);
@@ -152,8 +161,12 @@
   --mega-shadow-lg: 0 18px 80px 4px var(--mega-shadow-color);
 
   // ---- motion ----
-  --mega-ease: cubic-bezier(0.2, 0, 0, 1);
-  --mega-duration: 160ms;
+  --mega-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --mega-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --mega-duration-fast: 120ms;
+  --mega-duration-base: 200ms;
+  --mega-duration-slow: 320ms;
+  --mega-duration: var(--mega-duration-base);
 
   // ---- spacing ----
   --mega-space-0: 0;
