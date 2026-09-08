@@ -5,7 +5,7 @@
 
 ## 생성 규칙
 
-1. `@mega-ui/react`의 공개 named export 83개만 사용합니다. 내부 dist 경로를 import하지 않습니다.
+1. `@mega-ui/react`의 문서화된 공개 named export 197개만 사용합니다. [150개 대조표](./component-coverage.md)에서 기존/별칭/확장 API를 확인합니다. 내부 dist 경로를 import하지 않습니다.
 2. 앱 진입점에 `import '@mega-ui/react/styles.css'`를 한 번 추가합니다.
 3. 간격은 `gap` 0–8 토큰, 색·표면은 문서화된 variant/tone을 사용합니다. 임의의 hex를 쓰지 않습니다.
 4. 커스텀 CSS를 추가하기 전에 기존 컴포넌트와 `--mega-*` 시맨틱 토큰으로 해결합니다.

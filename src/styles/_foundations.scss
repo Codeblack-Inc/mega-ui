@@ -1,0 +1,91 @@
+.mega-box {
+  min-width: 0;
+}
+.mega-theme {
+  color: var(--mega-text);
+  background: var(--mega-bg);
+}
+.mega-focus-ring:focus-within,
+:where([class*='mega-']) :focus-visible,
+:where([class*='mega-']):focus-visible {
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
+}
+.mega-color {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-xs);
+}
+@each $tone in brand, success, warning, danger, text, surface {
+  .mega-color--#{$tone} {
+    background: var(--mega-#{$tone});
+  }
+}
+.mega-center {
+  display: grid;
+  place-items: center;
+}
+.mega-scroll-area {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.mega-resizable-panel {
+  overflow: auto;
+  min-width: 120px;
+  min-height: 80px;
+  max-width: 100%;
+  border: 1px solid var(--mega-border);
+  padding: var(--mega-space-4);
+  border-radius: var(--mega-radius-md);
+}
+.mega-split-pane__control {
+  display: flex;
+  gap: var(--mega-space-3);
+  align-items: center;
+  margin-bottom: var(--mega-space-3);
+  color: var(--mega-text-secondary);
+  font-size: 13px;
+  input {
+    accent-color: var(--mega-brand);
+    min-height: 44px;
+  }
+}
+.mega-split-pane__panels {
+  display: grid;
+  gap: var(--mega-space-4);
+  > div {
+    min-width: 0;
+    overflow: auto;
+  }
+}
+.mega-app-shell,
+.mega-page-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mega-space-5);
+  min-width: 0;
+}
+.mega-app-shell__body {
+  display: flex;
+  gap: var(--mega-space-5);
+  > aside {
+    flex: 0 0 220px;
+  }
+}
+.mega-app-shell__content {
+  flex: 1;
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .mega-app-shell__body {
+    flex-direction: column;
+    > aside {
+      flex-basis: auto;
+    }
+  }
+  .mega-split-pane__panels {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}

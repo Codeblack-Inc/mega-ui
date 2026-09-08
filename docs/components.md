@@ -1,6 +1,6 @@
 # Mega UI 컴포넌트 API — 0.1.0
 
-`@mega-ui/react`의 공개 named export 83개입니다. 모두 값 export이며, 같은 이름의 props 타입도 함께 export합니다.
+`@mega-ui/react`의 공개 named export는 197개입니다. 이 페이지는 기존 83개 API를 설명하며, 추가 114개 이름은 [150개 대조표](./component-coverage.md)에 연결된 확장 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
 별도 명시가 없으면 해당 HTML 요소의 표준 속성, `className`, `style`, React 19 `ref`를 그대로 전달합니다.
 `children`은 ReactNode입니다. 범용 `as`, `asChild`, `sx` API는 제공하지 않습니다(`Text`와 `Amount`만 좁은 `as`를 받습니다).
 

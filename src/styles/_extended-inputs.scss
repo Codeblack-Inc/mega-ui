@@ -1,0 +1,207 @@
+.mega-button-group {
+  display: flex;
+  gap: var(--mega-space-2);
+  align-items: center;
+  flex-wrap: wrap;
+
+  &--vertical {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+.mega-split-button {
+  display: inline-flex;
+  align-items: stretch;
+
+  > .mega-button {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  > .mega-menu > .mega-icon-button {
+    width: 34px;
+    height: 100%;
+    min-height: 34px;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    background: var(--mega-brand);
+    color: var(--mega-on-brand);
+    box-shadow: inset 1px 0 0 var(--mega-brand-border);
+  }
+
+  &--danger > .mega-menu > .mega-icon-button {
+    background: var(--mega-danger-fill);
+  }
+
+  &--weak > .mega-menu > .mega-icon-button {
+    background: var(--mega-brand-soft);
+    color: var(--mega-brand-strong);
+  }
+
+  &--secondary > .mega-menu > .mega-icon-button {
+    background: var(--mega-fill);
+    color: var(--mega-text-secondary);
+  }
+
+  &--outline > .mega-menu > .mega-icon-button {
+    background: var(--mega-surface);
+    color: var(--mega-text-secondary);
+    box-shadow: inset 0 0 0 1px var(--mega-border);
+  }
+
+  &--ghost > .mega-menu > .mega-icon-button {
+    background: transparent;
+    color: var(--mega-text-secondary);
+  }
+
+  &--xs > .mega-menu > .mega-icon-button {
+    width: 24px;
+    min-height: 24px;
+  }
+
+  &--sm > .mega-menu > .mega-icon-button {
+    width: 28px;
+    min-height: 28px;
+  }
+
+  &--lg > .mega-menu > .mega-icon-button {
+    width: 40px;
+    min-height: 40px;
+  }
+
+  &--xl > .mega-menu > .mega-icon-button {
+    width: 56px;
+    min-height: 56px;
+  }
+}
+
+.mega-floating-action-button {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: var(--mega-radius-full);
+  box-shadow: var(--mega-shadow-md);
+
+  > svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.mega-speed-dial {
+  position: relative;
+  display: inline-block;
+
+  > summary {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--mega-radius-full);
+    background: var(--mega-brand);
+    color: var(--mega-on-brand);
+    box-shadow: var(--mega-shadow-md);
+    cursor: pointer;
+    font-size: 24px;
+    list-style: none;
+    user-select: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &__actions {
+    position: absolute;
+    inset-inline-end: 0;
+    bottom: calc(100% + var(--mega-space-2));
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: var(--mega-space-2);
+
+    > button {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--mega-space-2);
+      min-height: 40px;
+      padding: 0 var(--mega-space-3);
+      border: 0;
+      border-radius: var(--mega-radius-full);
+      background: var(--mega-surface-raised);
+      color: var(--mega-text);
+      box-shadow: var(--mega-shadow-sm);
+      cursor: pointer;
+      font: inherit;
+      white-space: nowrap;
+
+      &:hover:not(:disabled) {
+        background: var(--mega-fill-hover);
+      }
+
+      &:disabled {
+        opacity: var(--mega-disabled-opacity);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.mega-button[href] {
+  text-decoration: none;
+}
+
+.mega-file-input {
+  padding: var(--mega-space-1);
+
+  &::file-selector-button {
+    min-height: 32px;
+    margin-inline-end: var(--mega-space-2);
+    padding: 0 var(--mega-space-3);
+    border: 0;
+    border-radius: var(--mega-radius-xs);
+    background: var(--mega-fill);
+    color: var(--mega-text-secondary);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+  }
+}
+
+.mega-date-range-picker,
+.mega-range-slider {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--mega-space-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  > legend {
+    grid-column: 1 / -1;
+    padding: 0;
+    color: var(--mega-text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  > label {
+    display: grid;
+    gap: var(--mega-space-1);
+    min-width: 0;
+
+    > span {
+      color: var(--mega-muted);
+      font-size: 13px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .mega-date-range-picker,
+  .mega-range-slider {
+    grid-template-columns: 1fr;
+  }
+}

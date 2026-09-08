@@ -3,19 +3,21 @@
 목표는 사내 웹 대부분을 라이브러리 조합으로 구현하는 것입니다. 아래 순서는 제안이며,
 실제 제품 화면의 반복 빈도와 요구를 기준으로 우선순위를 조정합니다.
 
-| 단계              | 범위                                                                                  | 상태   |
-| ----------------- | ------------------------------------------------------------------------------------- | ------ |
-| 0. 기반           | 빌드/타입/CSS 배포, 83개 export, 토스 실측 토큰(light/dark), 5개 화면 예제, AI 가이드 | 구현됨 |
-| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                             | 구현됨 |
-| 1b. 남은 상호작용 | Drawer, Popover, Accordion                                                            | 예정   |
-| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner     | 구현됨 |
-| 2b. 남은 입력     | Combobox, Upload                                                                      | 예정   |
-| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                | 구현됨 |
-| 3b. 남은 패턴     | AppShell, SearchToolbar, FilterBar, FormSection, ConfirmDialog                        | 예정   |
-| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                      | 예정   |
-| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                       | 예정   |
+| 단계              | 범위                                                                                   | 상태   |
+| ----------------- | -------------------------------------------------------------------------------------- | ------ |
+| 0. 기반           | 빌드/타입/CSS 배포, 197개 export, 토스 실측 토큰(light/dark), 5개 화면 예제, AI 가이드 | 구현됨 |
+| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                              | 구현됨 |
+| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                             | 구현됨 |
+| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner      | 구현됨 |
+| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                         | 구현됨 |
+| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                 | 구현됨 |
+| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                             | 구현됨 |
+| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                       | 예정   |
+| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                        | 예정   |
 
 ## 구현됨 상세
+
+150개 요청 전체의 처리 현황과 범위는 [컴포넌트 대조표](./component-coverage.md)를 기준으로 합니다. 기존 목록에 더해 데이터 정렬/편집/가상화, 업무 일정, 파일 미리보기, AI 대화 UI를 제공합니다. 도메인 엔진과 서버 연결은 별도입니다.
 
 - 레이아웃·타이포그래피: Container, Stack, Grid, Heading, Text
 - 컨트롤: Button, IconButton, Chip, Input, Textarea, Select, Checkbox, Radio, Field
@@ -30,7 +32,7 @@
 
 - `SideNavItem`/`NavRailItem`은 `a`/`button`을 모두 렌더링하느라 ref를 전달하지 않습니다.
 - Menu와 Tooltip은 위치 계산을 하지 않아 뷰포트 경계에서 잘릴 수 있습니다.
-- Table은 정렬 표시만 제공하고 정렬·선택·가상 스크롤 로직은 소비 앱의 몫입니다.
+- Table은 표 구조를 제공하고 DataTable/DataGrid/VirtualTable이 정렬·선택·고정 높이 가상 스크롤을 담당합니다. 서버 데이터 요청은 소비 앱의 몫입니다.
 
 ## 컴포넌트 완료 기준
 
@@ -50,5 +52,4 @@
 - MCP: 정적 문서로 해결되지 않는 컴포넌트 검색/버전별 조회 수요가 생겼을 때 도입합니다.
 
 빌드한 ESM의 서버 렌더링과 CSS/타입/문서 산출물을 검사합니다.
-폼은 `node examples/check-forms.mjs <개발 서버 주소>`로 입력·IME·키보드·모바일·테마 검증을 실행할 수 있습니다.
-Dialog, Menu, Tabs, Toast 같은 상호작용 컴포넌트의 키보드 동작은 브라우저 자동화로 확장해야 합니다.
+개발 서버의 카탈로그에서 입력·키보드·모바일·테마를 확인합니다. 수동 브라우저 검증 결과는 [검증 기록](./verification.md)에 남기며, 지속적인 브라우저 회귀 자동화와 스크린 리더 전수 검사는 후속 과제입니다.

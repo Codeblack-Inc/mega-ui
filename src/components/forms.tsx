@@ -449,8 +449,18 @@ export function Knob({
   className = '',
   ...props
 }: KnobProps) {
+  const safeMin = Number.isFinite(min) ? min : 0;
+  const safeMax = Number.isFinite(max) ? max : 100;
+  const lowerBound = Math.min(safeMin, safeMax);
+  const upperBound = Math.max(safeMin, safeMax);
+  const safeValue = Math.max(
+    lowerBound,
+    Math.min(upperBound, Number.isFinite(value) ? value : lowerBound),
+  );
   const progress =
-    max > min ? Math.max(0, Math.min(1, (value - min) / (max - min))) : 0;
+    upperBound > lowerBound
+      ? (safeValue - lowerBound) / (upperBound - lowerBound)
+      : 0;
   return (
     <div className="mega-knob">
       <svg viewBox="0 0 100 100" aria-hidden="true">
@@ -464,16 +474,16 @@ export function Knob({
           strokeDasharray={`${progress * 100} 100`}
         />
         <text x="50" y="50" textAnchor="middle" dominantBaseline="central">
-          {value}
+          {safeValue}
         </text>
       </svg>
       <Slider
         {...props}
         className={className}
         aria-label={label}
-        value={value}
-        min={min}
-        max={max}
+        value={safeValue}
+        min={lowerBound}
+        max={upperBound}
       />
     </div>
   );

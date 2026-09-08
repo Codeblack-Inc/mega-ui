@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
   ToastProvider,
+  ThemeProvider,
 } from '@mega-ui/react';
 import { categories } from './catalog';
 import { DashboardExample, SettingsExample, PaymentExample } from './recipes';
@@ -25,7 +26,7 @@ import recipesSource from './recipes.tsx?raw';
 import '../src/styles/index.scss';
 import './site.scss';
 
-const componentCount = 83;
+const componentCount = 150;
 
 interface Route {
   id: string;
@@ -114,7 +115,7 @@ const routes: Route[] = [
   ...examples,
 ];
 
-const homeRoute = routes[0]!;
+const homeRoute = routes.find((route) => route.id === 'components/foundation')!;
 
 /** Hash aliases keep older links (#components, #forms) pointing at a real page. */
 function resolveRoute(hash: string) {
@@ -166,7 +167,7 @@ export default function App() {
   const PageFrame = page.wide ? 'div' : Container;
 
   return (
-    <div className="docs-app" data-mega-theme={dark ? 'dark' : 'light'}>
+    <ThemeProvider className="docs-app" theme={dark ? 'dark' : 'light'}>
       <ToastProvider>
         <a className="skip-link" href="#main">
           본문으로 건너뛰기
@@ -215,6 +216,12 @@ export default function App() {
               ))}
             </SideNavSection>
             <SideNavSection title="리소스">
+              <SideNavItem
+                href="./component-coverage.md"
+                icon={externalLinkIcon}
+              >
+                150개 대조표
+              </SideNavItem>
               <SideNavItem href="./getting-started.md" icon={externalLinkIcon}>
                 시작하기
               </SideNavItem>
@@ -303,6 +310,6 @@ export default function App() {
           </main>
         </div>
       </ToastProvider>
-    </div>
+    </ThemeProvider>
   );
 }

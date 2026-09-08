@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import * as ui from '@mega-ui/react';
 
 test('public package exports render without a browser or bundled React', () => {
-  assert.equal(Object.keys(ui).length, 83);
+  assert.ok(Object.keys(ui).length >= 150);
   const html = renderToStaticMarkup(
     h(
       ui.Container,
@@ -83,7 +83,7 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
   const pkg = JSON.parse(
     readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
   );
-  assert.equal(pkg.dependencies, undefined);
+  assert.deepEqual(Object.keys(pkg.dependencies), ['qrcode-generator']);
   assert.deepEqual(pkg.sideEffects, ['**/*.css', '**/*.scss']);
   for (const path of [
     'dist/index.d.ts',

@@ -1,0 +1,771 @@
+[
+  {
+    "name": "Typography",
+    "category": "Foundations",
+    "status": "reused",
+    "implementation": "Text"
+  },
+  {
+    "name": "Icon",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "Color",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "Divider",
+    "category": "Foundations",
+    "status": "reused",
+    "implementation": "Separator"
+  },
+  {
+    "name": "Surface",
+    "category": "Foundations",
+    "status": "reused",
+    "implementation": "Card"
+  },
+  {
+    "name": "Box",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "VisuallyHidden",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "FocusRing",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "Portal",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "ThemeProvider",
+    "category": "Foundations",
+    "status": "added"
+  },
+  {
+    "name": "Button",
+    "category": "Actions",
+    "status": "existing"
+  },
+  {
+    "name": "IconButton",
+    "category": "Actions",
+    "status": "existing"
+  },
+  {
+    "name": "ButtonGroup",
+    "category": "Actions",
+    "status": "added"
+  },
+  {
+    "name": "SplitButton",
+    "category": "Actions",
+    "status": "added"
+  },
+  {
+    "name": "ToggleButton",
+    "category": "Actions",
+    "status": "existing"
+  },
+  {
+    "name": "ToggleButtonGroup",
+    "category": "Actions",
+    "status": "existing"
+  },
+  {
+    "name": "FloatingActionButton",
+    "category": "Actions",
+    "status": "added"
+  },
+  {
+    "name": "SpeedDial",
+    "category": "Actions",
+    "status": "added"
+  },
+  {
+    "name": "CopyButton",
+    "category": "Actions",
+    "status": "added"
+  },
+  {
+    "name": "LinkButton",
+    "category": "Actions",
+    "status": "added"
+  },
+  {
+    "name": "Input",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "Textarea",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "PasswordInput",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "InputPassword"
+  },
+  {
+    "name": "NumberInput",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "InputNumber"
+  },
+  {
+    "name": "CurrencyInput",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "PercentInput",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "MaskInput",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "InputMask"
+  },
+  {
+    "name": "OTPInput",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "InputOtp"
+  },
+  {
+    "name": "SearchInput",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "ColorInput",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "InputColor"
+  },
+  {
+    "name": "FileInput",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "DateInput",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "DatePicker"
+  },
+  {
+    "name": "DatePicker",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "DateRangePicker",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "TimePicker",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "DateTimePicker",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "Slider",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "RangeSlider",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "Rating",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "Knob",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "FormField",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "Field"
+  },
+  {
+    "name": "FormLabel",
+    "category": "Form / Inputs",
+    "status": "reused",
+    "implementation": "Label"
+  },
+  {
+    "name": "FormDescription",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "FormError",
+    "category": "Form / Inputs",
+    "status": "added"
+  },
+  {
+    "name": "InputGroup",
+    "category": "Form / Inputs",
+    "status": "existing"
+  },
+  {
+    "name": "Checkbox",
+    "category": "Selection",
+    "status": "existing"
+  },
+  {
+    "name": "CheckboxGroup",
+    "category": "Selection",
+    "status": "existing"
+  },
+  {
+    "name": "Radio",
+    "category": "Selection",
+    "status": "existing"
+  },
+  {
+    "name": "RadioGroup",
+    "category": "Selection",
+    "status": "added"
+  },
+  {
+    "name": "Switch",
+    "category": "Selection",
+    "status": "existing"
+  },
+  {
+    "name": "Select",
+    "category": "Selection",
+    "status": "existing"
+  },
+  {
+    "name": "MultiSelect",
+    "category": "Selection",
+    "status": "added"
+  },
+  {
+    "name": "Autocomplete",
+    "category": "Selection",
+    "status": "reused",
+    "implementation": "AutoComplete"
+  },
+  {
+    "name": "Combobox",
+    "category": "Selection",
+    "status": "reused",
+    "implementation": "AutoComplete"
+  },
+  {
+    "name": "TreeSelect",
+    "category": "Selection",
+    "status": "added"
+  },
+  {
+    "name": "Anchor",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "Breadcrumb",
+    "category": "Navigation",
+    "status": "existing"
+  },
+  {
+    "name": "Tabs",
+    "category": "Navigation",
+    "status": "existing"
+  },
+  {
+    "name": "SegmentedControl",
+    "category": "Navigation",
+    "status": "existing"
+  },
+  {
+    "name": "Pagination",
+    "category": "Navigation",
+    "status": "existing"
+  },
+  {
+    "name": "Stepper",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "Menu",
+    "category": "Navigation",
+    "status": "existing"
+  },
+  {
+    "name": "DropdownMenu",
+    "category": "Navigation",
+    "status": "reused",
+    "implementation": "Menu"
+  },
+  {
+    "name": "ContextMenu",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "NavigationMenu",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "MegaMenu",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "Sidebar",
+    "category": "Navigation",
+    "status": "reused",
+    "implementation": "SideNav"
+  },
+  {
+    "name": "BottomNavigation",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "CommandPalette",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "BackToTop",
+    "category": "Navigation",
+    "status": "added"
+  },
+  {
+    "name": "Container",
+    "category": "Layout",
+    "status": "existing"
+  },
+  {
+    "name": "Stack",
+    "category": "Layout",
+    "status": "existing"
+  },
+  {
+    "name": "HStack",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "VStack",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "Flex",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "Grid",
+    "category": "Layout",
+    "status": "existing"
+  },
+  {
+    "name": "GridItem",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "Center",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "Spacer",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "AspectRatio",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "ScrollArea",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "SplitPane",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "ResizablePanel",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "AppShell",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "PageLayout",
+    "category": "Layout",
+    "status": "added"
+  },
+  {
+    "name": "Avatar",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "AvatarGroup",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "Badge",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "Tag",
+    "category": "Data Display",
+    "status": "reused",
+    "implementation": "Badge"
+  },
+  {
+    "name": "Chip",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "Status",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "Card",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "Stat",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "KPI",
+    "category": "Data Display",
+    "status": "reused",
+    "implementation": "Stat"
+  },
+  {
+    "name": "DescriptionList",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "List",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "ListItem",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "Timeline",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "Tree",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "Accordion",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "Carousel",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "Code",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "CodeBlock",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "QRCode",
+    "category": "Data Display",
+    "status": "added"
+  },
+  {
+    "name": "EmptyState",
+    "category": "Data Display",
+    "status": "existing"
+  },
+  {
+    "name": "Table",
+    "category": "Complex Data / Enterprise",
+    "status": "existing"
+  },
+  {
+    "name": "DataTable",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "VirtualTable",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "EditableTable",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "TreeTable",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "PivotTable",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "PropertyGrid",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "DataGrid",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "Kanban",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "Calendar",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "Scheduler",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "Gantt",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "Spreadsheet",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "OrganizationChart",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "DataExplorer",
+    "category": "Complex Data / Enterprise",
+    "status": "added"
+  },
+  {
+    "name": "Alert",
+    "category": "Feedback / State",
+    "status": "existing"
+  },
+  {
+    "name": "Message",
+    "category": "Feedback / State",
+    "status": "added"
+  },
+  {
+    "name": "Toast",
+    "category": "Feedback / State",
+    "status": "added"
+  },
+  {
+    "name": "Notification",
+    "category": "Feedback / State",
+    "status": "added"
+  },
+  {
+    "name": "Progress",
+    "category": "Feedback / State",
+    "status": "reused",
+    "implementation": "ProgressBar"
+  },
+  {
+    "name": "CircularProgress",
+    "category": "Feedback / State",
+    "status": "added"
+  },
+  {
+    "name": "Skeleton",
+    "category": "Feedback / State",
+    "status": "existing"
+  },
+  {
+    "name": "Spinner",
+    "category": "Feedback / State",
+    "status": "added"
+  },
+  {
+    "name": "Result",
+    "category": "Feedback / State",
+    "status": "existing"
+  },
+  {
+    "name": "ErrorState",
+    "category": "Feedback / State",
+    "status": "added"
+  },
+  {
+    "name": "Tooltip",
+    "category": "Overlay",
+    "status": "existing"
+  },
+  {
+    "name": "Popover",
+    "category": "Overlay",
+    "status": "added"
+  },
+  {
+    "name": "HoverCard",
+    "category": "Overlay",
+    "status": "added"
+  },
+  {
+    "name": "Modal",
+    "category": "Overlay",
+    "status": "reused",
+    "implementation": "Dialog"
+  },
+  {
+    "name": "AlertDialog",
+    "category": "Overlay",
+    "status": "added"
+  },
+  {
+    "name": "Drawer",
+    "category": "Overlay",
+    "status": "added"
+  },
+  {
+    "name": "Sheet",
+    "category": "Overlay",
+    "status": "added"
+  },
+  {
+    "name": "Tour",
+    "category": "Overlay",
+    "status": "added"
+  },
+  {
+    "name": "Image",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "ImageViewer",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "Gallery",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "FileUpload",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "Dropzone",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "FilePreview",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "PDFViewer",
+    "category": "Media / Files",
+    "status": "added"
+  },
+  {
+    "name": "Chat",
+    "category": "AI / Modern UX",
+    "status": "added"
+  },
+  {
+    "name": "MessageBubble",
+    "category": "AI / Modern UX",
+    "status": "added"
+  },
+  {
+    "name": "PromptInput",
+    "category": "AI / Modern UX",
+    "status": "added"
+  },
+  {
+    "name": "StreamingText",
+    "category": "AI / Modern UX",
+    "status": "added"
+  },
+  {
+    "name": "AgentActivity",
+    "category": "AI / Modern UX",
+    "status": "added"
+  }
+]
