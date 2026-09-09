@@ -1,55 +1,153 @@
+// SchedulerPro: quiet sheet-style calendar. One accent (brand) for events, a
+// dimmed column outside business hours, conflicts flagged by the accent bar only.
 .mega-scheduler-pro {
   --mega-scheduler-hour: 48px;
   min-width: 0;
   display: grid;
-  gap: var(--mega-space-3);
+  gap: var(--mega-space-4);
   color: var(--mega-text);
   font-family: var(--mega-font);
+
+  // ---- header: title + range on the left, edit-state cluster and the one primary on the right
   &__toolbar {
     display: flex;
     justify-content: space-between;
-    gap: var(--mega-space-4);
+    gap: var(--mega-space-3) var(--mega-space-4);
     flex-wrap: wrap;
-    align-items: start;
+    align-items: center;
   }
   &__toolbar > div:first-child {
     min-width: 150px;
   }
   &__toolbar h2 {
     margin: 0;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
     color: var(--mega-text-strong);
   }
   &__toolbar p,
-  &__hint,
   &__empty {
-    margin: var(--mega-space-1) 0 0;
+    margin: 2px 0 0;
     font-size: 13px;
+    line-height: 1.45;
     color: var(--mega-text-secondary);
   }
-  &__actions,
-  &__filters {
+  &__actions {
     display: flex;
-    gap: var(--mega-space-2);
     align-items: center;
+    gap: var(--mega-space-2);
     flex-wrap: wrap;
   }
-  &__filters {
-    padding: var(--mega-space-3);
-    background: var(--mega-fill);
-    border-radius: var(--mega-radius-md);
-    align-items: end;
-  }
-  &__actions label,
-  &__filters label,
-  &__form > label:not(.mega-checkbox),
-  &__times label,
-  &__recurrence > label {
-    display: grid;
+  &__save {
+    display: flex;
+    align-items: center;
     gap: var(--mega-space-1);
+  }
+  &__save > span {
+    padding-inline: var(--mega-space-2) var(--mega-space-1);
     font-size: 13px;
+    white-space: nowrap;
+    color: var(--mega-muted);
+  }
+  &__save[data-dirty] > span {
+    color: var(--mega-warning);
+    font-weight: 500;
+  }
+
+  // ---- control bar: navigation on the left, filters and file actions on the right, one 34px row
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--mega-space-2) var(--mega-space-4);
+    flex-wrap: wrap;
+  }
+  &__nav,
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-2);
+    flex-wrap: wrap;
     min-width: 0;
   }
+  &__filters > [role='status'] {
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--mega-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  &__group {
+    display: inline-flex;
+  }
+  &__group > .mega-button {
+    position: relative;
+  }
+  &__group > .mega-button:not(:first-child) {
+    margin-inline-start: -1px;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+  &__group > .mega-button:not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+  &__group > .mega-button:focus-visible {
+    z-index: 1;
+  }
+  &__control {
+    display: block;
+    min-width: 0;
+  }
+  &__control--date {
+    width: 156px;
+  }
+  &__control--view {
+    width: 96px;
+  }
+  &__control--zone {
+    width: 148px;
+  }
+  &__control--search {
+    width: 200px;
+  }
+  &__control--resource {
+    width: 140px;
+  }
+  // Transparent on wide screens; a row of its own once the bar wraps on a phone.
+  &__files {
+    display: contents;
+  }
+  &__file {
+    position: relative;
+    cursor: pointer;
+  }
+  &__file input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &__file:focus-within {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: 2px;
+  }
+  &__file:has(input:disabled) {
+    opacity: var(--mega-disabled-opacity);
+    pointer-events: none;
+  }
+  &__hint {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--mega-muted);
+  }
+
+  // ---- time grid (day / week / resource)
   &__board {
     position: relative;
     display: grid;
@@ -63,21 +161,27 @@
     overscroll-behavior: contain;
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-md);
-    background: var(--mega-bg);
+    background: var(--mega-surface);
   }
   &__corner,
   &__head {
     position: sticky;
     inset-block-start: 0;
     z-index: 2;
-    background: var(--mega-bg);
+    background: var(--mega-surface);
     border-bottom: 1px solid var(--mega-border);
   }
   &__corner {
     z-index: 3;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    padding: 0 var(--mega-space-2) 7px;
+    font-size: 11px;
+    color: var(--mega-muted);
   }
   &__head {
-    padding: var(--mega-space-2);
+    padding: var(--mega-space-2) var(--mega-space-2) var(--mega-space-1);
     border-inline-start: 1px solid var(--mega-border);
     min-width: 0;
   }
@@ -85,8 +189,12 @@
     margin: 0;
     font-size: 13px;
     font-weight: 600;
-    color: var(--mega-text-strong);
+    line-height: 1.45;
+    color: var(--mega-text-secondary);
     overflow-wrap: break-word;
+  }
+  &__head--today h3 {
+    color: var(--mega-brand);
   }
   &__allday {
     display: grid;
@@ -98,66 +206,137 @@
     display: grid;
     grid-auto-rows: var(--mega-scheduler-hour);
     font-size: 11px;
-    color: var(--mega-text-secondary);
+    color: var(--mega-muted);
     font-variant-numeric: tabular-nums;
   }
   &__hours span {
-    padding-inline-end: 6px;
+    display: block;
+    align-self: start;
+    padding-inline-end: var(--mega-space-2);
+    line-height: 1;
     text-align: end;
+    transform: translateY(-50%);
+  }
+  &__hours span:first-child {
+    visibility: hidden;
   }
   &__column {
     position: relative;
     border-inline-start: 1px solid var(--mega-border);
     min-width: 0;
   }
-  &__hour {
-    height: var(--mega-scheduler-hour);
-    border-bottom: 1px solid var(--mega-border);
-    opacity: 0.55;
+  // Off-hours are dimmed; the business-hours band clears back to the sheet colour.
+  &__board--hours &__column {
+    background: var(--mega-fill);
   }
   &__band {
     position: absolute;
     inset-inline: 0;
-    background: var(--mega-brand-soft);
+    background: var(--mega-surface);
   }
+  &__hour {
+    position: relative;
+    height: var(--mega-scheduler-hour);
+    border-bottom: 1px solid var(--mega-border);
+  }
+  &__hour:last-child {
+    border-bottom: 0;
+  }
+
+  // ---- event chips: tinted block with one accent bar, title and time on one line
   &__event {
     position: absolute;
     z-index: 1;
-    display: grid;
-    gap: 1px;
+    display: flex;
+    flex-wrap: wrap;
     align-content: start;
-    padding: 3px 6px;
+    column-gap: 6px;
+    row-gap: 0;
+    padding: 1px 6px 0 7px;
     text-align: start;
     font: inherit;
     font-size: 12px;
-    line-height: 1.35;
+    line-height: 16px;
     color: var(--mega-text-strong);
     background: var(--mega-brand-soft);
-    border: 1px solid var(--mega-brand-border);
+    border: 0;
     border-inline-start: 3px solid var(--mega-brand);
-    border-radius: var(--mega-radius-sm);
+    border-radius: var(--mega-radius-2xs);
     overflow: hidden;
     cursor: pointer;
     touch-action: manipulation;
+    transition: background-color var(--mega-duration-fast) var(--mega-ease);
   }
   &__event:hover {
     background: var(--mega-brand-soft-hover);
   }
+  &__event:focus-visible {
+    z-index: 2;
+    outline: 2px solid var(--mega-brand);
+    outline-offset: 1px;
+  }
   &__event strong {
+    min-width: 0;
     font-weight: 600;
-    overflow-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__event span,
   &__event small {
-    color: var(--mega-text-secondary);
     font-size: 11px;
+    white-space: nowrap;
+    color: var(--mega-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+  &__event small {
+    flex-basis: 100%;
+  }
+  &__column > &__event {
+    container-type: size;
+  }
+  @container (max-height: 33px) {
+    .mega-scheduler-pro__event small {
+      display: none;
+    }
+  }
+  // A narrow chip (7 columns in a card, or a split overlap) cannot hold the title
+  // and the time side by side: give the time its own line, then drop what does not fit.
+  @container (max-width: 140px) {
+    .mega-scheduler-pro__event > span {
+      flex-basis: 100%;
+    }
+    .mega-scheduler-pro__event small {
+      display: none;
+    }
+  }
+  @container (max-width: 140px) and (max-height: 33px) {
+    .mega-scheduler-pro__event > span {
+      display: none;
+    }
+  }
+  // Below this the time cannot be read at all: keep the title, drop the clipped time.
+  @container (max-width: 96px) {
+    .mega-scheduler-pro__event > span {
+      display: none;
+    }
+  }
+  // The resource column already names the resource.
+  &__column[data-resource-id] > &__event small {
+    display: none;
   }
   &__event[data-conflict] {
-    background: var(--mega-danger-soft);
-    border-color: var(--mega-danger);
+    border-inline-start-color: var(--mega-danger);
+  }
+  &__column > &__event[data-conflict] span {
+    color: var(--mega-danger);
   }
   &__event[data-outside] {
-    border-style: dashed;
+    background: var(--mega-fill-strong);
+    border-inline-start-color: var(--mega-control-strong);
+  }
+  &__event[data-outside]:hover {
+    background: var(--mega-control-hover);
   }
   &__event[data-dragging] {
     opacity: 0.45;
@@ -169,60 +348,95 @@
     height: 8px;
     cursor: ns-resize;
   }
+
+  // ---- month
   &__month {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-md);
     overflow: hidden;
-    background: var(--mega-bg);
+    background: var(--mega-surface);
   }
   &__weekday {
-    padding: 6px;
+    padding: var(--mega-space-2) 0 6px;
     text-align: center;
     font-size: 12px;
+    font-weight: 500;
     color: var(--mega-text-secondary);
-    background: var(--mega-fill);
+    border-bottom: 1px solid var(--mega-border);
   }
   &__month-cell {
-    min-height: 96px;
-    padding: 4px;
+    container-type: inline-size;
+    min-height: 108px;
+    padding: 6px;
     display: grid;
     gap: 2px;
     align-content: start;
     border-block-start: 1px solid var(--mega-border);
-    border-inline-start: 1px solid var(--mega-border);
     min-width: 0;
   }
-  &__month-cell[data-other-month] {
-    background: var(--mega-fill);
+  &__month > :nth-child(-n + 7) {
+    border-block-start: 0;
+  }
+  &__month > :not(:nth-child(7n + 1)) {
+    border-inline-start: 1px solid var(--mega-border);
   }
   &__day {
     justify-self: start;
-    padding: 2px 6px;
+    width: 24px;
+    height: 24px;
+    margin-block-end: 2px;
+    padding: 0;
     font: inherit;
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 24px;
+    text-align: center;
     color: var(--mega-text-secondary);
     background: none;
     border: 0;
     border-radius: var(--mega-radius-full);
     cursor: pointer;
+    font-variant-numeric: tabular-nums;
   }
   &__day:hover {
     background: var(--mega-fill-hover);
+  }
+  &__day--today,
+  &__day--today:hover {
+    font-weight: 600;
+    color: var(--mega-on-brand);
+    background: var(--mega-action-fill);
+  }
+  &__month-cell[data-other-month] &__day {
+    color: var(--mega-text-disabled);
   }
   &__month &__event,
   &__allday &__event {
     position: static;
     width: auto;
-    display: flex;
-    gap: var(--mega-space-1);
+    flex-wrap: nowrap;
     align-items: baseline;
+    min-height: 22px;
+    padding: 2px 6px 2px 7px;
   }
-  &__file {
-    display: inline-grid;
+  &__month &__event strong {
+    flex: 1 1 auto;
+  }
+  &__month &__event small,
+  &__allday &__event small {
+    display: none;
+  }
+
+  // ---- editor form
+  &__form > label:not(.mega-checkbox),
+  &__times label,
+  &__recurrence > label {
+    display: grid;
     gap: var(--mega-space-1);
     font-size: 13px;
+    min-width: 0;
+    color: var(--mega-text-secondary);
   }
   &__form {
     display: grid;
@@ -286,11 +500,62 @@
     pointer-events: none;
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  .mega-scheduler-pro__event {
+    transition: none;
+  }
+}
 @media (max-width: 600px) {
   .mega-scheduler-pro {
     --mega-scheduler-hour: 40px;
   }
+  .mega-scheduler-pro__toolbar,
+  .mega-scheduler-pro__controls {
+    align-items: start;
+  }
+  .mega-scheduler-pro__controls .mega-input {
+    min-height: 44px;
+  }
+  // Fixed control widths would each claim a row of their own on a phone.
+  .mega-scheduler-pro__control--date {
+    width: auto;
+    flex: 1 1 130px;
+  }
+  .mega-scheduler-pro__control--view,
+  .mega-scheduler-pro__control--zone,
+  .mega-scheduler-pro__control--resource {
+    width: auto;
+    flex: 1 1 96px;
+  }
+  .mega-scheduler-pro__control--search {
+    width: auto;
+    flex: 1 1 150px;
+  }
+  .mega-scheduler-pro__files {
+    display: flex;
+    flex: 1 1 100%;
+    gap: var(--mega-space-2);
+  }
+  .mega-scheduler-pro__files > * {
+    flex: 1 1 0;
+  }
+  // Ghost file actions read as stray text once they wrap onto a row of their own.
+  .mega-scheduler-pro__files > .mega-button--ghost,
+  .mega-scheduler-pro__file {
+    box-shadow: inset 0 0 0 1px var(--mega-border-strong);
+    border-radius: var(--mega-radius-sm);
+  }
+  .mega-scheduler-pro__actions > .mega-button--primary {
+    order: -1;
+  }
+  .mega-scheduler-pro__board {
+    grid-template-columns: 48px repeat(
+        var(--mega-scheduler-columns, 7),
+        minmax(110px, 1fr)
+      );
+  }
   .mega-scheduler-pro__month-cell {
     min-height: 64px;
+    padding: 4px;
   }
 }

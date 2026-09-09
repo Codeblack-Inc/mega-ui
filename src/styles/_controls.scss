@@ -326,6 +326,12 @@
   &[type='datetime-local'],
   &[type='month'],
   &[type='week'] {
+    // Safari anchors the value to the top of a control taller than its line box,
+    // unlike the text inputs it sits next to. Center it inside the shadow flex box.
+    &::-webkit-date-and-time-value {
+      margin-block: auto;
+      text-align: start;
+    }
     &::-webkit-calendar-picker-indicator {
       width: 20px;
       height: 20px;

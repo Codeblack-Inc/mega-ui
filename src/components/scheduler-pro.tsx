@@ -730,9 +730,11 @@ export function SchedulerPro({
     const hour = Number(data?.businessHours?.start.slice(0, 2) ?? 8);
     if (column)
       board.current.scrollTop =
-        (column.clientHeight * Math.max(0, hour - 1)) / 24;
+        (column.clientHeight * Math.max(0, hour - 1)) / 24 - 8;
   }, [view, data?.businessHours?.start]);
   const hours = Array.from({ length: 24 }, (_, hour) => hour);
+  const today = schedulerToWall(Date.now(), viewZone).slice(0, 10);
+  const hasAllDay = visible.some((item) => item.allDay);
   const zoneOptions = [
     ...new Set([
       zone,
@@ -1047,73 +1049,17 @@ export function SchedulerPro({
                   </p>
                 </div>
                 <div className="mega-scheduler-pro__actions">
-                  <Button
-                    variant="secondary"
-                    onClick={() => moveRange(-1)}
-                    aria-label="이전 기간"
-                  >
-                    이전
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() =>
-                      setAnchor(
-                        schedulerToWall(Date.now(), viewZone).slice(0, 10),
-                      )
-                    }
-                  >
-                    오늘
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => moveRange(1)}
-                    aria-label="다음 기간"
-                  >
-                    다음
-                  </Button>
-                  <label>
-                    보기
-                    <Select
-                      aria-label="달력 보기"
-                      value={view}
-                      onChange={(event) =>
-                        setView(event.target.value as SchedulerView)
-                      }
-                    >
-                      <option value="day">일</option>
-                      <option value="week">주</option>
-                      <option value="month">월</option>
-                      <option value="resource">리소스</option>
-                    </Select>
-                  </label>
-                  <label>
-                    시간대
-                    <Select
-                      aria-label="표시 시간대"
-                      value={viewZone}
-                      onChange={(event) => setViewZone(event.target.value)}
-                    >
-                      {zoneOptions.map((item) => (
-                        <option key={item} value={item}>
-                          {item}
-                        </option>
-                      ))}
-                    </Select>
-                  </label>
-                  {canEdit && (
-                    <Button onClick={() => createAt(anchor)}>새 일정</Button>
-                  )}
                   {canEdit && (
                     <>
                       <Button
-                        variant="secondary"
+                        variant="ghost"
                         disabled={!history.undo.length || saving}
                         onClick={() => travel('undo')}
                       >
                         실행 취소
                       </Button>
                       <Button
-                        variant="secondary"
+                        variant="ghost"
                         disabled={!history.redo.length || saving}
                         onClick={() => travel('redo')}
                       >
@@ -1122,8 +1068,28 @@ export function SchedulerPro({
                     </>
                   )}
                   {onSave && (
-                    <>
+                    <div
+                      className="mega-scheduler-pro__save"
+                      data-dirty={dirty || undefined}
+                    >
+                      <span>
+                        {dirty
+                          ? '저장하지 않은 변경'
+                          : savedOnce
+                            ? '저장한 상태'
+                            : '변경 없음'}
+                      </span>
                       <Button
+                        variant="ghost"
+                        disabled={!dirty || saving || !saved}
+                        onClick={() => setRestoring(true)}
+                      >
+                        {savedOnce
+                          ? '저장한 상태로 되돌리기'
+                          : '처음 상태로 되돌리기'}
+                      </Button>
+                      <Button
+                        variant="weak"
                         disabled={(!dirty && savedOnce) || saving}
                         onClick={async () => {
                           if (busy.current) return;
@@ -1151,136 +1117,192 @@ export function SchedulerPro({
                       >
                         {saving ? '저장 중' : '일정 저장'}
                       </Button>
-                      <Button
-                        variant="secondary"
-                        disabled={!dirty || saving || !saved}
-                        onClick={() => setRestoring(true)}
-                      >
-                        {savedOnce
-                          ? '저장한 상태로 되돌리기'
-                          : '처음 상태로 되돌리기'}
-                      </Button>
-                      <span>
-                        {dirty
-                          ? '저장하지 않은 변경'
-                          : savedOnce
-                            ? '저장한 상태'
-                            : '변경 없음'}
-                      </span>
-                    </>
+                    </div>
                   )}
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      let url: string | undefined;
-                      try {
-                        url = URL.createObjectURL(
-                          new Blob([serializeSchedulerIcs(data)], {
-                            type: 'text/calendar',
-                          }),
-                        );
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = 'scheduler.ics';
-                        document.body.append(link);
-                        try {
-                          link.click();
-                        } finally {
-                          link.remove();
-                        }
-                      } catch {
-                        setError(
-                          '일정 파일을 만들지 못했어요. 다시 내려받아 주세요.',
-                        );
-                      } finally {
-                        if (url)
-                          setTimeout(() => URL.revokeObjectURL(url!), 1000);
-                      }
-                    }}
-                  >
-                    일정 파일 내려받기
-                  </Button>
                   {canEdit && (
-                    <label className="mega-scheduler-pro__file">
-                      일정 파일 불러오기
-                      <input
-                        aria-label="일정 파일 불러오기"
-                        type="file"
-                        accept=".ics,text/calendar"
-                        disabled={saving}
-                        onChange={async (event) => {
-                          const file = event.target.files?.[0];
-                          event.target.value = '';
-                          if (!file) return;
-                          try {
-                            if (file.size > 8_000_000)
-                              throw new Error(
-                                '일정 파일은 8MB 이내로 불러와 주세요.',
-                              );
-                            setImported(
-                              parseSchedulerIcs(await file.text(), zone),
-                            );
-                            setError('');
-                          } catch {
-                            setError(
-                              '일정 파일을 불러오지 못했어요. 파일 형식과 크기를 확인해 주세요.',
-                            );
-                          }
-                        }}
-                      />
-                    </label>
+                    <Button onClick={() => createAt(anchor)}>새 일정</Button>
                   )}
                 </div>
               </div>
             )}
             {showTools && (
-              <div className="mega-scheduler-pro__filters">
-                <label>
-                  일정 검색
-                  <Input
-                    type="search"
-                    aria-label="일정 검색"
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                  />
-                </label>
-                <label>
-                  리소스
-                  <Select
-                    aria-label="리소스 필터"
-                    value={resource}
-                    onChange={(event) => setResource(event.target.value)}
-                  >
-                    <option value="">전체 리소스</option>
-                    <option value="none">리소스 없음</option>
-                    {resources.map((item) => (
-                      <option key={item.id} value={`resource:${item.id}`}>
-                        {item.title}
-                      </option>
-                    ))}
-                  </Select>
-                </label>
-                <label>
-                  기준 날짜
-                  <Input
-                    type="date"
-                    aria-label="기준 날짜"
-                    value={anchor}
-                    onChange={(event) =>
-                      event.target.value && setAnchor(event.target.value)
-                    }
-                  />
-                </label>
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setSearch('');
-                    setResource('');
-                  }}
-                >
-                  필터 지우기
-                </Button>
-                <span role="status">{visible.length}개 표시</span>
+              <div className="mega-scheduler-pro__controls">
+                <div className="mega-scheduler-pro__nav">
+                  <div className="mega-scheduler-pro__group">
+                    <Button
+                      variant="outline"
+                      onClick={() => moveRange(-1)}
+                      aria-label="이전 기간"
+                    >
+                      이전
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        setAnchor(
+                          schedulerToWall(Date.now(), viewZone).slice(0, 10),
+                        )
+                      }
+                    >
+                      오늘
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => moveRange(1)}
+                      aria-label="다음 기간"
+                    >
+                      다음
+                    </Button>
+                  </div>
+                  <label className="mega-scheduler-pro__control mega-scheduler-pro__control--date">
+                    <span className="mega-visually-hidden">기준 날짜</span>
+                    <Input
+                      type="date"
+                      size="sm"
+                      aria-label="기준 날짜"
+                      value={anchor}
+                      onChange={(event) =>
+                        event.target.value && setAnchor(event.target.value)
+                      }
+                    />
+                  </label>
+                  <label className="mega-scheduler-pro__control mega-scheduler-pro__control--view">
+                    <span className="mega-visually-hidden">보기</span>
+                    <Select
+                      size="sm"
+                      aria-label="달력 보기"
+                      value={view}
+                      onChange={(event) =>
+                        setView(event.target.value as SchedulerView)
+                      }
+                    >
+                      <option value="day">일</option>
+                      <option value="week">주</option>
+                      <option value="month">월</option>
+                      <option value="resource">리소스</option>
+                    </Select>
+                  </label>
+                  <label className="mega-scheduler-pro__control mega-scheduler-pro__control--zone">
+                    <span className="mega-visually-hidden">시간대</span>
+                    <Select
+                      size="sm"
+                      aria-label="표시 시간대"
+                      value={viewZone}
+                      onChange={(event) => setViewZone(event.target.value)}
+                    >
+                      {zoneOptions.map((item) => (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      ))}
+                    </Select>
+                  </label>
+                </div>
+                <div className="mega-scheduler-pro__filters">
+                  <label className="mega-scheduler-pro__control mega-scheduler-pro__control--search">
+                    <span className="mega-visually-hidden">일정 검색</span>
+                    <Input
+                      type="search"
+                      size="sm"
+                      aria-label="일정 검색"
+                      placeholder="일정 검색"
+                      value={search}
+                      onChange={(event) => setSearch(event.target.value)}
+                    />
+                  </label>
+                  <label className="mega-scheduler-pro__control mega-scheduler-pro__control--resource">
+                    <span className="mega-visually-hidden">리소스</span>
+                    <Select
+                      size="sm"
+                      aria-label="리소스 필터"
+                      value={resource}
+                      onChange={(event) => setResource(event.target.value)}
+                    >
+                      <option value="">전체 리소스</option>
+                      <option value="none">리소스 없음</option>
+                      {resources.map((item) => (
+                        <option key={item.id} value={`resource:${item.id}`}>
+                          {item.title}
+                        </option>
+                      ))}
+                    </Select>
+                  </label>
+                  {(search || resource) && (
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        setSearch('');
+                        setResource('');
+                      }}
+                    >
+                      필터 지우기
+                    </Button>
+                  )}
+                  <span role="status">{visible.length}개 표시</span>
+                  <div className="mega-scheduler-pro__files">
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        let url: string | undefined;
+                        try {
+                          url = URL.createObjectURL(
+                            new Blob([serializeSchedulerIcs(data)], {
+                              type: 'text/calendar',
+                            }),
+                          );
+                          const link = document.createElement('a');
+                          link.href = url;
+                          link.download = 'scheduler.ics';
+                          document.body.append(link);
+                          try {
+                            link.click();
+                          } finally {
+                            link.remove();
+                          }
+                        } catch {
+                          setError(
+                            '일정 파일을 만들지 못했어요. 다시 내려받아 주세요.',
+                          );
+                        } finally {
+                          if (url)
+                            setTimeout(() => URL.revokeObjectURL(url!), 1000);
+                        }
+                      }}
+                    >
+                      일정 파일 내려받기
+                    </Button>
+                    {canEdit && (
+                      <label className="mega-scheduler-pro__file mega-button mega-button--ghost mega-button--md">
+                        일정 파일 불러오기
+                        <input
+                          aria-label="일정 파일 불러오기"
+                          type="file"
+                          accept=".ics,text/calendar"
+                          disabled={saving}
+                          onChange={async (event) => {
+                            const file = event.target.files?.[0];
+                            event.target.value = '';
+                            if (!file) return;
+                            try {
+                              if (file.size > 8_000_000)
+                                throw new Error(
+                                  '일정 파일은 8MB 이내로 불러와 주세요.',
+                                );
+                              setImported(
+                                parseSchedulerIcs(await file.text(), zone),
+                              );
+                              setError('');
+                            } catch {
+                              setError(
+                                '일정 파일을 불러오지 못했어요. 파일 형식과 크기를 확인해 주세요.',
+                              );
+                            }
+                          }}
+                        />
+                      </label>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
             {error && (
@@ -1288,14 +1310,6 @@ export function SchedulerPro({
                 {error}
               </Alert>
             )}
-            <p id={`${id}-help`} className="mega-scheduler-pro__hint">
-              {canEdit
-                ? '빈 시간을 눌러 일정을 만들고, 일정을 끌어 옮기거나 아래 가장자리로 길이를 바꿔요. 일정에 포커스한 뒤 Alt+상하로 시간, Alt+Shift+상하로 길이, Alt+좌우로 날짜를 바꿔요.'
-                : '일정을 읽기 전용으로 보고 있어요.'}
-              {viewZone !== zone
-                ? ` 화면은 ${viewZone}, 편집 폼은 달력 시간대 ${zone} 기준이에요.`
-                : ''}
-            </p>
             <p
               className="mega-visually-hidden"
               role="status"
@@ -1333,7 +1347,7 @@ export function SchedulerPro({
                     >
                       <button
                         type="button"
-                        className="mega-scheduler-pro__day"
+                        className={`mega-scheduler-pro__day${date === today ? ' mega-scheduler-pro__day--today' : ''}`}
                         onClick={() => {
                           setAnchor(date);
                           setView('day');
@@ -1352,7 +1366,7 @@ export function SchedulerPro({
               </div>
             ) : (
               <div
-                className="mega-scheduler-pro__board"
+                className={`mega-scheduler-pro__board${data.businessHours ? ' mega-scheduler-pro__board--hours' : ''}`}
                 ref={board}
                 style={{
                   ['--mega-scheduler-columns' as string]: String(
@@ -1361,7 +1375,9 @@ export function SchedulerPro({
                 }}
                 onClick={(event) => slotClick(event)}
               >
-                <div className="mega-scheduler-pro__corner" />
+                <div className="mega-scheduler-pro__corner">
+                  {hasAllDay && <span>종일</span>}
+                </div>
                 {gridColumns.map((column) => {
                   const { dayStart, dayEnd, inDay } = columnSlot(
                     column.date,
@@ -1371,7 +1387,7 @@ export function SchedulerPro({
                   return (
                     <div
                       key={`head-${column.key}`}
-                      className="mega-scheduler-pro__head"
+                      className={`mega-scheduler-pro__head${column.date === today && view !== 'resource' ? ' mega-scheduler-pro__head--today' : ''}`}
                     >
                       <h3>{column.title}</h3>
                       <div
@@ -1408,7 +1424,7 @@ export function SchedulerPro({
                   return (
                     <div
                       key={`body-${column.key}`}
-                      className="mega-scheduler-pro__column"
+                      className={`mega-scheduler-pro__column${column.date === today && view !== 'resource' ? ' mega-scheduler-pro__column--today' : ''}`}
                       data-scheduler-slot=""
                       data-date={column.date}
                       data-resource-id={column.resourceId}
@@ -1459,6 +1475,14 @@ export function SchedulerPro({
                 이 기간에 표시할 일정이 없어요.
               </p>
             )}
+            <p id={`${id}-help`} className="mega-scheduler-pro__hint">
+              {canEdit
+                ? '빈 시간을 눌러 일정을 만들고, 일정을 끌어 옮기거나 아래 가장자리로 길이를 바꿔요. 일정에 포커스한 뒤 Alt+상하로 시간, Alt+Shift+상하로 길이, Alt+좌우로 날짜를 바꿔요.'
+                : '일정을 읽기 전용으로 보고 있어요.'}
+              {viewZone !== zone
+                ? ` 화면은 ${viewZone}, 편집 폼은 달력 시간대 ${zone} 기준이에요.`
+                : ''}
+            </p>
           </>
         )
       )}
