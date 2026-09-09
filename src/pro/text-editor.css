@@ -1,9 +1,91 @@
 .mega-text-editor {
   display: grid;
-  gap: var(--mega-space-3);
+  grid-template-columns: minmax(0, 1fr);
+  position: relative;
   min-width: 0;
   color: var(--mega-text);
   font: inherit;
+  background: var(--mega-surface);
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-lg);
+}
+.mega-text-editor__documentbar,
+.mega-text-editor__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mega-space-3);
+  padding: var(--mega-space-3) var(--mega-space-4);
+  color: var(--mega-text-secondary);
+  font-size: 13px;
+}
+.mega-text-editor__documentbar {
+  min-height: 56px;
+}
+.mega-text-editor__toolbar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--mega-space-1);
+  padding: var(--mega-space-2) var(--mega-space-3);
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-fill-solid);
+}
+.mega-text-editor__toolbar > [aria-label='문서 서식'] {
+  flex: 0 0 auto;
+  max-width: 100%;
+  gap: 2px;
+}
+.mega-text-editor__toolbar .mega-input.mega-text-editor__block-select {
+  width: 104px;
+  flex: 0 0 104px;
+  margin-inline-end: var(--mega-space-2);
+}
+.mega-text-editor__format {
+  width: 32px;
+  padding-inline: 0;
+  font-size: 16px;
+}
+.mega-text-editor__format--bold {
+  font-weight: 700;
+}
+.mega-text-editor__format--italic {
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+.mega-text-editor__format--underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.mega-text-editor__format--strike {
+  text-decoration: line-through;
+}
+.mega-text-editor__canvas {
+  min-width: 0;
+}
+.mega-text-editor:has(.mega-text-editor__panel[open])
+  .mega-text-editor__canvas {
+  margin-inline-end: 340px;
+}
+.mega-text-editor__footer {
+  border-top: 1px solid var(--mega-border);
+}
+.mega-editor-example {
+  max-width: 1120px;
+  margin-inline: auto;
+}
+.mega-editor-example__options {
+  font-size: 13px;
+  color: var(--mega-text-secondary);
+}
+.mega-editor-example__options summary {
+  cursor: pointer;
+  width: fit-content;
+}
+.mega-editor-example__options[open] > div {
+  margin-top: var(--mega-space-3);
 }
 .mega-text-editor__tools {
   display: flex;
@@ -15,20 +97,38 @@
   width: min(100%, 320px);
 }
 .mega-text-editor [contenteditable] {
-  min-height: 280px;
-  max-height: 640px;
+  box-sizing: border-box;
+  min-height: 580px;
+  max-height: 780px;
+  max-width: 840px;
+  margin-inline: auto;
   overflow: auto;
   overflow-wrap: anywhere;
-  padding: var(--mega-space-4);
-  border: 1px solid var(--mega-border);
-  border-radius: var(--mega-radius-sm);
+  padding: var(--mega-space-7) var(--mega-space-6);
   background: var(--mega-surface);
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.mega-text-editor .tiptap > :first-child {
+  margin-top: 0;
+}
+.mega-text-editor .tiptap h1 {
+  font-size: 32px;
+  line-height: 1.35;
+  letter-spacing: -0.03em;
+}
+.mega-text-editor .tiptap h2 {
+  font-size: 26px;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
 }
 .mega-text-editor [contenteditable]:focus-visible {
-  outline: 2px solid var(--mega-brand);
-  outline-offset: 2px;
+  outline: none;
+}
+/* Text insertion uses the caret; keyboard entry retains a quiet perimeter. */
+.mega-text-editor[data-keyboard-focus='true'] [contenteditable]:focus-visible {
+  outline: 1px solid var(--mega-border-strong);
+  outline-offset: -1px;
 }
 .mega-text-editor [aria-pressed='true'] {
   background: var(--mega-brand-soft);
@@ -51,5 +151,202 @@
 @media (pointer: coarse) {
   .mega-text-editor button {
     min-height: 44px;
+  }
+}
+.mega-text-editor__panel {
+  min-width: 0;
+}
+.mega-text-editor__panel summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 var(--mega-space-2);
+  cursor: pointer;
+  border-radius: var(--mega-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  list-style: none;
+}
+.mega-text-editor__panel summary::-webkit-details-marker {
+  display: none;
+}
+.mega-text-editor__panel summary::after {
+  content: '';
+  box-sizing: border-box;
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  margin: -3px 2px 0 4px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.mega-text-editor__panel[open] > summary::after {
+  transform: rotate(225deg);
+  margin-top: 3px;
+}
+.mega-text-editor__panel summary:hover {
+  background: var(--mega-hover);
+}
+.mega-text-editor__panel[open] > summary {
+  background: var(--mega-brand-soft);
+  color: var(--mega-brand);
+}
+.mega-text-editor__panel-body {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 100%;
+  width: 340px;
+  box-sizing: border-box;
+  height: 580px;
+  max-height: 75vh;
+  overflow: auto;
+  background: var(--mega-surface);
+  border-inline-start: 1px solid var(--mega-border);
+  border-bottom: 1px solid var(--mega-border);
+  padding: var(--mega-space-4);
+  font-size: 13px;
+}
+.mega-text-editor__panel-body > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--mega-space-4);
+}
+.mega-text-editor__panel-body > * + * {
+  margin-top: var(--mega-space-3);
+}
+.mega-text-editor__panel-body .mega-text-editor__tools {
+  gap: var(--mega-space-2);
+}
+.mega-text-editor__panel-body .mega-input {
+  width: 100%;
+}
+.mega-text-editor__panel-body input[type='number'] {
+  width: 100px;
+}
+.mega-text-editor__panel-body input[type='file'] {
+  max-width: 100%;
+}
+.mega-text-editor__panel-body p {
+  color: var(--mega-text-secondary);
+  line-height: 1.6;
+}
+.mega-text-editor__blocks {
+  max-height: 360px;
+  overflow: auto;
+  padding-inline-start: var(--mega-space-5);
+}
+.mega-text-editor__blocks li {
+  padding: var(--mega-space-3);
+  border-bottom: 1px solid var(--mega-border);
+  overflow-wrap: anywhere;
+}
+.mega-text-editor .tiptap .tableWrapper {
+  overflow-x: auto;
+}
+.mega-text-editor .tiptap table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: var(--mega-space-3) 0;
+}
+.mega-text-editor .tiptap td,
+.mega-text-editor .tiptap th {
+  border: 1px solid var(--mega-border-strong);
+  min-width: 25px;
+  padding: var(--mega-space-2);
+  vertical-align: top;
+  position: relative;
+}
+.mega-text-editor .tiptap th {
+  background: var(--mega-fill-solid);
+  text-align: start;
+}
+.mega-text-editor .tiptap .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--mega-brand-soft);
+  pointer-events: none;
+}
+.mega-text-editor .tiptap .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--mega-brand);
+  pointer-events: none;
+}
+.mega-text-editor .tiptap tr.row-resizing {
+  height: var(--mega-editor-row-preview) !important;
+}
+.mega-text-editor .tiptap.row-resize-cursor {
+  cursor: row-resize;
+}
+.mega-text-editor .tiptap td > p,
+.mega-text-editor .tiptap th > p {
+  margin-block: 0;
+}
+.mega-text-editor .tiptap.resize-cursor {
+  cursor: col-resize;
+}
+.mega-text-editor .tiptap img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: var(--mega-space-3) 0;
+}
+.mega-text-editor .tiptap .ProseMirror-selectednode {
+  outline: 2px solid var(--mega-brand);
+}
+.mega-text-editor summary:focus-visible {
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  .mega-text-editor summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .mega-text-editor [contenteditable] {
+    min-height: 460px;
+    padding: var(--mega-space-5) var(--mega-space-4);
+    font-size: 15px;
+  }
+  .mega-text-editor .tiptap h2 {
+    font-size: 24px;
+  }
+  .mega-text-editor:has(.mega-text-editor__panel[open])
+    .mega-text-editor__canvas {
+    margin-inline-end: 0;
+  }
+  .mega-text-editor__panel-body {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    border: 1px solid var(--mega-border);
+    box-shadow: var(--mega-shadow-md);
+  }
+  .mega-text-editor__toolbar {
+    padding-inline: var(--mega-space-2);
+  }
+  .mega-text-editor__toolbar > [aria-label='문서 서식'] {
+    flex: 1 1 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .mega-text-editor__format {
+    flex: 0 0 32px;
+    width: 32px;
   }
 }

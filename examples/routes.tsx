@@ -268,7 +268,8 @@ export const exampleGroups: ExampleGroup[] = [
         id: 'text-editor',
         label: '텍스트 편집기',
         title: '팀 운영 문서 편집',
-        description: '문서 서식과 링크를 편집하고 브라우저에 저장해요.',
+        description:
+          '문단·표·이미지를 편집하고 Markdown으로 변환하거나 브라우저에 저장해요.',
         wide: true,
         Component: TextEditorExampleRoute,
         source: textEditorSource,

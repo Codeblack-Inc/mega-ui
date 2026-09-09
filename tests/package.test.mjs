@@ -85,6 +85,9 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
   );
   assert.deepEqual(Object.keys(pkg.dependencies), [
     '@tiptap/core',
+    '@tiptap/extension-image',
+    '@tiptap/extension-table',
+    '@tiptap/markdown',
     '@tiptap/pm',
     '@tiptap/react',
     '@tiptap/starter-kit',

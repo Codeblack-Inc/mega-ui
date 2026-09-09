@@ -18,6 +18,10 @@ async function paste(page: Page, html: string) {
 test.beforeEach(async ({ page }) => {
   await page.goto('/#text-editor?full=1');
   await expect(body(page)).toBeVisible();
+  await page
+    .locator('summary')
+    .filter({ hasText: /^예제 옵션$/ })
+    .click();
 });
 
 test('format, undo/redo, failed save, retry, reopen and cancel', async ({
@@ -44,6 +48,10 @@ test('format, undo/redo, failed save, retry, reopen and cancel', async ({
   ).toBeVisible();
   await page.reload();
   await expect(body(page).locator('strong')).toHaveText('새 운영 문서');
+  await page
+    .locator('summary')
+    .filter({ hasText: /^예제 옵션$/ })
+    .click();
   await body(page).fill('취소할 내용');
   await page.getByRole('button', { name: '변경 취소', exact: true }).click();
   await page.getByRole('button', { name: '계속 편집', exact: true }).click();
@@ -58,6 +66,10 @@ test('format, undo/redo, failed save, retry, reopen and cancel', async ({
 test('links validate URLs; pasted markup drops scripts, images and event handlers', async ({
   page,
 }) => {
+  await page
+    .locator('summary')
+    .filter({ hasText: /^링크$/ })
+    .click();
   await body(page).fill('참고 문서');
   await body(page).press('ControlOrMeta+a');
   await page
@@ -118,9 +130,13 @@ test('readonly preserves the draft; composition blocks toolbar; narrow dark layo
   ).toBe(true);
   await body(page).focus();
   await expect(body(page)).toBeFocused();
+  await page.evaluate(() => {
+    document.documentElement.style.colorScheme = 'dark';
+  });
   await page.screenshot({
     path: test.info().outputPath('text-editor-dark-mobile.png'),
     fullPage: true,
+    animations: 'disabled',
   });
 });
 
@@ -206,11 +222,12 @@ test('keyboard formatting, block commands and pending save lock', async ({
     ['인용', 'blockquote'],
     ['코드 블록', 'pre'],
   ] as const) {
+    await body(page).press('ControlOrMeta+a');
     await page.getByRole('button', { name, exact: true }).click();
     await expect(
       body(page).locator(selector).filter({ hasText: '키보드 문서' }),
     ).toBeVisible();
-    await page.getByRole('button', { name, exact: true }).click();
+    await page.getByRole('button', { name: '실행 취소', exact: true }).click();
   }
   await save(page).click();
   await expect(body(page)).toHaveAttribute('contenteditable', 'false');
@@ -219,4 +236,47 @@ test('keyboard formatting, block commands and pending save lock', async ({
     page.getByText('문서를 저장했어요.', { exact: true }),
   ).toBeVisible();
   await expect(body(page)).toHaveAttribute('contenteditable', 'true');
+});
+
+test('writing canvas leads the layout and inspectors switch without losing text', async ({
+  page,
+}) => {
+  await page
+    .locator('summary')
+    .filter({ hasText: /^예제 옵션$/ })
+    .click();
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  await expect(page.locator('.mega-text-editor__panel[open]')).toHaveCount(0);
+  expect((await body(page).boundingBox())!.y).toBeLessThan(330);
+  await body(page).fill('계속 작성할 문서');
+  await page.screenshot({
+    path: test.info().outputPath('editor-desktop.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
+  await page.locator('summary[aria-label="이미지 편집"]').click();
+  await expect(page.getByLabel('이미지 주소', { exact: true })).toBeVisible();
+  await page.locator('summary[aria-label="표 편집"]').click();
+  await expect(page.getByLabel('이미지 주소', { exact: true })).toBeHidden();
+  await expect(page.getByLabel('행 수', { exact: true })).toBeVisible();
+  await page.getByLabel('행 수', { exact: true }).press('Escape');
+  await expect(page.locator('.mega-text-editor__panel[open]')).toHaveCount(0);
+  await expect(body(page)).toHaveText('계속 작성할 문서');
+  await page.setViewportSize({ width: 375, height: 812 });
+  expect((await body(page).boundingBox())!.y).toBeLessThan(460);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  expect(
+    await page
+      .locator('.mega-text-editor')
+      .evaluate((el) => el.scrollWidth <= el.clientWidth),
+  ).toBe(true);
+  await page.screenshot({
+    path: test.info().outputPath('editor-mobile.png'),
+    fullPage: true,
+    animations: 'disabled',
+  });
 });

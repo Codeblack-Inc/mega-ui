@@ -40,7 +40,7 @@
   "scripts": {
     "dev": "vite --config vite.docs.config.ts",
     "build": "vite build && tsc -p tsconfig.build.json && sass --no-source-map --style=compressed src/styles/index.scss dist/styles.css",
-    "build:docs": "vite build --config vite.docs.config.ts",
+    "build:docs": "vite build --config vite.docs.config.ts && node tests/docs-build.check.mjs",
     "preview": "vite preview --config vite.docs.config.ts",
     "typecheck": "tsc --noEmit",
     "test": "npm run build && node --experimental-strip-types --test tests/*.test.mjs",
@@ -70,6 +70,9 @@
   },
   "dependencies": {
     "@tiptap/core": "3.31.3",
+    "@tiptap/extension-image": "3.31.3",
+    "@tiptap/extension-table": "3.31.3",
+    "@tiptap/markdown": "3.31.3",
     "@tiptap/pm": "3.31.3",
     "@tiptap/react": "3.31.3",
     "@tiptap/starter-kit": "3.31.3",

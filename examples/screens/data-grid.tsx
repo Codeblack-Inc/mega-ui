@@ -1,3 +1,4 @@
+import '@mega-ui/react/data-grid.css';
 import { useEffect, useMemo, useState } from 'react';
 import {
   Button,

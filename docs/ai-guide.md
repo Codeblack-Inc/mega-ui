@@ -63,7 +63,8 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 `@mega-ui/react/text-editor`의 `TextEditor`는 별도 진입점입니다. [API와 제한](./text-editor.md)을 먼저 읽고
 기본 CSS와 `@mega-ui/react/text-editor.css`를 함께 로드합니다. `defaultValue`는 최초 JSON이며
 변경은 `onChange`, 저장 확정은 비동기 `onSave`로 연결합니다. 문서 교체는 미저장 변경을 확인한 뒤 재마운트합니다.
-표·이미지·Markdown 변환은 아직 제공하지 않습니다.
+표·이미지·블록 편집과 Markdown/JSON 반입·반출을 제공합니다. `exportTextEditorMarkdown`의 `warnings`를 표시하고,
+병합 셀·너비 등 원본 구조 보관에는 JSON을 사용합니다. 파일 이미지 512KB·문서 1M UTF-16 상한을 확인하세요.
 
 **공통**
 

@@ -1,3 +1,4 @@
+import '@mega-ui/react/text-editor.css';
 import { useState } from 'react';
 import {
   Alert,
@@ -56,7 +57,7 @@ export function TextEditorExample() {
   const [readOnly, setReadOnly] = useState(false);
   const [cancel, setCancel] = useState(false);
   return (
-    <Stack gap={4}>
+    <Stack gap={4} className="mega-editor-example">
       <PageHeader
         title="팀 운영 문서"
         description="이 예제는 현재 브라우저에 저장해요. 저장하지 않은 내용은 화면을 닫으면 사라져요."
@@ -68,29 +69,6 @@ export function TextEditorExample() {
         </Alert>
       ) : (
         <>
-          <div className="mega-text-editor__tools">
-            <Checkbox
-              checked={fail}
-              disabled={saving}
-              onChange={(event) => setFail(event.target.checked)}
-            >
-              저장 실패 시뮬레이션
-            </Checkbox>
-            <Checkbox
-              checked={readOnly}
-              disabled={saving}
-              onChange={(event) => setReadOnly(event.target.checked)}
-            >
-              읽기 전용
-            </Checkbox>
-            <Button
-              variant="secondary"
-              disabled={!dirty || saving || readOnly}
-              onClick={() => setCancel(true)}
-            >
-              변경 취소
-            </Button>
-          </div>
           <TextEditor
             key={revision}
             label="팀 운영 문서 본문"
@@ -115,6 +93,32 @@ export function TextEditorExample() {
               }
             }}
           />
+          <details className="mega-editor-example__options">
+            <summary>예제 옵션</summary>
+            <div className="mega-text-editor__tools">
+              <Checkbox
+                checked={fail}
+                disabled={saving}
+                onChange={(event) => setFail(event.target.checked)}
+              >
+                저장 실패 시뮬레이션
+              </Checkbox>
+              <Checkbox
+                checked={readOnly}
+                disabled={saving}
+                onChange={(event) => setReadOnly(event.target.checked)}
+              >
+                읽기 전용
+              </Checkbox>
+              <Button
+                variant="secondary"
+                disabled={!dirty || saving || readOnly}
+                onClick={() => setCancel(true)}
+              >
+                변경 취소
+              </Button>
+            </div>
+          </details>
           <Dialog
             open={cancel}
             onClose={() => setCancel(false)}
