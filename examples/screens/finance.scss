@@ -35,10 +35,20 @@
   font-variant-numeric: tabular-nums;
 }
 
+// ---------- 대출 계산기 ----------
+.loan-grid {
+  align-items: start;
+}
+.loan-repay {
+  flex-direction: column;
+  gap: 10px;
+}
+
 // ---------- 소비 리포트 ----------
 .report-budget {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 16px;
 }
 .report-bars {
@@ -96,6 +106,12 @@
 }
 
 // ---------- 카드 혜택·관리 ----------
+.cardb-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: 24px 32px;
+  align-items: center;
+}
 .cardb-face {
   display: flex;
   flex-direction: column;
@@ -130,5 +146,8 @@
 @media (max-width: 720px) {
   .report-budget {
     gap: 12px;
+  }
+  .cardb-hero {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

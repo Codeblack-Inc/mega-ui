@@ -13,7 +13,7 @@ import {
   useToast,
 } from '@mega-ui/react';
 import { ExampleIcon } from '../icons';
-import { CategoryCards } from './shell';
+import { CategoryCards, OpenState } from './shell';
 
 export const overlayNames = ['Dialog', 'Menu', 'Tooltip'] as const;
 
@@ -28,7 +28,9 @@ export function OverlayCategory() {
           중요한 결정을 하기 전에 한 번 더 확인해요.
         </Text>
         <Stack direction="row" gap={3} wrap>
-          <Button onClick={() => setDialog(true)}>확인창 열기</Button>
+          <Button variant="secondary" onClick={() => setDialog(true)}>
+            확인창 열기
+          </Button>
         </Stack>
         <Dialog
           open={dialog}
@@ -61,7 +63,7 @@ export function OverlayCategory() {
           버튼을 눌러 추가 동작을 펼쳐요.
         </Text>
         <Stack direction="row" gap={3} wrap>
-          <Menu trigger={<Button variant="outline">더 보기 ⌄</Button>}>
+          <Menu trigger={<Button variant="secondary">더 보기 ⌄</Button>}>
             <MenuLabel>문서 관리</MenuLabel>
             <MenuItem
               icon={<ExampleIcon name="receipt" />}
@@ -86,14 +88,27 @@ export function OverlayCategory() {
         </Text>
         <Stack direction="row" gap={3} align="center" wrap>
           <Tooltip content="중요한 작업 전에 내용을 한 번 더 확인해요.">
-            <IconButton label="확인창 도움말">?</IconButton>
+            <IconButton
+              label="확인창 도움말"
+              size="sm"
+              variant="filled"
+              round
+              className="demo-help"
+            >
+              ?
+            </IconButton>
           </Tooltip>
           <Tooltip content="정산은 영업일 기준 2일 뒤에 완료돼요.">
-            <Button size="sm" variant="secondary">
-              정산 안내
-            </Button>
+            <Button variant="secondary">정산 안내</Button>
           </Tooltip>
         </Stack>
+        <OpenState>
+          <span className="mega-tooltip">
+            <span className="mega-tooltip__bubble">
+              정산은 영업일 기준 2일 뒤에 완료돼요.
+            </span>
+          </span>
+        </OpenState>
       </Stack>
     ),
   };

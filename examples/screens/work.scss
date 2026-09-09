@@ -41,6 +41,11 @@
     flex: 1 1 200px;
   }
 }
+.users-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 .users-chips {
   display: flex;
   gap: 6px;
@@ -58,6 +63,12 @@
   .mega-table__cell,
   .mega-table__header-cell {
     white-space: nowrap;
+  }
+  // 로그인 횟수: 숫자 열 오른쪽 정렬
+  .mega-table__cell:last-child,
+  .mega-table__header-cell:last-child {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
   }
 }
 .users-name,
@@ -115,6 +126,10 @@
 .cal-list > .mega-list-row + .mega-list-row {
   border-top: 1px solid var(--mega-border);
 }
+// 월 제목은 페이지 헤더(이전/다음 달 포함)에만
+.cal-main .mega-calendar > header {
+  display: none;
+}
 
 // ---------- 조직도 ----------
 .org-stats {
@@ -154,10 +169,29 @@
   padding: 0 8px;
 }
 .drive-main {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
   min-width: 0;
+}
+// 드롭존은 드래그 진입 시에만 오버레이로
+.drive-drop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+  border-color: var(--mega-brand);
+  background: color-mix(in srgb, var(--mega-surface) 92%, transparent);
+  color: var(--mega-brand);
+  font-weight: 600;
+  > * {
+    pointer-events: none;
+  }
+  input {
+    display: none;
+  }
 }
 .drive-toolbar {
   display: flex;

@@ -105,6 +105,8 @@ test('data tables sort, window, edit, expand and aggregate meaningful data', () 
     h(ui.EditableTable, { rows, columns, getRowId: id, onCellChange() {} }),
   );
   assert.match(editable, /aria-label="금액 편집"/);
+  assert.match(editable, /data-editable="true"/);
+  assert.match(editable, /data-align="end"/);
 
   const tree = renderToStaticMarkup(
     h(ui.TreeTable, {
@@ -198,6 +200,10 @@ test('enterprise planning views retain accessible native semantics', () => {
   assert.match(html, /role="grid"/);
   assert.match(html, /aria-multiselectable="true"/);
   assert.match(html, /다음 열로 이동/);
+  assert.match(html, /mega-icon-button/);
+  assert.doesNotMatch(html, />[←→]</);
+  assert.equal((html.match(/mega-checkbox/g) ?? []).length >= 5, true);
+  assert.match(html, /data-numeric="true"/);
   assert.equal((html.match(/role="gridcell"/g) ?? []).length >= 42, true);
   assert.equal((html.match(/tabindex="0"/g) ?? []).length >= 1, true);
   assert.match(html, /09:00–10:00/);

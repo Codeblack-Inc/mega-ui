@@ -29,7 +29,7 @@ import {
   Tour,
 } from '@mega-ui/react';
 import { ExampleIcon } from '../icons';
-import { CategoryCards } from './shell';
+import { CategoryCards, OpenState } from './shell';
 
 export const extendedNavigationNames = [
   'Anchor',
@@ -73,14 +73,14 @@ export function ExtendedNavigationCategory() {
       />
     ),
     DropdownMenu: (
-      <DropdownMenu trigger={<Button variant="outline">작업</Button>}>
+      <DropdownMenu trigger={<Button variant="secondary">작업</Button>}>
         <MenuItem>복사하기</MenuItem>
         <MenuItem>이동하기</MenuItem>
       </DropdownMenu>
     ),
     ContextMenu: (
       <ContextMenu
-        trigger={<Button variant="outline">오른쪽 버튼을 눌러 보세요</Button>}
+        trigger={<Button variant="secondary">오른쪽 버튼을 눌러 보세요</Button>}
       >
         <MenuItem>이름 바꾸기</MenuItem>
         <MenuItem tone="danger">삭제하기</MenuItem>
@@ -130,7 +130,9 @@ export function ExtendedNavigationCategory() {
     ),
     CommandPalette: (
       <>
-        <Button onClick={() => setOpen('command')}>명령 팔레트 열기</Button>
+        <Button variant="secondary" onClick={() => setOpen('command')}>
+          명령 팔레트 열기
+        </Button>
         <CommandPalette
           open={open === 'command'}
           onClose={() => setOpen('')}
@@ -153,23 +155,45 @@ export function ExtendedNavigationCategory() {
     ),
     BackToTop: <BackToTop />,
     Popover: (
-      <Popover
-        label="정산 안내"
-        trigger={<Button variant="outline">정산 안내</Button>}
-      >
-        영업일 기준 2일 뒤에 정산돼요.
-      </Popover>
+      <>
+        <Popover
+          label="정산 안내"
+          trigger={<Button variant="secondary">정산 안내</Button>}
+        >
+          영업일 기준 2일 뒤에 정산돼요.
+        </Popover>
+        <OpenState>
+          <div className="mega-popover">
+            <div className="mega-popover__content">
+              영업일 기준 2일 뒤에 정산돼요.
+            </div>
+          </div>
+        </OpenState>
+      </>
     ),
     HoverCard: (
-      <HoverCard trigger={<Anchor href="#HoverCard">판매자 정보</Anchor>}>
-        <strong>메가 상점</strong>
-        <br />
-        평균 응답 시간 1시간
-      </HoverCard>
+      <>
+        <HoverCard trigger={<Anchor href="#HoverCard">판매자 정보</Anchor>}>
+          <strong>메가 상점</strong>
+          <br />
+          평균 응답 시간 1시간
+        </HoverCard>
+        <OpenState>
+          <span className="mega-hover-card">
+            <span className="mega-hover-card__content">
+              <strong>메가 상점</strong>
+              <br />
+              평균 응답 시간 1시간
+            </span>
+          </span>
+        </OpenState>
+      </>
     ),
     Modal: (
       <>
-        <Button onClick={() => setOpen('modal')}>모달 열기</Button>
+        <Button variant="secondary" onClick={() => setOpen('modal')}>
+          모달 열기
+        </Button>
         <Modal
           open={open === 'modal'}
           onClose={() => setOpen('')}
@@ -197,7 +221,9 @@ export function ExtendedNavigationCategory() {
     ),
     Drawer: (
       <>
-        <Button onClick={() => setOpen('drawer')}>서랍 열기</Button>
+        <Button variant="secondary" onClick={() => setOpen('drawer')}>
+          서랍 열기
+        </Button>
         <Drawer
           open={open === 'drawer'}
           onClose={() => setOpen('')}
@@ -210,7 +236,9 @@ export function ExtendedNavigationCategory() {
     ),
     Sheet: (
       <>
-        <Button onClick={() => setOpen('sheet')}>시트 열기</Button>
+        <Button variant="secondary" onClick={() => setOpen('sheet')}>
+          시트 열기
+        </Button>
         <Sheet
           open={open === 'sheet'}
           onClose={() => setOpen('')}
@@ -223,6 +251,7 @@ export function ExtendedNavigationCategory() {
     Tour: (
       <>
         <Button
+          variant="secondary"
           onClick={() => {
             setTour(0);
             setOpen('tour');

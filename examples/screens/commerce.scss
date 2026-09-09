@@ -25,6 +25,11 @@
   .mega-input:first-child {
     flex: 1 1 220px;
   }
+  > .mega-select {
+    flex: 0 0 160px;
+    width: 160px;
+    background-color: var(--mega-surface);
+  }
 }
 .shop-filter-button {
   display: none;
@@ -98,6 +103,14 @@
 // ---------- 주문 상세 ----------
 .order .mega-description-list strong {
   color: var(--mega-text-strong);
+}
+.order-actions .mega-bottom-cta__actions > :first-child,
+.settings-actions .mega-bottom-cta__actions > :first-child {
+  flex: 1;
+}
+.order-actions .mega-bottom-cta__actions > :last-child,
+.settings-actions .mega-bottom-cta__actions > :last-child {
+  flex: 2;
 }
 
 // ---------- 랜딩 페이지 ----------
@@ -216,6 +229,8 @@
 }
 .assist-chat {
   flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 .assist-activity {
   padding: 12px 16px;
@@ -316,6 +331,20 @@
 }
 
 // ---------- 상태 화면 모음 ----------
-.states .mega-card {
-  min-width: 0;
+.states {
+  > .mega-grid {
+    align-items: start;
+  }
+  .mega-card {
+    min-width: 0;
+  }
+  .mega-result--danger .mega-result__symbol {
+    width: 48px;
+    height: 48px;
+    background: var(--mega-danger-soft);
+    color: var(--mega-danger);
+    &::after {
+      mask-size: 24px;
+    }
+  }
 }

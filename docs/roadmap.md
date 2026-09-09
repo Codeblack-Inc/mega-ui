@@ -30,6 +30,7 @@
 
 ## 남은 과제
 
+- 중복 컴포넌트 통합: 이름만 다른 짝(InputPassword/PasswordInput, InputNumber/NumberInput, InputMask/MaskInput, InputOtp/OTPInput, InputColor/ColorInput, AutoComplete/Autocomplete, DatePicker/DateInput, Field/FormField)은 현재 별칭 export이고, Radio/RadioGroup, IconField/SearchInput은 확장판입니다. 다음 메이저에서 한 이름으로 합치고 별칭은 deprecated 처리합니다. FileUpload/Dropzone/FilePreview/PDFViewer도 파일 컴포넌트 하나로 정리합니다.
 - `SideNavItem`/`NavRailItem`은 `a`/`button`을 모두 렌더링하느라 ref를 전달하지 않습니다.
 - Menu와 Tooltip은 위치 계산을 하지 않아 뷰포트 경계에서 잘릴 수 있습니다.
 - Table은 표 구조를 제공하고 DataTable/DataGrid/VirtualTable이 정렬·선택·고정 높이 가상 스크롤을 담당합니다. 서버 데이터 요청은 소비 앱의 몫입니다.

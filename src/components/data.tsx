@@ -313,9 +313,7 @@ export function Amount({
       {currency === '$' ? '$' : null}
       {amountFormat.format(Math.abs(value))}
       {currency && currency !== '$' ? (
-        <span className={currency === '원' ? 'mega-amount__unit' : undefined}>
-          {currency}
-        </span>
+        <span className="mega-amount__unit">{currency}</span>
       ) : null}
     </>,
   );

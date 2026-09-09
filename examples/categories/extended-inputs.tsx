@@ -36,7 +36,7 @@ import {
   useToast,
 } from '@mega-ui/react';
 import { ExampleIcon } from '../icons';
-import { CategoryCards } from './shell';
+import { CategoryCards, PairNote } from './shell';
 
 export const extendedInputNames = [
   'ButtonGroup',
@@ -320,6 +320,32 @@ export function ExtendedInputsCategory() {
       code="EXTENDED INPUT"
       order={extendedInputNames}
       demos={demos}
+      notes={{
+        PasswordInput: (
+          <PairNote name="InputPassword" category="inputs" kind="alias" />
+        ),
+        NumberInput: (
+          <PairNote name="InputNumber" category="inputs" kind="alias" />
+        ),
+        MaskInput: <PairNote name="InputMask" category="inputs" kind="alias" />,
+        OTPInput: <PairNote name="InputOtp" category="inputs" kind="alias" />,
+        ColorInput: (
+          <PairNote name="InputColor" category="inputs" kind="alias" />
+        ),
+        Autocomplete: (
+          <PairNote name="AutoComplete" category="inputs" kind="alias" />
+        ),
+        DateInput: (
+          <PairNote name="DatePicker" category="inputs" kind="alias" />
+        ),
+        FormField: <PairNote name="Field" category="inputs" kind="alias" />,
+        RadioGroup: (
+          <PairNote name="Radio" category="controls" kind="extends" />
+        ),
+        SearchInput: (
+          <PairNote name="IconField" category="inputs" kind="extends" />
+        ),
+      }}
     />
   );
 }

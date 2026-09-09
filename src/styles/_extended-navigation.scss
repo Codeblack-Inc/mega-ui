@@ -10,6 +10,7 @@
 
 .mega-stepper {
   display: flex;
+  container-type: inline-size;
   gap: var(--mega-space-2);
   margin: 0;
   padding: 0;
@@ -49,6 +50,8 @@
     font-size: 14px;
     font-weight: 600;
     line-height: 1.4;
+    white-space: nowrap;
+    word-break: keep-all;
   }
   &__description {
     margin-top: var(--mega-space-1);
@@ -65,6 +68,30 @@
   &__item[data-complete] .mega-stepper__number {
     color: var(--mega-on-brand);
     background: var(--mega-success-fill);
+  }
+}
+
+@container (max-width: 520px) {
+  .mega-stepper__item {
+    flex: 0 0 32px;
+  }
+  .mega-stepper__item[data-active] {
+    flex: 1 1 auto;
+  }
+  .mega-stepper__button {
+    padding-inline: var(--mega-space-1);
+  }
+  .mega-stepper__item:not([data-active])
+    :is(.mega-stepper__label, .mega-stepper__description) {
+    display: none;
+  }
+  .mega-stepper__button[aria-current='step'] {
+    .mega-stepper__number {
+      display: none;
+    }
+    .mega-stepper__label::before {
+      content: attr(data-progress) ' ';
+    }
   }
 }
 

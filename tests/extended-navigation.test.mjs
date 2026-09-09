@@ -69,6 +69,8 @@ test('extended components preserve native and ARIA semantics on the server', () 
   );
   assert.match(html, /href="\/settings"/);
   assert.match(html, /aria-current="step"/);
+  assert.match(html, /data-active="true"/);
+  assert.match(html, /data-progress="2\/2"/);
   assert.match(html, /aria-label="Primary"/);
   assert.match(html, /aria-haspopup="dialog"/);
   assert.match(html, /role="progressbar"[^>]*aria-valuenow="25"/);

@@ -34,9 +34,22 @@ export function Button({
       disabled={disabled || loading}
       aria-busy={loading || undefined}
     >
-      {loading ? <span className="mega-spinner" aria-hidden="true" /> : leading}
-      {children}
-      {trailing}
+      {loading ? (
+        <>
+          <span className="mega-spinner" aria-hidden="true" />
+          <span className="mega-button__label">
+            {leading}
+            {children}
+            {trailing}
+          </span>
+        </>
+      ) : (
+        <>
+          {leading}
+          {children}
+          {trailing}
+        </>
+      )}
     </button>
   );
 }
@@ -156,7 +169,8 @@ export interface CheckboxProps extends Omit<
   ComponentPropsWithRef<'input'>,
   'type' | 'children'
 > {
-  children: ReactNode;
+  /** Omit to render the box alone (give the input an aria-label). */
+  children?: ReactNode;
   /** Square box (form checkbox) instead of the Toss circle check (agreement lists). */
   shape?: 'circle' | 'square';
 }
@@ -171,7 +185,7 @@ export function Checkbox({
       className={`mega-checkbox ${shape === 'square' ? 'mega-checkbox--square' : ''} ${className}`}
     >
       <input {...props} type="checkbox" />
-      <span>{children}</span>
+      {children != null ? <span>{children}</span> : null}
     </label>
   );
 }

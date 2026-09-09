@@ -120,6 +120,7 @@ test('new form controls preserve native semantics, names and constraints', () =>
   assert.match(html, /type="color"/);
   assert.match(html, /autoComplete="one-time-code"/);
   assert.match(html, /maxLength="4" pattern="\[0-9\]\{4\}"/);
+  assert.match(html, /--_otp-length:4/);
   assert.match(html, /name="team"[^>]*checked="" value="dev"/);
   assert.match(
     html,
@@ -131,6 +132,16 @@ test('new form controls preserve native semantics, names and constraints', () =>
   assert.match(html, /for="email"/);
   assert.match(html, /type="password"/);
   assert.match(html, /aria-pressed="true"/);
+  const otp = render(
+    h(ui.InputOtp, {
+      length: Number.POSITIVE_INFINITY,
+      defaultValue: '12',
+      'aria-label': 'Code',
+    }),
+  );
+  assert.match(otp, /--_otp-length:6/);
+  assert.match(otp, /aria-label="Code"/);
+  assert.match(otp, /mega-input-otp__box[^>]*>1<.*mega-input-otp__box[^>]*>2</);
 });
 
 test('form styles only reference existing theme tokens', () => {

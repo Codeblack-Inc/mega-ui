@@ -34,10 +34,18 @@ import './site.scss';
 
 const HOME = 'home';
 const GALLERY = 'examples';
+const THEME_KEY = 'mega-docs-theme';
+/** Examples designed at phone width; shown in a "모바일 폭" preview frame. */
+const NARROW = ['payments', 'transfer', 'login', 'signup'];
+
+/** `#id?full=1&to=Name` — `full` drops the docs chrome, `to` scrolls to a card. */
+function parseHash(hash: string) {
+  const [id = '', query = ''] = hash.replace(/^#/, '').split('?');
+  return { id, params: new URLSearchParams(query) };
+}
 
 /** Hash aliases keep older links (#components, #forms) pointing at a real page. */
-function resolveRoute(hash: string) {
-  const id = hash.replace(/^#/, '');
+function resolveRoute(id: string) {
   if (!id || id === HOME) return HOME;
   if (id === GALLERY) return GALLERY;
   if (id === 'components') return 'components/foundation';
@@ -45,35 +53,87 @@ function resolveRoute(hash: string) {
   return routes.some((route) => route.id === id) ? id : null;
 }
 
+function initialDark() {
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved) return saved === 'dark';
+  } catch {
+    /* private mode */
+  }
+  return matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 export default function App() {
-  const [active, setActive] = useState(
-    () => resolveRoute(location.hash) ?? HOME,
-  );
-  const [dark, setDark] = useState(false);
+  const [hash, setHash] = useState(() => parseHash(location.hash));
+  const [dark, setDark] = useState(initialDark);
+  const active = resolveRoute(hash.id) ?? HOME;
+  const full = hash.params.get('full') === '1';
 
   useEffect(() => {
-    const onHashChange = () => {
-      const next = resolveRoute(location.hash);
-      if (next) setActive(next);
-    };
+    const onHashChange = () => setHash(parseHash(location.hash));
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const to = hash.params.get('to');
+    const target = to
+      ? (document.getElementById(to) ??
+        document.querySelector(`[data-members~="${CSS.escape(to)}"]`))
+      : null;
+    if (target) target.scrollIntoView({ block: 'start' });
+    else window.scrollTo(0, 0);
     document.getElementById('main')?.focus({ preventScroll: true });
-  }, [active]);
+  }, [active, hash]);
+
+  useEffect(() => {
+    const theme = dark ? 'dark' : 'light';
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  }, [dark]);
+
+  const toggleDark = () => {
+    const next = !dark;
+    setDark(next);
+    try {
+      localStorage.setItem(THEME_KEY, next ? 'dark' : 'light');
+    } catch {
+      /* private mode */
+    }
+  };
 
   const page = routes.find((route) => route.id === active);
   const isExample =
     active === GALLERY || examples.some((item) => item.id === active);
   const isComponent = active.startsWith('components/');
 
+  if (page && full) {
+    return (
+      <ThemeProvider className="docs-app" theme={dark ? 'dark' : 'light'}>
+        <ToastProvider>
+          <main id="main" tabIndex={-1} className="docs-full">
+            <a className="docs-full__back" href={`#${page.id}`}>
+              ← 문서로 돌아가기
+            </a>
+            <page.Component key={page.id} />
+          </main>
+        </ToastProvider>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider className="docs-app" theme={dark ? 'dark' : 'light'}>
       <ToastProvider>
-        <a className="skip-link" href="#main">
+        <a
+          className="skip-link"
+          href="#main"
+          onClick={(event) => {
+            event.preventDefault();
+            document.getElementById('main')?.focus();
+            document.getElementById('main')?.scrollIntoView();
+          }}
+        >
           본문으로 건너뛰기
         </a>
         <TopBar
@@ -90,7 +150,7 @@ export default function App() {
               variant="secondary"
               size="sm"
               aria-pressed={dark}
-              onClick={() => setDark((value) => !value)}
+              onClick={toggleDark}
             >
               {dark ? '라이트 모드' : '다크 모드'}
             </Button>
@@ -164,13 +224,10 @@ export default function App() {
             </Stack>
           }
         >
-          <main
-            id="main"
-            tabIndex={-1}
-            className={page?.wide ? 'docs-main docs-wide' : 'docs-main'}
-          >
+          <main id="main" tabIndex={-1} className="docs-main">
             {page ? (
               <PageView
+                key={page.id}
                 page={page}
                 crumb={
                   isExample
@@ -185,13 +242,15 @@ export default function App() {
             )}
           </main>
           <footer className="docs-footer">
-            <Text size="sm" tone="muted">
-              Mega UI · 토스의 공개 디자인 패턴을 참고한 자체 구현 ·{' '}
-              {componentCount}개 컴포넌트 · {examples.length}개 화면 예제
-            </Text>
-            <Text size="sm" tone="muted" as="span">
-              <a href="./llms.txt">AI 문서 인덱스</a>
-            </Text>
+            <Container>
+              <Text size="sm" tone="muted">
+                Mega UI · 토스의 공개 디자인 패턴을 참고한 자체 구현 ·{' '}
+                {componentCount}개 컴포넌트 · {examples.length}개 화면 예제
+              </Text>
+              <Text size="sm" tone="muted" as="span">
+                <a href="./llms.txt">AI 문서 인덱스</a>
+              </Text>
+            </Container>
           </footer>
         </AppShell>
       </ToastProvider>
@@ -206,42 +265,95 @@ function PageView({
   page: (typeof routes)[number];
   crumb: { label: string; href: string };
 }) {
-  const Frame = page.wide ? 'div' : Container;
+  const [view, setView] = useState('preview');
   const Example = page.Component;
+  const isCategory = page.id.startsWith('components/');
+  const narrow = NARROW.includes(page.id);
+  const frame = (
+    <div
+      className={`docs-preview${page.wide ? ' docs-preview--wide' : ''}`}
+      data-width={narrow ? 'mobile' : 'desktop'}
+    >
+      <div className="docs-preview__bar">
+        <Text size="xs" tone="muted" as="span" weight="semibold">
+          미리보기 · {narrow ? '모바일 폭' : '데스크톱'}
+        </Text>
+        <Stack direction="row" gap={2} align="center">
+          <Badge>React · TypeScript</Badge>
+          {page.wide ? (
+            <a className="docs-preview__full" href={`#${page.id}?full=1`}>
+              전체 화면으로 보기
+            </a>
+          ) : null}
+          <Stack direction="row" gap={1} role="group" aria-label="보기 방식">
+            {(['preview', 'code'] as const).map((value) => (
+              <Button
+                key={value}
+                size="sm"
+                variant={view === value ? 'weak' : 'secondary'}
+                aria-pressed={view === value}
+                onClick={() => setView(value)}
+              >
+                {value === 'preview' ? '미리보기' : '코드'}
+              </Button>
+            ))}
+          </Stack>
+        </Stack>
+      </div>
+      <section
+        hidden={view !== 'preview'}
+        className="docs-preview__stage"
+        aria-label={`${page.label} 미리보기`}
+      >
+        <Example key={page.id} />
+      </section>
+      {view === 'code' ? (
+        <CodeBlock className="docs-source" code={page.source} language="tsx" />
+      ) : null}
+    </div>
+  );
+
   return (
-    <Frame>
-      <Stack gap={5}>
-        <Breadcrumb label="현재 위치">
-          <BreadcrumbItem href={`#${HOME}`}>홈</BreadcrumbItem>
-          <BreadcrumbItem href={crumb.href}>{crumb.label}</BreadcrumbItem>
-          <BreadcrumbItem current>{page.label}</BreadcrumbItem>
-        </Breadcrumb>
-        <PageHeader
-          title={page.title}
-          description={page.description}
-          actions={
-            page.count ? (
-              <Badge tone="brand">전체 {page.count}개</Badge>
-            ) : undefined
-          }
-        />
-        <section
-          className={page.id === 'payments' ? 'docs-signin' : undefined}
-          aria-label={`${page.label} 미리보기`}
-        >
-          <Example key={page.id} />
-        </section>
-        <Accordion
-          className="docs-source"
-          items={[
-            {
-              id: 'source',
-              title: '예제 소스 코드 보기 · React · TypeScript',
-              content: <CodeBlock code={page.source} language="tsx" />,
-            },
-          ]}
-        />
-      </Stack>
-    </Frame>
+    <>
+      <Container>
+        <Stack gap={isCategory ? 5 : 3}>
+          <Breadcrumb label="현재 위치">
+            <BreadcrumbItem href={`#${HOME}`}>홈</BreadcrumbItem>
+            <BreadcrumbItem href={crumb.href}>{crumb.label}</BreadcrumbItem>
+            <BreadcrumbItem current>{page.label}</BreadcrumbItem>
+          </Breadcrumb>
+          {isCategory ? (
+            <PageHeader
+              title={page.title}
+              description={page.description}
+              actions={<Badge tone="brand">전체 {page.count}개</Badge>}
+            />
+          ) : (
+            <Text size="sm" tone="muted" className="docs-eyebrow">
+              {page.description}
+            </Text>
+          )}
+          {isCategory ? <Example key={page.id} /> : null}
+        </Stack>
+      </Container>
+      {isCategory ? (
+        <Container>
+          <Accordion
+            className="docs-source"
+            items={[
+              {
+                id: 'source',
+                title: '이 페이지의 소스 코드 보기 · React · TypeScript',
+                content: <CodeBlock code={page.source} language="tsx" />,
+              },
+            ]}
+          />
+        </Container>
+      ) : page.wide ? (
+        frame
+      ) : (
+        <Container>{frame}</Container>
+      )}
+    </>
   );
 }

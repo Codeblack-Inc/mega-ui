@@ -5,7 +5,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { Input } from './controls';
+import { Checkbox, IconButton, Input } from './controls';
 import {
   Table,
   TableBody,
@@ -322,7 +322,11 @@ export function EditableTable<Row extends object>({
         <TableHead>
           <TableRow>
             {columns.map((column) => (
-              <TableHeaderCell key={column.key}>
+              <TableHeaderCell
+                key={column.key}
+                align={column.numeric ? 'end' : 'start'}
+                style={{ width: column.width }}
+              >
                 {column.header}
               </TableHeaderCell>
             ))}
@@ -334,7 +338,12 @@ export function EditableTable<Row extends object>({
               {columns.map((column) => {
                 const value = cellValue(row, column);
                 return (
-                  <TableCell key={column.key} numeric={column.numeric}>
+                  <TableCell
+                    key={column.key}
+                    numeric={column.numeric}
+                    data-editable={column.editable || undefined}
+                    style={{ width: column.width }}
+                  >
                     {column.editable ? (
                       <Input
                         type={column.inputType ?? 'text'}
@@ -653,8 +662,8 @@ export function DataGrid<Row extends object>({
         <TableHead>
           <TableRow>
             <TableHeaderCell>
-              <input
-                type="checkbox"
+              <Checkbox
+                shape="square"
                 aria-label="모든 행 선택"
                 checked={allSelected}
                 onChange={(event) =>
@@ -663,7 +672,11 @@ export function DataGrid<Row extends object>({
               />
             </TableHeaderCell>
             {columns.map((column) => (
-              <TableHeaderCell key={column.key}>
+              <TableHeaderCell
+                key={column.key}
+                align={column.numeric ? 'end' : 'start'}
+                style={{ width: column.width }}
+              >
                 {column.header}
               </TableHeaderCell>
             ))}
@@ -675,8 +688,8 @@ export function DataGrid<Row extends object>({
             return (
               <TableRow key={id} selected={selected.has(id)}>
                 <TableCell>
-                  <input
-                    type="checkbox"
+                  <Checkbox
+                    shape="square"
                     aria-label={`${id} 행 선택`}
                     checked={selected.has(id)}
                     onChange={(event) => {
@@ -693,6 +706,8 @@ export function DataGrid<Row extends object>({
                   return (
                     <TableCell
                       key={column.key}
+                      numeric={column.numeric}
+                      style={{ width: column.width }}
                       role="gridcell"
                       tabIndex={active === position ? 0 : -1}
                       data-grid-cell={position}
@@ -761,8 +776,8 @@ export function Kanban({
                 {onMove && columns.length > 1 ? (
                   <div className="mega-kanban__actions">
                     {columnIndex > 0 ? (
-                      <button
-                        type="button"
+                      <IconButton
+                        size="sm"
                         onClick={() =>
                           onMove(
                             card.id,
@@ -770,14 +785,16 @@ export function Kanban({
                             columns[columnIndex - 1]!.id,
                           )
                         }
-                        aria-label={`${String(card.title)} 이전 열로 이동`}
+                        label={`${String(card.title)} 이전 열로 이동`}
                       >
-                        ←
-                      </button>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="m15 6-6 6 6 6" />
+                        </svg>
+                      </IconButton>
                     ) : null}
                     {columnIndex < columns.length - 1 ? (
-                      <button
-                        type="button"
+                      <IconButton
+                        size="sm"
                         onClick={() =>
                           onMove(
                             card.id,
@@ -785,10 +802,12 @@ export function Kanban({
                             columns[columnIndex + 1]!.id,
                           )
                         }
-                        aria-label={`${String(card.title)} 다음 열로 이동`}
+                        label={`${String(card.title)} 다음 열로 이동`}
                       >
-                        →
-                      </button>
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="m9 6 6 6-6 6" />
+                        </svg>
+                      </IconButton>
                     ) : null}
                   </div>
                 ) : null}
@@ -1250,20 +1269,20 @@ export function DataExplorer<Row extends object>({
       <fieldset>
         <legend>표시할 열</legend>
         {columns.map((column) => (
-          <label key={column.key}>
-            <input
-              type="checkbox"
-              checked={visibleKeys.includes(column.key)}
-              onChange={(event) =>
-                setVisibleKeys((keys) =>
-                  event.currentTarget.checked
-                    ? [...keys, column.key]
-                    : keys.filter((key) => key !== column.key),
-                )
-              }
-            />
+          <Checkbox
+            key={column.key}
+            shape="square"
+            checked={visibleKeys.includes(column.key)}
+            onChange={(event) =>
+              setVisibleKeys((keys) =>
+                event.currentTarget.checked
+                  ? [...keys, column.key]
+                  : keys.filter((key) => key !== column.key),
+              )
+            }
+          >
             {column.header}
-          </label>
+          </Checkbox>
         ))}
       </fieldset>
       {visible.length ? (

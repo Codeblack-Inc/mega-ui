@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import {
   Calendar,
+  Amount,
   DataExplorer,
   DataGrid,
   DataTable,
@@ -54,6 +55,7 @@ const paymentColumns: DataColumn<Payment>[] = [
     editable: true,
     inputType: 'number',
     numeric: true,
+    render: (value) => <Amount value={Number(value)} />,
   },
   { key: 'status', header: '상태', editable: true },
 ];
@@ -110,17 +112,19 @@ export function EnterpriseCategory() {
         <Text size="sm" tone="muted">
           1,000개 중 보이는 고정 높이 행만 렌더해요.
         </Text>
-        <VirtualTable
-          height={240}
-          rows={Array.from({ length: 1000 }, (_, index) => ({
-            id: String(index),
-            customer: `고객 ${index + 1}`,
-            amount: (index + 1) * 1200,
-            status: index % 2 ? '완료' : '대기',
-          }))}
-          columns={paymentColumns}
-          getRowId={getPaymentId}
-        />
+        <div className="demo-overflow demo-virtual">
+          <VirtualTable
+            height={264}
+            rows={Array.from({ length: 1000 }, (_, index) => ({
+              id: String(index),
+              customer: `고객 ${index + 1}`,
+              amount: (index + 1) * 1200,
+              status: index % 2 ? '완료' : '대기',
+            }))}
+            columns={paymentColumns}
+            getRowId={getPaymentId}
+          />
+        </div>
       </Stack>
     ),
     EditableTable: (
@@ -213,27 +217,29 @@ export function EnterpriseCategory() {
       </Stack>
     ),
     Kanban: (
-      <Kanban
-        columns={board}
-        onMove={(cardId, from, to) =>
-          setBoard((columns) => {
-            const card = columns
-              .find((column) => column.id === from)
-              ?.cards.find((item) => item.id === cardId);
-            if (!card) return columns;
-            return columns.map((column) =>
-              column.id === from
-                ? {
-                    ...column,
-                    cards: column.cards.filter((item) => item.id !== cardId),
-                  }
-                : column.id === to
-                  ? { ...column, cards: [...column.cards, card] }
-                  : column,
-            );
-          })
-        }
-      />
+      <div className="demo-overflow">
+        <Kanban
+          columns={board}
+          onMove={(cardId, from, to) =>
+            setBoard((columns) => {
+              const card = columns
+                .find((column) => column.id === from)
+                ?.cards.find((item) => item.id === cardId);
+              if (!card) return columns;
+              return columns.map((column) =>
+                column.id === from
+                  ? {
+                      ...column,
+                      cards: column.cards.filter((item) => item.id !== cardId),
+                    }
+                  : column.id === to
+                    ? { ...column, cards: [...column.cards, card] }
+                    : column,
+              );
+            })
+          }
+        />
+      </div>
     ),
     Calendar: (
       <Calendar
@@ -277,47 +283,51 @@ export function EnterpriseCategory() {
       </Stack>
     ),
     Gantt: (
-      <Gantt
-        tasks={[
-          {
-            id: 'g1',
-            title: '설계',
-            start: '2026-09-01',
-            end: '2026-09-04',
-            progress: 100,
-          },
-          {
-            id: 'g2',
-            title: '개발',
-            start: '2026-09-03',
-            end: '2026-09-12',
-            progress: 60,
-          },
-          {
-            id: 'g3',
-            title: '검증',
-            start: '2026-09-11',
-            end: '2026-09-16',
-            progress: 20,
-          },
-        ]}
-      />
+      <div className="demo-overflow">
+        <Gantt
+          tasks={[
+            {
+              id: 'g1',
+              title: '설계',
+              start: '2026-09-01',
+              end: '2026-09-04',
+              progress: 100,
+            },
+            {
+              id: 'g2',
+              title: '개발',
+              start: '2026-09-03',
+              end: '2026-09-12',
+              progress: 60,
+            },
+            {
+              id: 'g3',
+              title: '검증',
+              start: '2026-09-11',
+              end: '2026-09-16',
+              progress: 20,
+            },
+          ]}
+        />
+      </div>
     ),
     Spreadsheet: (
-      <Spreadsheet
-        cells={sheet}
-        onCellChange={(row, column, value) =>
-          setSheet((cells) =>
-            cells.map((current, rowIndex) =>
-              rowIndex === row
-                ? current.map((cell, columnIndex) =>
-                    columnIndex === column ? value : cell,
-                  )
-                : current,
-            ),
-          )
-        }
-      />
+      <div className="demo-overflow">
+        <Spreadsheet
+          cells={sheet}
+          onCellChange={(row, column, value) =>
+            setSheet((cells) =>
+              cells.map((current, rowIndex) =>
+                rowIndex === row
+                  ? current.map((cell, columnIndex) =>
+                      columnIndex === column ? value : cell,
+                    )
+                  : current,
+              ),
+            )
+          }
+        />
+      </div>
     ),
     OrganizationChart: (
       <OrganizationChart

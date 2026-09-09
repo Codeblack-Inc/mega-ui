@@ -498,7 +498,23 @@ export function AgentActivity({
     >
       {steps.map((step) => (
         <li key={step.id} data-status={step.status}>
-          <span>{names[step.status]}</span> {step.label}
+          <span className="mega-agent-activity__status">
+            {step.status === 'running' ? (
+              <span className="mega-spinner" aria-hidden="true" />
+            ) : (
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                {step.status === 'complete' ? (
+                  <path d="m5 12.5 4.5 4.5L19 7.5" />
+                ) : step.status === 'error' ? (
+                  <path d="M12 5v8m0 4.5v.01" />
+                ) : (
+                  <circle cx="12" cy="12" r="8.5" />
+                )}
+              </svg>
+            )}
+            {names[step.status]}
+          </span>{' '}
+          {step.label}
           {step.detail && <div>{step.detail}</div>}
         </li>
       ))}

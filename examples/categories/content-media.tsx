@@ -27,6 +27,10 @@ import {
   Button,
   Text,
   Surface,
+  AspectRatio,
+  Stack,
+  Tabs,
+  TabPanel,
 } from '@mega-ui/react';
 import { CategoryCards } from './shell';
 import sampleImage from '../../docs/favicon.svg?raw';
@@ -57,9 +61,57 @@ export const contentMediaNames = [
   'StreamingText',
   'AgentActivity',
 ] as const;
+/** Inline SVG scenes as data URIs, so the docs need no image assets. */
+const scene = (sky: string, ground: string, shape: string) =>
+  `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100"><rect width="160" height="100" fill="${sky}"/>${shape}<rect y="70" width="160" height="30" fill="${ground}"/></svg>`,
+  )}`;
 const images = [
-  { src: '/favicon.svg', alt: 'Mega UI 심볼' },
-  { src: '/favicon.svg', alt: '두 번째 심볼' },
+  {
+    src: scene(
+      '#dcecfe',
+      '#1f9d6f',
+      '<circle cx="120" cy="30" r="14" fill="#ffbc46"/><path d="M0 70 40 30 80 70Z" fill="#2272eb"/><path d="M60 70 110 25 160 70Z" fill="#1b59c5"/>',
+    ),
+    alt: '산과 해가 있는 풍경',
+    caption: '풍경 · 16:10',
+  },
+  {
+    src: scene(
+      '#1c4989',
+      '#333840',
+      '<circle cx="35" cy="28" r="10" fill="#fff3ce"/><rect x="60" y="30" width="18" height="40" fill="#4e535c"/><rect x="85" y="18" width="24" height="52" fill="#727780"/><rect x="118" y="40" width="20" height="30" fill="#4e535c"/>',
+    ),
+    alt: '밤의 도시 스카이라인',
+    caption: '도시 · 밤',
+  },
+  {
+    src: scene(
+      '#ebf4ff',
+      '#3182f6',
+      '<circle cx="80" cy="60" r="26" fill="#ffbc46"/><path d="M0 62h160v8H0z" fill="#93c0fc"/>',
+    ),
+    alt: '바다 위로 지는 해',
+    caption: '바다 · 노을',
+  },
+  {
+    src: scene(
+      '#fff3ce',
+      '#e26d00',
+      '<circle cx="50" cy="45" r="22" fill="#ef3341"/><circle cx="110" cy="50" r="16" fill="#a450fc"/>',
+    ),
+    alt: '추상 색면',
+    caption: '추상 · 4:3',
+  },
+];
+const fileTabs = ['FileUpload', 'Dropzone', 'FilePreview', 'PDFViewer'].map(
+  (value) => ({ value, label: value }),
+);
+/** The four file components share one tabbed card. */
+const cardOrder = [
+  ...contentMediaNames.slice(0, 16),
+  'Files',
+  ...contentMediaNames.slice(20),
 ];
 export function ContentMediaCategory() {
   const [viewer, setViewer] = useState(false);
@@ -67,6 +119,7 @@ export function ContentMediaCategory() {
   const [file, setFile] = useState<File>();
   const [pdf, setPdf] = useState<File>();
   const [uploaded, setUploaded] = useState('');
+  const [fileTab, setFileTab] = useState('FileUpload');
   const [messages, setMessages] = useState(['컴포넌트에 대해 물어보세요.']);
   const [prompt, setPrompt] = useState('');
   const [failSubmit, setFailSubmit] = useState(false);
@@ -172,7 +225,20 @@ export function ContentMediaCategory() {
       <QRCode value="https://example.com/mega-ui" label="Mega UI 예제 링크" />
     ),
     Image: (
-      <Image src="/favicon.svg" alt="Mega UI 로고" width={120} height={120} />
+      <div className="demo-scenes">
+        {images.slice(0, 3).map((image, i) => (
+          <figure key={image.alt}>
+            <AspectRatio ratio={i === 2 ? 1 : 16 / 10}>
+              <Image src={image.src} alt={image.alt} />
+            </AspectRatio>
+            <figcaption>
+              <Text size="xs" tone="muted" as="span">
+                {i === 2 ? '정사각 · 1:1' : image.caption}
+              </Text>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     ),
     ImageViewer: (
       <>
@@ -183,66 +249,87 @@ export function ContentMediaCategory() {
           open={viewer}
           onClose={() => setViewer(false)}
           title="이미지 미리보기"
-          src="/favicon.svg"
-          alt="Mega UI 로고"
+          src={images[0]?.src ?? ''}
+          alt={images[0]?.alt ?? ''}
         />
       </>
     ),
-    Gallery: <Gallery label="예제 갤러리" images={images} />,
-    FileUpload: (
+    Gallery: (
       <>
-        <FileUpload
-          label="파일을 선택하거나 여기로 끌어 놓으세요"
-          multiple
-          onFilesChange={(files) =>
-            setUploaded(files.map((f) => f.name).join(', '))
-          }
+        <Gallery
+          label="예제 갤러리"
+          images={images}
+          style={{ maxWidth: 360 }}
         />
-        <Text size="sm">선택한 파일: {uploaded || '없음'}</Text>
-      </>
-    ),
-    Dropzone: (
-      <Dropzone
-        label="이미지 파일 선택 · 최대 5MB"
-        accept="image/*"
-        maxSize={5 * 1024 * 1024}
-        onFilesChange={(files) => setFile(files[0])}
-      />
-    ),
-    FilePreview: (
-      <>
-        <Button
-          variant="secondary"
-          onClick={() =>
-            setFile(
-              new File([sampleImage], 'sample.svg', { type: 'image/svg+xml' }),
-            )
-          }
-        >
-          샘플 이미지 미리보기
-        </Button>
-        <Dropzone
-          label="미리 볼 파일 선택"
-          onFilesChange={(files) => setFile(files[0])}
-        />
-        {file ? (
-          <FilePreview file={file} />
-        ) : (
-          <Text size="sm">파일을 선택하면 여기에 표시돼요.</Text>
-        )}
-      </>
-    ),
-    PDFViewer: (
-      <>
-        <Text size="sm">
-          PDF를 선택하면 PDFViewer가 브라우저의 문서 뷰어로 표시해요.
+        <Text size="xs" tone="muted">
+          썸네일을 누르면 크게 볼 수 있어요.
         </Text>
-        <Dropzone
-          label="미리 볼 PDF 선택"
-          accept="application/pdf,.pdf"
-          onFilesChange={(files) => setPdf(files[0])}
+      </>
+    ),
+    Files: (
+      <>
+        <Tabs
+          label="파일 컴포넌트"
+          items={fileTabs}
+          value={fileTab}
+          onValueChange={setFileTab}
         />
-        {pdf && <FilePreview file={pdf} />}
+        <TabPanel active={fileTab === 'FileUpload'}>
+          <Stack gap={3}>
+            <FileUpload
+              label="파일을 선택하거나 여기로 끌어 놓으세요"
+              multiple
+              onFilesChange={(files) =>
+                setUploaded(files.map((f) => f.name).join(', '))
+              }
+            />
+            <Text size="sm">선택한 파일: {uploaded || '없음'}</Text>
+          </Stack>
+        </TabPanel>
+        <TabPanel active={fileTab === 'Dropzone'}>
+          <Dropzone
+            label="이미지 파일 선택 · 최대 5MB"
+            accept="image/*"
+            maxSize={5 * 1024 * 1024}
+            onFilesChange={(files) => setFile(files[0])}
+          />
+        </TabPanel>
+        <TabPanel active={fileTab === 'FilePreview'}>
+          <Stack gap={3} align="start">
+            <Button
+              variant="secondary"
+              onClick={() =>
+                setFile(
+                  new File([sampleImage], 'sample.svg', {
+                    type: 'image/svg+xml',
+                  }),
+                )
+              }
+            >
+              샘플 이미지 미리보기
+            </Button>
+            {file ? (
+              <FilePreview file={file} />
+            ) : (
+              <Text size="sm">
+                Dropzone 탭에서 고른 파일이 여기에 표시돼요.
+              </Text>
+            )}
+          </Stack>
+        </TabPanel>
+        <TabPanel active={fileTab === 'PDFViewer'}>
+          <Stack gap={3}>
+            <Text size="sm">
+              PDF를 선택하면 PDFViewer가 브라우저의 문서 뷰어로 표시해요.
+            </Text>
+            <Dropzone
+              label="미리 볼 PDF 선택"
+              accept="application/pdf,.pdf"
+              onFilesChange={(files) => setPdf(files[0])}
+            />
+            {pdf && <FilePreview file={pdf} />}
+          </Stack>
+        </TabPanel>
       </>
     ),
     Chat: (
@@ -315,6 +402,11 @@ export function ContentMediaCategory() {
     ),
   };
   return (
-    <CategoryCards code="CONTENT+" order={contentMediaNames} demos={demos} />
+    <CategoryCards
+      code="CONTENT+"
+      order={cardOrder}
+      groups={{ Files: fileTabs.map((tab) => tab.value) }}
+      demos={demos}
+    />
   );
 }

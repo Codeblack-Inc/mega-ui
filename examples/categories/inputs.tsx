@@ -22,7 +22,7 @@ import {
   Text,
   Textarea,
 } from '@mega-ui/react';
-import { CategoryCards } from './shell';
+import { CategoryCards, PairNote } from './shell';
 
 export const inputNames = [
   'Input',
@@ -289,5 +289,33 @@ export function InputsCategory() {
       </Field>
     ),
   };
-  return <CategoryCards code="INPUT" order={inputNames} demos={demos} />;
+  const ext = 'extended-inputs';
+  return (
+    <CategoryCards
+      code="INPUT"
+      order={inputNames}
+      demos={demos}
+      notes={{
+        InputPassword: (
+          <PairNote name="PasswordInput" category={ext} kind="aliased" />
+        ),
+        InputNumber: (
+          <PairNote name="NumberInput" category={ext} kind="aliased" />
+        ),
+        InputMask: <PairNote name="MaskInput" category={ext} kind="aliased" />,
+        InputOtp: <PairNote name="OTPInput" category={ext} kind="aliased" />,
+        InputColor: (
+          <PairNote name="ColorInput" category={ext} kind="aliased" />
+        ),
+        AutoComplete: (
+          <PairNote name="Autocomplete" category={ext} kind="aliased" />
+        ),
+        DatePicker: <PairNote name="DateInput" category={ext} kind="aliased" />,
+        Field: <PairNote name="FormField" category={ext} kind="aliased" />,
+        IconField: (
+          <PairNote name="SearchInput" category={ext} kind="extended" />
+        ),
+      }}
+    />
+  );
 }

@@ -283,7 +283,7 @@ export function LoanCalculatorExample() {
         title="얼마나 갚게 될까요?"
         description="조건을 바꿔가며 월 상환금을 미리 계산해 보세요"
       />
-      <Grid minItemWidth={320} gap={5}>
+      <Grid minItemWidth={320} gap={5} className="loan-grid">
         <Card padding="lg">
           <Stack gap={5}>
             <Stack gap={2}>
@@ -323,6 +323,7 @@ export function LoanCalculatorExample() {
               />
             </Stack>
             <RadioGroup
+              className="loan-repay"
               label="상환 방식"
               name="loan-repay"
               value={kind}
@@ -490,12 +491,12 @@ export function SpendingReportExample() {
         description="소비 패턴을 카테고리와 요일별로 살펴봐요"
         actions={<Badge tone="brand">데모 데이터</Badge>}
       />
-      <Tabs
+      <SegmentedControl
         label="조회 기간"
-        variant="pill"
+        name="report-period"
         value={period}
         onValueChange={(v) => setPeriod(v as keyof typeof periods)}
-        items={[
+        options={[
           { value: 'month', label: '이번 달' },
           { value: 'last', label: '지난달' },
           { value: 'quarter', label: '3개월' },
@@ -516,20 +517,21 @@ export function SpendingReportExample() {
             label="하루 평균"
             value={Math.round(data.total / 30).toLocaleString('ko-KR')}
             unit="원"
+            hint="30일 기준"
           />
         </Card>
         <Card variant="outlined" className="report-budget">
+          <Stat
+            label="예산 달성률"
+            value={used}
+            unit="%"
+            hint={`예산 ${won(data.budget)}`}
+          />
           <CircularProgress
             label={`예산 ${used}% 사용`}
             value={Math.min(used, 100)}
-            size={56}
+            size={40}
           />
-          <div>
-            <Text size="sm" tone="muted">
-              예산 달성률
-            </Text>
-            <Heading size="md">{used}%</Heading>
-          </div>
         </Card>
       </Grid>
 
@@ -632,21 +634,25 @@ export function SpendingReportExample() {
 const benefits = [
   {
     tone: 'brand',
+    category: '카페',
     title: '커피 50% 할인',
     body: '전국 카페에서 월 5회, 최대 2만원',
   },
   {
     tone: 'success',
+    category: '교통',
     title: '대중교통 10% 적립',
     body: '버스·지하철·택시 한도 없이',
   },
   {
     tone: 'purple',
+    category: '구독',
     title: '스트리밍 3천원 할인',
     body: '메가플릭스, 뮤직 등 구독 결제',
   },
   {
     tone: 'warning',
+    category: '해외',
     title: '해외결제 수수료 면제',
     body: '전 세계 어디서나 수수료 0원',
   },
@@ -676,30 +682,41 @@ function CardBenefits() {
 
   return (
     <Stack gap={5}>
-      <div className="cardb-face" aria-label="메가 데일리 카드 **** 4821">
-        <div className="cardb-face__top">
-          <span>MEGA CARD</span>
-          <ExampleIcon name="bolt" />
+      <div className="cardb-hero">
+        <div className="cardb-face" aria-label="메가 데일리 카드 **** 4821">
+          <div className="cardb-face__top">
+            <span>MEGA CARD</span>
+            <ExampleIcon name="bolt" />
+          </div>
+          <div className="cardb-face__number">**** **** **** 4821</div>
+          <div className="cardb-face__bottom">
+            <span>KIM MEGA</span>
+            <span>12/29</span>
+          </div>
         </div>
-        <div className="cardb-face__number">**** **** **** 4821</div>
-        <div className="cardb-face__bottom">
-          <span>KIM MEGA</span>
-          <span>12/29</span>
-        </div>
-      </div>
-      <Stack direction="row" justify="between" align="center" wrap>
-        <div>
+        <Stack gap={3} align="start">
+          {lost ? (
+            <Badge tone="danger">분실 신고됨</Badge>
+          ) : (
+            <Badge tone="success">사용 중</Badge>
+          )}
           <Heading size="lg">메가 데일리 카드</Heading>
-          <Text size="sm" tone="muted">
-            이번 달 받은 혜택 {won(saved)}
-          </Text>
-        </div>
-        {lost ? (
-          <Badge tone="danger">분실 신고됨</Badge>
-        ) : (
-          <Badge tone="success">사용 중</Badge>
-        )}
-      </Stack>
+          <Stat
+            size="sm"
+            label="이번 달 받은 혜택"
+            value={saved.toLocaleString('ko-KR')}
+            unit="원"
+          />
+          <Button
+            variant="secondary"
+            leading={<ExampleIcon name="shield" />}
+            disabled={lost}
+            onClick={() => setConfirm(true)}
+          >
+            {lost ? '분실 신고 완료' : '분실 신고'}
+          </Button>
+        </Stack>
+      </div>
       <Tabs
         label="카드 정보"
         value={tab}
@@ -716,7 +733,7 @@ function CardBenefits() {
             {benefits.map((b) => (
               <Card key={b.title} variant="outlined">
                 <Stack gap={2} align="start">
-                  <Badge tone={b.tone}>혜택</Badge>
+                  <Badge tone={b.tone}>{b.category}</Badge>
                   <Heading size="sm">{b.title}</Heading>
                   <Text size="sm" tone="secondary">
                     {b.body}

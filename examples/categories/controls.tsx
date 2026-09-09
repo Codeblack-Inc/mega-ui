@@ -18,7 +18,7 @@ import {
   useToast,
 } from '@mega-ui/react';
 import { ExampleIcon } from '../icons';
-import { CategoryCards } from './shell';
+import { CategoryCards, PairNote } from './shell';
 
 export const controlNames = [
   'Button',
@@ -271,5 +271,20 @@ export function ControlsCategory() {
       />
     ),
   };
-  return <CategoryCards code="CONTROL" order={controlNames} demos={demos} />;
+  return (
+    <CategoryCards
+      code="CONTROL"
+      order={controlNames}
+      demos={demos}
+      notes={{
+        Radio: (
+          <PairNote
+            name="RadioGroup"
+            category="extended-inputs"
+            kind="extended"
+          />
+        ),
+      }}
+    />
+  );
 }

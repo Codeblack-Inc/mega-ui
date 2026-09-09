@@ -5,7 +5,7 @@
   border: 1px solid transparent;
   border-radius: var(--mega-radius-xl);
   &--elevated {
-    box-shadow: var(--mega-shadow-xs);
+    box-shadow: var(--mega-shadow-card);
   }
   &--filled {
     background: var(--mega-fill-solid);

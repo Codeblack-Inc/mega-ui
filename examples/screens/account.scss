@@ -70,9 +70,35 @@
 
 // ---------- 알림센터 ----------
 .notif__item {
-  transition: opacity var(--mega-duration-fast) var(--mega-ease);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: center;
+  > strong,
+  > span {
+    grid-column: 1;
+  }
+  > .mega-button,
+  > .notif__read {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  // 읽은 알림: 틴트 없는 기본 surface + muted 텍스트
   &:not(.is-unread) {
-    opacity: 0.6;
+    background: var(--mega-surface);
+    box-shadow: inset 0 0 0 1px var(--mega-border);
+    color: var(--mega-muted);
+    > strong {
+      color: var(--mega-text-secondary);
+    }
+  }
+}
+.notif__read {
+  display: flex;
+  color: var(--mega-success);
+  > svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -98,5 +124,25 @@
   }
   .login__social {
     flex-direction: column;
+  }
+}
+
+// 간편 로그인: 브랜드 톤
+.login__social > .mega-button {
+  &[data-brand='kakao'] {
+    background: #fee500;
+    color: #191919;
+  }
+  &[data-brand='google'] {
+    background: #fff;
+    color: #1f1f1f;
+    box-shadow: inset 0 0 0 1px var(--mega-border-strong);
+  }
+  &[data-brand='apple'] {
+    background: #000;
+    color: #fff;
+  }
+  &[data-brand]:hover {
+    filter: brightness(0.94);
   }
 }

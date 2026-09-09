@@ -74,7 +74,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'dashboard',
         label: '자산 홈',
-        title: '내 자산을 한눈에, 금융 홈.',
+        title: '내 자산을 한눈에, 금융 홈',
         description: '카드와 리스트, 진행률로 구성한 개인 금융 화면이에요.',
         wide: false,
         Component: DashboardExample,
@@ -83,7 +83,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'payments',
         label: '결제 화면',
-        title: '선택부터 완료까지, 간편한 결제.',
+        title: '선택부터 완료까지, 간편한 결제',
         description: '결제 수단 선택, 동의, 하단 버튼, 완료 피드백을 담았어요.',
         wide: false,
         Component: PaymentExample,
@@ -92,7 +92,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'transfer',
         label: '송금하기',
-        title: '받는 사람부터 확인까지, 3단계 송금.',
+        title: '받는 사람부터 확인까지, 3단계 송금',
         description:
           '연락처 선택, 금액 입력, 확인과 완료까지 이어지는 송금 흐름이에요.',
         wide: false,
@@ -102,7 +102,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'loan',
         label: '대출 계산기',
-        title: '조건을 바꾸면 바로 보이는 월 상환금.',
+        title: '조건을 바꾸면 바로 보이는 월 상환금',
         description:
           '슬라이더와 상환 방식으로 이자와 상환 일정을 실시간 계산해요.',
         wide: false,
@@ -112,7 +112,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'spending',
         label: '소비 리포트',
-        title: '어디에 얼마나 썼는지, 한눈에.',
+        title: '어디에 얼마나 썼는지, 한눈에',
         description:
           '카테고리 막대, 요일별 차트, 자주 간 곳으로 소비 패턴을 살펴봐요.',
         wide: false,
@@ -122,7 +122,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'card',
         label: '카드 관리',
-        title: '내 카드의 혜택과 설정을 한곳에.',
+        title: '내 카드의 혜택과 설정을 한곳에',
         description:
           '카드 이미지, 혜택·이용내역·설정 탭, 분실 신고 다이얼로그를 담았어요.',
         wide: false,
@@ -132,7 +132,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'market',
         label: '증권 홈',
-        title: '시장의 흐름을 더 가까이.',
+        title: '시장의 흐름을 더 가까이',
         description: '실시간 순위와 관심 주식으로 살펴보는 오늘의 시장이에요.',
         wide: true,
         Component: MarketExample,
@@ -148,7 +148,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'login',
         label: '로그인',
-        title: '다시 만나서 반가워요, 로그인.',
+        title: '다시 만나서 반가워요, 로그인',
         description:
           '이메일·비밀번호 입력, 오류 안내, 로딩 상태와 간편 로그인을 담았어요.',
         wide: false,
@@ -158,7 +158,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'signup',
         label: '회원가입',
-        title: '약관부터 인증까지, 4단계 가입.',
+        title: '약관부터 인증까지, 4단계 가입',
         description:
           '전체 동의, 입력 마스크, 인증번호 카운트다운으로 이어지는 가입 플로우예요.',
         wide: false,
@@ -168,7 +168,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'profile',
         label: '마이페이지',
-        title: '내 정보와 혜택을 한곳에서.',
+        title: '내 정보와 혜택을 한곳에서',
         description:
           '프로필, 포인트·쿠폰 통계, 최근 주문과 계정 메뉴를 모았어요.',
         wide: false,
@@ -178,7 +178,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'settings',
         label: '설정 화면',
-        title: '나에게 딱 맞는, 서비스 설정.',
+        title: '나에게 딱 맞는, 서비스 설정',
         description: '입력과 스위치를 조합해 내 정보와 알림을 관리해요.',
         wide: false,
         Component: SettingsExample,
@@ -187,7 +187,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'notifications',
         label: '알림센터',
-        title: '놓친 소식 없이, 알림센터.',
+        title: '놓친 소식 없이, 알림센터',
         description:
           '분류 탭과 읽음 처리, 빈 상태와 수신 설정까지 갖춘 알림 목록이에요.',
         wide: false,
@@ -197,7 +197,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'security',
         label: '보안·기기',
-        title: '내 계정을 더 안전하게.',
+        title: '내 계정을 더 안전하게',
         description:
           '2단계 인증 QR, 로그인 기기 관리, 비밀번호 안전도와 보안 활동 기록이에요.',
         wide: false,
@@ -214,7 +214,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'admin',
         label: '어드민 대시보드',
-        title: '비즈니스의 오늘을 한눈에.',
+        title: '비즈니스의 오늘을 한눈에',
         description: '매출부터 정산까지, 사장님을 위한 가맹점 관리 화면이에요.',
         wide: true,
         Component: AdminExample,
@@ -223,7 +223,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'users',
         label: '사용자 관리',
-        title: '팀원을 한곳에서, 사용자 관리.',
+        title: '팀원을 한곳에서, 사용자 관리',
         description:
           '검색·필터·선택과 초대, 상세 드로어까지 담은 관리자용 사용자 목록이에요.',
         wide: true,
@@ -233,7 +233,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'board',
         label: '프로젝트 보드',
-        title: '보드·목록·타임라인, 하나의 프로젝트.',
+        title: '보드·목록·타임라인, 하나의 프로젝트',
         description:
           '칸반으로 옮기고, 표로 정렬하고, 간트로 일정을 살펴보는 협업 화면이에요.',
         wide: true,
@@ -243,7 +243,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'calendar',
         label: '일정 관리',
-        title: '이번 달 일정을 한눈에.',
+        title: '이번 달 일정을 한눈에',
         description:
           '달력과 주간 스케줄러를 오가며 일정을 보고 추가하는 화면이에요.',
         wide: true,
@@ -253,7 +253,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'org',
         label: '조직도·인사',
-        title: '우리 팀은 이렇게 생겼어요.',
+        title: '우리 팀은 이렇게 생겼어요',
         description:
           '조직도와 부서 트리로 구성원 명단을 살펴보는 인사 화면이에요.',
         wide: true,
@@ -263,7 +263,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'drive',
         label: '파일 드라이브',
-        title: '파일은 드라이브에 차곡차곡.',
+        title: '파일은 드라이브에 차곡차곡',
         description:
           '업로드, 목록·격자 보기, 정렬과 상세 드로어를 갖춘 파일 관리 화면이에요.',
         wide: true,
@@ -280,7 +280,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'shop',
         label: '상품 목록',
-        title: '취향에 맞는 상품을 더 빠르게.',
+        title: '취향에 맞는 상품을 더 빠르게',
         description: '필터와 정렬, 찜과 장바구니를 담은 쇼핑 목록 화면이에요.',
         wide: true,
         Component: ShopExample,
@@ -289,7 +289,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'order',
         label: '주문 상세',
-        title: '내 주문이 어디쯤 왔는지 한눈에.',
+        title: '내 주문이 어디쯤 왔는지 한눈에',
         description:
           '진행 단계, 배송 현황, 결제 정보와 배송지 변경을 담았어요.',
         wide: false,
@@ -299,7 +299,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'landing',
         label: '랜딩 페이지',
-        title: '첫인상부터 요금까지, 한 페이지에.',
+        title: '첫인상부터 요금까지, 한 페이지에',
         description:
           '히어로, 기능 소개, 후기, 요금제, FAQ로 구성한 마케팅 화면이에요.',
         wide: true,
@@ -316,7 +316,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'assistant',
         label: 'AI 어시스턴트',
-        title: '물어보면 바로 답하는 금융 비서.',
+        title: '물어보면 바로 답하는 금융 비서',
         description:
           '대화 목록, 스트리밍 답변, 작업 상태를 보여주는 AI 채팅 화면이에요.',
         wide: true,
@@ -326,7 +326,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'mobile',
         label: '모바일 홈',
-        title: '손안에서 시작하는 하루.',
+        title: '손안에서 시작하는 하루',
         description:
           '폰 프레임 안에서 하단 탭으로 홈·혜택·송금·증권을 오가는 앱 홈이에요.',
         wide: false,
@@ -336,7 +336,7 @@ export const exampleGroups: ExampleGroup[] = [
       {
         id: 'states',
         label: '상태 화면',
-        title: '비어 있어도, 막혀도 친절하게.',
+        title: '비어 있어도, 막혀도 친절하게',
         description:
           '404, 서버 오류, 빈 검색, 점검, 로딩, 둘러보기 등 상태 화면 모음이에요.',
         wide: false,

@@ -25,11 +25,30 @@
 }
 .mega-timeline {
   margin: 0;
-  padding-left: var(--mega-space-5);
+  padding-left: 6px;
   color: var(--mega-text);
+  list-style: none;
   li {
+    position: relative;
     padding: 0 0 var(--mega-space-5) var(--mega-space-3);
     border-left: 2px solid var(--mega-border-brand-soft);
+
+    &::before {
+      position: absolute;
+      top: 5px;
+      left: -6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--mega-brand);
+      box-shadow: 0 0 0 2px var(--mega-surface);
+      content: '';
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+      border-left-color: transparent;
+    }
   }
   time,
   p {
@@ -69,15 +88,52 @@
 }
 .mega-carousel {
   min-width: 0;
+  container-type: inline-size;
 }
 .mega-carousel__controls {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
   align-items: center;
   gap: var(--mega-space-3);
   margin-top: var(--mega-space-4);
   color: var(--mega-muted);
   font-variant-numeric: tabular-nums;
+}
+.mega-carousel__controls > .mega-icon-button svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mega-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--mega-space-2);
+
+  button {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--mega-radius-full);
+    background: var(--mega-control);
+    cursor: pointer;
+  }
+
+  button[aria-current] {
+    width: 20px;
+    background: var(--mega-brand);
+  }
+}
+@container (max-width: 480px) {
+  .mega-carousel__controls {
+    display: flex;
+    justify-content: center;
+  }
+  .mega-carousel__controls > .mega-icon-button {
+    display: none;
+  }
 }
 .mega-code,
 .mega-code-block {

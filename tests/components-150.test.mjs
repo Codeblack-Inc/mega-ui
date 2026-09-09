@@ -86,6 +86,13 @@ test('content renders native disclosures, literal code, real QR paths and safe e
       }),
       h(ui.CodeBlock, { code: '<script>alert(1)</script>' }),
       h(ui.Carousel, { label: 'Empty' }),
+      h(
+        ui.Carousel,
+        { label: 'News' },
+        h('p', null, 'First'),
+        h('p', null, 'Second'),
+      ),
+      h(ui.Timeline, { items: [{ id: 'a', title: 'Started' }] }),
       h(ui.QRCode, { value: 'https://example.com', label: 'Link' }),
     ),
   );
@@ -94,6 +101,9 @@ test('content renders native disclosures, literal code, real QR paths and safe e
   assert.match(html, /&lt;script&gt;/);
   assert.doesNotMatch(html, /<script>/);
   assert.match(html, /0 \/ 0/);
+  assert.match(html, /aria-label="1번 슬라이드" aria-current="true"/);
+  assert.match(html, /aria-label="다음 슬라이드"/);
+  assert.match(html, /mega-timeline/);
   assert.match(html, /shape-rendering="crispEdges"/);
   assert.match(html, /M4 4h1v1h-1z/);
   assert.notEqual(
@@ -127,7 +137,10 @@ test('media and AI components retain accessible labels and controlled busy state
       }),
       h(ui.StreamingText, { text: 'Partial', streaming: true }),
       h(ui.AgentActivity, {
-        steps: [{ id: 'x', label: 'Task', status: 'error' }],
+        steps: [
+          { id: 'x', label: 'Task', status: 'error' },
+          { id: 'y', label: 'Work', status: 'running' },
+        ],
       }),
     ),
   );
@@ -136,6 +149,7 @@ test('media and AI components retain accessible labels and controlled busy state
   assert.match(html, /생성 중지/);
   assert.match(html, /aria-busy="true" aria-live="off"/);
   assert.match(html, /data-status="error"/);
+  assert.match(html, /data-status="running"[^>]*>.*mega-spinner/);
   assert.match(render(h(ui.Image, { alt: 'Missing' })), /mega-image-fallback/);
   assert.doesNotMatch(render(h(ui.Image, { alt: '' })), /role="img"/);
 });

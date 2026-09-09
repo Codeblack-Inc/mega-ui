@@ -3,9 +3,7 @@ import {
   Badge,
   Card,
   Chip,
-  Grid,
   Heading,
-  LinkButton,
   PageHeader,
   Stack,
   Text,
@@ -47,31 +45,29 @@ export function GalleryPage() {
             </Heading>
             <Text tone="muted">{item.description}</Text>
           </Stack>
-          <Grid minItemWidth={260} gap={4}>
+          <div className="gallery-grid">
             {item.items.map((example) => (
-              <Card key={example.id} variant="outlined" padding="lg">
-                <Stack gap={3} className="home-card">
-                  <Stack direction="row" justify="between" align="center">
+              <a
+                key={example.id}
+                href={`#${example.id}`}
+                className="gallery-card"
+              >
+                <Card variant="outlined" padding="lg">
+                  <Stack gap={3}>
                     <Text size="xs" tone="brand" weight="semibold">
                       {example.label}
                     </Text>
-                    {example.wide ? (
-                      <Badge tone="neutral">전체 너비</Badge>
-                    ) : null}
+                    <Heading level={3} size="sm">
+                      {example.title}
+                    </Heading>
+                    <Text size="sm" tone="secondary">
+                      {example.description}
+                    </Text>
                   </Stack>
-                  <Heading level={3} size="sm">
-                    {example.title}
-                  </Heading>
-                  <Text size="sm" tone="secondary">
-                    {example.description}
-                  </Text>
-                  <LinkButton href={`#${example.id}`} variant="weak" size="sm">
-                    화면 열기
-                  </LinkButton>
-                </Stack>
-              </Card>
+                </Card>
+              </a>
             ))}
-          </Grid>
+          </div>
         </Stack>
       ))}
     </Stack>

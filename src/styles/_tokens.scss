@@ -161,6 +161,7 @@
   --mega-shadow-sm: 0 2px 4px 0 var(--mega-shadow-color);
   --mega-shadow-md: 0 12px 40px 4px var(--mega-shadow-color);
   --mega-shadow-lg: 0 18px 80px 4px var(--mega-shadow-color);
+  --mega-shadow-card: 0 1px 2px rgb(0 0 0 / 4%), 0 6px 16px rgb(0 0 0 / 6%);
 
   // ---- motion ----
   --mega-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -180,6 +181,7 @@
   --mega-space-6: 32px;
   --mega-space-7: 48px;
   --mega-space-8: 64px;
+  accent-color: var(--mega-brand);
   color-scheme: light;
 }
 
@@ -216,8 +218,8 @@
   --mega-blue-700: #4896ff;
   --mega-blue-800: #64adff;
   --mega-blue-900: #8fc7ff;
-  --mega-blue-a100: rgb(67 122 223 / 20%);
-  --mega-blue-a200: rgb(68 122 213 / 28%);
+  --mega-blue-a100: rgb(72 150 255 / 14%);
+  --mega-blue-a200: rgb(72 150 255 / 22%);
   --mega-blue-a300: rgb(60 121 220 / 41%);
 
   --mega-red-100: #3e2429;
@@ -225,39 +227,49 @@
   --mega-red-400: #8d222f;
   --mega-red-600: #dc2e47;
   --mega-red-700: #f5445a;
-  --mega-red-a100: rgb(219 81 87 / 20%);
-  --mega-red-a200: rgb(216 75 85 / 30%);
+  --mega-red-a100: rgb(245 68 90 / 14%);
+  --mega-red-a200: rgb(245 68 90 / 22%);
 
   --mega-green-100: #212e2e;
   --mega-green-200: #213834;
   --mega-green-400: #1f5c4c;
   --mega-green-600: #009169;
   --mega-green-700: #07a978;
-  --mega-green-a100: rgb(61 123 101 / 23%);
-  --mega-green-a200: rgb(55 132 108 / 30%);
+  --mega-green-a100: rgb(7 169 120 / 14%);
+  --mega-green-a200: rgb(7 169 120 / 22%);
 
   --mega-yellow-100: #312a25;
   --mega-yellow-200: #3e3123;
   --mega-yellow-400: #814f1e;
   --mega-yellow-600: #f29300;
   --mega-yellow-700: #fcb50c;
-  --mega-yellow-a100: rgb(230 168 86 / 13%);
-  --mega-yellow-a200: rgb(227 158 53 / 19%);
+  --mega-yellow-a100: rgb(252 181 12 / 14%);
+  --mega-yellow-a200: rgb(252 181 12 / 22%);
 
   --mega-teal-600: #188b8c;
   --mega-teal-700: #02a4a5;
-  --mega-teal-a100: rgb(66 122 127 / 22%);
+  --mega-teal-a100: rgb(2 164 165 / 14%);
   --mega-purple-600: #9451d9;
   --mega-purple-700: #ac65f2;
-  --mega-purple-a100: rgb(147 98 192 / 21%);
+  --mega-purple-a100: rgb(172 101 242 / 14%);
 
   --mega-bg: #17171c;
-  --mega-surface: #202025;
-  --mega-surface-raised: #2a2b31;
+  // surface sits ~4% lighter than bg; elevated cards get a hairline ring since shadows vanish on dark
+  --mega-surface: #222228;
+  --mega-surface-raised: #2c2d33;
   --mega-dim: rgb(0 0 0 / 60%);
   --mega-shadow-color: rgb(0 0 0 / 25%);
   --mega-shadow-color-weak: rgb(0 0 0 / 12%);
+  --mega-shadow-card:
+    0 0 0 1px rgb(255 255 255 / 7%), 0 6px 16px rgb(0 0 0 / 40%);
+  --mega-border: rgb(213 223 244 / 16%);
   --mega-warning-fill: var(--mega-yellow-600);
+  // tone text on 14% tinted surfaces: all >= 4.5:1
+  --mega-brand-strong: var(--mega-blue-800);
+  --mega-danger: #ff7583;
+  --mega-success: #2ed19a;
+  --mega-teal: #2ec4c5;
+  --mega-purple: #c48fff;
   --mega-up: var(--mega-red-700);
   --mega-down: var(--mega-blue-700);
   color-scheme: dark;

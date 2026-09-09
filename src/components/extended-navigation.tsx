@@ -64,6 +64,7 @@ export function Stepper({
           <li
             key={index}
             className="mega-stepper__item"
+            data-active={active || undefined}
             data-complete={complete || undefined}
           >
             <button
@@ -78,7 +79,12 @@ export function Stepper({
                 {complete ? '✓' : index + 1}
               </span>
               <span>
-                <span className="mega-stepper__label">{item.label}</span>
+                <span
+                  className="mega-stepper__label"
+                  data-progress={`${index + 1}/${items.length}`}
+                >
+                  {item.label}
+                </span>
                 {item.description ? (
                   <span className="mega-stepper__description">
                     {item.description}

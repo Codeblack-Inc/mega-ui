@@ -15,7 +15,6 @@ import {
   Chat,
   CheckboxGroup,
   Chip,
-  CircularProgress,
   DescriptionList,
   Dialog,
   Drawer,
@@ -44,7 +43,6 @@ import {
   SideNavItem,
   SideNavSection,
   Skeleton,
-  Spinner,
   Stack,
   Stat,
   Stepper,
@@ -446,7 +444,10 @@ export function OrderDetailExample() {
           </Card>
         </Stack>
       </Grid>
-      <BottomCTA description="배송 완료 후 7일까지 교환·반품을 신청할 수 있어요">
+      <BottomCTA
+        className="order-actions"
+        description="배송 완료 후 7일까지 교환·반품을 신청할 수 있어요"
+      >
         <Button size="xl" variant="secondary">
           교환·반품
         </Button>
@@ -749,6 +750,21 @@ interface ChatMessage {
   time: string;
 }
 
+const initialMessages: ChatMessage[] = [
+  {
+    id: 1,
+    author: '나',
+    text: '이번 달 소비가 지난달보다 얼마나 줄었어?',
+    time: '09:00',
+  },
+  {
+    id: 2,
+    author: '메가 AI',
+    text: '이번 달 총 소비는 84만 원으로 지난달보다 25% 줄었어요. 카페와 배달 지출이 가장 많이 줄었고, 남은 예산은 66만 원이에요.',
+    time: '09:00',
+  },
+];
+
 const now = () =>
   new Date().toLocaleTimeString('ko-KR', {
     hour: '2-digit',
@@ -756,14 +772,7 @@ const now = () =>
   });
 
 export function AssistantExample() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 1,
-      author: '메가 AI',
-      text: '안녕하세요, 김메가님. 자산이나 소비에 대해 무엇이든 물어보세요.',
-      time: '09:00',
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [prompt, setPrompt] = useState('');
   const [streaming, setStreaming] = useState<{
     full: string;
@@ -775,6 +784,7 @@ export function AssistantExample() {
 
   const finish = (text: string) => {
     window.clearInterval(timer.current);
+    timer.current = undefined;
     setStreaming(null);
     setMessages((items) => [
       ...items,
@@ -783,6 +793,21 @@ export function AssistantExample() {
   };
 
   useEffect(() => () => window.clearInterval(timer.current), []);
+
+  const newChat = () => {
+    window.clearInterval(timer.current);
+    timer.current = undefined;
+    setStreaming(null);
+    setStepIndex(0);
+    setMessages([
+      {
+        id: Date.now(),
+        author: '메가 AI',
+        text: '새 대화를 시작했어요. 궁금한 내용을 물어보세요.',
+        time: now(),
+      },
+    ]);
+  };
 
   const ask = (text: string) => {
     if (!text.trim() || streaming) return;
@@ -813,7 +838,7 @@ export function AssistantExample() {
         <Button
           fullWidth
           leading={<ExampleIcon name="plus" />}
-          onClick={() => setMessages(messages.slice(0, 1))}
+          onClick={newChat}
         >
           새 대화
         </Button>
@@ -840,7 +865,11 @@ export function AssistantExample() {
               side={message.author === '나' ? 'end' : 'start'}
               time={message.time}
             >
-              {message.text}
+              {message.author === '메가 AI' ? (
+                <StreamingText text={message.text} />
+              ) : (
+                message.text
+              )}
             </MessageBubble>
           ))}
           {streaming ? (
@@ -849,18 +878,19 @@ export function AssistantExample() {
             </MessageBubble>
           ) : null}
         </Chat>
-        {streaming ? (
+        {streaming || messages.length > 1 ? (
           <Card variant="outlined" className="assist-activity">
             <AgentActivity
               steps={steps.map((label, index) => ({
                 id: label,
                 label,
-                status:
-                  index < stepIndex
+                status: streaming
+                  ? index < stepIndex
                     ? 'complete'
                     : index === stepIndex
                       ? 'running'
-                      : 'pending',
+                      : 'pending'
+                  : 'complete',
               }))}
             />
           </Card>
@@ -1197,11 +1227,6 @@ export function StatesExample() {
           <Stack gap={4}>
             <Heading size="sm">불러오는 중</Heading>
             <Skeleton lines={3} />
-            <Stack direction="row" gap={4} align="center">
-              <Spinner label="데이터 불러오는 중" />
-              <CircularProgress label="업로드 65%" value={65} />
-              <CircularProgress label="처리 중" />
-            </Stack>
           </Stack>
         </Card>
         <Card padding="lg">

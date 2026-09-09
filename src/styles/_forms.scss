@@ -112,15 +112,84 @@
   padding: 5px;
   cursor: pointer;
 }
+// One real (invisible) input over presentational boxes: paste, autofill and
+// native validation stay intact, and the caret box follows the value length.
 .mega-input-otp {
-  letter-spacing: 0.45em;
-  font-variant-numeric: tabular-nums;
+  position: relative;
+  display: inline-grid;
+  width: 100%;
+  max-width: calc(
+    var(--_otp-length) * 44px + (var(--_otp-length) - 1) * var(--mega-space-2)
+  );
+  grid-auto-flow: column;
+  grid-template-columns: repeat(var(--_otp-length), minmax(0, 44px));
+  gap: var(--mega-space-2);
+  &__input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-size: 16px;
+    caret-color: transparent;
+    outline: 0;
+    &::selection {
+      background: transparent;
+    }
+  }
+  &__box {
+    display: grid;
+    height: 52px;
+    place-items: center;
+    border-radius: var(--mega-radius-sm);
+    background: var(--mega-surface);
+    color: var(--mega-text-strong);
+    font-size: 22px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    box-shadow: inset 0 0 0 1px var(--mega-border-strong);
+    transition: box-shadow var(--mega-duration) var(--mega-ease);
+  }
+  &:focus-within &__box[data-active] {
+    box-shadow: inset 0 0 0 1.5px var(--mega-brand);
+  }
+  &:has(.mega-input-otp__input[aria-invalid='true']) &__box {
+    box-shadow: inset 0 0 0 1.5px var(--mega-danger-fill);
+  }
+  &:has(.mega-input-otp__input:disabled) {
+    opacity: var(--mega-disabled-opacity);
+  }
+  &--box &__box {
+    background: var(--mega-fill-solid);
+    box-shadow: inset 0 0 0 1.5px transparent;
+  }
+  &--sm &__box {
+    height: 44px;
+    font-size: 18px;
+  }
+  &--lg &__box {
+    height: 56px;
+  }
 }
 .mega-listbox {
   padding: 4px;
   option {
     padding: 8px 12px;
     border-radius: var(--mega-radius-xs);
+    // ponytail: a gradient is the only background browsers honor on a selected option
+    &:checked {
+      background: linear-gradient(
+        var(--mega-brand-soft),
+        var(--mega-brand-soft)
+      );
+      color: var(--mega-brand-strong);
+      font-weight: 600;
+    }
   }
 }
 .mega-slider {

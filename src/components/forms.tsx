@@ -1,7 +1,10 @@
 import {
+  useEffect,
   useId,
+  useRef,
   useState,
   type ComponentPropsWithRef,
+  type CSSProperties,
   type ReactNode,
 } from 'react';
 import {
@@ -278,23 +281,71 @@ export interface InputOtpProps extends Omit<
 > {
   length?: number;
 }
-/** One real input preserves mobile autofill, paste, selection and native validation. */
+/** One real input (invisible, over the boxes) preserves mobile autofill, paste, selection and native validation. */
 export function InputOtp({
   length = 6,
   className = '',
+  variant,
+  size,
+  value,
+  defaultValue,
+  onChange,
+  ref,
+  style,
   ...props
 }: InputOtpProps) {
-  const count = Math.max(1, Math.trunc(length) || 6);
+  const count = Number.isFinite(length)
+    ? Math.max(1, Math.trunc(length) || 6)
+    : 6;
+  const [local, setLocal] = useState(String(defaultValue ?? ''));
+  const inputRef = useRef<HTMLInputElement>(null);
+  const text = String(value ?? local);
+  useEffect(() => {
+    const form = inputRef.current?.form;
+    if (!form || value !== undefined) return;
+    const reset = () =>
+      queueMicrotask(() => setLocal(inputRef.current?.value ?? ''));
+    form.addEventListener('reset', reset);
+    return () => form.removeEventListener('reset', reset);
+  }, [value]);
   return (
-    <Input
-      autoComplete="one-time-code"
-      inputMode="numeric"
-      {...props}
-      type="text"
-      maxLength={count}
-      pattern={`[0-9]{${count}}`}
-      className={`mega-input-otp ${className}`}
-    />
+    <span
+      className={`mega-input-otp ${variant === 'box' ? 'mega-input-otp--box' : ''} ${size && size !== 'md' ? `mega-input-otp--${size}` : ''} ${className}`}
+      style={{ '--_otp-length': count, ...style } as CSSProperties}
+    >
+      {Array.from({ length: count }, (_, index) => (
+        <span
+          key={index}
+          className="mega-input-otp__box"
+          data-active={
+            index === Math.min(text.length, count - 1) ? '' : undefined
+          }
+          aria-hidden="true"
+        >
+          {text[index]}
+        </span>
+      ))}
+      <input
+        ref={(node) => {
+          inputRef.current = node;
+          if (typeof ref === 'function') return ref(node);
+          if (ref) ref.current = node;
+        }}
+        autoComplete="one-time-code"
+        inputMode="numeric"
+        {...props}
+        type="text"
+        maxLength={count}
+        pattern={`[0-9]{${count}}`}
+        value={value}
+        defaultValue={defaultValue}
+        onChange={(event) => {
+          setLocal(event.currentTarget.value);
+          onChange?.(event);
+        }}
+        className="mega-input-otp__input"
+      />
+    </span>
   );
 }
 

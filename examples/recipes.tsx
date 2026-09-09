@@ -224,7 +224,7 @@ export function SettingsExample() {
             <Text size="sm" tone="muted">
               중요한 보안 알림은 설정과 관계없이 전달돼요.
             </Text>
-            <BottomCTA>
+            <BottomCTA className="settings-actions">
               <Button
                 type="reset"
                 size="xl"

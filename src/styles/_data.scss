@@ -102,7 +102,7 @@
   &__amount {
     display: flex;
     align-items: baseline;
-    gap: var(--mega-space-1);
+    gap: 0;
   }
   &__value {
     color: var(--mega-text-strong);

@@ -186,42 +186,38 @@ function AdminDashboard() {
   );
   return (
     <div className="admin-layout">
-      <NavRail label="비즈니스 서비스" className="admin-rail">
-        <span className="admin-rail__brand" aria-label="메가">
-          m
-        </span>
-        {(['전체', '쇼핑', '매출', '페이', 'PG', '설정'] as const).map(
-          (label, index) => (
-            <NavRailItem
-              key={label}
-              label={label}
-              icon={
-                <ExampleIcon
-                  name={
-                    (
-                      [
-                        'grid',
-                        'bag',
-                        'chart',
-                        'card',
-                        'receipt',
-                        'settings',
-                      ] as const
-                    )[index]
-                  }
-                />
-              }
-              active={label === 'PG'}
-              onClick={() => setDetail(`${label} 서비스`)}
-            />
-          ),
-        )}
-        <Avatar name="김메가" size="sm" className="admin-rail__avatar" />
-      </NavRail>
       <aside className="admin-sidebar">
         <div className="admin-brand">
           <span className="admin-brand__symbol">m</span> payments
         </div>
+        <NavRail label="비즈니스 서비스" className="admin-services">
+          {(['전체', '쇼핑', '매출', '페이', 'PG', '설정'] as const).map(
+            (label, index) => (
+              <NavRailItem
+                key={label}
+                label={label}
+                icon={
+                  <ExampleIcon
+                    name={
+                      (
+                        [
+                          'grid',
+                          'bag',
+                          'chart',
+                          'card',
+                          'receipt',
+                          'settings',
+                        ] as const
+                      )[index]
+                    }
+                  />
+                }
+                active={label === 'PG'}
+                onClick={() => setDetail(`${label} 서비스`)}
+              />
+            ),
+          )}
+        </NavRail>
         <Button
           variant="outline"
           fullWidth
@@ -253,9 +249,12 @@ function AdminDashboard() {
             <SideNavItem
               icon={<ExampleIcon name="grid" />}
               badge={
-                <Badge variant="dot" tone="danger">
-                  N
-                </Badge>
+                <Badge
+                  variant="dot"
+                  tone="danger"
+                  className="admin-menu-dot"
+                  aria-label="새 소식"
+                />
               }
               onClick={() => setTab('payments')}
             >
@@ -304,16 +303,19 @@ function AdminDashboard() {
           </SideNavSection>
         </SideNav>
         <div className="admin-support">
-          <Text size="xs" tone="muted">
-            도움이 필요하신가요?
-          </Text>
-          <Button
-            variant="text"
-            size="sm"
-            onClick={() => setDetail('가맹점 고객센터')}
-          >
-            고객센터 바로가기 →
-          </Button>
+          <Avatar name="김메가" size="sm" />
+          <div>
+            <Text size="xs" tone="muted">
+              도움이 필요하신가요?
+            </Text>
+            <Button
+              variant="text"
+              size="sm"
+              onClick={() => setDetail('가맹점 고객센터')}
+            >
+              고객센터 바로가기 →
+            </Button>
+          </div>
         </div>
       </aside>
       {banner ? (
@@ -424,9 +426,7 @@ function AdminDashboard() {
                   ))}
                   <TableHeaderCell align="end">금액</TableHeaderCell>
                   <TableHeaderCell>상태</TableHeaderCell>
-                  <TableHeaderCell>
-                    <span className="mega-visually-hidden">결제 관리</span>
-                  </TableHeaderCell>
+                  <TableHeaderCell aria-label="결제 관리" />
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -593,9 +593,11 @@ function AdminDashboard() {
                     <span className="admin-notice__title">{notice.title}</span>
                     <span className="admin-notice__date">{notice.date}</span>
                   </span>
-                  <Badge tone="danger" variant="dot">
-                    N
-                  </Badge>
+                  {notice.date >= '2026.09.07' ? (
+                    <Badge tone="danger" variant="dot">
+                      N
+                    </Badge>
+                  ) : null}
                 </button>
               ))}
           </div>

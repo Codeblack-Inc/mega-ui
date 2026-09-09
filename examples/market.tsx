@@ -4,6 +4,7 @@ import {
   Input,
   Avatar,
   Badge,
+  Banner,
   Button,
   Chip,
   Dialog,
@@ -244,21 +245,22 @@ export function MarketExample() {
         ))}
       </TopBar>
       <div className="market-main">
-        <div className="market-announcement">
-          <span className="market-announcement__icon">
-            <ExampleIcon name="bell" />
-          </span>
-          <Text size="sm" weight="semibold">
-            9월 19일 서비스 점검 안내
-          </Text>
-          <Button
-            variant="outline"
-            size="xs"
-            onClick={() => setInfo('9월 19일 서비스 점검 안내')}
-          >
-            자세히 보기
-          </Button>
-        </div>
+        <Banner
+          className="market-announcement"
+          tone="warning"
+          icon={<ExampleIcon name="bell" />}
+          title="9월 19일 서비스 점검 안내"
+          description="오전 2시부터 6시까지 주문이 잠시 멈춰요"
+          action={
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setInfo('9월 19일 서비스 점검 안내')}
+            >
+              자세히 보기
+            </Button>
+          }
+        />
         <section className="market-board" aria-label="시장 현황과 실시간 순위">
           <div className="market-session">
             <Stack direction="row" gap={4} wrap>
@@ -396,69 +398,80 @@ export function MarketExample() {
                   </IconButton>
                 </Tooltip>
               </div>
-              <Table
-                zebra={false}
-                className="market-table"
-                aria-label="실시간 종목 순위"
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableHeaderCell>순위</TableHeaderCell>
-                    <TableHeaderCell>종목</TableHeaderCell>
-                    <TableHeaderCell align="end">현재가</TableHeaderCell>
-                    <TableHeaderCell align="end">등락률</TableHeaderCell>
-                    <TableHeaderCell align="end">거래대금</TableHeaderCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {ranked.length ? (
-                    ranked.map((stock, index) => (
-                      <TableRow
-                        key={stock.symbol}
-                        clickable
-                        onClick={() => setSelected(stock)}
-                      >
-                        <TableCell className="market-rank">
-                          {index + 1}
-                        </TableCell>
-                        <TableCell>
-                          <div className="market-stock-name">
-                            <Avatar
-                              name={stock.name}
-                              size="sm"
-                              shape="rounded"
-                              style={{ background: stock.color, color: '#fff' }}
-                            />
-                            <span>
-                              {stock.name}
-                              <span className="market-stock-symbol">
-                                {stock.symbol} · {stock.region}
-                              </span>
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell numeric>
-                          <Amount value={stock.price} size="sm" />
-                        </TableCell>
-                        <TableCell
-                          numeric
-                          tone={stock.change > 0 ? 'up' : 'down'}
+              <div className="market-table-scroll">
+                <Table
+                  zebra={false}
+                  className="market-table"
+                  aria-label="실시간 종목 순위"
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableHeaderCell>순위</TableHeaderCell>
+                      <TableHeaderCell>종목</TableHeaderCell>
+                      <TableHeaderCell align="end">현재가</TableHeaderCell>
+                      <TableHeaderCell align="end">등락률</TableHeaderCell>
+                      <TableHeaderCell align="end" className="market-turnover">
+                        거래대금
+                      </TableHeaderCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {ranked.length ? (
+                      ranked.map((stock, index) => (
+                        <TableRow
+                          key={stock.symbol}
+                          clickable
+                          onClick={() => setSelected(stock)}
                         >
-                          {stock.change > 0 ? '+' : ''}
-                          {stock.change.toFixed(2)}%
-                        </TableCell>
-                        <TableCell numeric tone="muted">
-                          {stock.turnover}억원
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableEmpty colSpan={5}>
-                      검색 결과가 없어요. 다른 종목 이름을 입력해 주세요.
-                    </TableEmpty>
-                  )}
-                </TableBody>
-              </Table>
+                          <TableCell className="market-rank">
+                            {index + 1}
+                          </TableCell>
+                          <TableCell>
+                            <div className="market-stock-name">
+                              <Avatar
+                                name={stock.name}
+                                size="sm"
+                                shape="rounded"
+                                style={{
+                                  background: stock.color,
+                                  color: '#fff',
+                                }}
+                              />
+                              <span>
+                                {stock.name}
+                                <span className="market-stock-symbol">
+                                  {stock.symbol} · {stock.region}
+                                </span>
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell numeric>
+                            <Amount value={stock.price} size="sm" />
+                          </TableCell>
+                          <TableCell
+                            numeric
+                            tone={stock.change > 0 ? 'up' : 'down'}
+                          >
+                            {stock.change > 0 ? '+' : ''}
+                            {stock.change.toFixed(2)}%
+                          </TableCell>
+                          <TableCell
+                            numeric
+                            tone="muted"
+                            className="market-turnover"
+                          >
+                            {stock.turnover}억원
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableEmpty colSpan={5}>
+                        검색 결과가 없어요. 다른 종목 이름을 입력해 주세요.
+                      </TableEmpty>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           ) : tab === 'industry' ? (
             <div
@@ -531,7 +544,9 @@ export function MarketExample() {
       <aside className="market-watchlist">
         <div className="market-watchlist__heading">
           <Heading size="sm">관심</Heading>
-          <Badge>원</Badge>
+          <Text size="xs" tone="muted">
+            단위: 원
+          </Text>
         </div>
         <div className="market-ai">
           <Text size="sm" weight="semibold" tone="brand">

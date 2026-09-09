@@ -14,13 +14,16 @@ import {
   Text,
 } from '@mega-ui/react';
 import { categories } from './catalog';
+import { ExampleIcon } from './icons';
 import { componentCount, docs, exampleGroups, examples } from './routes';
 
 const exportCount = Object.keys(Mega).length;
 
 const installCode = `npm install /absolute/path/to/mega-ui-react-0.1.0.tgz`;
 
-const usageCode = `import { Button, Card, Container, Heading, Stack, Text } from '@mega-ui/react';
+const usageCode = `import {
+  Button, Card, Container, Heading, Stack, Text,
+} from '@mega-ui/react';
 import '@mega-ui/react/styles.css'; // 앱 진입점에서 한 번만
 
 export function Welcome() {
@@ -59,20 +62,29 @@ const principles = [
 function Section({
   title,
   description,
+  more,
   children,
 }: {
   title: string;
   description?: string;
+  more?: { href: string; label: string };
   children: ReactNode;
 }) {
   return (
     <Stack gap={4} className="home-section">
-      <Stack gap={1}>
-        <Heading level={2} size="lg">
-          {title}
-        </Heading>
-        {description ? <Text tone="muted">{description}</Text> : null}
-      </Stack>
+      <div className="home-section__head">
+        <Stack gap={1}>
+          <Heading level={2} size="lg">
+            {title}
+          </Heading>
+          {description ? <Text tone="muted">{description}</Text> : null}
+        </Stack>
+        {more ? (
+          <a className="home-section__more" href={more.href}>
+            {more.label} →
+          </a>
+        ) : null}
+      </div>
       {children}
     </Stack>
   );
@@ -84,8 +96,7 @@ export function HomePage() {
       <Stack gap={5} align="start" className="home-hero">
         <Badge tone="brand">v0.1.0 · React 19 · TypeScript · SCSS</Badge>
         <Heading level={1} size="2xl">
-          익숙해서 쉽고, 단순해서 편안한
-          <br />
+          익숙해서 쉽고, 단순해서 편안한 <br className="home-hero__br" />
           회사 웹을 위한 React UI.
         </Heading>
         <Text size="lg" tone="secondary" className="home-hero__lead">
@@ -106,7 +117,7 @@ export function HomePage() {
         </Stack>
       </Stack>
 
-      <Grid minItemWidth={180} gap={3}>
+      <div className="home-stats">
         <Card variant="outlined">
           <Stat label="컴포넌트" value={componentCount} unit="개" />
         </Card>
@@ -119,7 +130,7 @@ export function HomePage() {
         <Card variant="outlined">
           <Stat label="화면 예제" value={examples.length} unit="개" />
         </Card>
-      </Grid>
+      </div>
 
       <Section
         title="3분 만에 시작하기"
@@ -209,8 +220,12 @@ export function HomePage() {
       <Section
         title="화면 예제"
         description="컴포넌트만 조합해 만든 실제 화면이에요. 소스 코드를 그대로 가져다 쓸 수 있어요."
+        more={{
+          href: '#examples',
+          label: `모든 화면 예제 보기 · ${examples.length}개`,
+        }}
       >
-        <Grid minItemWidth={220} gap={4}>
+        <div className="home-groups">
           {exampleGroups.map((group) => (
             <Card key={group.key} variant="outlined" padding="lg">
               <Stack gap={3} className="home-card">
@@ -236,10 +251,7 @@ export function HomePage() {
               </Stack>
             </Card>
           ))}
-        </Grid>
-        <LinkButton href="#examples" variant="secondary" size="md">
-          모든 화면 예제 보기 · {examples.length}개
-        </LinkButton>
+        </div>
       </Section>
 
       <Section
@@ -249,16 +261,13 @@ export function HomePage() {
         <Card variant="outlined" padding="lg">
           <Stack gap={0} className="home-docs">
             {docs.map((doc) => (
-              <ListRow
-                key={doc.href}
-                title={doc.label}
-                description={doc.description}
-                trailing={
-                  <LinkButton href={doc.href} variant="text" size="sm">
-                    열기
-                  </LinkButton>
-                }
-              />
+              <a key={doc.href} href={doc.href} className="home-docs__row">
+                <ListRow
+                  title={doc.label}
+                  description={doc.description}
+                  trailing={<ExampleIcon name="chevron" />}
+                />
+              </a>
             ))}
           </Stack>
         </Card>

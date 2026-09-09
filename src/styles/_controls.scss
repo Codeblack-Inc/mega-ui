@@ -111,9 +111,25 @@
     opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
   }
+  // Loading: the label keeps its width (no layout jump) and the loader sits over it.
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
   &[aria-busy='true'] {
+    position: relative;
     opacity: 0.8;
     cursor: progress;
+    > .mega-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -50% -50%;
+    }
+    > .mega-button__label {
+      opacity: 0;
+    }
   }
 }
 
@@ -287,10 +303,48 @@
     }
   }
 }
+// Native date/time/color fields: same box as Input, library icons instead of the UA glyphs.
+.mega-input {
+  &[type='date'],
+  &[type='time'],
+  &[type='datetime-local'],
+  &[type='month'],
+  &[type='week'] {
+    &::-webkit-calendar-picker-indicator {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      padding: 0;
+      background: var(--mega-icon);
+      mask: icons.$calendar center / 20px no-repeat;
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+  &[type='time']::-webkit-calendar-picker-indicator {
+    mask-image: icons.$clock;
+  }
+  &[type='color'] {
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    &::-webkit-color-swatch {
+      border: 0;
+      border-radius: var(--mega-radius-2xs);
+    }
+    &::-moz-color-swatch {
+      border: 0;
+      border-radius: var(--mega-radius-2xs);
+    }
+  }
+}
 .mega-textarea {
   padding-block: 10px;
   min-height: 112px;
-  resize: vertical;
+  // No native resize grip; grows with content where field-sizing is supported.
+  resize: none;
+  field-sizing: content;
+  max-height: 60vh;
   &.mega-input--box {
     padding-block: 15px;
   }

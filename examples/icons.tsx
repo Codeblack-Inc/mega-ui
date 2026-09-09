@@ -9,6 +9,8 @@ const paths = {
   settings:
     'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2',
   arrow: 'M5 12h14m-6-6 6 6-6 6',
+  chevronLeft: 'm15 6-6 6 6 6',
+  chevronRight: 'm9 6 6 6-6 6',
   heart: 'M12 21 3 12C-2 4 8 0 12 7c4-7 14-3 9 5z',
   info: 'M12 11v6M12 7v.1M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
   calendar: 'M4 5h16v16H4zM8 2v6M16 2v6M4 11h16',
@@ -52,11 +54,14 @@ const paths = {
   bolt: 'M13 2 4 14h7l-1 8 9-12h-7z',
   image: 'M3 4h18v16H3zM3 16l5-5 4 4 3-3 6 5M16 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2',
   more: 'M5 12h.01M12 12h.01M19 12h.01',
+  chevron: 'm9 6 6 6-6 6',
   help: 'M9 9a3 3 0 1 1 4.5 2.6c-1 .6-1.5 1.2-1.5 2.4M12 17v.1M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
   logout: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9',
   globe:
     'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20',
 } as const;
+
+export const iconNames = Object.keys(paths) as (keyof typeof paths)[];
 
 export function ExampleIcon({ name = 'grid' }: { name?: keyof typeof paths }) {
   return (

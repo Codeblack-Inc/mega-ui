@@ -101,9 +101,7 @@ export function SurfacesCategory() {
         <Alert tone="success">변경 사항을 저장했어요</Alert>
         <Alert tone="warning">한 번 더 확인해 주세요</Alert>
         <Alert tone="danger">다시 시도해 주세요</Alert>
-        <Alert icon={<ExampleIcon name="info" />}>
-          새로운 정산 내역이 도착했어요
-        </Alert>
+        <Alert>새로운 정산 내역이 도착했어요</Alert>
       </Stack>
     ),
     Banner: banner ? (

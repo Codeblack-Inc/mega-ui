@@ -134,18 +134,34 @@
   li {
     padding-block: var(--mega-space-3);
   }
-  span {
+  &__status {
+    display: inline-flex;
+    min-width: 72px;
+    align-items: center;
+    gap: var(--mega-space-2);
     color: var(--mega-muted);
     margin-right: var(--mega-space-2);
     font-size: 13px;
   }
-  [data-status='running'] span {
+  &__status > svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  &__status > .mega-spinner {
+    margin-inline: 6px;
+  }
+  [data-status='running'] &__status {
     color: var(--mega-brand);
   }
-  [data-status='complete'] span {
+  [data-status='complete'] &__status {
     color: var(--mega-success);
   }
-  [data-status='error'] span {
+  [data-status='error'] &__status {
     color: var(--mega-danger);
   }
 }

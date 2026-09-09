@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Avatar,
   AvatarGroup,
@@ -204,18 +204,22 @@ function UserManagement() {
               resetPage();
             }}
           />
-          <Select
-            aria-label="역할 필터"
-            value={role}
-            onChange={(event) => {
-              setRole(event.currentTarget.value);
-              resetPage();
-            }}
-          >
-            {['전체', '관리자', '편집자', '뷰어'].map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </Select>
+          <label className="users-role">
+            <Text as="span" size="sm" tone="muted">
+              역할
+            </Text>
+            <Select
+              value={role}
+              onChange={(event) => {
+                setRole(event.currentTarget.value);
+                resetPage();
+              }}
+            >
+              {['전체', '관리자', '편집자', '뷰어'].map((item) => (
+                <option key={item}>{item}</option>
+              ))}
+            </Select>
+          </label>
           <div className="users-chips">
             {(
               [
@@ -795,6 +799,7 @@ const seedEvents: Event[] = [
 export function CalendarExample() {
   const [events, setEvents] = useState(seedEvents);
   const [date, setDate] = useState('2026-09-09');
+  const [month, setMonth] = useState('2026-09');
   const [mode, setMode] = useState('month');
   const [adding, setAdding] = useState(false);
   const dayEvents = events
@@ -805,11 +810,30 @@ export function CalendarExample() {
     day: 'numeric',
     weekday: 'long',
   });
+  const monthLabel = new Date(`${month}-01T00:00`).toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+  });
+  const shiftMonth = (by: number) => {
+    const next = new Date(`${month}-01T00:00`);
+    next.setMonth(next.getMonth() + by);
+    setMonth(
+      `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, '0')}`,
+    );
+  };
 
   return (
     <div className="cal-layout">
       <div className="cal-heading">
-        <Heading size="xl">2026년 9월</Heading>
+        <Stack direction="row" gap={2} align="center">
+          <IconButton label="이전 달" size="sm" onClick={() => shiftMonth(-1)}>
+            <ExampleIcon name="chevronLeft" />
+          </IconButton>
+          <Heading size="xl">{monthLabel}</Heading>
+          <IconButton label="다음 달" size="sm" onClick={() => shiftMonth(1)}>
+            <ExampleIcon name="chevronRight" />
+          </IconButton>
+        </Stack>
         <Stack direction="row" gap={2} align="center">
           <SegmentedControl
             label="보기 방식"
@@ -833,8 +857,8 @@ export function CalendarExample() {
         <Card className="cal-main">
           {mode === 'month' ? (
             <Calendar
-              label="9월 달력"
-              month="2026-09"
+              label={`${monthLabel} 달력`}
+              month={month}
               selectedDate={date}
               onDateSelect={setDate}
               events={events.map((event) => ({
@@ -1323,6 +1347,23 @@ export function DriveExample() {
   const [layout, setLayout] = useState('list');
   const [sort, setSort] = useState<'name' | 'size'>('name');
   const [detail, setDetail] = useState<Doc | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  const addFiles = (files: File[]) =>
+    setDocs((list) => [
+      ...files.map((file) => ({
+        id: `f-${file.name}-${file.size}`,
+        name: file.name,
+        kind: file.type.startsWith('image/')
+          ? ('image' as const)
+          : ('doc' as const),
+        owner: '김메가',
+        modified: '방금 전',
+        size: file.size,
+      })),
+      ...list,
+    ]);
 
   const visible = docs
     .filter((doc) => doc.name.includes(query))
@@ -1339,14 +1380,21 @@ export function DriveExample() {
         <Button
           fullWidth
           leading={<ExampleIcon name="upload" />}
-          onClick={() =>
-            document
-              .querySelector<HTMLInputElement>('.drive-drop input')
-              ?.click()
-          }
+          onClick={() => fileInput.current?.click()}
         >
           업로드
         </Button>
+        <input
+          ref={fileInput}
+          type="file"
+          multiple
+          hidden
+          aria-label="업로드할 파일"
+          onChange={(event) => {
+            addFiles(Array.from(event.currentTarget.files ?? []));
+            event.currentTarget.value = '';
+          }}
+        />
         <SideNav label="드라이브 메뉴">
           <SideNavSection>
             {(
@@ -1376,7 +1424,7 @@ export function DriveExample() {
           </Text>
         </Stack>
       </aside>
-      <div className="drive-main">
+      <div className="drive-main" onDragEnter={() => setDragging(true)}>
         <Breadcrumb label="폴더 경로">
           <BreadcrumbItem href="#drive">내 드라이브</BreadcrumbItem>
           <BreadcrumbItem current>프로젝트</BreadcrumbItem>
@@ -1403,26 +1451,16 @@ export function DriveExample() {
             <MenuItem onSelect={() => setSort('size')}>크기순</MenuItem>
           </Menu>
         </div>
-        <Dropzone
-          label="여기로 파일을 끌어 놓거나 눌러서 업로드하세요"
-          multiple
-          className="drive-drop"
-          onFilesChange={(files) =>
-            setDocs((list) => [
-              ...files.map((file) => ({
-                id: `f-${file.name}-${file.size}`,
-                name: file.name,
-                kind: file.type.startsWith('image/')
-                  ? ('image' as const)
-                  : ('doc' as const),
-                owner: '김메가',
-                modified: '방금 전',
-                size: file.size,
-              })),
-              ...list,
-            ])
-          }
-        />
+        {dragging ? (
+          <Dropzone
+            label="여기에 놓으면 업로드돼요"
+            multiple
+            className="drive-drop"
+            onDragLeave={() => setDragging(false)}
+            onDrop={() => setDragging(false)}
+            onFilesChange={addFiles}
+          />
+        ) : null}
         {section !== 'mine' ? (
           <EmptyState
             icon={<ExampleIcon name="folder" />}

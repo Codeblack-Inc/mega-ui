@@ -2,13 +2,15 @@ import {
   Children,
   useId,
   useMemo,
+  useRef,
   useState,
   type ComponentPropsWithRef,
   type ReactNode,
+  type TouchEvent,
 } from 'react';
 import qrcode from 'qrcode-generator';
 import { Badge, type BadgeProps } from './surfaces';
-import { Button } from './controls';
+import { Button, IconButton } from './controls';
 export { Badge as Tag } from './surfaces';
 export type { BadgeProps as TagProps } from './surfaces';
 export { Stat as KPI } from './data';
@@ -184,17 +186,41 @@ export function Carousel({
   label,
   children,
   className = '',
+  onTouchStart,
+  onTouchEnd,
   ...props
 }: CarouselProps) {
   const slides = Children.toArray(children);
   const [index, setIndex] = useState(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const current = Math.min(index, Math.max(0, slides.length - 1));
+  const change = (next: number) =>
+    setIndex(Math.max(0, Math.min(slides.length - 1, next)));
   return (
     <section
       {...props}
       aria-roledescription="carousel"
       aria-label={label}
       className={`mega-carousel ${className}`}
+      onTouchStart={(event: TouchEvent<HTMLElement>) => {
+        onTouchStart?.(event);
+        const touch = event.changedTouches[0];
+        touchStart.current =
+          !event.defaultPrevented && touch
+            ? { x: touch.clientX, y: touch.clientY }
+            : null;
+      }}
+      onTouchEnd={(event: TouchEvent<HTMLElement>) => {
+        onTouchEnd?.(event);
+        const start = touchStart.current;
+        const touch = event.changedTouches[0];
+        touchStart.current = null;
+        if (event.defaultPrevented || !start || !touch) return;
+        const x = touch.clientX - start.x;
+        const y = touch.clientY - start.y;
+        if (Math.abs(x) >= 40 && Math.abs(x) > Math.abs(y))
+          change(current + (x < 0 ? 1 : -1));
+      }}
     >
       <div aria-live="polite">
         {slides.map((slide, i) => (
@@ -210,23 +236,42 @@ export function Carousel({
         ))}
       </div>
       <div className="mega-carousel__controls">
-        <Button
-          variant="secondary"
+        <IconButton
+          label="이전 슬라이드"
+          variant="filled"
+          round
           disabled={current === 0}
-          onClick={() => setIndex(current - 1)}
+          onClick={() => change(current - 1)}
         >
-          이전
-        </Button>
-        <span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m15 6-6 6 6 6" />
+          </svg>
+        </IconButton>
+        <div className="mega-carousel__dots" aria-label="슬라이드 선택">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`${i + 1}번 슬라이드`}
+              aria-current={current === i ? 'true' : undefined}
+              onClick={() => change(i)}
+            />
+          ))}
+        </div>
+        <span className="mega-visually-hidden">
           {slides.length ? current + 1 : 0} / {slides.length}
         </span>
-        <Button
-          variant="secondary"
+        <IconButton
+          label="다음 슬라이드"
+          variant="filled"
+          round
           disabled={current >= slides.length - 1}
-          onClick={() => setIndex(current + 1)}
+          onClick={() => change(current + 1)}
         >
-          다음
-        </Button>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m9 6 6 6-6 6" />
+          </svg>
+        </IconButton>
       </div>
     </section>
   );

@@ -50,6 +50,50 @@ import { ExampleIcon } from '../icons';
 
 // ---------- 로그인 ----------
 
+/** Brand marks for social login; the stroke icon set has no filled logos. */
+function SocialMark({ name }: { name: 'kakao' | 'google' | 'apple' }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {name === 'kakao' ? (
+        <path
+          fill="currentColor"
+          d="M12 3C6.5 3 2 6.4 2 10.6c0 2.7 1.8 5 4.5 6.4l-1 3.6c-.1.3.2.5.5.3l4.2-2.8c.6.1 1.2.1 1.8.1 5.5 0 10-3.4 10-7.6S17.5 3 12 3"
+        />
+      ) : name === 'apple' ? (
+        <path
+          fill="currentColor"
+          d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.5-3.8M14.1 5.8c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3"
+        />
+      ) : (
+        <>
+          <path
+            fill="#4285F4"
+            d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.4c-.2 1.2-.9 2.3-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.4"
+          />
+          <path
+            fill="#34A853"
+            d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6C4.8 19.8 8.1 22 12 22"
+          />
+          <path
+            fill="#FBBC05"
+            d="M6.4 13.9c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.5H3.1C2.4 8.9 2 10.4 2 12s.4 3.1 1.1 4.5z"
+          />
+          <path
+            fill="#EA4335"
+            d="M12 6c1.5 0 2.8.5 3.8 1.5l2.8-2.8C17 3.1 14.7 2 12 2 8.1 2 4.8 4.2 3.1 7.5l3.3 2.6C7.2 7.8 9.4 6 12 6"
+          />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export function LoginExample() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -131,13 +175,28 @@ export function LoginExample() {
               <Separator />
             </div>
             <ButtonGroup className="login__social" aria-label="간편 로그인">
-              <Button variant="secondary" fullWidth>
+              <Button
+                variant="secondary"
+                fullWidth
+                data-brand="kakao"
+                leading={<SocialMark name="kakao" />}
+              >
                 카카오
               </Button>
-              <Button variant="secondary" fullWidth>
+              <Button
+                variant="secondary"
+                fullWidth
+                data-brand="google"
+                leading={<SocialMark name="google" />}
+              >
                 구글
               </Button>
-              <Button variant="secondary" fullWidth>
+              <Button
+                variant="secondary"
+                fullWidth
+                data-brand="apple"
+                leading={<SocialMark name="apple" />}
+              >
                 애플
               </Button>
             </ButtonGroup>
@@ -218,7 +277,6 @@ export function SignupExample() {
             <Stack gap={4}>
               <Heading size="lg">약관에 동의해 주세요</Heading>
               <Checkbox
-                shape="square"
                 checked={agreed.length === terms.length}
                 onChange={(event) =>
                   setAgreed(event.target.checked ? terms.map((t) => t.id) : [])
@@ -676,14 +734,23 @@ export function NotificationCenterExample() {
                     title={item.title}
                     description={item.description}
                     action={
-                      <Button
-                        size="sm"
-                        variant="text"
-                        disabled={item.read}
-                        onClick={() => markRead(item.id)}
-                      >
-                        {item.read ? '읽음' : '확인'}
-                      </Button>
+                      item.read ? (
+                        <span
+                          className="notif__read"
+                          role="img"
+                          aria-label="읽음"
+                        >
+                          <ExampleIcon name="check" />
+                        </span>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="text"
+                          onClick={() => markRead(item.id)}
+                        >
+                          확인
+                        </Button>
+                      )
                     }
                   />
                 ))}
@@ -749,11 +816,13 @@ export function SecurityExample() {
       <Stack gap={5}>
         <Card padding="lg">
           <Stack gap={4}>
-            <Stack direction="row" justify="between" align="center">
+            <Stack gap={1}>
               <Heading size="sm">2단계 인증</Heading>
-              <Badge tone={twoFactor ? 'success' : 'neutral'}>
-                {twoFactor ? '사용 중' : '꺼짐'}
-              </Badge>
+              <Text size="sm" tone={twoFactor ? 'success' : 'muted'}>
+                {twoFactor
+                  ? '인증 앱으로 계정을 보호하고 있어요'
+                  : '아직 사용하지 않고 있어요'}
+              </Text>
             </Stack>
             <Switch
               label="인증 앱으로 한 번 더 확인하기"
