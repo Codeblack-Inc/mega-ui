@@ -222,9 +222,10 @@ function AdminDashboard() {
           variant="outline"
           fullWidth
           className="admin-store"
+          trailing={<ExampleIcon name="chevron" />}
           onClick={() => setDetail('메가스토어 주식회사')}
         >
-          메가스토어 주식회사 <span aria-hidden="true">⌄</span>
+          메가스토어 주식회사
         </Button>
         <SideNav label="가맹점 관리">
           <SideNavSection>
@@ -375,7 +376,16 @@ function AdminDashboard() {
             <Heading size="md">거래 한눈에 보기</Heading>
             <Menu
               align="end"
-              trigger={<Button variant="outline">정산계좌 {account} ⌄</Button>}
+              trigger={
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  aria-label={`정산계좌: ${account}`}
+                  trailing={<ExampleIcon name="chevron" />}
+                >
+                  {account === '전체' ? '전체 계좌' : account}
+                </Button>
+              }
             >
               <MenuLabel>조회할 정산계좌</MenuLabel>
               {['전체', '메가뱅크', '국민은행'].map((bank) => (
@@ -557,7 +567,7 @@ function AdminDashboard() {
                       N
                     </Badge>
                   ) : (
-                    '›'
+                    <ExampleIcon name="chevronRight" />
                   )}
                 </Button>
               }

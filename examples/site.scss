@@ -3,6 +3,7 @@
 @use 'screens/work';
 @use 'screens/commerce';
 @use 'screens/admin-market';
+@use 'screens/operations';
 
 // ---------- Docs site shell: TopBar + AppShell + SideNav from the library ----------
 body {
@@ -113,6 +114,14 @@ a {
 .docs-source .mega-code-block {
   max-height: 480px;
   tab-size: 2;
+}
+
+.docs-example-header {
+  margin-bottom: 24px;
+
+  &--wide {
+    max-width: none;
+  }
 }
 
 // ---------- Example preview frame ----------
@@ -656,7 +665,13 @@ a {
   font-size: 13px;
   white-space: nowrap;
   display: inline-flex;
+  align-items: center;
   gap: 8px;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
 
   &:hover {
     background-image: linear-gradient(var(--mega-hover), var(--mega-hover));

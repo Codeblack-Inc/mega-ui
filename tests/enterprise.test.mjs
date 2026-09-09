@@ -63,6 +63,29 @@ test('data tables sort, window, edit, expand and aggregate meaningful data', () 
   );
   assert.ok(unsorted.indexOf('베타') < unsorted.indexOf('알파'));
 
+  const serverSorted = renderToStaticMarkup(
+    h(ui.DataTable, {
+      rows,
+      columns,
+      getRowId: id,
+      sort: { key: 'amount', direction: 'asc' },
+      manual: true,
+    }),
+  );
+  assert.ok(serverSorted.indexOf('베타') < serverSorted.indexOf('알파'));
+
+  const sortedGrid = renderToStaticMarkup(
+    h(ui.DataGrid, {
+      rows,
+      columns,
+      getRowId: id,
+      initialSort: { key: 'amount', direction: 'asc' },
+      selectedIds: ['a'],
+    }),
+  );
+  assert.ok(sortedGrid.indexOf('알파') < sortedGrid.indexOf('베타'));
+  assert.match(sortedGrid, /aria-checked="mixed"/);
+
   const virtual = renderToStaticMarkup(
     h(ui.VirtualTable, {
       rows: Array.from({ length: 100 }, (_, index) => ({

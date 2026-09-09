@@ -6,6 +6,13 @@ export {
   BottomCTA,
   ProgressBar,
   Result,
+  FilterBar,
+  ActiveFilters,
+  BulkActionBar,
+  DataPagination,
+  FormSection,
+  FormActions,
+  FormErrorSummary,
 } from './components/patterns';
 export type {
   ListRowProps,
@@ -14,6 +21,15 @@ export type {
   BottomCTAProps,
   ProgressBarProps,
   ResultProps,
+  FilterBarProps,
+  ActiveFilter,
+  ActiveFiltersProps,
+  BulkActionBarProps,
+  DataPaginationProps,
+  FormSectionProps,
+  FormActionsProps,
+  FormSummaryError,
+  FormErrorSummaryProps,
 } from './components/patterns';
 export type {
   ContainerProps,

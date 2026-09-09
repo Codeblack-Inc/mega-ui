@@ -315,24 +315,28 @@ function PageView({
 
   return (
     <>
-      <Container>
-        <Stack gap={isCategory ? 5 : 3}>
+      <Container
+        className={
+          isCategory
+            ? undefined
+            : `docs-example-header${page.wide ? ' docs-example-header--wide' : ''}`
+        }
+      >
+        <Stack gap={isCategory ? 5 : 4}>
           <Breadcrumb label="현재 위치">
             <BreadcrumbItem href={`#${HOME}`}>홈</BreadcrumbItem>
             <BreadcrumbItem href={crumb.href}>{crumb.label}</BreadcrumbItem>
             <BreadcrumbItem current>{page.label}</BreadcrumbItem>
           </Breadcrumb>
-          {isCategory ? (
-            <PageHeader
-              title={page.title}
-              description={page.description}
-              actions={<Badge tone="brand">전체 {page.count}개</Badge>}
-            />
-          ) : (
-            <Text size="sm" tone="muted" className="docs-eyebrow">
-              {page.description}
-            </Text>
-          )}
+          <PageHeader
+            title={page.title}
+            description={page.description}
+            actions={
+              isCategory ? (
+                <Badge tone="brand">전체 {page.count}개</Badge>
+              ) : undefined
+            }
+          />
           {isCategory ? <Example key={page.id} /> : null}
         </Stack>
       </Container>

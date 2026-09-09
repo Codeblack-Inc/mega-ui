@@ -1,0 +1,225 @@
+.ops-screen {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  padding: 24px;
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-bg);
+  font-size: 14px;
+  .mega-card {
+    border: 1px solid var(--mega-border);
+    box-shadow: none;
+  }
+}
+.ops-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.ops-kpis--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.ops-card {
+  min-width: 0;
+  overflow: hidden;
+}
+.ops-saved,
+.ops-filters,
+.ops-bulk,
+.ops-pagination,
+.log-toolbar,
+.log-health,
+.log-table__head,
+.log-chart__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ops-saved {
+  padding: 10px 12px 14px;
+  overflow-x: auto;
+}
+.ops-saved > * {
+  flex: 0 0 auto;
+}
+.ops-filters {
+  flex-wrap: wrap;
+  padding: 14px 12px;
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-grey-50);
+}
+.ops-filters > .mega-input {
+  width: auto;
+  flex: 0 1 180px;
+}
+.ops-filters .mega-input:first-child {
+  flex: 1 1 240px;
+}
+.ops-advanced {
+  padding: 12px;
+  border-bottom: 1px solid var(--mega-border);
+}
+.ops-advanced summary {
+  color: var(--mega-brand-strong);
+  font-weight: 600;
+  cursor: pointer;
+}
+.ops-advanced > div {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 12px;
+  padding-top: 14px;
+}
+.ops-advanced label {
+  display: grid;
+  gap: 5px;
+  color: var(--mega-muted);
+  font-size: 12px;
+}
+.ops-bulk {
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--mega-brand-soft);
+}
+.ops-table {
+  overflow-x: auto;
+}
+.ops-table .mega-table__cell,
+.ops-table .mega-table__header-cell {
+  white-space: nowrap;
+}
+.ops-link,
+.log-message {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--mega-brand-strong);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ops-link:hover,
+.log-message:hover {
+  text-decoration: underline;
+}
+.ops-link:focus-visible,
+.log-message:focus-visible {
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
+}
+.ops-pagination {
+  justify-content: space-between;
+  padding: 14px 12px 6px;
+  border-top: 1px solid var(--mega-border);
+}
+.settlement-screen > .mega-alert {
+  align-items: center;
+}
+.log-screen {
+  background: color-mix(in srgb, var(--mega-bg) 92%, var(--mega-text));
+}
+.log-health {
+  justify-content: space-between;
+  padding: 10px 14px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-surface);
+}
+.log-health__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--mega-success);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--mega-success) 18%, transparent);
+}
+.log-query {
+  display: flex;
+  gap: 8px;
+  background: #15171c;
+}
+.log-query .mega-input {
+  flex: 1;
+  border-color: transparent;
+  font-family: var(--mega-font-mono, ui-monospace, monospace);
+}
+.log-toolbar {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.log-toolbar .mega-input {
+  width: auto;
+  min-width: 150px;
+}
+.log-chart__head,
+.log-table__head {
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.log-bars {
+  display: flex;
+  align-items: end;
+  gap: 3px;
+  height: 84px;
+  border-bottom: 1px solid var(--mega-border);
+}
+.log-bars i {
+  flex: 1;
+  min-width: 3px;
+  border-radius: 2px 2px 0 0;
+  background: var(--mega-brand);
+  opacity: 0.7;
+}
+.log-bars i[data-error] {
+  background: var(--mega-danger);
+  opacity: 1;
+}
+.log-table {
+  min-width: 0;
+}
+.log-table .mega-virtual-table {
+  font-family: var(--mega-font-mono, ui-monospace, monospace);
+  font-size: 12px;
+}
+.log-message {
+  color: inherit;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.log-payload {
+  padding: 14px;
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-text-strong);
+  color: var(--mega-surface);
+}
+.log-payload pre {
+  overflow: auto;
+  margin: 8px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+@media (max-width: 1000px) {
+  .ops-kpis,
+  .ops-kpis--three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ops-advanced > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .ops-screen {
+    padding: 16px;
+  }
+  .ops-kpis,
+  .ops-kpis--three,
+  .ops-advanced > div {
+    grid-template-columns: 1fr;
+  }
+  .ops-pagination,
+  .log-health {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

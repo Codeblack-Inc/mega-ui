@@ -19,6 +19,7 @@ import {
   Text,
 } from '@mega-ui/react';
 import { CategoryCards } from './shell';
+import { ExampleIcon } from '../icons';
 
 export const dataNames = [
   'Table',
@@ -131,7 +132,7 @@ const demos: Record<(typeof dataNames)[number], ReactNode> = {
             href="#dashboard"
             aria-label="메가뱅크 통장 보기"
           >
-            보기 <span aria-hidden="true">›</span>
+            보기 <ExampleIcon name="chevronRight" />
           </a>
         }
       />
@@ -160,7 +161,7 @@ const demos: Record<(typeof dataNames)[number], ReactNode> = {
             href="#payments"
             aria-label="이번 달 결제 내역 보기"
           >
-            보기 <span aria-hidden="true">›</span>
+            보기 <ExampleIcon name="chevronRight" />
           </a>
         }
       />

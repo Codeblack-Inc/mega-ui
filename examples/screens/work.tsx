@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import {
   Avatar,
   AvatarGroup,
+  ActiveFilters,
   Badge,
   Breadcrumb,
   BreadcrumbItem,
@@ -10,7 +11,9 @@ import {
   Card,
   Chip,
   CopyButton,
+  BulkActionBar,
   DataGrid,
+  DataPagination,
   DataTable,
   DatePicker,
   DescriptionList,
@@ -19,6 +22,9 @@ import {
   Dropzone,
   EmptyState,
   Field,
+  FilterBar,
+  FormActions,
+  FormSection,
   Gantt,
   Grid,
   Heading,
@@ -31,7 +37,6 @@ import {
   MenuItem,
   MenuSeparator,
   OrganizationChart,
-  Pagination,
   ProgressBar,
   PropertyGrid,
   Scheduler,
@@ -122,6 +127,7 @@ function UserManagement() {
   const [role, setRole] = useState('전체');
   const [status, setStatus] = useState<'all' | 'active' | 'inactive'>('all');
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [selected, setSelected] = useState<string[]>([]);
   const [inviting, setInviting] = useState(false);
   const [detail, setDetail] = useState<User | null>(null);
@@ -132,8 +138,7 @@ function UserManagement() {
       (status === 'all' || user.active === (status === 'active')) &&
       (user.name.includes(query) || user.email.includes(query)),
   );
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const rows = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const rows = filtered.slice((page - 1) * pageSize, page * pageSize);
 
   const columns: DataColumn<User>[] = [
     {
@@ -194,90 +199,122 @@ function UserManagement() {
         </Button>
       </div>
       <Card className="users-card">
-        <div className="users-toolbar">
-          <SearchInput
-            aria-label="사용자 검색"
-            placeholder="이름 또는 이메일"
-            value={query}
-            onChange={(event) => {
-              setQuery(event.currentTarget.value);
-              resetPage();
-            }}
-          />
-          <label className="users-role">
-            <Text as="span" size="sm" tone="muted">
-              역할
-            </Text>
-            <Select
-              value={role}
+        <FilterBar
+          label="사용자 필터"
+          search={
+            <SearchInput
+              aria-label="사용자 검색"
+              placeholder="이름 또는 이메일"
+              value={query}
               onChange={(event) => {
-                setRole(event.currentTarget.value);
+                setQuery(event.currentTarget.value);
                 resetPage();
               }}
-            >
-              {['전체', '관리자', '편집자', '뷰어'].map((item) => (
-                <option key={item}>{item}</option>
+            />
+          }
+          filters={
+            <>
+              <label>
+                <Text as="span" size="sm" tone="muted">
+                  역할
+                </Text>
+                <Select
+                  value={role}
+                  onChange={(event) => {
+                    setRole(event.currentTarget.value);
+                    resetPage();
+                  }}
+                >
+                  {['전체', '관리자', '편집자', '뷰어'].map((item) => (
+                    <option key={item}>{item}</option>
+                  ))}
+                </Select>
+              </label>
+              {(
+                [
+                  ['all', '모두'],
+                  ['active', '활성'],
+                  ['inactive', '비활성'],
+                ] as const
+              ).map(([value, label]) => (
+                <Chip
+                  key={value}
+                  selected={status === value}
+                  onClick={() => {
+                    setStatus(value);
+                    resetPage();
+                  }}
+                >
+                  {label}
+                </Chip>
               ))}
-            </Select>
-          </label>
-          <div className="users-chips">
-            {(
-              [
-                ['all', '모두'],
-                ['active', '활성'],
-                ['inactive', '비활성'],
-              ] as const
-            ).map(([value, label]) => (
-              <Chip
-                key={value}
-                selected={status === value}
-                onClick={() => {
-                  setStatus(value);
-                  resetPage();
-                }}
-              >
-                {label}
-              </Chip>
-            ))}
-          </div>
-        </div>
-        {selected.length ? (
-          <div className="users-bulk" role="status">
-            <Text weight="semibold">{selected.length}명 선택</Text>
-            <Stack direction="row" gap={2}>
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => {
-                  setUsers((list) =>
-                    list.map((u) =>
-                      selected.includes(u.id) ? { ...u, role: '편집자' } : u,
-                    ),
-                  );
-                  toast({ title: '역할을 편집자로 바꿨어요', tone: 'success' });
-                  setSelected([]);
-                }}
-              >
-                역할 변경
-              </Button>
-              <Button
-                size="sm"
-                variant="danger"
-                onClick={() => {
-                  setUsers((list) =>
-                    list.map((u) =>
-                      selected.includes(u.id) ? { ...u, active: false } : u,
-                    ),
-                  );
-                  toast({ title: `${selected.length}명을 비활성화했어요` });
-                  setSelected([]);
-                }}
-              >
-                비활성화
-              </Button>
-            </Stack>
-          </div>
-        ) : null}
+            </>
+          }
+        />
+        <ActiveFilters
+          filters={[
+            ...(query ? [{ id: 'query', label: `검색: ${query}` }] : []),
+            ...(role !== '전체'
+              ? [{ id: 'role', label: `역할: ${role}` }]
+              : []),
+            ...(status !== 'all'
+              ? [
+                  {
+                    id: 'status',
+                    label: status === 'active' ? '활성' : '비활성',
+                  },
+                ]
+              : []),
+          ]}
+          onRemove={(id) => {
+            if (id === 'query') setQuery('');
+            if (id === 'role') setRole('전체');
+            if (id === 'status') setStatus('all');
+            resetPage();
+          }}
+          onClear={() => {
+            setQuery('');
+            setRole('전체');
+            setStatus('all');
+            resetPage();
+          }}
+        />
+        <BulkActionBar
+          count={selected.length}
+          formatCount={(count) => `${count}명 선택`}
+          onClear={() => setSelected([])}
+        >
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => {
+              setUsers((list) =>
+                list.map((u) =>
+                  selected.includes(u.id) ? { ...u, role: '편집자' } : u,
+                ),
+              );
+              toast({ title: '역할을 편집자로 바꿨어요', tone: 'success' });
+              setSelected([]);
+            }}
+          >
+            역할 변경
+          </Button>
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => {
+              setUsers((list) =>
+                list.map((u) =>
+                  selected.includes(u.id) ? { ...u, active: false } : u,
+                ),
+              );
+              toast({ title: `${selected.length}명을 비활성화했어요` });
+              setSelected([]);
+            }}
+          >
+            비활성화
+          </Button>
+        </BulkActionBar>
         <div className="users-grid">
           <DataGrid
             label="사용자 목록"
@@ -288,16 +325,23 @@ function UserManagement() {
             onSelectionChange={setSelected}
           />
         </div>
-        <div className="users-pagination">
-          <Text size="sm" tone="muted">
-            {filtered.length}명 중 {rows.length}명 표시
-          </Text>
-          <Pagination
-            page={page}
-            pageCount={pageCount}
-            onPageChange={setPage}
-          />
-        </div>
+        <DataPagination
+          total={filtered.length}
+          page={page}
+          pageSize={pageSize}
+          pageSizeOptions={[8, 16]}
+          onPageChange={(value) => {
+            setPage(value);
+            setSelected([]);
+          }}
+          onPageSizeChange={(value) => {
+            setPageSize(value);
+            resetPage();
+          }}
+          formatSummary={({ start, end, total }) =>
+            total ? `${total}명 중 ${start}–${end}명` : '사용자 0명'
+          }
+        />
       </Card>
 
       <Dialog
@@ -331,7 +375,10 @@ function UserManagement() {
             toast({ title: `${email}에게 초대를 보냈어요`, tone: 'success' });
           }}
         >
-          <Stack gap={4}>
+          <FormSection
+            title="초대 정보"
+            description="업무 이메일과 역할을 지정해 주세요."
+          >
             <Field label="이메일" htmlFor="invite-email" required>
               <Input
                 id="invite-email"
@@ -348,13 +395,11 @@ function UserManagement() {
                 ))}
               </Select>
             </Field>
-            <Stack direction="row" gap={2} justify="end">
-              <Button variant="secondary" onClick={() => setInviting(false)}>
-                취소
-              </Button>
-              <Button type="submit">초대 보내기</Button>
-            </Stack>
-          </Stack>
+          </FormSection>
+          <FormActions
+            submitLabel="초대 보내기"
+            onCancel={() => setInviting(false)}
+          />
         </form>
       </Dialog>
 
@@ -1446,7 +1491,18 @@ export function DriveExample() {
             value={layout}
             onValueChange={setLayout}
           />
-          <Menu align="end" trigger={<Button variant="outline">정렬 ⌄</Button>}>
+          <Menu
+            align="end"
+            trigger={
+              <Button
+                variant="secondary"
+                size="sm"
+                trailing={<ExampleIcon name="chevron" />}
+              >
+                정렬
+              </Button>
+            }
+          >
             <MenuItem onSelect={() => setSort('name')}>이름순</MenuItem>
             <MenuItem onSelect={() => setSort('size')}>크기순</MenuItem>
           </Menu>

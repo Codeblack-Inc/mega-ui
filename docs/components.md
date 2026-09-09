@@ -1,6 +1,6 @@
 # Mega UI 컴포넌트 API — 0.1.0
 
-`@mega-ui/react`의 공개 named export는 197개입니다. 이 페이지는 기존 83개 API를 설명하며, 추가 114개 이름은 [150개 대조표](./component-coverage.md)에 연결된 확장 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
+`@mega-ui/react`의 공개 named export는 204개입니다. 이 페이지는 핵심 API와 목록·폼 조합 7종을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
 별도 명시가 없으면 해당 HTML 요소의 표준 속성, `className`, `style`, React 19 `ref`를 그대로 전달합니다.
 `children`은 ReactNode입니다. 범용 `as`, `asChild`, `sx` API는 제공하지 않습니다(`Text`와 `Amount`만 좁은 `as`를 받습니다).
 
@@ -103,10 +103,11 @@ Select의 option은 children으로 전달합니다. 세 컴포넌트 모두 네�
 
 ### Checkbox (label + input) · Radio (label + input)
 
-| prop       | 타입                 | 기본값   | 설명                                                      |
-| ---------- | -------------------- | -------- | --------------------------------------------------------- |
-| `children` | `ReactNode` **필수** | —        | 접근 가능한 라벨. 비우지 말고 링크/버튼을 중첩하지 마세요 |
-| `shape`    | `circle \| square`   | `circle` | Checkbox 전용. square는 폼용 사각 체크박스                |
+| prop            | 타입               | 기본값   | 설명                                                 |
+| --------------- | ------------------ | -------- | ---------------------------------------------------- |
+| `children`      | `ReactNode`        | —        | 생략하면 input에 `aria-label`을 지정합니다.          |
+| `shape`         | `circle \| square` | `circle` | Checkbox 전용. square는 폼용 사각 체크박스           |
+| `indeterminate` | `boolean`          | `false`  | Checkbox 전용. 부분 선택 상태와 `aria-checked=mixed` |
 
 `className`은 바깥 `label`에, `ref`와 나머지 입력 속성은 안쪽 `input`에 전달됩니다. `type`은 전달할 수 없습니다.
 
@@ -309,6 +310,20 @@ onClick에서 preventDefault()하면 토글하지 않습니다. 기본 type=butt
 | `actions`      | `ReactNode`       | —      | 우측 정렬 액션. 줄바꿈됩니다 |
 
 ## 패턴
+
+### 목록·폼 조합
+
+| 컴포넌트           | 핵심 props와 동작                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `FilterBar`        | `search`, `filters`, `sort`, `actions`, `advanced`. 좁은 화면에서는 줄바꿈하고 고급 조건은 네이티브 `details`로 펼칩니다. |
+| `ActiveFilters`    | `filters: {id,label}[]`, `onRemove`, `onClear`. 각 조건을 버튼으로 제거하고 다음 조건으로 포커스를 옮깁니다.              |
+| `BulkActionBar`    | `count`, 작업 버튼 children, `onClear`, `status`, `error`. `count`가 0이면 렌더하지 않습니다.                             |
+| `DataPagination`   | `total`, `page`, `pageSize`, 변경 콜백. 표시 범위·페이지 크기·기존 `Pagination`을 한 영역에 배치합니다.                   |
+| `FormSection`      | `title`, `description`, `actions`, `grouped`. 기본은 section, `grouped`는 fieldset/legend로 렌더합니다.                   |
+| `FormActions`      | `dirty`, `saving`, `disabled`, `status`, `onCancel`, `form`, `sticky`. 저장 중에는 제출과 취소를 막습니다.                |
+| `FormErrorSummary` | `errors: {id,label,message}[]`. 오류가 나타나면 요약에 포커스를 두고 각 링크로 해당 입력에 이동합니다.                    |
+
+이 컴포넌트들은 검색 쿼리, 데이터 요청, 선택 작업, 검증·저장 정책을 실행하지 않습니다. 애플리케이션이 상태와 콜백을 전달합니다.
 
 ### ListRow (div)
 
@@ -694,7 +709,6 @@ function SaveButton() {
 | `description` | `ReactNode`          | —      |                           |
 | `action`      | `ReactNode`          | —      | 다음 행동 버튼            |
 
-## 아직 없는 API
+## 후속 확장
 
-Drawer, Popover, Accordion, Combobox, Upload, DataGrid, 차트, AppShell은 export하지 않습니다.
-같은 이름의 컴포넌트가 있다고 추정하지 마세요. 계획은 [로드맵](./roadmap.md)에 있습니다.
+차트와 파일별 업로드 상태, 알림 목록은 [컴포넌트 확장 보고서](./component-gap-report.md)의 후속 순서로 남아 있습니다.

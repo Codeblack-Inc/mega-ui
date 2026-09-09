@@ -12,8 +12,11 @@ import {
   Checkbox,
   EmptyState,
   Field,
+  FormActions,
   FormDescription,
   FormError,
+  FormErrorSummary,
+  FormSection,
   Grid,
   Heading,
   IconButton,
@@ -562,7 +565,7 @@ export function ProfileExample() {
                   aria-label={`${label} 열기`}
                   onClick={() => label === '로그아웃' && setLogout(true)}
                 >
-                  ›
+                  <ExampleIcon name="chevronRight" />
                 </Button>
               }
             />
@@ -852,8 +855,24 @@ export function SecurityExample() {
             }}
             onChange={() => setChanged(false)}
           >
-            <Stack gap={4}>
-              <Heading size="sm">비밀번호 변경</Heading>
+            <FormSection
+              title="비밀번호 변경"
+              description="다른 서비스에서 쓰지 않는 비밀번호를 설정해 주세요."
+            >
+              <FormErrorSummary
+                focusOnMount={false}
+                errors={
+                  confirm && confirm !== next
+                    ? [
+                        {
+                          id: 'security-confirm',
+                          label: '새 비밀번호 확인',
+                          message: '비밀번호가 서로 달라요.',
+                        },
+                      ]
+                    : []
+                }
+              />
               <Field label="새 비밀번호" htmlFor="security-next" required>
                 <InputPassword
                   id="security-next"
@@ -885,19 +904,18 @@ export function SecurityExample() {
                   required
                 />
               </Field>
-              <Button
-                type="submit"
-                fullWidth
-                disabled={score < 50 || confirm !== next}
-              >
-                변경하기
-              </Button>
-              {changed ? (
-                <Alert tone="success">
-                  비밀번호 변경을 체험했어요. 실제로 바뀌지 않아요.
-                </Alert>
-              ) : null}
-            </Stack>
+            </FormSection>
+            <FormActions
+              dirty={!changed && Boolean(next || confirm)}
+              disabled={score < 50 || confirm !== next}
+              submitLabel="변경하기"
+              status={
+                changed
+                  ? '비밀번호 변경을 체험했어요. 실제로 바뀌지 않아요.'
+                  : undefined
+              }
+              statusTone="success"
+            />
           </form>
         </Card>
       </Stack>

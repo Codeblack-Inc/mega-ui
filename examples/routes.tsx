@@ -39,6 +39,12 @@ import {
   StatesExample,
 } from './screens/commerce';
 import commerceSource from './screens/commerce.tsx?raw';
+import {
+  LogExplorerExample,
+  OrderOperationsExample,
+  SettlementReconciliationExample,
+} from './screens/operations';
+import operationsSource from './screens/operations.tsx?raw';
 
 /** Size of the requested component list this library set out to cover. */
 export const componentCount = 150;
@@ -229,6 +235,36 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: UserManagementExample,
         source: withIcons(workSource),
+      },
+      {
+        id: 'order-operations',
+        label: '주문 운영 관제',
+        title: '18,426건을 놓치지 않는 주문 운영',
+        description:
+          '저장된 보기, 복합 검색, 대량 선택, SLA와 주문 상세를 갖춘 실무형 운영 화면이에요.',
+        wide: true,
+        Component: OrderOperationsExample,
+        source: withIcons(operationsSource),
+      },
+      {
+        id: 'settlement-reconciliation',
+        label: '정산 대사',
+        title: '입금 차액의 원인까지 찾는 정산 대사',
+        description:
+          '여러 판매처의 주문 원장과 입금 내역을 비교하고 예외를 일괄 처리해요.',
+        wide: true,
+        Component: SettlementReconciliationExample,
+        source: withIcons(operationsSource),
+      },
+      {
+        id: 'log-explorer',
+        label: '로그 탐색기',
+        title: '초당 12,800건을 다루는 로그 탐색기',
+        description:
+          '실시간 상태, 레벨·서비스 필터, 이벤트 차트와 가상화 로그 목록을 담았어요.',
+        wide: true,
+        Component: LogExplorerExample,
+        source: withIcons(operationsSource),
       },
       {
         id: 'board',

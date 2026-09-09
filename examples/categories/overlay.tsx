@@ -63,7 +63,16 @@ export function OverlayCategory() {
           버튼을 눌러 추가 동작을 펼쳐요.
         </Text>
         <Stack direction="row" gap={3} wrap>
-          <Menu trigger={<Button variant="secondary">더 보기 ⌄</Button>}>
+          <Menu
+            trigger={
+              <Button
+                variant="secondary"
+                trailing={<ExampleIcon name="chevron" />}
+              >
+                더 보기
+              </Button>
+            }
+          >
             <MenuLabel>문서 관리</MenuLabel>
             <MenuItem
               icon={<ExampleIcon name="receipt" />}

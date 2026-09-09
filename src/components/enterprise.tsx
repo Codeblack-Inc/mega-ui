@@ -78,6 +78,12 @@ export interface DataTableProps<Row extends object> extends BoxProps {
   defaultQuery?: string;
   onQueryChange?: (query: string) => void;
   initialSort?: DataTableSort;
+  sort?: DataTableSort;
+  onSortChange?: (sort: DataTableSort) => void;
+  manual?: boolean;
+  loading?: boolean;
+  error?: ReactNode;
+  loadingMessage?: ReactNode;
   emptyMessage?: ReactNode;
 }
 
@@ -91,19 +97,27 @@ export function DataTable<Row extends object>({
   defaultQuery = '',
   onQueryChange,
   initialSort,
+  sort: controlledSort,
+  onSortChange,
+  manual = false,
+  loading = false,
+  error,
+  loadingMessage = '데이터를 불러오는 중이에요.',
   emptyMessage = '표시할 데이터가 없어요.',
   className = '',
   ...props
 }: DataTableProps<Row>) {
   const [localQuery, setLocalQuery] = useState(defaultQuery);
-  const [sort, setSort] = useState<DataTableSort | undefined>(() =>
+  const [localSort, setLocalSort] = useState<DataTableSort | undefined>(() =>
     initialSort &&
     columns.some((column) => column.key === initialSort.key && column.sortable)
       ? initialSort
       : undefined,
   );
+  const sort = controlledSort ?? localSort;
   const resolvedQuery = query ?? localQuery;
   const visibleRows = useMemo(() => {
+    if (manual) return [...rows];
     const needle = resolvedQuery.trim().toLocaleLowerCase('ko');
     const filtered = needle
       ? rows.filter((row) =>
@@ -123,7 +137,7 @@ export function DataTable<Row extends object>({
       const result = compareValues(cellValue(a, column), cellValue(b, column));
       return sort.direction === 'asc' ? result : -result;
     });
-  }, [columns, resolvedQuery, rows, sort]);
+  }, [columns, manual, resolvedQuery, rows, sort]);
 
   return (
     <div {...props} className={`mega-data-table ${className}`}>
@@ -153,15 +167,18 @@ export function DataTable<Row extends object>({
                   sortDirection={column.sortable ? direction : undefined}
                   onSort={
                     column.sortable
-                      ? () =>
-                          setSort((current) => ({
+                      ? () => {
+                          const next: DataTableSort = {
                             key: column.key,
                             direction:
-                              current?.key === column.key &&
-                              current.direction === 'asc'
+                              sort?.key === column.key &&
+                              sort.direction === 'asc'
                                 ? 'desc'
                                 : 'asc',
-                          }))
+                          };
+                          if (controlledSort === undefined) setLocalSort(next);
+                          onSortChange?.(next);
+                        }
                       : undefined
                   }
                 >
@@ -172,7 +189,13 @@ export function DataTable<Row extends object>({
           </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows.length ? (
+          {loading || error ? (
+            <TableEmpty colSpan={columns.length}>
+              <span role={error ? 'alert' : 'status'}>
+                {error ?? loadingMessage}
+              </span>
+            </TableEmpty>
+          ) : visibleRows.length ? (
             visibleRows.map((row) => (
               <TableRow key={getRowId(row)}>
                 {columns.map((column) => {
@@ -607,6 +630,14 @@ export interface DataGridProps<Row extends object> extends BoxProps {
   selectedIds?: readonly string[];
   defaultSelectedIds?: readonly string[];
   onSelectionChange?: (ids: string[]) => void;
+  initialSort?: DataTableSort;
+  sort?: DataTableSort;
+  onSortChange?: (sort: DataTableSort) => void;
+  manual?: boolean;
+  loading?: boolean;
+  error?: ReactNode;
+  loadingMessage?: ReactNode;
+  emptyMessage?: ReactNode;
   label?: string;
 }
 export function DataGrid<Row extends object>({
@@ -616,15 +647,44 @@ export function DataGrid<Row extends object>({
   selectedIds,
   defaultSelectedIds = [],
   onSelectionChange,
+  initialSort,
+  sort: controlledSort,
+  onSortChange,
+  manual = false,
+  loading = false,
+  error,
+  loadingMessage = '데이터를 불러오는 중이에요.',
+  emptyMessage = '표시할 데이터가 없어요.',
   label = '데이터 그리드',
   className = '',
   ...props
 }: DataGridProps<Row>) {
   const [localSelected, setLocalSelected] = useState(defaultSelectedIds);
+  const [localSort, setLocalSort] = useState<DataTableSort | undefined>(() =>
+    initialSort &&
+    columns.some((column) => column.key === initialSort.key && column.sortable)
+      ? initialSort
+      : undefined,
+  );
   const [active, setActive] = useState('0:0');
+  const sort = controlledSort ?? localSort;
+  const visibleRows = useMemo(() => {
+    if (manual || !sort) return [...rows];
+    const column = columns.find(
+      (item) => item.key === sort.key && item.sortable,
+    );
+    if (!column) return [...rows];
+    return [...rows].sort((a, b) => {
+      const result = compareValues(cellValue(a, column), cellValue(b, column));
+      return sort.direction === 'asc' ? result : -result;
+    });
+  }, [columns, manual, rows, sort]);
   const selected = new Set(selectedIds ?? localSelected);
+  const visibleIds = visibleRows.map(getRowId);
   const allSelected =
-    rows.length > 0 && rows.every((row) => selected.has(getRowId(row)));
+    visibleIds.length > 0 && visibleIds.every((id) => selected.has(id));
+  const someSelected =
+    !allSelected && visibleIds.some((id) => selected.has(id));
   const update = (ids: string[]) => {
     if (selectedIds === undefined) setLocalSelected(ids);
     onSelectionChange?.(ids);
@@ -643,7 +703,10 @@ export function DataGrid<Row extends object>({
     const offset = offsets[event.key];
     if (!offset) return;
     event.preventDefault();
-    const nextRow = Math.max(0, Math.min(rows.length - 1, row + offset[0]));
+    const nextRow = Math.max(
+      0,
+      Math.min(visibleRows.length - 1, row + offset[0]),
+    );
     const nextColumn = Math.max(
       0,
       Math.min(columns.length - 1, column + offset[1]),
@@ -658,7 +721,12 @@ export function DataGrid<Row extends object>({
   };
   return (
     <div {...props} className={`mega-data-grid ${className}`}>
-      <Table role="grid" aria-label={label} aria-multiselectable="true">
+      <Table
+        role="grid"
+        aria-label={label}
+        aria-multiselectable="true"
+        aria-busy={loading || undefined}
+      >
         <TableHead>
           <TableRow>
             <TableHeaderCell>
@@ -666,63 +734,101 @@ export function DataGrid<Row extends object>({
                 shape="square"
                 aria-label="모든 행 선택"
                 checked={allSelected}
-                onChange={(event) =>
-                  update(event.currentTarget.checked ? rows.map(getRowId) : [])
-                }
+                indeterminate={someSelected}
+                onChange={(event) => {
+                  const next = new Set(selected);
+                  visibleIds.forEach((id) =>
+                    event.currentTarget.checked
+                      ? next.add(id)
+                      : next.delete(id),
+                  );
+                  update([...next]);
+                }}
               />
             </TableHeaderCell>
-            {columns.map((column) => (
-              <TableHeaderCell
-                key={column.key}
-                align={column.numeric ? 'end' : 'start'}
-                style={{ width: column.width }}
-              >
-                {column.header}
-              </TableHeaderCell>
-            ))}
+            {columns.map((column) => {
+              const direction =
+                sort?.key === column.key ? sort.direction : 'none';
+              return (
+                <TableHeaderCell
+                  key={column.key}
+                  align={column.numeric ? 'end' : 'start'}
+                  style={{ width: column.width }}
+                  sortDirection={column.sortable ? direction : undefined}
+                  onSort={
+                    column.sortable
+                      ? () => {
+                          const next: DataTableSort = {
+                            key: column.key,
+                            direction:
+                              sort?.key === column.key &&
+                              sort.direction === 'asc'
+                                ? 'desc'
+                                : 'asc',
+                          };
+                          if (controlledSort === undefined) setLocalSort(next);
+                          onSortChange?.(next);
+                        }
+                      : undefined
+                  }
+                >
+                  {column.header}
+                </TableHeaderCell>
+              );
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, rowIndex) => {
-            const id = getRowId(row);
-            return (
-              <TableRow key={id} selected={selected.has(id)}>
-                <TableCell>
-                  <Checkbox
-                    shape="square"
-                    aria-label={`${id} 행 선택`}
-                    checked={selected.has(id)}
-                    onChange={(event) => {
-                      const next = new Set(selected);
-                      if (event.currentTarget.checked) next.add(id);
-                      else next.delete(id);
-                      update([...next]);
-                    }}
-                  />
-                </TableCell>
-                {columns.map((column, columnIndex) => {
-                  const value = cellValue(row, column);
-                  const position = `${rowIndex}:${columnIndex}`;
-                  return (
-                    <TableCell
-                      key={column.key}
-                      numeric={column.numeric}
-                      style={{ width: column.width }}
-                      role="gridcell"
-                      tabIndex={active === position ? 0 : -1}
-                      data-grid-cell={position}
-                      onFocus={() => setActive(position)}
-                      onKeyDown={(event) => move(event, rowIndex, columnIndex)}
-                    >
-                      {column.render
-                        ? column.render(value, row)
-                        : (value as ReactNode)}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
+          {loading || error || !visibleRows.length ? (
+            <TableEmpty colSpan={columns.length + 1}>
+              <span role={error ? 'alert' : loading ? 'status' : undefined}>
+                {error ?? (loading ? loadingMessage : emptyMessage)}
+              </span>
+            </TableEmpty>
+          ) : (
+            visibleRows.map((row, rowIndex) => {
+              const id = getRowId(row);
+              return (
+                <TableRow key={id} selected={selected.has(id)}>
+                  <TableCell>
+                    <Checkbox
+                      shape="square"
+                      aria-label={`${id} 행 선택`}
+                      checked={selected.has(id)}
+                      onChange={(event) => {
+                        const next = new Set(selected);
+                        if (event.currentTarget.checked) next.add(id);
+                        else next.delete(id);
+                        update([...next]);
+                      }}
+                    />
+                  </TableCell>
+                  {columns.map((column, columnIndex) => {
+                    const value = cellValue(row, column);
+                    const position = `${rowIndex}:${columnIndex}`;
+                    return (
+                      <TableCell
+                        key={column.key}
+                        numeric={column.numeric}
+                        style={{ width: column.width }}
+                        role="gridcell"
+                        tabIndex={active === position ? 0 : -1}
+                        data-grid-cell={position}
+                        onFocus={() => setActive(position)}
+                        onKeyDown={(event) =>
+                          move(event, rowIndex, columnIndex)
+                        }
+                      >
+                        {column.render
+                          ? column.render(value, row)
+                          : (value as ReactNode)}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })
+          )}
         </TableBody>
       </Table>
     </div>

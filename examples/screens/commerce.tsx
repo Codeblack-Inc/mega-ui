@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   Accordion,
+  ActiveFilters,
   AgentActivity,
   Amount,
   Avatar,
@@ -16,11 +17,13 @@ import {
   CheckboxGroup,
   Chip,
   DescriptionList,
+  DataPagination,
   Dialog,
   Drawer,
   EmptyState,
   ErrorState,
   Field,
+  FilterBar,
   Grid,
   Heading,
   IconButton,
@@ -32,7 +35,6 @@ import {
   Message,
   MessageBubble,
   PageHeader,
-  Pagination,
   PromptInput,
   RangeSlider,
   Result,
@@ -105,6 +107,7 @@ function Shop() {
   const [topRated, setTopRated] = useState(false);
   const [sort, setSort] = useState('popular');
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(PER_PAGE);
   const [liked, setLiked] = useState<number[]>([]);
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -124,7 +127,7 @@ function Shop() {
           ? b.price - a.price
           : b.reviews - a.reviews,
     );
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
   const current = Math.min(page, pageCount);
 
   const reset = () => {
@@ -194,34 +197,68 @@ function Shop() {
         </Card>
       </aside>
       <div className="shop-main">
-        <div className="shop-toolbar">
-          <SearchInput
-            aria-label="상품 검색"
-            placeholder="어떤 상품을 찾으세요?"
-            value={query}
-            onChange={(event) => {
-              setQuery(event.target.value);
-              setPage(1);
-            }}
-          />
-          <Select
-            aria-label="정렬"
-            value={sort}
-            onChange={(event) => setSort(event.target.value)}
-          >
-            <option value="popular">인기순</option>
-            <option value="low">낮은 가격순</option>
-            <option value="high">높은 가격순</option>
-          </Select>
-          <Button
-            variant="outline"
-            className="shop-filter-button"
-            leading={<ExampleIcon name="filter" />}
-            onClick={() => setFilterOpen(true)}
-          >
-            필터
-          </Button>
-        </div>
+        <FilterBar
+          label="상품 필터"
+          search={
+            <SearchInput
+              aria-label="상품 검색"
+              placeholder="어떤 상품을 찾으세요?"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setPage(1);
+              }}
+            />
+          }
+          sort={
+            <Select
+              aria-label="정렬"
+              value={sort}
+              onChange={(event) => setSort(event.target.value)}
+            >
+              <option value="popular">인기순</option>
+              <option value="low">낮은 가격순</option>
+              <option value="high">높은 가격순</option>
+            </Select>
+          }
+          actions={
+            <Button
+              variant="outline"
+              className="shop-filter-button"
+              leading={<ExampleIcon name="filter" />}
+              onClick={() => setFilterOpen(true)}
+            >
+              필터
+            </Button>
+          }
+        />
+        <ActiveFilters
+          filters={[
+            ...(query ? [{ id: 'query', label: `검색: ${query}` }] : []),
+            ...categories.map((category) => ({
+              id: `category:${category}`,
+              label: category,
+            })),
+            ...(range[0] !== 0 || range[1] !== 100000
+              ? [{ id: 'price', label: '가격 범위' }]
+              : []),
+            ...(topRated ? [{ id: 'rating', label: '평점 4.7 이상' }] : []),
+          ]}
+          onRemove={(id) => {
+            if (id === 'query') setQuery('');
+            if (id.startsWith('category:'))
+              setCategories((value) =>
+                value.filter((item) => item !== id.slice(9)),
+              );
+            if (id === 'price') setRange([0, 100000]);
+            if (id === 'rating') setTopRated(false);
+            setPage(1);
+          }}
+          onClear={() => {
+            setQuery('');
+            reset();
+          }}
+        />
         <Text size="sm" tone="muted">
           {filtered.length}개 상품
         </Text>
@@ -239,7 +276,7 @@ function Shop() {
         ) : (
           <Grid minItemWidth={220} gap={4}>
             {filtered
-              .slice((current - 1) * PER_PAGE, current * PER_PAGE)
+              .slice((current - 1) * pageSize, current * pageSize)
               .map((item) => (
                 <Card key={item.id} variant="outlined" className="shop-card">
                   <div className="shop-thumb" data-tone={item.tone}>
@@ -291,13 +328,20 @@ function Shop() {
               ))}
           </Grid>
         )}
-        <div className="shop-pagination">
-          <Pagination
-            page={current}
-            pageCount={pageCount}
-            onPageChange={setPage}
-          />
-        </div>
+        <DataPagination
+          total={filtered.length}
+          page={current}
+          pageSize={pageSize}
+          pageSizeOptions={[6, 12]}
+          onPageChange={setPage}
+          onPageSizeChange={(value) => {
+            setPageSize(value);
+            setPage(1);
+          }}
+          formatSummary={({ start, end, total }) =>
+            total ? `${total}개 중 ${start}–${end}개 상품` : '상품 0개'
+          }
+        />
       </div>
       <Drawer
         open={filterOpen}
@@ -1099,7 +1143,7 @@ export function MobileHomeExample() {
                   key={label}
                   leading={<ExampleIcon name={icon} />}
                   title={label}
-                  trailing={<Text tone="muted">›</Text>}
+                  trailing={<ExampleIcon name="chevronRight" />}
                 />
               ))}
             </Card>

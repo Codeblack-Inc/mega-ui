@@ -1,4 +1,9 @@
-import type { ComponentPropsWithRef, ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  type ComponentPropsWithRef,
+  type ReactNode,
+} from 'react';
 
 export interface ButtonProps extends ComponentPropsWithRef<'button'> {
   variant?:
@@ -173,18 +178,36 @@ export interface CheckboxProps extends Omit<
   children?: ReactNode;
   /** Square box (form checkbox) instead of the Toss circle check (agreement lists). */
   shape?: 'circle' | 'square';
+  indeterminate?: boolean;
 }
 export function Checkbox({
   children,
   shape = 'circle',
+  indeterminate = false,
   className = '',
+  ref,
   ...props
 }: CheckboxProps) {
+  const input = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (input.current) input.current.indeterminate = indeterminate;
+  }, [indeterminate]);
+
   return (
     <label
       className={`mega-checkbox ${shape === 'square' ? 'mega-checkbox--square' : ''} ${className}`}
     >
-      <input {...props} type="checkbox" />
+      <input
+        {...props}
+        ref={(node) => {
+          input.current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) ref.current = node;
+        }}
+        type="checkbox"
+        aria-checked={indeterminate ? 'mixed' : props['aria-checked']}
+      />
       {children != null ? <span>{children}</span> : null}
     </label>
   );
