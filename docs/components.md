@@ -735,5 +735,5 @@ function SaveButton() {
 
 ## 다중 계열 Charts (별도 진입점)
 
-`@mega-ui/react/charts`의 `CartesianChart`·`PieChart`와 `createChartCsv`는
+`@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.

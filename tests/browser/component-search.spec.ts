@@ -61,6 +61,7 @@ test('professional components appear in the catalog and search opens live demos'
     'TextEditor',
     'CartesianChart',
     'PieChart',
+    'ChartPro',
   ]) {
     await page.getByRole('button', { name: '글로벌 검색 열기' }).click();
     const search = page

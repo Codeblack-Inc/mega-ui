@@ -122,7 +122,18 @@ export function prepareChartPro(
     animation: false,
     tooltip: { trigger: 'item', renderMode: 'richText', confine: true },
     series,
-    toolbox: { show: false, feature: { dataZoom: { yAxisIndex: 'none' } } },
+    toolbox: {
+      show: true,
+      itemSize: 0,
+      itemGap: 0,
+      showTitle: false,
+      feature: {
+        dataZoom: {
+          yAxisIndex: 'none',
+          icon: { zoom: 'path://', back: 'path://' },
+        },
+      },
+    },
   };
   let cartesian = false;
   const axes = (type: 'category' | 'value' | 'time', categories?: string[]) => {
@@ -335,6 +346,7 @@ export function prepareChartPro(
       option.visualMap = {
         min,
         max,
+        text: [String(max), String(min)],
         dimension: 2,
         orient: 'horizontal',
         left: 'center',
@@ -490,6 +502,36 @@ export function prepareChartPro(
       throw new Error('Invalid chart type');
   }
   if (rows.length > 10000) throw new Error('Chart exceeds 10000 points');
+  if ('series' in data && settings.yAxes) {
+    columns.splice(columns.length - 1, 0, '축');
+    rows.forEach((row) =>
+      row.cells.splice(
+        row.cells.length - 1,
+        0,
+        settings.yAxes![data.series[row.seriesIndex]!.axis ?? 0]!.label,
+      ),
+    );
+  }
+  const lookup = new Map(
+    rows.map((row) => [`${row.seriesIndex}:${row.dataIndex}`, row]),
+  );
+  option.tooltip = {
+    trigger: 'item',
+    renderMode: 'richText',
+    confine: true,
+    formatter: (params) => {
+      const point = Array.isArray(params) ? params[0] : params;
+      if (!point) return '';
+      const row = lookup.get(
+        `${data.type === 'candlestick' ? 0 : point.seriesIndex}:${point.dataIndex}`,
+      );
+      return (
+        row?.cells
+          .map((cell, index) => `${columns[index]}: ${cell ?? '값 없음'}`)
+          .join('\n') ?? ''
+      );
+    },
+  };
   return { option, columns, rows, legends, cartesian };
 }
 export function createChartProCsv(

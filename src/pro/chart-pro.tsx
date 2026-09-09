@@ -99,6 +99,7 @@ export function ChartPro({
   const descriptionId = useId();
   const host = useRef<HTMLDivElement>(null);
   const engine = useRef<echarts.EChartsType | null>(null);
+  const brushActive = useRef(false);
   const callbacks = useRef({ onSelectionChange, onRangeChange });
   useEffect(() => {
     callbacks.current = { onSelectionChange, onRangeChange };
@@ -135,9 +136,12 @@ export function ChartPro({
   useEffect(() => {
     setFailure(false);
     setSelected([]);
+    callbacks.current.onSelectionChange?.([]);
+    callbacks.current.onRangeChange?.([0, 100]);
     setHidden([]);
     setRange([0, 100]);
     setBrush(false);
+    brushActive.current = false;
     setDragZoom(false);
     setActive(0);
     setPage(0);
@@ -163,6 +167,14 @@ export function ChartPro({
         'danger',
         'success',
       ].map(color);
+      const treeColors = [
+        'brand-soft',
+        'teal-soft',
+        'purple-soft',
+        'warning-soft',
+        'danger-soft',
+        'success-soft',
+      ].map(color);
       const text = color('text'),
         border = color('border'),
         background = color('surface');
@@ -174,7 +186,7 @@ export function ChartPro({
         backgroundColor: background,
         textStyle: {
           color: text,
-          fontFamily: getComputedStyle(element).fontFamily,
+          fontFamily: getComputedStyle(element).fontFamily.replace(/["']/g, ''),
         },
         ...(prepared.cartesian
           ? {
@@ -203,6 +215,23 @@ export function ChartPro({
                 inRange: { color: [background, colors[0]] },
                 textStyle: { color: text },
               },
+            }
+          : {}),
+        ...(data.type === 'treemap'
+          ? {
+              series: [
+                {
+                  color: treeColors,
+                  levels: [{ color: treeColors }],
+                  label: {
+                    color: text,
+                    padding: 4,
+                    borderRadius: 3,
+                  },
+                  upperLabel: { color: text },
+                  itemStyle: { borderColor: border, gapWidth: 2 },
+                },
+              ],
             }
           : {}),
         ...(data.type === 'candlestick'
@@ -259,6 +288,8 @@ export function ChartPro({
         }
       });
       chart.on('brushselected', (event: unknown) => {
+        // ECharts also emits this during resize/render; preserve explicit table selection.
+        if (!brushActive.current) return;
         const e = event as {
           batch?: {
             selected?: { seriesIndex: number; dataIndex: number[] }[];
@@ -320,6 +351,13 @@ export function ChartPro({
     });
   };
   const select = (ids: string[]) => {
+    brushActive.current = false;
+    setBrush(false);
+    engine.current?.dispatchAction({
+      type: 'takeGlobalCursor',
+      key: 'brush',
+      brushOption: { brushType: false },
+    });
     setSelected(ids);
     callbacks.current.onSelectionChange?.(ids);
   };
@@ -436,7 +474,7 @@ export function ChartPro({
       ) : (
         <>
           <div className="mega-chart-pro__tools" aria-label="계열 표시">
-            {prepared.legends.map((item) => (
+            {prepared.legends.map((item, index) => (
               <Button
                 key={item}
                 variant="secondary"
@@ -453,6 +491,13 @@ export function ChartPro({
                   });
                 }}
               >
+                <span
+                  aria-hidden="true"
+                  className="mega-chart-pro__swatch"
+                  style={{
+                    backgroundColor: `var(--mega-${['brand', 'teal', 'purple', 'warning', 'danger', 'success'][index % 6]})`,
+                  }}
+                />
                 {item}
               </Button>
             ))}
@@ -509,6 +554,7 @@ export function ChartPro({
                 aria-pressed={brush}
                 onClick={() => {
                   setDragZoom(false);
+                  brushActive.current = !brush;
                   setBrush(!brush);
                   engine.current?.dispatchAction({
                     type: 'takeGlobalCursor',
@@ -527,6 +573,7 @@ export function ChartPro({
                 aria-pressed={dragZoom}
                 onClick={() => {
                   setBrush(false);
+                  brushActive.current = false;
                   setDragZoom(!dragZoom);
                   engine.current?.dispatchAction({
                     type: 'takeGlobalCursor',
@@ -580,6 +627,23 @@ export function ChartPro({
               : ''}
             방향키로 값을 읽고, 전체 데이터 표에서 항목을 선택할 수 있어요.
           </p>
+          {data.type === 'treemap' && (
+            <Button
+              variant="secondary"
+              onClick={() => {
+                if (prepared)
+                  engine.current?.setOption(
+                    {
+                      ...engine.current.getOption(),
+                      series: engine.current.getOption().series,
+                    },
+                    { notMerge: true },
+                  );
+              }}
+            >
+              전체 트리 보기
+            </Button>
+          )}
           {failure && (
             <Alert tone="danger" role="alert">
               차트를 그리지 못했어요. 아래 데이터 표를 이용해 주세요.
@@ -605,6 +669,7 @@ export function ChartPro({
               brushOption: { brushType: false },
             });
             setBrush(false);
+            brushActive.current = false;
             setDragZoom(false);
             engine.current?.dispatchAction({
               type: 'takeGlobalCursor',

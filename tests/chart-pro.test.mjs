@@ -128,6 +128,10 @@ test('time axes preserve elapsed time and exact instants across DST and financia
   );
   assert.match(model.rows[0].cells[1], /1:30:00/);
   assert.match(model.rows[1].cells[1], /3:30:00/);
+  assert.match(
+    model.option.tooltip.formatter({ seriesIndex: 0, dataIndex: 1 }),
+    /3:30:00/,
+  );
   assert.match(createChartProCsv(data), /2026-03-08T06:30:00.000Z/);
   const candle = {
     time: before,
@@ -227,4 +231,25 @@ test('professional input boundary rejects invalid and excessive data without mut
     ],
   });
   assert.equal(large.rows.length, 10000);
+});
+
+test('ChartPro server rendering keeps the accessible source and safe failure states', async () => {
+  const { createElement } = await import('react');
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const { ChartPro } = await import('@mega-ui/react/charts');
+  const html = renderToStaticMarkup(
+    createElement(ChartPro, { label: '분석', data: { type: 'line', series } }),
+  );
+  assert.match(html, /<table>/);
+  assert.match(html, /분석 · 전체 데이터/);
+  assert.match(html, /값 없음/);
+  assert.doesNotMatch(html, /<svg/);
+  const bad = renderToStaticMarkup(
+    createElement(ChartPro, {
+      label: '분석',
+      data: { type: 'pie', items: [{ label: 'A', value: -1 }] },
+    }),
+  );
+  assert.match(bad, /차트 데이터 형식을 확인해 주세요/);
+  assert.doesNotMatch(bad, /Invalid pie/);
 });

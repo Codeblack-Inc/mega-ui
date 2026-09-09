@@ -69,11 +69,50 @@ test('all professional chart types render, export and expose the source table', 
     if (format === 'SVG') {
       expect(file.toString()).toContain('<svg');
       expect(file.toString()).toContain('그룹 A');
+      expect(
+        await page.evaluate(
+          (svg) =>
+            new DOMParser()
+              .parseFromString(svg, 'image/svg+xml')
+              .querySelector('parsererror')?.textContent ?? '',
+          file.toString(),
+        ),
+      ).toBe('');
     }
-    if (format === 'PNG')
+    if (format === 'PNG') {
       expect(file.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
+      expect(file.readUInt32BE(16)).toBeGreaterThanOrEqual(1280);
+      expect(file.readUInt32BE(20)).toBe(880);
+    }
     if (format === 'CSV') expect(file.toString()).toContain('그룹 B,9,4');
   }
+  const selectedDownload = page.waitForEvent('download');
+  await chart
+    .getByRole('button', { name: '선택 데이터 CSV 내려받기', exact: true })
+    .click();
+  const selectedFile = await selectedDownload;
+  const selectedCsv = await readFile((await selectedFile.path())!, 'utf8');
+  expect(selectedCsv.split('\r\n')).toHaveLength(2);
+  expect(selectedCsv).toContain('그룹 B,9,4');
+  await page.evaluate(() => {
+    const original = URL.createObjectURL;
+    URL.createObjectURL = (...args) => {
+      URL.createObjectURL = original;
+      throw new Error(String(args.length));
+    };
+  });
+  await chart
+    .getByRole('button', { name: '전체 데이터 CSV 내려받기', exact: true })
+    .click();
+  await expect(chart.getByRole('alert')).toContainText(
+    '파일을 만들지 못했어요.',
+  );
+  const retryDownload = page.waitForEvent('download');
+  await chart
+    .getByRole('button', { name: '전체 데이터 CSV 내려받기', exact: true })
+    .click();
+  await retryDownload;
+  await expect(chart.getByRole('alert')).toHaveCount(0);
   await kind.selectOption('empty');
   await expect(chart.getByText('표시할 값이 없어요.')).toBeVisible();
   await kind.selectOption('loading');

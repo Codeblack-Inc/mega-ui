@@ -9,6 +9,7 @@ for (const selector of [
   '.mega-text-editor__panel',
   '.mega-pro-grid',
   '.mega-cartesian-chart',
+  '.mega-chart-pro',
 ]) {
   assert.ok(css.includes(selector), `Production CSS missing ${selector}`);
 }

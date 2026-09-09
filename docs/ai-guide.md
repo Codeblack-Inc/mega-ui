@@ -68,7 +68,12 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 
 **다중 계열 분석 차트**
 
-막대·선·영역·누적 비교, 구간 확대·이동, 축·범례·키보드 값 탐색에는 `@mega-ui/react/charts`의 `CartesianChart`를 사용합니다.
+전문 분석에는 `@mega-ui/react/charts`의 `ChartPro`를 사용합니다. 막대·선·영역·누적·원형·도넛·산점·히트맵·트리맵·캔들/거래량,
+시간/이중 축·드래그 탐색·선택·PNG/SVG/CSV·페이지형 데이터 표를 제공합니다.
+시간축은 오름차순 epoch milliseconds와 명시적인 `timeZone`을 사용하며 최대 10,000개 데이터·20개 계열입니다.
+[ChartPro API](./charts.md#chartpro)를 읽고 유형에 맞는 `ChartProData`를 전달하세요. 원시 ECharts 옵션은 받지 않습니다.
+
+기존 경량 막대·선·영역·누적 비교, 구간 확대·이동, 축·범례·키보드 값 탐색에는 `@mega-ui/react/charts`의 `CartesianChart`를 사용합니다.
 [API와 제한](./charts.md)을 먼저 읽고 기본 CSS와 `@mega-ui/react/charts.css`를 로드합니다.
 `labels`와 각 `series.values`의 길이를 맞추고, 결측은 `null`로 전달합니다. 범주는 등간격이며 시간축이 아닙니다.
 최대 200개 항목·6개 계열을 지원하며 전체 데이터 표와 CSV는 숨긴 계열도 포함합니다.

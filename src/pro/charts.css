@@ -325,3 +325,14 @@
     height: 400px;
   }
 }
+
+.mega-chart-pro__swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-inline-end: var(--mega-space-1);
+}
+.mega-chart-pro__tools [aria-pressed='false'] {
+  text-decoration: line-through;
+}
