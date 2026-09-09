@@ -1,4 +1,5 @@
 import taskBoardSource from './screens/task-board.tsx?raw';
+import schedulerSource from './screens/scheduler.tsx?raw';
 import chartsSource from './screens/charts.tsx?raw';
 const LazyChartsExample = lazy(() =>
   import('./screens/charts').then((module) => ({
@@ -41,6 +42,7 @@ function DataGridExampleRoute() {
     </Suspense>
   );
 }
+import { SchedulerExample } from './screens/scheduler';
 import { categories } from './catalog';
 import { DashboardExample, SettingsExample, PaymentExample } from './recipes';
 import { AdminExample } from './admin';
@@ -317,6 +319,16 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: DataGridExampleRoute,
         source: dataGridSource,
+      },
+      {
+        id: 'scheduler',
+        label: '전문 일정',
+        title: '회의실까지 함께 잡는 팀 일정',
+        description:
+          '일·주·월·리소스 보기에서 반복 일정을 만들고, 끌어서 옮기고, 예약 충돌을 확인해요.',
+        wide: true,
+        Component: SchedulerExample,
+        source: schedulerSource,
       },
       {
         id: 'order-operations',

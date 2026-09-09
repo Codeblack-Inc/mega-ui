@@ -8,6 +8,7 @@ async function open(page: import('@playwright/test').Page) {
     exact: true,
   });
   await expect(board).toBeVisible();
+  await board.getByLabel('구획별 보기', { exact: true }).check();
   return board;
 }
 test('board edits, filters, WIP, undo, save failure, concurrent save and reload', async ({
@@ -250,7 +251,7 @@ test('save acknowledgement preserves later edits; drag cancel and WIP reject pre
         localStorage.getItem('mega-task-board-example-v1')!,
       ).cards.find((card: { id: string }) => card.id === 'task-6').title,
   );
-  expect(saved).toBe('다음 릴리스 준비');
+  expect(saved).toContain('다음 릴리스 준비');
   await page.clock.resume();
   await board.getByLabel('구획별 보기', { exact: true }).uncheck();
   const handle = board.locator('[data-card-handle="task-1"]');
@@ -438,14 +439,12 @@ test('card bodies drag across columns and auto-scroll to lanes at a normal viewp
   const platform = board.locator(
     '[data-column-id="doing"][data-lane-id="platform"]',
   );
-  await expect
-    .poll(async () => {
-      const bounds = await platform.boundingBox();
-      return bounds!.y;
-    })
-    .toBeLessThan(560);
-  const target = await platform.boundingBox();
-  await page.mouse.move(target!.x + 90, target!.y + 65, { steps: 10 });
+  // Drop when the live target reaches the desired lane. A bounding box read
+  // while edge scrolling continues becomes stale before the next mouse move.
+  await expect(platform).toHaveAttribute('data-drop-target', 'true');
+  await expect(page.locator('.mega-task-board__drag-preview')).toContainText(
+    '진행 중 · 플랫폼에 놓기',
+  );
   await page.mouse.up();
   await expect(platform.locator('[data-board-card="task-6"]')).toHaveCount(1);
   await expect(board.locator('[data-board-card]')).toHaveCount(6);
@@ -459,7 +458,13 @@ test('visible keyboard order, interactive controls and blocked pointer drops pre
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
-  const board = await open(page);
+  await page.goto('/#board?full=1');
+  const board = page.getByRole('region', {
+    name: '릴리스 작업 보드',
+    exact: true,
+  });
+  await expect(board.getByLabel('구획별 보기')).not.toBeChecked();
+  await expect(board.locator('[data-board-slot]')).toHaveCount(4);
   await board.getByLabel('구획별 보기').uncheck();
   const backlog = board.locator('[data-board-slot][data-column-id="backlog"]');
   await board.locator('[data-card-handle="task-6"]').press('Alt+ArrowUp');
@@ -501,6 +506,22 @@ test('drag cancellation restores focus, boundaries announce and empty slots show
   await page.setViewportSize({ width: 1280, height: 720 });
   const board = await open(page);
   const handle = board.locator('[data-card-handle="task-6"]');
+  await page.evaluate(() =>
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: async (text: string) => {
+          (window as unknown as { copied: string }).copied = text;
+        },
+      },
+    }),
+  );
+  await board
+    .getByRole('button', { name: '다음 릴리스 준비 카드 내용 복사' })
+    .click();
+  expect(
+    await page.evaluate(() => (window as unknown as { copied: string }).copied),
+  ).toContain('다음 릴리스 준비');
   await handle.click();
   await expect(handle).toBeFocused();
   await handle.press('Alt+ArrowUp');

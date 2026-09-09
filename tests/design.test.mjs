@@ -17,6 +17,8 @@ const runtimeValues = new Set([
   '--mega-gap',
   '--mega-grid-min',
   '--mega-chart-value',
+  '--mega-scheduler-columns',
+  '--mega-scheduler-hour',
 ]);
 const styles = Object.fromEntries(componentStyles);
 

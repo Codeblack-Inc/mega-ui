@@ -243,3 +243,38 @@ export {
   type TaskBoardAssignee,
   type TaskBoardAction,
 } from './components/task-board-model';
+
+export {
+  SchedulerPro,
+  type SchedulerProProps,
+  type SchedulerView,
+} from './components/scheduler-pro';
+export {
+  validateScheduler,
+  updateScheduler,
+  expandScheduler,
+  schedulerConflicts,
+  schedulerOutsideHours,
+  schedulerOccurrenceDates,
+  schedulerToUtc,
+  schedulerToWall,
+  schedulerOffset,
+  schedulerShift,
+  schedulerDaysBetween,
+  schedulerWeekday,
+  serializeSchedulerIcs,
+  parseSchedulerIcs,
+  isSchedulerDate,
+  isSchedulerTime,
+  isSchedulerZone,
+  SCHEDULER_MAX_OCCURRENCES,
+  type SchedulerData,
+  type SchedulerEvent,
+  type SchedulerResource,
+  type SchedulerRecurrence,
+  type SchedulerException,
+  type SchedulerBusinessHours,
+  type SchedulerOccurrence,
+  type SchedulerAction,
+  type SchedulerIcsResult,
+} from './components/scheduler-model';

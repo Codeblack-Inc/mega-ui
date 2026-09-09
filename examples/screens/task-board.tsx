@@ -142,7 +142,13 @@ export function TaskBoardExample() {
         }
       />
       <p>예제 데이터를 바꾸면 저장하지 않은 변경은 사라져요.</p>
-      <Stack direction="row" gap={3} wrap align="end">
+      <Stack
+        direction="row"
+        gap={3}
+        wrap
+        align="end"
+        className="mega-task-board-example-controls"
+      >
         <label>
           예제 데이터
           <Select
@@ -192,7 +198,7 @@ export function TaskBoardExample() {
         >
           사용자 카드 표시
         </Checkbox>
-        <Button variant="secondary" onClick={() => setReload(true)}>
+        <Button size="lg" variant="secondary" onClick={() => setReload(true)}>
           브라우저 저장본 불러오기
         </Button>
       </Stack>

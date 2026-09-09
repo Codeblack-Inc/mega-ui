@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from 'react';
 import { Portal } from './foundations';
-import { Button, Input, Select } from './controls';
+import { Button, Checkbox, Input, Select } from './controls';
 import { Alert } from './surfaces';
 import { Dialog } from './overlay';
 import {
@@ -100,7 +100,7 @@ export function TaskBoard({
   const [search, setSearch] = useState('');
   const [assignee, setAssignee] = useState('');
   const [due, setDue] = useState('');
-  const [grouped, setGrouped] = useState(true);
+  const [grouped, setGrouped] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
   const [formError, setFormError] = useState('');
   const [removing, setRemoving] = useState<Editor | null>(null);
@@ -496,7 +496,7 @@ export function TaskBoard({
         ) {
           current.active = true;
           window.getSelection()?.removeAllRanges();
-          // Keep native focus reveal from scrolling back to the source during dragging.
+          // A pointer drag should not leave an unrelated text field editing behind it.
           if (document.activeElement instanceof HTMLElement)
             document.activeElement.blur();
           setDragging(current.id);
@@ -752,16 +752,16 @@ export function TaskBoard({
                   />
                 </label>
                 {data.lanes.length > 0 && (
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={grouped}
-                      onChange={(event) => setGrouped(event.target.checked)}
-                    />
+                  <Checkbox
+                    shape="square"
+                    checked={grouped}
+                    onChange={(event) => setGrouped(event.target.checked)}
+                  >
                     구획별 보기
-                  </label>
+                  </Checkbox>
                 )}
                 <Button
+                  size="lg"
                   variant="secondary"
                   onClick={() => {
                     setSearch('');
@@ -805,6 +805,13 @@ export function TaskBoard({
                 <section
                   key={lane.id}
                   className="mega-task-board__lane"
+                  data-empty={
+                    (showLanes &&
+                      !data.cards.some(
+                        (card) => (card.laneId ?? '') === lane.id,
+                      )) ||
+                    undefined
+                  }
                   aria-label={lane.title || '전체 카드'}
                 >
                   {showLanes && (
@@ -1063,6 +1070,37 @@ export function TaskBoard({
                                         편집
                                       </Button>
                                     )}
+                                    <Button
+                                      variant="secondary"
+                                      size="sm"
+                                      aria-label={`${card.title} 카드 내용 복사`}
+                                      onClick={async (event) => {
+                                        const content =
+                                          event.currentTarget
+                                            .closest('[data-board-card]')
+                                            ?.querySelector<HTMLElement>(
+                                              '.mega-task-board__card-content',
+                                            )?.innerText ?? card.title;
+                                        try {
+                                          await navigator.clipboard.writeText(
+                                            content,
+                                          );
+                                          if (alive.current) {
+                                            setError('');
+                                            setMessage(
+                                              '카드 내용을 복사했어요.',
+                                            );
+                                          }
+                                        } catch {
+                                          if (alive.current)
+                                            setError(
+                                              '카드 내용을 복사하지 못했어요. 다시 시도해 주세요.',
+                                            );
+                                        }
+                                      }}
+                                    >
+                                      복사
+                                    </Button>
                                     <details>
                                       <summary
                                         aria-label={`${card.title} 이동 메뉴`}
@@ -1537,7 +1575,9 @@ export function TaskBoard({
       !allowReorder
     )
       return;
-    if (!event.currentTarget.matches('button')) event.preventDefault();
+    event.preventDefault();
+    if (event.currentTarget.matches('button'))
+      event.currentTarget.focus({ preventScroll: true });
     currentStart.current = { x: event.clientX, y: event.clientY };
     drag.current = {
       kind,

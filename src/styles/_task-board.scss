@@ -40,26 +40,38 @@
     border-radius: var(--mega-radius-md);
     align-items: end;
   }
-  &__filters label,
+  &__filters > label:not(.mega-checkbox),
   &__form label {
     display: grid;
     gap: var(--mega-space-1);
     font-size: 13px;
     min-width: 0;
   }
-  &__filters input[type='checkbox'] {
-    width: 20px;
-    height: 20px;
+  &__filters > .mega-checkbox,
+  &__filters > [role='status'],
+  &-example-controls > .mega-checkbox {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
   }
   &__scroll {
     overflow: auto;
-    max-height: 720px;
+    max-height: min(720px, 50dvh);
     overscroll-behavior: contain;
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-md);
   }
   &__lane {
     min-width: fit-content;
+  }
+  &__lane[data-empty] &__column {
+    min-height: 0;
+  }
+  &__lane[data-empty] &__column > header {
+    margin-bottom: 0;
+  }
+  &__lane[data-empty] :is(.mega-task-board__empty, .mega-task-board__add) {
+    display: none;
   }
   &__lane > header {
     display: flex;
@@ -212,7 +224,11 @@
     outline-offset: 2px;
   }
   &__card-actions details {
+    margin-inline-start: auto;
+  }
+  &__card-actions details[open] {
     flex-basis: 100%;
+    margin-inline-start: 0;
   }
   &__card-actions summary {
     cursor: pointer;
@@ -259,7 +275,7 @@
     width: 100%;
   }
   @media (max-width: 600px) {
-    &__filters > label {
+    &__filters > label:not(.mega-checkbox) {
       flex: 1 1 140px;
     }
     &__card-actions summary {

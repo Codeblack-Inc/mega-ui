@@ -64,7 +64,7 @@ export const categories: Category[] = [
   {
     key: 'professional',
     label: '전문 업무 컴포넌트',
-    description: '그리드·편집기·차트·작업 보드를 사용해 봐요.',
+    description: '그리드·편집기·차트·작업 보드·일정을 사용해 봐요.',
     names: [
       'DataGridPro',
       'TextEditor',
@@ -72,6 +72,7 @@ export const categories: Category[] = [
       'PieChart',
       'ChartPro',
       'TaskBoard',
+      'SchedulerPro',
     ],
     Component: ProfessionalCategoryRoute,
     source: professionalSource,

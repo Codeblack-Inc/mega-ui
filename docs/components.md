@@ -738,6 +738,13 @@ function SaveButton() {
 `@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.
 
+## SchedulerPro
+
+`SchedulerPro`와 `SchedulerData`·`SchedulerEvent`·`SchedulerResource`·`SchedulerRecurrence`·`SchedulerException`·
+`SchedulerBusinessHours`·`SchedulerOccurrence`·`SchedulerAction`, `validateScheduler`·`updateScheduler`·`expandScheduler`·
+`schedulerConflicts`·`schedulerOutsideHours`·`serializeSchedulerIcs`·`parseSchedulerIcs`와 시간대 도우미는 기본 진입점에서 제공합니다.
+[API](./scheduler.md)를 참조하세요. 기존 `Scheduler`는 날짜별 목록만 표시하는 가벼운 컴포넌트로 유지합니다.
+
 ## TaskBoard
 
 `TaskBoard`와 `TaskBoardData`·`TaskBoardCard`·`TaskBoardColumn`·`TaskBoardLane`·`TaskBoardAssignee`·`TaskBoardAction`,

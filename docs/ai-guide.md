@@ -81,6 +81,15 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 컴포넌트 카탈로그의 `#components/professional`에서 그리드·편집기·차트 데모와 API를 함께 찾을 수 있습니다.
 단일 계열의 간단한 표시에는 기존 `BarChart`·`LineChart`·`Sparkline`을 계속 사용합니다.
 
+**일정·예약**
+
+`SchedulerPro`는 일·주·월·리소스 보기와 반복 일정을 다루는 달력입니다. [SchedulerPro API](./scheduler.md)를 먼저 읽습니다.
+`value`와 `onChange`로 제어하며 `onSave`가 있으면 저장 중·실패·재시도를 제공합니다.
+일정 시각은 달력 `timeZone`의 벽시계 문자열이고 종료는 배타적입니다. 반복은 매일·매주·매월과 회차 예외까지 지원합니다.
+겹침과 업무 시간 밖은 저장을 막지 않고 표시하며, 편집 폼에서 한 번 더 확인을 받습니다.
+파일 연동은 `serializeSchedulerIcs`·`parseSchedulerIcs`를 사용하고 가져오지 못한 항목은 note로 안내합니다.
+날짜별 목록만 필요하면 기존 `Scheduler`를, 월 달력 표시는 `Calendar`를 사용합니다.
+
 **작업 보드**
 
 `TaskBoard`는 기존 Kanban의 편집·이동 구현을 통합한 API입니다. [TaskBoard API](./task-board.md)를 먼저 읽습니다.

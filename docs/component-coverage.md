@@ -14,7 +14,7 @@
 - [내비게이션·오버레이·피드백](./extended-navigation.md)
 - [엔터프라이즈](./enterprise.md)
 
-엔터프라이즈는 정렬/검색, 고정 높이 가상 스크롤, 셀 편집, 집계, 날짜 배치 등 문서의 핵심 기능을 제공합니다. Spreadsheet 수식 엔진, Gantt 의존성 계산, Scheduler 반복 일정, 서버 업로드·AI 백엔드는 포함하지 않습니다. 해당 데이터와 콜백은 소비 애플리케이션이 공급합니다.
+엔터프라이즈는 정렬/검색, 고정 높이 가상 스크롤, 셀 편집, 집계, 날짜 배치 등 문서의 핵심 기능을 제공합니다. Spreadsheet 수식 엔진, Gantt 의존성 계산, 서버 업로드·AI 백엔드는 포함하지 않습니다. 반복 일정·시간대·예약 충돌은 별도 `SchedulerPro`가 제공합니다. 해당 데이터와 콜백은 소비 애플리케이션이 공급합니다.
 
 | 번호 | 요청 컴포넌트        | 영역                      | 처리                        |
 | ---- | -------------------- | ------------------------- | --------------------------- |
@@ -133,7 +133,7 @@
 | 113  | DataGrid             | Complex Data / Enterprise | 추가                        |
 | 114  | Kanban               | Complex Data / Enterprise | TaskBoard 호환 래퍼         |
 | 115  | Calendar             | Complex Data / Enterprise | 추가                        |
-| 116  | Scheduler            | Complex Data / Enterprise | 추가                        |
+| 116  | Scheduler            | Complex Data / Enterprise | 추가 · SchedulerPro 확장판  |
 | 117  | Gantt                | Complex Data / Enterprise | 추가                        |
 | 118  | Spreadsheet          | Complex Data / Enterprise | 추가                        |
 | 119  | OrganizationChart    | Complex Data / Enterprise | 추가                        |

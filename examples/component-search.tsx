@@ -9,7 +9,7 @@ const destinations = [
       id: `${category.key}-${name}`,
       label: name,
       description: `컴포넌트 · ${category.label}`,
-      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''}`,
+      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''} ${name === 'SchedulerPro' ? 'Scheduler 캘린더 달력 일정 예약 회의실 iCalendar' : ''}`,
       href: `#components/${category.key}?to=${encodeURIComponent(name)}`,
     })),
   ),
