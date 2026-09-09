@@ -9,7 +9,7 @@ const destinations = [
       id: `${category.key}-${name}`,
       label: name,
       description: `컴포넌트 · ${category.label}`,
-      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''} ${name === 'SchedulerPro' ? 'Scheduler 캘린더 달력 일정 예약 회의실 iCalendar' : ''} ${name === 'DiagramEditor' ? 'Diagram 다이어그램 플로우차트 노드 연결 순서도 워크플로' : ''} ${name === 'SpreadsheetPro' ? 'Spreadsheet 스프레드시트 엑셀 excel 수식 셀 xlsx csv 시트' : ''}`,
+      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''} ${name === 'SchedulerPro' ? 'Scheduler 캘린더 달력 일정 예약 회의실 iCalendar' : ''} ${name === 'DiagramEditor' ? 'Diagram 다이어그램 플로우차트 노드 연결 순서도 워크플로' : ''} ${name === 'SpreadsheetPro' ? 'Spreadsheet 스프레드시트 엑셀 excel 수식 셀 xlsx csv 시트' : ''} ${name === 'PdfViewerPro' ? 'PDF 문서 뷰어 viewer 인쇄 양식 서명 pdfjs' : ''}`,
       href: `#components/${category.key}?to=${encodeURIComponent(name)}`,
     })),
   ),

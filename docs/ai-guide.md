@@ -81,6 +81,14 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 컴포넌트 카탈로그의 `#components/professional`에서 그리드·편집기·차트 데모와 API를 함께 찾을 수 있습니다.
 단일 계열의 간단한 표시에는 기존 `BarChart`·`LineChart`·`Sparkline`을 계속 사용합니다.
 
+**PDF 문서**
+
+`@mega-ui/react/pdf-viewer`의 `PdfViewerPro`로 PDF를 읽고 검색하고 양식을 채웁니다. [API](./pdf-viewer.md)를 먼저 읽습니다.
+`pdf-viewer.css`를 로드하고 `workerSrc`에 pdf.js 워커 주소를 전달합니다. 생략하면 메인 스레드에서 해석합니다.
+`onSave`는 양식 값과 주석을 포함한 PDF 바이트를 받습니다. `editable`이 true면 글자(FreeText)·서명 그리기(Ink)·도장(Stamp) 주석을 만들 수 있습니다.
+문서의 서명 칸은 위치만 표시하며, 그린 서명도 잉크 주석이지 전자서명이 아닙니다. 이렇게 설명하세요.
+쪽 편집과 하이라이트 주석은 제공하지 않습니다. 단순 미리보기는 기존 `PDFViewer`를 사용합니다.
+
 **시트·수식**
 
 `SpreadsheetPro`는 수식과 여러 시트를 다루는 스프레드시트입니다. [SpreadsheetPro API](./spreadsheet.md)를 먼저 읽습니다.

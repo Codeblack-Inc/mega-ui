@@ -173,6 +173,19 @@ Button의 기본 type은 button입니다. 폼 제출에만 `type="submit"`을 �
 loading은 중복 클릭을 막지만 요청 상태나 완료 알림까지 관리하지 않습니다.
 아이콘만 있는 버튼은 `IconButton`의 `label`로 이름을 붙입니다. 페이지의 h1은 한 개로 구성하세요.
 
+## 별도 진입점
+
+전문 업무 컴포넌트 중 외부 엔진이 필요한 넷은 기본 진입점과 분리했습니다. 쓰는 화면에서만 불러오세요.
+
+| 진입점                       | 컴포넌트                             | 엔진            | CSS                              |
+| ---------------------------- | ------------------------------------ | --------------- | -------------------------------- |
+| `@mega-ui/react/data-grid`   | DataGridPro                          | react-data-grid | `@mega-ui/react/data-grid.css`   |
+| `@mega-ui/react/text-editor` | TextEditor                           | Tiptap          | `@mega-ui/react/text-editor.css` |
+| `@mega-ui/react/charts`      | ChartPro · CartesianChart · PieChart | Apache ECharts  | `@mega-ui/react/charts.css`      |
+| `@mega-ui/react/pdf-viewer`  | PdfViewerPro                         | pdf.js          | `@mega-ui/react/pdf-viewer.css`  |
+
+`TaskBoard`·`SchedulerPro`·`DiagramEditor`·`SpreadsheetPro`는 추가 엔진이 없어 기본 진입점과 `styles.css`에 포함합니다.
+
 ## SSR와 프레임워크
 
 컴포넌트는 렌더 중에 window/document를 참조하지 않습니다. Dialog와 Menu도 DOM 접근이 effect 안에만 있어

@@ -36,7 +36,12 @@
       "types": "./dist/charts.d.ts",
       "import": "./dist/charts.js"
     },
-    "./charts.css": "./dist/charts.css"
+    "./charts.css": "./dist/charts.css",
+    "./pdf-viewer": {
+      "types": "./dist/pdf-viewer.d.ts",
+      "import": "./dist/pdf-viewer.js"
+    },
+    "./pdf-viewer.css": "./dist/pdf-viewer.css"
   },
   "sideEffects": [
     "**/*.css",
@@ -82,6 +87,7 @@
     "@tiptap/react": "3.31.3",
     "@tiptap/starter-kit": "3.31.3",
     "echarts": "^6.1.0",
+    "pdfjs-dist": "^6.3.289",
     "qrcode-generator": "^2.0.4",
     "react-data-grid": "7.0.0-beta.61"
   }

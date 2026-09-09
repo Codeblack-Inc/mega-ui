@@ -12,6 +12,12 @@ export default defineConfig({
       '@mega-ui/react/charts.css': fileURLToPath(
         new URL('./src/pro/charts.css', import.meta.url),
       ),
+      '@mega-ui/react/pdf-viewer.css': fileURLToPath(
+        new URL('./src/pro/pdf-viewer.css', import.meta.url),
+      ),
+      '@mega-ui/react/pdf-viewer': fileURLToPath(
+        new URL('./src/pdf-viewer.ts', import.meta.url),
+      ),
       '@mega-ui/react/charts': fileURLToPath(
         new URL('./src/charts.ts', import.meta.url),
       ),

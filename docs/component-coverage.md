@@ -162,7 +162,7 @@
 | 142  | FileUpload           | Media / Files             | 추가                         |
 | 143  | Dropzone             | Media / Files             | 추가                         |
 | 144  | FilePreview          | Media / Files             | 추가                         |
-| 145  | PDFViewer            | Media / Files             | 추가                         |
+| 145  | PDFViewer            | Media / Files             | 추가 · PdfViewerPro 확장판   |
 | 146  | Chat                 | AI / Modern UX            | 추가                         |
 | 147  | MessageBubble        | AI / Modern UX            | 추가                         |
 | 148  | PromptInput          | AI / Modern UX            | 추가                         |

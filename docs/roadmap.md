@@ -3,18 +3,18 @@
 목표는 사내 웹 대부분을 라이브러리 조합으로 구현하는 것입니다. 아래 순서는 제안이며,
 실제 제품 화면의 반복 빈도와 요구를 기준으로 우선순위를 조정합니다.
 
-| 단계              | 범위                                                                                                 | 상태                                                                    |
-| ----------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| 0. 기반           | 빌드/타입/CSS 배포, 213개 런타임 export, 토스 실측 토큰(light/dark), 28개 화면 예제, AI 가이드       | 구현됨                                                                  |
-| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                                            | 구현됨                                                                  |
-| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                                           | 구현됨                                                                  |
-| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner                    | 구현됨                                                                  |
-| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                                       | 구현됨                                                                  |
-| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                               | 구현됨                                                                  |
-| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                           | 구현됨                                                                  |
-| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                                     | 예정                                                                    |
-| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                      | 예정                                                                    |
-| 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Diagram, Spreadsheet, PDF Viewer (Gantt 제외) | DataGridPro · Text Editor · Charts · TaskBoard · SchedulerPro 기능 구현 |
+| 단계              | 범위                                                                                                 | 상태                          |
+| ----------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------- |
+| 0. 기반           | 빌드/타입/CSS 배포, 281개 런타임 export, 토스 실측 토큰(light/dark), 39개 화면 예제, AI 가이드       | 구현됨                        |
+| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                                            | 구현됨                        |
+| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                                           | 구현됨                        |
+| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner                    | 구현됨                        |
+| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                                       | 구현됨                        |
+| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                               | 구현됨                        |
+| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                           | 구현됨                        |
+| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                                     | 예정                          |
+| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                      | 예정                          |
+| 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Diagram, Spreadsheet, PDF Viewer (Gantt 제외) | Gantt 제외 8개 영역 기능 구현 |
 
 ## 전문 업무 기능 지원 목표
 
@@ -115,7 +115,21 @@ CSV·xlsx 반입과 반출을 구현했습니다. xlsx 압축은 브라우저의
 `tests/spreadsheet.test.mjs`·`tests/browser/spreadsheet.spec.ts`가 근거입니다.
 xlsx는 값·수식·병합·틀 고정만 주고받으며 셀 서식·차트·도형과 엑셀 전체 호환은 제공하지 않습니다.
 날짜 함수·배열 수식·이름 정의·조건부 서식·행 열 삽입도 구현하지 않았습니다.
-실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도이며, 남은 전문 영역은 PDF Viewer입니다.
+실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도입니다.
+
+### 여덟 번째 구현: PdfViewerPro
+
+`@mega-ui/react/pdf-viewer`에 pdf.js 기반 문서 뷰어를 추가했습니다. Apache-2.0 라이선스의 `pdfjs-dist` 6.3을
+별도 진입점에서만 로드합니다. 쪽 렌더링과 탐색, 썸네일, 확대·쪽 맞춤·회전, 전체 쪽 검색과 텍스트 선택,
+주석 표시와 AcroForm 양식 입력, 서명 칸 표시, 양식 값을 담은 저장·재열기·인쇄·내려받기,
+비밀번호 요구와 손상 파일 오류 처리를 구현했습니다.
+[API와 검증 범위](./pdf-viewer.md), `/#pdf-viewer?full=1`, 전문 컴포넌트 카탈로그,
+`tests/browser/pdf-viewer.spec.ts`와 `tests/fixtures/make-pdf.mjs`가 근거입니다.
+사용자 요청으로 글자(FreeText)·서명 그리기(Ink)·도장 이미지(Stamp) 주석 편집과 삭제·실행 취소를 더했고,
+세 주석 모두 저장한 PDF에 포함합니다. 암호학적 전자서명 생성·검증, 쪽 편집, 목차 패널, XFA 양식은
+구현하지 않았고, 검색은 쪽 단위로 표시합니다.
+암호화 문서는 만들 도구가 없어 자동 검사에 포함하지 못했습니다.
+이로써 로드맵 6단계의 전문 업무 기능 중 Gantt를 제외한 8개 영역을 구현했습니다.
 
 ### 전문 기능 완료 기준
 

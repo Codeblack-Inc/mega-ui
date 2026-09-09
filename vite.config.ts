@@ -8,6 +8,7 @@ export default defineConfig({
         charts: 'src/charts.ts',
         'data-grid': 'src/data-grid.ts',
         'text-editor': 'src/text-editor.ts',
+        'pdf-viewer': 'src/pdf-viewer.ts',
       },
       formats: ['es'],
       fileName: (_format, name) => `${name}.js`,
@@ -17,7 +18,7 @@ export default defineConfig({
     cssTarget: 'esnext',
     rolldownOptions: {
       external:
-        /^(?:react(?:-dom)?(?:\/.*)?|echarts(?:\/.*)?|react-data-grid|@tiptap\/.*)$/,
+        /^(?:react(?:-dom)?(?:\/.*)?|echarts(?:\/.*)?|react-data-grid|pdfjs-dist(?:\/.*)?|@tiptap\/.*)$/,
     },
   },
 });

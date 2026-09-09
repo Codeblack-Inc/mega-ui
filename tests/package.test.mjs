@@ -92,6 +92,7 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
     '@tiptap/react',
     '@tiptap/starter-kit',
     'echarts',
+    'pdfjs-dist',
     'qrcode-generator',
     'react-data-grid',
   ]);

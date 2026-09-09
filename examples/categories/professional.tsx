@@ -2,6 +2,7 @@ import { TaskBoardDemo } from '../screens/task-board';
 import { SchedulerProDemo } from '../screens/scheduler';
 import { DiagramDemo } from '../screens/diagram';
 import { SpreadsheetDemo } from '../screens/spreadsheet';
+import { PdfViewerDemo } from '../screens/pdf-viewer';
 import { ChartProDemo } from '../chart-pro-demos';
 import { useState } from 'react';
 import { Checkbox, Select, Stack, Text } from '@mega-ui/react';
@@ -50,8 +51,15 @@ export function ProfessionalCategory() {
           'SchedulerPro',
           'DiagramEditor',
           'SpreadsheetPro',
+          'PdfViewerPro',
         ]}
         notes={{
+          PdfViewerPro: (
+            <>
+              <a href="./pdf-viewer.md">문서 뷰어 API</a> ·{' '}
+              <a href="#pdf-viewer?full=1">문서 검토 전체 예제 열기</a>
+            </>
+          ),
           SpreadsheetPro: (
             <>
               <a href="./spreadsheet.md">시트 API</a> ·{' '}
@@ -112,6 +120,7 @@ export function ProfessionalCategory() {
           SchedulerPro: <SchedulerProDemo />,
           DiagramEditor: <DiagramDemo />,
           SpreadsheetPro: <SpreadsheetDemo />,
+          PdfViewerPro: <PdfViewerDemo />,
           ChartPro: <ChartProDemo />,
           PieChart: (
             <Stack gap={3}>

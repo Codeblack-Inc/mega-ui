@@ -738,6 +738,12 @@ function SaveButton() {
 `@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.
 
+## PdfViewerPro (별도 진입점)
+
+`@mega-ui/react/pdf-viewer`의 `PdfViewerPro`는 [문서 뷰어 API](./pdf-viewer.md)를 참조하세요.
+`pdf-viewer.css`와 pdf.js 워커 주소가 필요하며 기본 진입점에는 포함하지 않습니다.
+브라우저 내장 뷰어로 충분하면 기존 `PDFViewer`를 사용합니다.
+
 ## SpreadsheetPro
 
 `SpreadsheetPro`와 `SpreadsheetData`·`SpreadsheetSheet`·`SpreadsheetCell`·`SpreadsheetFormat`·`SpreadsheetAction`,

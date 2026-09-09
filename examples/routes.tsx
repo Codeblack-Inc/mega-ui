@@ -2,6 +2,19 @@ import taskBoardSource from './screens/task-board.tsx?raw';
 import schedulerSource from './screens/scheduler.tsx?raw';
 import diagramSource from './screens/diagram.tsx?raw';
 import spreadsheetSource from './screens/spreadsheet.tsx?raw';
+import pdfViewerSource from './screens/pdf-viewer.tsx?raw';
+const LazyPdfViewerExample = lazy(() =>
+  import('./screens/pdf-viewer').then((module) => ({
+    default: module.PdfViewerExample,
+  })),
+);
+function PdfViewerExampleRoute() {
+  return (
+    <Suspense fallback={<p role="status">문서 뷰어를 불러오고 있어요.</p>}>
+      <LazyPdfViewerExample />
+    </Suspense>
+  );
+}
 import chartsSource from './screens/charts.tsx?raw';
 const LazyChartsExample = lazy(() =>
   import('./screens/charts').then((module) => ({
@@ -353,6 +366,16 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: SpreadsheetExample,
         source: spreadsheetSource,
+      },
+      {
+        id: 'pdf-viewer',
+        label: '문서 뷰어',
+        title: '읽고 검색하고 서식까지 채우는 PDF',
+        description:
+          '쪽 탐색·썸네일·확대·회전·검색과 양식 입력, 저장·인쇄·내려받기를 갖춘 문서 뷰어예요.',
+        wide: true,
+        Component: PdfViewerExampleRoute,
+        source: pdfViewerSource,
       },
       {
         id: 'order-operations',
