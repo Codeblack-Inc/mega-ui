@@ -1,5 +1,6 @@
 import { TaskBoardDemo } from '../screens/task-board';
 import { SchedulerProDemo } from '../screens/scheduler';
+import { DiagramDemo } from '../screens/diagram';
 import { ChartProDemo } from '../chart-pro-demos';
 import { useState } from 'react';
 import { Checkbox, Select, Stack, Text } from '@mega-ui/react';
@@ -46,8 +47,15 @@ export function ProfessionalCategory() {
           'ChartPro',
           'TaskBoard',
           'SchedulerPro',
+          'DiagramEditor',
         ]}
         notes={{
+          DiagramEditor: (
+            <>
+              <a href="./diagram.md">다이어그램 API</a> ·{' '}
+              <a href="#diagram?full=1">업무 흐름 전체 예제 열기</a>
+            </>
+          ),
           SchedulerPro: (
             <>
               <a href="./scheduler.md">일정 API</a> ·{' '}
@@ -94,6 +102,7 @@ export function ProfessionalCategory() {
         demos={{
           TaskBoard: <TaskBoardDemo />,
           SchedulerPro: <SchedulerProDemo />,
+          DiagramEditor: <DiagramDemo />,
           ChartPro: <ChartProDemo />,
           PieChart: (
             <Stack gap={3}>

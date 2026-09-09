@@ -81,6 +81,15 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 컴포넌트 카탈로그의 `#components/professional`에서 그리드·편집기·차트 데모와 API를 함께 찾을 수 있습니다.
 단일 계열의 간단한 표시에는 기존 `BarChart`·`LineChart`·`Sparkline`을 계속 사용합니다.
 
+**다이어그램·흐름도**
+
+`DiagramEditor`는 노드·포트·연결을 편집하는 SVG 캔버스입니다. [DiagramEditor API](./diagram.md)를 먼저 읽습니다.
+`value`와 `onChange`로 제어하며 `onSave`가 있으면 저장 중·실패·재시도를 제공합니다.
+노드 좌표는 다이어그램 단위이고 포트를 생략하면 좌측 입력·우측 출력을 채웁니다.
+연결은 출력→입력, 자기 연결·중복 금지이며 포트 `limit`과 종류 `rules`로 더 제한합니다.
+자동 배치는 `layoutDiagram`, 경로는 직각 라우팅이며 노드를 피하는 경로 계산은 없습니다.
+조직도처럼 계층만 보여줄 때는 `OrganizationChart`를 씁니다.
+
 **일정·예약**
 
 `SchedulerPro`는 일·주·월·리소스 보기와 반복 일정을 다루는 달력입니다. [SchedulerPro API](./scheduler.md)를 먼저 읽습니다.

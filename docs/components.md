@@ -738,6 +738,13 @@ function SaveButton() {
 `@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.
 
+## DiagramEditor
+
+`DiagramEditor`와 `DiagramData`·`DiagramInput`·`DiagramNode`·`DiagramPort`·`DiagramEdge`·`DiagramRule`·`DiagramAction`,
+`validateDiagram`·`updateDiagram`·`serializeDiagram`·`parseDiagram`·`layoutDiagram`·`diagramEdgePath`·
+`diagramPortPoint`·`diagramConnectionError`·`diagramBounds`·`defaultDiagramPorts`는 기본 진입점에서 제공합니다.
+[API](./diagram.md)를 참조하세요. 계층 목록만 필요하면 기존 `OrganizationChart`를 사용합니다.
+
 ## SchedulerPro
 
 `SchedulerPro`와 `SchedulerData`·`SchedulerEvent`·`SchedulerResource`·`SchedulerRecurrence`·`SchedulerException`·

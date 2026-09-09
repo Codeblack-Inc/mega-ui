@@ -14,7 +14,7 @@
 | 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                           | 구현됨                                                                  |
 | 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                                     | 예정                                                                    |
 | 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                      | 예정                                                                    |
-| 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Gantt Chart, Diagram, Spreadsheet, PDF Viewer | DataGridPro · Text Editor · Charts · TaskBoard · SchedulerPro 기능 구현 |
+| 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Diagram, Spreadsheet, PDF Viewer (Gantt 제외) | DataGridPro · Text Editor · Charts · TaskBoard · SchedulerPro 기능 구현 |
 
 ## 전문 업무 기능 지원 목표
 
@@ -22,17 +22,17 @@
 
 참조한 [PrimeUI Pro 공식 소개](https://primeuipro.dev/)는 확인일 기준 Scheduler·Text Editor·Charts·Task Board를 공개 기능으로, PDF Viewer·Diagram·Grid·Gantt를 출시 예정으로 구분합니다. 해당 소개에서 Spreadsheet의 공개 상태는 확인하지 못했습니다. 아래 목표는 사용자 요구와 Mega UI의 업무 활용 기준이며, 경쟁 제품 전체 기능을 직접 검증한 대조표는 아닙니다.
 
-| 영역        | 현재 구현                                                                  | 정식 지원 목표                                                                                                                                               |
-| ----------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Scheduler   | SchedulerPro 일·주·월·리소스 뷰·CRUD·드래그·반복/예외·시간대·충돌·ICS 구현 | 일·주·월·리소스 뷰, 생성·수정·삭제, 드래그 이동·기간 조절, 겹침 배치, 반복과 개별 예외, 시간대·DST, 업무 시간·예약 충돌 검증, 일정 가져오기·내보내기         |
-| Text Editor | TextEditor: 표·이미지·블록·Markdown·JSON 저장/복원                         | 문단·서식·목록·링크·표·이미지·블록 편집, Markdown 변환, 붙여넣기 정제, 한글 IME, undo/redo, 문서 직렬화·복원, 저장 실패 시 내용 보존                         |
-| Charts      | ChartPro 전체 목표 유형·시간/이중 축·드래그 탐색·표·PNG/SVG/CSV 구현       | 다중 계열·축·범례·툴팁, 막대·선·영역·원형·산점·히트맵·트리맵·금융 차트, 확대·이동·구간 선택, 결측·음수·시간축 처리, 데이터 대체 표현, 이미지·데이터 내보내기 |
-| Task Board  | TaskBoard CRUD·정렬·구획·WIP·필터·저장/JSON, Kanban 통합                   | 열·카드 생성·편집·삭제, 열 안/사이 드래그 정렬, 키보드 이동, swimlane, WIP 제한, 필터·담당자·기한, 사용자 카드 렌더링, 순서·상태 저장과 복원                 |
-| Data Grid   | 별도 DataGridPro에 편집·검증·범위·그룹·트리·가상화·서버 저장 통합          | 정렬·필터·편집·선택·가상화의 통합, 열 크기·순서·고정·숨김, 범위 선택·복사·붙여넣기, 그룹·집계·트리, 서버 조회·페이지 연결, 검증·취소·일괄 저장, CSV 내보내기 |
-| Gantt Chart | 날짜 범위의 작업 막대와 진행률 표시                                        | 작업 계층·마일스톤, 이동·기간 조절, FS/SS/FF/SF 의존성·지연, 순환 검증, 작업 달력, 일정 재계산·critical path, 기준 일정·리소스, 확대·내보내기                |
-| Diagram     | 범용 편집기 없음; OrganizationChart는 계층 목록                            | 노드·포트·엣지 생성·연결·편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·엣지 경로, undo/redo, 직렬화·복원·내보내기                      |
-| Spreadsheet | 문자열 셀 편집과 방향키 이동                                               | 범위 선택·복사·붙여넣기·자동 채우기, 수식·참조·재계산·순환 오류, 셀 형식·병합·고정, 정렬·필터, 여러 시트, undo/redo, CSV/XLSX 반입·반출                      |
-| PDF Viewer  | 브라우저 내장 PDF object와 열기 링크                                       | 일관된 페이지 렌더링·탐색·썸네일·확대·회전, 검색·텍스트 선택, 주석·양식 입력·서명 표시, 변경 저장·재열기·인쇄·다운로드, 암호·손상 문서 오류 처리             |
+| 영역        | 현재 구현                                                                                           | 정식 지원 목표                                                                                                                                               |
+| ----------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Scheduler   | SchedulerPro 일·주·월·리소스 뷰·CRUD·드래그·반복/예외·시간대·충돌·ICS 구현                          | 일·주·월·리소스 뷰, 생성·수정·삭제, 드래그 이동·기간 조절, 겹침 배치, 반복과 개별 예외, 시간대·DST, 업무 시간·예약 충돌 검증, 일정 가져오기·내보내기         |
+| Text Editor | TextEditor: 표·이미지·블록·Markdown·JSON 저장/복원                                                  | 문단·서식·목록·링크·표·이미지·블록 편집, Markdown 변환, 붙여넣기 정제, 한글 IME, undo/redo, 문서 직렬화·복원, 저장 실패 시 내용 보존                         |
+| Charts      | ChartPro 전체 목표 유형·시간/이중 축·드래그 탐색·표·PNG/SVG/CSV 구현                                | 다중 계열·축·범례·툴팁, 막대·선·영역·원형·산점·히트맵·트리맵·금융 차트, 확대·이동·구간 선택, 결측·음수·시간축 처리, 데이터 대체 표현, 이미지·데이터 내보내기 |
+| Task Board  | TaskBoard CRUD·정렬·구획·WIP·필터·저장/JSON, Kanban 통합                                            | 열·카드 생성·편집·삭제, 열 안/사이 드래그 정렬, 키보드 이동, swimlane, WIP 제한, 필터·담당자·기한, 사용자 카드 렌더링, 순서·상태 저장과 복원                 |
+| Data Grid   | 별도 DataGridPro에 편집·검증·범위·그룹·트리·가상화·서버 저장 통합                                   | 정렬·필터·편집·선택·가상화의 통합, 열 크기·순서·고정·숨김, 범위 선택·복사·붙여넣기, 그룹·집계·트리, 서버 조회·페이지 연결, 검증·취소·일괄 저장, CSV 내보내기 |
+| Gantt Chart | 날짜 범위의 작업 막대와 진행률 표시                                                                 | **지원 목표에서 제외(2026-09-09 결정).** 기존 `Gantt`는 막대·진행률 표시 용도로만 유지하며 의존성·critical path는 제공하지 않습니다                          |
+| Diagram     | DiagramEditor 노드·포트·엣지 편집·제약·다중 선택·스냅·확대/미니맵·자동 배치·undo/redo·JSON/SVG 구현 | 노드·포트·엣지 생성·연결·편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·엣지 경로, undo/redo, 직렬화·복원·내보내기                      |
+| Spreadsheet | 문자열 셀 편집과 방향키 이동                                                                        | 범위 선택·복사·붙여넣기·자동 채우기, 수식·참조·재계산·순환 오류, 셀 형식·병합·고정, 정렬·필터, 여러 시트, undo/redo, CSV/XLSX 반입·반출                      |
+| PDF Viewer  | 브라우저 내장 PDF object와 열기 링크                                                                | 일관된 페이지 렌더링·탐색·썸네일·확대·회전, 검색·텍스트 선택, 주석·양식 입력·서명 표시, 변경 저장·재열기·인쇄·다운로드, 암호·손상 문서 오류 처리             |
 
 현재 구현 근거: [업무 데이터](../src/components/enterprise.tsx), [차트](../src/components/advanced-patterns.tsx), [PDFViewer](../src/components/media-ai.tsx), [공개 API](../src/index.ts).
 
@@ -42,7 +42,7 @@
 
 전문 기능을 사용하는 화면에서만 필요한 엔진을 로드하도록 구성합니다. 현재 가벼운 API의 동작을 바꿀 경우 호환 경로를 제공하고, 무거운 엔진을 기본 진입점에 일괄 추가하지 않습니다. 저장·권한·협업 서버는 소비 앱과 연결하되, 변경 요청·저장 중·실패·재시도·복원 흐름은 공식 예제에서 끝까지 검증합니다.
 
-제안 순서는 **Data Grid → Text Editor → Charts → Task Board → Scheduler → Gantt Chart → Diagram → Spreadsheet → PDF Viewer**입니다. 앞의 네 영역은 기존 목록·작성·분석·업무 화면에 적용하고, Scheduler의 달력·시간 모델 검증 후 Gantt를 진행합니다. 나머지 영역도 지원 목표에 유지하며 실제 적용 제품에 따라 순서를 조정합니다.
+제안 순서는 **Data Grid → Text Editor → Charts → Task Board → Scheduler → Diagram → Spreadsheet → PDF Viewer**입니다. 2026-09-09 결정으로 **Gantt Chart는 지원 목표에서 제외**하며, 기존 경량 `Gantt` 컴포넌트만 현재 범위대로 유지합니다. 앞의 네 영역은 기존 목록·작성·분석·업무 화면에 적용했고, Scheduler의 달력·시간 모델 검증 뒤 Diagram을 진행합니다. 나머지 영역도 지원 목표에 유지하며 실제 적용 제품에 따라 순서를 조정합니다.
 
 ### 첫 구현: DataGridPro
 
@@ -91,7 +91,19 @@ Charts의 구현 범위는 아래와 같습니다.
 `tests/scheduler.test.mjs`·`tests/browser/scheduler.spec.ts`가 근거입니다.
 반복 규칙은 매일·매주·매월과 간격·요일·횟수·종료일까지이며 `FREQ=YEARLY`·`BYMONTHDAY` 같은 규칙,
 `VTIMEZONE` 내보내기, 초대·참석자 응답은 구현하지 않았습니다.
-실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도이며, 다음 전문 영역은 Gantt Chart입니다.
+실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도입니다.
+
+### 여섯 번째 구현: DiagramEditor
+
+`DiagramEditor`에 노드·포트·연결 생성과 편집, 방향·자기 연결·중복·포트 제한·종류 규칙의 연결 제약,
+드래그 이동과 사각형 다중 선택·격자 스냅, 확대·이동·미니맵, 계층 자동 배치와 직각 경로,
+실행 취소·다시 실행, 버전 1 JSON 저장/복원과 SVG 내보내기를 구현했습니다.
+저장 실패·재시도·저장 중 편집과 파일 교체 확인은 TaskBoard·SchedulerPro와 같은 흐름을 사용합니다.
+기존 `OrganizationChart`는 계층 목록 용도로 유지합니다.
+[API와 검증 범위](./diagram.md), `/#diagram?full=1`, 전문 컴포넌트 카탈로그,
+`tests/diagram.test.mjs`·`tests/browser/diagram.spec.ts`가 근거입니다.
+노드를 피해 가는 경로 계산, PNG 변환, 그룹·서브그래프, 실시간 협업은 구현하지 않았습니다.
+실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도이며, 다음 전문 영역은 Spreadsheet입니다.
 
 ### 전문 기능 완료 기준
 

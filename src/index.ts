@@ -278,3 +278,33 @@ export {
   type SchedulerAction,
   type SchedulerIcsResult,
 } from './components/scheduler-model';
+
+export {
+  DiagramEditor,
+  type DiagramEditorProps,
+  type DiagramNodeType,
+} from './components/diagram';
+export {
+  validateDiagram,
+  updateDiagram,
+  serializeDiagram,
+  parseDiagram,
+  layoutDiagram,
+  diagramBounds,
+  diagramEdgePath,
+  diagramPortPoint,
+  diagramConnectionError,
+  defaultDiagramPorts,
+  DIAGRAM_MAX_NODES,
+  DIAGRAM_MAX_EDGES,
+  type DiagramData,
+  type DiagramInput,
+  type DiagramNodeInput,
+  type DiagramNode,
+  type DiagramEdge,
+  type DiagramPort,
+  type DiagramRule,
+  type DiagramSide,
+  type DiagramAction,
+  type DiagramLayoutOptions,
+} from './components/diagram-model';

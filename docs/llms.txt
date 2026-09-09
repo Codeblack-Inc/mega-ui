@@ -50,4 +50,5 @@ The package has not been published to a registry. Use the locally packed tarball
 Do not invent undocumented exports or props. This index is documentation, not an MCP endpoint.
 
 - [TaskBoard](./task-board.md): Kanban 통합, 카드·열·구획·WIP·드래그·저장/복원
+- [DiagramEditor](./diagram.md): 노드·포트·연결 편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·직각 경로, undo/redo, JSON·SVG 내보내기
 - [SchedulerPro](./scheduler.md): 일·주·월·리소스 보기, 반복과 회차 예외, 드래그·키보드 이동, 시간대·DST, 겹침·업무 시간 검증, iCalendar 반출입

@@ -136,7 +136,7 @@
 | 116  | Scheduler            | Complex Data / Enterprise | 추가 · SchedulerPro 확장판  |
 | 117  | Gantt                | Complex Data / Enterprise | 추가                        |
 | 118  | Spreadsheet          | Complex Data / Enterprise | 추가                        |
-| 119  | OrganizationChart    | Complex Data / Enterprise | 추가                        |
+| 119  | OrganizationChart    | Complex Data / Enterprise | 추가 · DiagramEditor 확장판 |
 | 120  | DataExplorer         | Complex Data / Enterprise | 추가                        |
 | 121  | Alert                | Feedback / State          | 기존 유지                   |
 | 122  | Message              | Feedback / State          | 추가                        |

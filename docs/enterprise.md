@@ -43,6 +43,8 @@ const columns = [
 
 고정 행 높이로 충분하지 않거나 수식·critical path·서버 쿼리처럼 도메인 엔진이 필요한 시점에만 전용 엔진을 연결하세요.
 
+`DiagramEditor`는 노드·포트·연결 편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치, JSON·SVG 내보내기를 제공합니다. [DiagramEditor API](./diagram.md)를 참조하세요.
+
 `SchedulerPro`는 일·주·월·리소스 보기, 반복과 회차 예외, 드래그·키보드 이동, 시간대·DST, 겹침·업무 시간 검증, iCalendar 반출입을 제공합니다. [SchedulerPro API](./scheduler.md)를 참조하세요.
 
 `TaskBoard`는 Kanban의 단일 후속 구현입니다. 열·카드 CRUD, 드래그/키보드 정렬, 구획·카드 제한·필터·JSON·저장 복원은 [TaskBoard API](./task-board.md)를 참조하세요.

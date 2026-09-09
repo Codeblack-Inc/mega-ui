@@ -1,5 +1,6 @@
 import taskBoardSource from './screens/task-board.tsx?raw';
 import schedulerSource from './screens/scheduler.tsx?raw';
+import diagramSource from './screens/diagram.tsx?raw';
 import chartsSource from './screens/charts.tsx?raw';
 const LazyChartsExample = lazy(() =>
   import('./screens/charts').then((module) => ({
@@ -43,6 +44,7 @@ function DataGridExampleRoute() {
   );
 }
 import { SchedulerExample } from './screens/scheduler';
+import { DiagramExample } from './screens/diagram';
 import { categories } from './catalog';
 import { DashboardExample, SettingsExample, PaymentExample } from './recipes';
 import { AdminExample } from './admin';
@@ -329,6 +331,16 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: SchedulerExample,
         source: schedulerSource,
+      },
+      {
+        id: 'diagram',
+        label: '다이어그램',
+        title: '노드와 연결로 그리는 업무 흐름',
+        description:
+          '노드·포트·연결을 만들고 끌어 배치하며, 자동 배치와 SVG 내보내기를 사용해요.',
+        wide: true,
+        Component: DiagramExample,
+        source: diagramSource,
       },
       {
         id: 'order-operations',

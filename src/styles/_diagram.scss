@@ -1,0 +1,285 @@
+// DiagramEditor: a quiet canvas sheet with one accent. Nodes carry the colour,
+// edges stay neutral until selected, and the chrome sits outside the canvas.
+.mega-diagram {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-areas:
+    'toolbar toolbar'
+    'stage inspector'
+    'hint hint';
+  gap: var(--mega-space-3) var(--mega-space-4);
+  color: var(--mega-text);
+  font-family: var(--mega-font);
+  &__toolbar {
+    grid-area: toolbar;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--mega-space-3) var(--mega-space-4);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  &__toolbar h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--mega-text-strong);
+  }
+  &__toolbar p,
+  &__hint {
+    margin: 2px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--mega-text-secondary);
+  }
+  &__hint {
+    grid-area: hint;
+    font-size: 12px;
+    color: var(--mega-muted);
+  }
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-2);
+    flex-wrap: wrap;
+  }
+  &__save {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-1);
+  }
+  &__save > span {
+    padding-inline: var(--mega-space-2) var(--mega-space-1);
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--mega-muted);
+  }
+  &__save[data-dirty] > span {
+    color: var(--mega-warning);
+    font-weight: 500;
+  }
+  &__file {
+    position: relative;
+    cursor: pointer;
+  }
+  &__file input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &__file:focus-within {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: 2px;
+  }
+
+  // ---- canvas
+  &__stage {
+    grid-area: stage;
+    position: relative;
+    min-width: 0;
+    height: min(640px, 60dvh);
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-md);
+    background: var(--mega-surface);
+    overflow: hidden;
+  }
+  &__canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+    cursor: default;
+  }
+  &__canvas[data-dragging='pan'] {
+    cursor: grabbing;
+  }
+  &__grid {
+    pointer-events: none;
+  }
+  &__dot {
+    fill: var(--mega-border);
+  }
+  &__box {
+    fill: var(--mega-bg);
+    stroke: var(--mega-border-strong);
+    stroke-width: 1;
+  }
+  &__node {
+    cursor: grab;
+  }
+  &__node:focus {
+    outline: none;
+  }
+  &__node:focus-visible &__box,
+  &__node[data-selected] &__box {
+    stroke: var(--mega-brand);
+    stroke-width: 2;
+  }
+  &__node[data-selected] &__box {
+    fill: var(--mega-brand-soft);
+  }
+  &__node-title {
+    fill: var(--mega-text-strong);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  &__node-type {
+    fill: var(--mega-text-secondary);
+    font-size: 11px;
+  }
+  &__port {
+    fill: var(--mega-surface);
+    stroke: var(--mega-border-strong);
+    stroke-width: 1.5;
+    cursor: crosshair;
+  }
+  &__port[data-direction='out'] {
+    fill: var(--mega-brand);
+    stroke: var(--mega-brand);
+  }
+  &__node:hover &__port,
+  &__node[data-selected] &__port {
+    stroke: var(--mega-brand);
+  }
+  &__edge-line {
+    fill: none;
+    stroke: var(--mega-border-strong);
+    stroke-width: 1.5;
+  }
+  &__edge-hit {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 14;
+    cursor: pointer;
+  }
+  &__edge:focus {
+    outline: none;
+  }
+  &__edge:hover &__edge-line,
+  &__edge:focus-visible &__edge-line,
+  &__edge[data-selected] &__edge-line {
+    stroke: var(--mega-brand);
+    stroke-width: 2.5;
+  }
+  &__arrow {
+    fill: var(--mega-border-strong);
+  }
+  &__edge-label {
+    fill: var(--mega-text-secondary);
+    font-size: 11px;
+    paint-order: stroke;
+    stroke: var(--mega-surface);
+    stroke-width: 4;
+  }
+  // The live preview and marquee must not intercept the drop hit-test.
+  &__preview {
+    pointer-events: none;
+    fill: none;
+    stroke: var(--mega-brand);
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+  }
+  &__marquee {
+    pointer-events: none;
+    fill: var(--mega-brand-soft);
+    stroke: var(--mega-brand);
+    stroke-width: 1;
+  }
+  &__zoom {
+    position: absolute;
+    inset-block-end: var(--mega-space-3);
+    inset-inline-start: var(--mega-space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-1);
+    padding: var(--mega-space-1);
+    background: var(--mega-surface-raised);
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-md);
+    box-shadow: var(--mega-shadow-xs);
+  }
+  &__zoom > span {
+    min-width: 46px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--mega-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+  &__minimap {
+    position: absolute;
+    inset-block-end: var(--mega-space-3);
+    inset-inline-end: var(--mega-space-3);
+    width: 168px;
+    height: 112px;
+    background: var(--mega-surface-raised);
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-sm);
+    box-shadow: var(--mega-shadow-xs);
+    touch-action: none;
+    cursor: pointer;
+  }
+  &__minimap-node {
+    fill: var(--mega-fill-strong);
+  }
+  &__minimap-node[data-selected] {
+    fill: var(--mega-brand);
+  }
+  &__minimap-view {
+    fill: var(--mega-brand-soft);
+    stroke: var(--mega-brand);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  // ---- inspector
+  &__inspector {
+    grid-area: inspector;
+    display: grid;
+    gap: var(--mega-space-3);
+    align-content: start;
+    padding: var(--mega-space-4);
+    background: var(--mega-fill);
+    border-radius: var(--mega-radius-md);
+  }
+  &__inspector h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mega-text-strong);
+  }
+  &__inspector p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--mega-text-secondary);
+  }
+  &__inspector label {
+    display: grid;
+    gap: var(--mega-space-1);
+    font-size: 13px;
+    color: var(--mega-text-secondary);
+    min-width: 0;
+  }
+}
+@media (max-width: 900px) {
+  .mega-diagram {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'toolbar'
+      'stage'
+      'inspector'
+      'hint';
+  }
+  .mega-diagram__stage {
+    height: min(520px, 55dvh);
+  }
+  .mega-diagram__minimap {
+    width: 120px;
+    height: 84px;
+  }
+}

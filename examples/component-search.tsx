@@ -9,7 +9,7 @@ const destinations = [
       id: `${category.key}-${name}`,
       label: name,
       description: `컴포넌트 · ${category.label}`,
-      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''} ${name === 'SchedulerPro' ? 'Scheduler 캘린더 달력 일정 예약 회의실 iCalendar' : ''}`,
+      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''} ${name === 'SchedulerPro' ? 'Scheduler 캘린더 달력 일정 예약 회의실 iCalendar' : ''} ${name === 'DiagramEditor' ? 'Diagram 다이어그램 플로우차트 노드 연결 순서도 워크플로' : ''}`,
       href: `#components/${category.key}?to=${encodeURIComponent(name)}`,
     })),
   ),
