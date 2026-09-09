@@ -269,12 +269,17 @@ export function ContentMediaCategory() {
     Files: (
       <>
         <Tabs
+          id="catalog-files"
           label="파일 컴포넌트"
           items={fileTabs}
           value={fileTab}
           onValueChange={setFileTab}
         />
-        <TabPanel active={fileTab === 'FileUpload'}>
+        <TabPanel
+          tabsId="catalog-files"
+          value="FileUpload"
+          active={fileTab === 'FileUpload'}
+        >
           <Stack gap={3}>
             <FileUpload
               label="파일을 선택하거나 여기로 끌어 놓으세요"
@@ -286,7 +291,11 @@ export function ContentMediaCategory() {
             <Text size="sm">선택한 파일: {uploaded || '없음'}</Text>
           </Stack>
         </TabPanel>
-        <TabPanel active={fileTab === 'Dropzone'}>
+        <TabPanel
+          tabsId="catalog-files"
+          value="Dropzone"
+          active={fileTab === 'Dropzone'}
+        >
           <Dropzone
             label="이미지 파일 선택 · 최대 5MB"
             accept="image/*"
@@ -294,7 +303,11 @@ export function ContentMediaCategory() {
             onFilesChange={(files) => setFile(files[0])}
           />
         </TabPanel>
-        <TabPanel active={fileTab === 'FilePreview'}>
+        <TabPanel
+          tabsId="catalog-files"
+          value="FilePreview"
+          active={fileTab === 'FilePreview'}
+        >
           <Stack gap={3} align="start">
             <Button
               variant="secondary"
@@ -317,7 +330,11 @@ export function ContentMediaCategory() {
             )}
           </Stack>
         </TabPanel>
-        <TabPanel active={fileTab === 'PDFViewer'}>
+        <TabPanel
+          tabsId="catalog-files"
+          value="PDFViewer"
+          active={fileTab === 'PDFViewer'}
+        >
           <Stack gap={3}>
             <Text size="sm">
               PDF를 선택하면 PDFViewer가 브라우저의 문서 뷰어로 표시해요.

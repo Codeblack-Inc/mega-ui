@@ -364,16 +364,51 @@ export function DateRangePicker({
 }: DateRangePickerProps) {
   const id = useId();
   const groupRef = useRef<HTMLFieldSetElement>(null);
+  const [localRange, setLocalRange] = useState(() => ({
+    start: String(startProps?.defaultValue ?? ''),
+    end: String(endProps?.defaultValue ?? ''),
+  }));
+  const startValue = String(startProps?.value ?? localRange.start);
+  const endValue = String(endProps?.value ?? localRange.end);
+  const rangeError =
+    startValue && endValue && startValue > endValue
+      ? '종료일은 시작일 이후로 선택해 주세요.'
+      : undefined;
+  const message = error ?? rangeError;
+  const startMax = [startProps?.max, endValue]
+    .filter(Boolean)
+    .map(String)
+    .sort()[0];
+  const endMin = [endProps?.min, startValue]
+    .filter(Boolean)
+    .map(String)
+    .sort()
+    .at(-1);
+  useEffect(() => {
+    const form = groupRef.current?.form;
+    const reset = (event: Event) =>
+      queueMicrotask(() => {
+        if (!event.defaultPrevented)
+          setLocalRange({
+            start: String(startProps?.defaultValue ?? ''),
+            end: String(endProps?.defaultValue ?? ''),
+          });
+      });
+    form?.addEventListener('reset', reset);
+    return () => form?.removeEventListener('reset', reset);
+  }, [startProps?.defaultValue, endProps?.defaultValue, props.form]);
   const report = (field: HTMLInputElement) => {
     const group = field.closest('fieldset');
-    onValueChange?.({
+    const next = {
       start:
         group?.querySelector<HTMLInputElement>('[data-mega-range-start]')
           ?.value ?? '',
       end:
         group?.querySelector<HTMLInputElement>('[data-mega-range-end]')
           ?.value ?? '',
-    });
+    };
+    setLocalRange(next);
+    onValueChange?.(next);
   };
 
   return (
@@ -385,7 +420,11 @@ export function DateRangePicker({
         else if (ref) ref.current = node;
       }}
       className={`mega-date-range-picker ${className}`}
-      aria-describedby={error ? `${id}-error` : props['aria-describedby']}
+      aria-describedby={
+        [props['aria-describedby'], message ? `${id}-error` : null]
+          .filter(Boolean)
+          .join(' ') || undefined
+      }
     >
       <legend>{label}</legend>
       {presets.length ? (
@@ -394,6 +433,12 @@ export function DateRangePicker({
             <Button
               key={`${preset.label}-${preset.start}-${preset.end}`}
               type="button"
+              disabled={
+                startProps?.disabled ||
+                endProps?.disabled ||
+                startProps?.readOnly ||
+                endProps?.readOnly
+              }
               size="sm"
               variant="weak"
               onClick={() => {
@@ -407,6 +452,7 @@ export function DateRangePicker({
                   start.value = preset.start;
                 if (end && endProps?.value === undefined)
                   end.value = preset.end;
+                setLocalRange({ start: preset.start, end: preset.end });
                 onValueChange?.({ start: preset.start, end: preset.end });
               }}
             >
@@ -422,7 +468,13 @@ export function DateRangePicker({
           id={startProps?.id ?? `${id}-start`}
           name={startName}
           data-mega-range-start=""
-          max={startProps?.max ?? endProps?.value?.toString()}
+          max={startMax}
+          aria-invalid={message ? true : startProps?.['aria-invalid']}
+          aria-describedby={
+            [startProps?.['aria-describedby'], message ? `${id}-error` : null]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
           onChange={(event) => {
             startProps?.onChange?.(event);
             if (!event.defaultPrevented) report(event.currentTarget);
@@ -436,14 +488,20 @@ export function DateRangePicker({
           id={endProps?.id ?? `${id}-end`}
           name={endName}
           data-mega-range-end=""
-          min={endProps?.min ?? startProps?.value?.toString()}
+          min={endMin}
+          aria-invalid={message ? true : endProps?.['aria-invalid']}
+          aria-describedby={
+            [endProps?.['aria-describedby'], message ? `${id}-error` : null]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
           onChange={(event) => {
             endProps?.onChange?.(event);
             if (!event.defaultPrevented) report(event.currentTarget);
           }}
         />
       </label>
-      {error ? <FormError id={`${id}-error`}>{error}</FormError> : null}
+      {message ? <FormError id={`${id}-error`}>{message}</FormError> : null}
     </fieldset>
   );
 }
@@ -651,6 +709,13 @@ export interface SearchableMultiSelectProps extends Omit<
   maxSelected?: number;
   searchLabel?: string;
   clearLabel?: string;
+  loading?: boolean;
+  error?: ReactNode;
+  emptyMessage?: ReactNode;
+  onRetry?: () => void;
+  onQueryChange?: (query: string) => void;
+  /** Server results have already been filtered. */
+  manual?: boolean;
 }
 export type MultiSelectProps =
   Omit<ListboxProps, 'multiple'> | SearchableMultiSelectProps;
@@ -666,14 +731,22 @@ function SearchableMultiSelect({
   maxSelected = Infinity,
   searchLabel = '옵션 검색',
   clearLabel = '전체 해제',
+  loading = false,
+  error,
+  emptyMessage = '검색 결과가 없어요.',
+  onRetry,
+  onQueryChange,
+  manual = false,
   className = '',
   ...props
 }: SearchableMultiSelectProps) {
   const [internal, setInternal] = useState([...defaultValue]);
   const [query, setQuery] = useState('');
   const selected = [...(value ?? internal)];
-  const visible = options.filter((option) =>
-    option.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+  const visible = options.filter(
+    (option) =>
+      manual ||
+      option.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
   );
   const update = (next: string[]) => {
     if (value === undefined) setInternal(next);
@@ -718,32 +791,50 @@ function SearchableMultiSelect({
           aria-label={searchLabel}
           placeholder={searchLabel}
           value={query}
-          onChange={(event) => setQuery(event.currentTarget.value)}
+          onChange={(event) => {
+            setQuery(event.currentTarget.value);
+            onQueryChange?.(event.currentTarget.value);
+          }}
         />
       ) : null}
-      <div className="mega-multi-select__options">
-        {visible.map((option) => {
-          const checked = selected.includes(option.value);
-          return (
-            <Checkbox
-              key={option.value}
-              shape="square"
-              checked={checked}
-              disabled={
-                option.disabled || (!checked && selected.length >= maxSelected)
-              }
-              onChange={() =>
-                update(
-                  checked
-                    ? selected.filter((item) => item !== option.value)
-                    : [...selected, option.value],
-                )
-              }
-            >
-              {option.label}
-            </Checkbox>
-          );
-        })}
+      <div
+        className="mega-multi-select__options"
+        aria-busy={loading || undefined}
+      >
+        {loading || error || !visible.length ? (
+          <div role={error ? 'alert' : 'status'}>
+            {loading ? '불러오는 중…' : (error ?? emptyMessage)}
+            {!loading && error && onRetry ? (
+              <Button variant="text" onClick={onRetry}>
+                다시 시도
+              </Button>
+            ) : null}
+          </div>
+        ) : (
+          visible.map((option) => {
+            const checked = selected.includes(option.value);
+            return (
+              <Checkbox
+                key={option.value}
+                shape="square"
+                checked={checked}
+                disabled={
+                  option.disabled ||
+                  (!checked && selected.length >= maxSelected)
+                }
+                onChange={() =>
+                  update(
+                    checked
+                      ? selected.filter((item) => item !== option.value)
+                      : [...selected, option.value],
+                  )
+                }
+              >
+                {option.label}
+              </Checkbox>
+            );
+          })
+        )}
       </div>
     </fieldset>
   );

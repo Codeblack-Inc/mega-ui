@@ -1,4 +1,19 @@
-import type { ComponentType } from 'react';
+import { lazy, Suspense, type ComponentType } from 'react';
+import dataGridSource from './screens/data-grid.tsx?raw';
+const LazyDataGridExample = lazy(() =>
+  import('./screens/data-grid').then((module) => ({
+    default: module.DataGridExample,
+  })),
+);
+function DataGridExampleRoute() {
+  return (
+    <Suspense
+      fallback={<p role="status">데이터 그리드를 불러오는 중입니다.</p>}
+    >
+      <LazyDataGridExample />
+    </Suspense>
+  );
+}
 import { categories } from './catalog';
 import { DashboardExample, SettingsExample, PaymentExample } from './recipes';
 import { AdminExample } from './admin';
@@ -235,6 +250,16 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: UserManagementExample,
         source: withIcons(workSource),
+      },
+      {
+        id: 'data-grid-pro',
+        label: '전문 데이터 그리드',
+        title: '검증부터 일괄 저장까지, 주문 데이터 워크벤치',
+        description:
+          '범위 편집, 다중 정렬, 필터, 그룹·집계, 트리, 서버 페이지와 10만 행 가상화를 사용합니다.',
+        wide: true,
+        Component: DataGridExampleRoute,
+        source: dataGridSource,
       },
       {
         id: 'order-operations',

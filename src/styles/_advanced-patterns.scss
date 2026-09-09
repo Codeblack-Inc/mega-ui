@@ -34,6 +34,7 @@
     font-variant-numeric: tabular-nums;
   }
   &__track {
+    position: relative;
     display: flex;
     align-items: flex-end;
     height: 12px;
@@ -41,10 +42,18 @@
     border-radius: var(--mega-radius-full);
     background: var(--mega-fill-strong);
     > span {
+      position: absolute;
       width: var(--mega-chart-value);
       height: 100%;
       border-radius: inherit;
       background: var(--mega-brand);
+    }
+    > i {
+      position: absolute;
+      z-index: 1;
+      width: 1px;
+      height: 100%;
+      background: var(--mega-text-secondary);
     }
   }
   @each $tone in 'success', 'warning', 'danger', 'teal', 'purple' {
@@ -59,21 +68,48 @@
   }
   &[data-orientation='vertical'] li {
     flex: 1;
-    grid-template: 1fr auto auto / minmax(0, 1fr);
+    min-width: 0;
+    grid-template: 120px auto auto / minmax(0, 1fr);
     justify-items: center;
     text-align: center;
   }
   &[data-orientation='vertical'] &__track {
+    grid-row: 1;
     width: min(32px, 80%);
     height: 120px;
     > span {
       width: 100%;
       height: var(--mega-chart-value);
     }
+    > i {
+      width: 100%;
+      height: 1px;
+    }
+  }
+  &[data-orientation='vertical'] &__label {
+    grid-row: 2;
+  }
+  &[data-orientation='vertical'] &__value {
+    grid-row: 3;
+    grid-column: 1;
   }
 }
 
 .mega-line-chart {
+  &__values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mega-space-3);
+    margin: 0;
+    font-size: 13px;
+    dt {
+      color: var(--mega-muted);
+    }
+    dd {
+      margin: 0;
+      font-variant-numeric: tabular-nums;
+    }
+  }
   svg {
     width: 100%;
     height: auto;

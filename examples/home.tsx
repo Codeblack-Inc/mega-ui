@@ -51,7 +51,7 @@ const principles = [
   },
   {
     title: '브라우저 기본 동작',
-    body: '폼은 네이티브 요소, 모달은 <dialog>, 콤보박스는 datalist. 접근성과 키보드 동작을 브라우저가 책임져요.',
+    body: '폼은 네이티브 요소, 모달은 <dialog>를 사용해요. 자유 입력 추천은 datalist, 값 선택은 Combobox로 구분해요.',
   },
   {
     title: '가벼운 의존성',

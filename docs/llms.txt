@@ -1,7 +1,14 @@
 # Mega UI
 
-> React 19 + TypeScript component library styled from measured Toss (TDS) values. SCSS with CSS-variable
+> React 19.2+ + TypeScript component library styled from measured Toss (TDS) values. SCSS with CSS-variable
 > tokens, qrcode-generator for QR encoding, Korean-first documentation. Version 0.1.0, 197 named exports covering the 150-component checklist.
+
+## Required UI writing contract
+
+Before generating UI, read [UX writing](./ux-writing.md) and [AI guide](./ai-guide.md).
+All user-facing copy and accessible names MUST follow this contract. Run the supplied
+[copy checker](./check-ux-writing.mjs) in the consumer CI and complete the semantic checklist.
+Installing this package alone does not configure a consumer project’s AI instructions or CI.
 
 ## Documentation
 
@@ -11,12 +18,15 @@
 - [Foundations, content, media and AI](./extended-components.md): Added primitives, disclosures, QR, uploads, chat.
 - [Extended inputs](./extended-inputs.md): Actions, input variants and selection.
 - [Extended navigation](./extended-navigation.md): Navigation, overlays and feedback.
+- [Professional DataGridPro](./data-grid.md): Separate @mega-ui/react/data-grid entry; transactional editing, range clipboard, virtualization, grouping, trees, server pagination, CSV and tested limits.
 - [Enterprise](./enterprise.md): Data tables, grids, planning, spreadsheets and explicit scope limits.
 - [AI guide](./ai-guide.md): Which component to use for what, required wiring (Field, Toast, Dialog, Tabs), limitations.
 - [Design direction](./design-direction.md): Measured basis, palette, radius ladder, control ladder, type roles, component specs.
 - [Roadmap](./roadmap.md): What is implemented and what is still planned.
 
 ## Components
+
+- [Readiness](./readiness.md): Selection validation, date bounds, tab relationships, toast handles, signed charts, failure recovery and browser checks.
 
 - Layout: Container, Stack, Grid
 - Typography: Heading, Text

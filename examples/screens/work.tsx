@@ -664,6 +664,7 @@ export function ProjectBoardExample() {
             ))}
           </AvatarGroup>
           <Tabs
+            id="project-views"
             label="보기 방식"
             variant="pill"
             value={view}
@@ -682,7 +683,7 @@ export function ProjectBoardExample() {
           </Button>
         </Stack>
       </div>
-      <TabPanel active={view === 'board'} aria-label="보드">
+      <TabPanel tabsId="project-views" value="board" active={view === 'board'}>
         <Kanban
           label="작업 보드"
           className="board-kanban"
@@ -702,7 +703,7 @@ export function ProjectBoardExample() {
           }
         />
       </TabPanel>
-      <TabPanel active={view === 'list'} aria-label="목록">
+      <TabPanel tabsId="project-views" value="list" active={view === 'list'}>
         <Card className="board-card">
           <DataTable
             label="작업 목록"
@@ -714,7 +715,11 @@ export function ProjectBoardExample() {
           />
         </Card>
       </TabPanel>
-      <TabPanel active={view === 'timeline'} aria-label="타임라인">
+      <TabPanel
+        tabsId="project-views"
+        value="timeline"
+        active={view === 'timeline'}
+      >
         <Card className="board-card">
           <Gantt
             label="작업 일정"

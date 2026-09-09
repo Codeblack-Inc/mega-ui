@@ -596,7 +596,7 @@ export function MarketExample() {
           selected ? `${selected.symbol} · ${selected.region} 주식` : undefined
         }
         size="sm"
-        actions={<Button onClick={() => setSelected(null)}>확인</Button>}
+        actions={<Button onClick={() => setSelected(null)}>닫기</Button>}
       >
         {selected ? (
           <Stack gap={3}>

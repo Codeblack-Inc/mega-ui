@@ -3,9 +3,16 @@
 대상 버전: 0.1.0. 먼저 [`components.md`](./components.md)의 실제 export와 props를 확인하세요.
 이 문서는 패키지 내부 `docs/ai-guide.md`와 예제 사이트 `/ai-guide.md`에서 제공합니다.
 
+## 필수 UX 라이팅 계약
+
+UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수합니다.
+버튼·설명·오류·빈 상태·완료 알림·접근 가능한 이름까지 적용합니다.
+정적 검사와 문서의 의미 검토를 완료하기 전에는 작업을 완료로 보고하지 않습니다.
+이 저장소에서는 `npm run lint:ux`를 실행합니다. 소비 앱에서는 계약의 AI 지침·CI 연결 절차를 적용합니다.
+
 ## 생성 규칙
 
-1. `@mega-ui/react`의 문서화된 공개 런타임 export 213개만 사용합니다. [150개 대조표](./component-coverage.md)에서 기존/별칭/확장 API를 확인합니다. 내부 dist 경로를 import하지 않습니다.
+1. `@mega-ui/react`의 문서화된 공개 export만 사용합니다. [150개 대조표](./component-coverage.md)에서 기존/별칭/확장 API를 확인합니다. 내부 dist 경로를 import하지 않습니다.
 2. 앱 진입점에 `import '@mega-ui/react/styles.css'`를 한 번 추가합니다.
 3. 간격은 `gap` 0–8 토큰, 색·표면은 문서화된 variant/tone을 사용합니다. 임의의 hex를 쓰지 않습니다.
 4. 커스텀 CSS를 추가하기 전에 기존 컴포넌트와 `--mega-*` 시맨틱 토큰으로 해결합니다.
@@ -43,6 +50,13 @@
 `FloatLabel` 안의 입력에는 같은 `id`와 `placeholder=" "`를 지정합니다.
 `InputText` = `Input`, `RadioButton` = `Radio`, `ToggleSwitch` = `Switch`,
 `ToggleButtonGroup` = 단일 선택 `SegmentedControl`입니다. 타 라이브러리와 props 호환을 가정하지 마세요.
+
+**전문 데이터 그리드**
+
+범위 편집·그룹·집계·가상화·일괄 저장에는 별도 진입점 `@mega-ui/react/data-grid`의
+`DataGridPro`를 사용합니다. [전문 그리드 API](./data-grid.md)를 먼저 읽고 기본 CSS와
+`@mega-ui/react/data-grid.css`를 함께 로드합니다. 기존 `DataGrid`/`DataColumn` API와
+호환된다고 가정하지 마세요. 저장 서버는 권한·트랜잭션·원본 버전 검증을 수행해야 합니다.
 
 **공통**
 
@@ -94,19 +108,22 @@ const [open, setOpen] = useState(false);
 <Dialog
   open={open}
   onClose={() => setOpen(false)}
-  title="정말 삭제할까요?"
+  title="문서를 삭제할까요?"
+  description="삭제한 문서는 복구할 수 없어요."
   actions={
     <>
       <Button variant="secondary" onClick={() => setOpen(false)}>
-        취소
+        계속 편집
       </Button>
       <Button variant="danger" onClick={remove}>
-        삭제
+        문서 삭제
       </Button>
     </>
   }
 />;
 ```
+
+위 삭제 설명은 복구가 불가능한 구현을 가정합니다. 실제 보관·복구 정책에 맞춰 바꾸세요.
 
 `onClose`는 Escape·배경 클릭·닫기 버튼 모두에서 호출되므로 반드시 상태를 false로 바꿔야 합니다.
 포커스 트랩은 네이티브 `<dialog>`가 처리하니 직접 구현하지 마세요.
@@ -115,6 +132,7 @@ const [open, setOpen] = useState(false);
 
 `value`를 넘기면 controlled, 안 넘기면 `defaultValue`로 uncontrolled입니다. 둘을 함께 쓰지 않습니다.
 `label`(tablist의 aria-label)은 필수이고, `TabPanel`은 `active={value === '...'}`로 직접 연결합니다.
+Tabs에 고유 `id`를 주고 각 TabPanel에 같은 `tabsId`와 항목 `value`를 전달하면 ARIA 관계도 연결됩니다. 비활성 패널은 언마운트하지 말고 `active={false}`로 유지하세요.
 
 ### 그 밖의 주의
 

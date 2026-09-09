@@ -1224,11 +1224,7 @@ export function StatesExample() {
         <Card padding="lg">
           {retry === 'done' ? (
             <Stack gap={3}>
-              <Message
-                tone="success"
-                title="다시 불러왔어요"
-                description="이제 정상적으로 이용할 수 있어요."
-              />
+              <Message tone="success" title="다시 불러왔어요" />
               <Button variant="text" size="sm" onClick={() => setRetry('idle')}>
                 오류 상태 다시 보기
               </Button>

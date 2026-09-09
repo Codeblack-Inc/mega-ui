@@ -114,8 +114,11 @@
   --mega-knob: #ffffff;
 
   --mega-brand: var(--mega-blue-600);
+  // Filled actions need 4.5:1 with white independently of the brand palette.
+  --mega-action-fill: #1b64da;
+  --mega-action-danger-fill: #c92232;
   --mega-brand-hover: var(--mega-blue-700);
-  --mega-brand-strong: var(--mega-blue-700);
+  --mega-brand-strong: var(--mega-blue-800);
   --mega-on-brand: #ffffff;
   --mega-qr-ink: #000000;
   --mega-qr-paper: #ffffff;

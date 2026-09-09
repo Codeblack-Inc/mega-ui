@@ -1,7 +1,7 @@
 # Mega UI
 
 회사 웹을 **컴포넌트 조합으로 만드는** React UI 라이브러리입니다.
-React 19 · TypeScript · SCSS · Vite. 요청 목록 150종을 포함한 213개 런타임 export를 제공하며,
+React 19.2+ · TypeScript · SCSS · Vite. 요청 목록 150종과 실무 조합 컴포넌트를 제공하며,
 색·치수·타입 스케일은 토스 웹 제품에서 실측한 값에 맞췄습니다. Tailwind, CSS-in-JS, 별도 상태 관리, 모노레포 도구를 사용하지 않습니다.
 
 ## 실행
@@ -13,9 +13,12 @@ npm ci
 npm run dev
 ```
 
-터미널에 표시된 주소에서 기존·확장 컴포넌트 카탈로그와 25개 화면 예제(금융·계정·업무·커머스·AI 등, 상단 메뉴 "화면 예제"), 그리고 소스 코드를 확인합니다.
+터미널에 표시된 주소에서 기존·확장 컴포넌트 카탈로그와 화면 예제(금융·계정·업무·커머스·AI 등, 상단 메뉴 "화면 예제"), 그리고 소스 코드를 확인합니다. 현재 개수는 사이트에서 확인할 수 있습니다.
+
+`실무 상태·조합` 카탈로그에서 저장 실패·재시도, 페이지 이탈 확인, 일부 일괄 작업 실패, 원격 선택과 차트 상태를 확인할 수 있습니다. 개발 서버의 `/readiness.html`은 브라우저 회귀 검사를 실행합니다. [수정된 API와 검증 방법](docs/readiness.md)을 참고하세요.
 
 ```sh
+npm run lint:ux     # UX 라이팅 금지 표현 검사 (문맥 검토는 별도)
 npm run check       # 타입, 포맷, 빌드 결과 테스트, 문서 사이트 빌드
 npm run build       # dist/: ESM + 타입 선언 + styles.css
 npm run build:docs  # site/: 정적 예제 사이트 + AI 문서
@@ -55,8 +58,9 @@ export function Welcome() {
 기본 서체는 Pretendard입니다. 폰트 파일은 번들하지 않으므로 소비 앱에서 직접 불러오세요.
 불러오는 방법은 [시작하기](docs/getting-started.md)의 폰트 절에 있습니다.
 
-React와 React DOM은 peer dependency로 외부화합니다. QR 인코딩은 `qrcode-generator` 한 개 의존성을 사용합니다.
-ESM만 제공하며, React 19를 지원 대상으로 시작합니다. React 18과 CommonJS는 현재 지원 대상으로 검증하지 않았습니다.
+React와 React DOM은 peer dependency로 외부화합니다. QR 인코딩에는 `qrcode-generator`, 전문 그리드에는 `react-data-grid`를 사용합니다.
+전문 그리드는 `@mega-ui/react/data-grid`와 `@mega-ui/react/data-grid.css`로 별도 로드합니다.
+ESM만 제공하며, React 19.2 이상을 지원합니다. React 18과 CommonJS는 현재 지원 대상으로 검증하지 않았습니다.
 
 새 컴포넌트의 디자인 규칙과 자동 검사 범위는 [디자인 계약](docs/design-contract.md)에 있습니다.
 
@@ -80,8 +84,10 @@ tests/              빌드 산출물에 대한 Node 기본 테스트
 
 - [시작하기 / 테마 / SSR](docs/getting-started.md)
 - [전체 컴포넌트 API](docs/components.md)
+- [전문 DataGridPro: 편집·가상화·그룹·서버 저장](docs/data-grid.md)
 - [150개 요청 대조표와 확장 API](docs/component-coverage.md)
 - [AI 코드 작성 가이드](docs/ai-guide.md)
+- [UX 라이팅 원칙·컴포넌트 문구·AI 및 CI 강제 방법](docs/ux-writing.md)
 - [확장 로드맵 및 완료 기준](docs/roadmap.md)
 - [AI 문서 인덱스](docs/llms.txt)
 

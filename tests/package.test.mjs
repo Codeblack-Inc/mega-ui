@@ -83,7 +83,10 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
   const pkg = JSON.parse(
     readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
   );
-  assert.deepEqual(Object.keys(pkg.dependencies), ['qrcode-generator']);
+  assert.deepEqual(Object.keys(pkg.dependencies), [
+    'qrcode-generator',
+    'react-data-grid',
+  ]);
   assert.deepEqual(pkg.sideEffects, ['**/*.css', '**/*.scss']);
   for (const path of [
     'dist/index.d.ts',

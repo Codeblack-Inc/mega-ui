@@ -21,6 +21,7 @@ import {
   TopBarLink,
 } from '@mega-ui/react';
 import { categories } from './catalog';
+import { ComponentSearch } from './component-search';
 import { GalleryPage } from './gallery';
 import { HomePage } from './home';
 import {
@@ -71,7 +72,32 @@ export default function App() {
   const full = hash.params.get('full') === '1';
 
   useEffect(() => {
-    const onHashChange = () => setHash(parseHash(location.hash));
+    let currentHash = location.hash;
+    let currentIndex = Number(history.state?.megaDocsIndex) || 0;
+    history.replaceState({ ...history.state, megaDocsIndex: currentIndex }, '');
+    const onHashChange = () => {
+      if (location.hash === currentHash) return;
+      const targetIndex = history.state?.megaDocsIndex as number | undefined;
+      // The example owns its router; the UI package does not intercept navigation.
+      if (
+        !window.dispatchEvent(
+          new Event('mega-before-route', { cancelable: true }),
+        )
+      ) {
+        history.go(
+          typeof targetIndex === 'number' ? currentIndex - targetIndex : -1,
+        );
+        return;
+      }
+      currentIndex =
+        typeof targetIndex === 'number' ? targetIndex : currentIndex + 1;
+      currentHash = location.hash;
+      history.replaceState(
+        { ...history.state, megaDocsIndex: currentIndex },
+        '',
+      );
+      setHash(parseHash(currentHash));
+    };
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
@@ -173,6 +199,7 @@ export default function App() {
           className="docs-shell"
           sidebar={
             <Stack gap={4} className="docs-sidebar">
+              <ComponentSearch />
               {isExample ? (
                 <SideNav label="화면 예제 탐색">
                   <SideNavSection>

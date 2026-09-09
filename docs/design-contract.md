@@ -12,12 +12,16 @@
 - 모션 단계는 120/200/320ms이며 brightness filter, 800·900 weight, shimmer, bounce, overshoot, parallax를 금지합니다.
 - 아이콘 데이터 URI처럼 색상 토큰을 쓸 수 없는 구현은 `_icons.scss`에만 둡니다.
 
+UX 라이팅도 디자인 계약입니다. [문구 규칙·컴포넌트별 예시·AI 필수 절차](./ux-writing.md)를 따릅니다.
+`npm run lint:ux`와 `tests/ux-writing.test.mjs`가 알려진 금지 표현을 차단하며,
+CI의 `npm run check`에서 실행됩니다. 문맥적 적절성은 아래 리뷰와 라이팅 의미 검토로 확인합니다.
+
 ## PR 체크리스트
 
 정적 검사로 의미를 판별할 수 없는 규칙은 리뷰에서 확인합니다.
 
 - 한 화면의 primary CTA는 하나이며 버튼 라벨은 결과를 직접 말합니다.
-- 제품 카피는 해요체를 쓰고 과장·감탄사·지시형 문구·inline emoji를 피합니다.
+- 제품 설명은 해요체, 버튼은 행동형, 필드·탭은 명사형을 씁니다. 과장·압박·불필요한 감탄사·inline emoji를 피합니다. 작업에 필요한 `입력해 주세요`는 허용합니다.
 - 기본 본문은 15px/1.5, 금액·표·실시간 수치는 tabular nums를 씁니다.
 - 간격은 4px 리듬, radius는 토큰 사다리, 아이콘은 16/20/24/32와 `currentColor`를 우선합니다.
 - 모바일은 단일 컬럼, 44px touch target, BottomCTA safe area, Dialog보다 BottomSheet를 우선합니다.
@@ -38,6 +42,6 @@
 | radius                | 부분 | 6/8/10/12/16/20/24/full을 제공. 새 기준의 4/14/32 단계는 없음                                         |
 | 모바일 컨트롤         | 부분 | XL 56, box input 56, sheet/safe-area 지원. Button L48/S32, checkbox 22 square, switch 44×26과는 다름  |
 | elevation·icon        | 부분 | 모든 shadow는 토큰화됐지만 새 shadow 수치와 완전 일치하지 않음. select data URI는 `currentColor` 불가 |
-| 카피·CTA 위계         | 수동 | 예제는 대체로 해요체지만 문맥 규칙이라 자동 실패 조건으로 만들지 않음                                 |
+| 카피·CTA 위계         | 수동 | 금지 표현은 정적 검사로 차단. 행동 일치·해요체·조건 누락 등 의미는 필수 리뷰                          |
 
 부분 항목은 기존 API와 화면 밀도를 바꾸는 변경입니다. 해당 surface를 재설계할 때 계약의 목표값으로 수렴시키고, 단순 토큰 교체로 기존 소비 화면을 깨뜨리지 않습니다.

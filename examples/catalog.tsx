@@ -1,4 +1,6 @@
 import type { ComponentType } from 'react';
+import { WorkflowsCategory, workflowNames } from './categories/workflows';
+import workflowsSource from './workflow-demos.tsx?raw';
 import { FoundationCategory, foundationNames } from './categories/foundation';
 import { ControlsCategory, controlNames } from './categories/controls';
 import { InputsCategory, inputNames } from './categories/inputs';
@@ -46,6 +48,14 @@ export interface Category {
 }
 
 export const categories: Category[] = [
+  {
+    key: 'workflows',
+    label: '실무 상태·조합',
+    description: '입력 보존, 실패 복구, 선택과 차트의 상태를 확인해요.',
+    names: workflowNames,
+    Component: WorkflowsCategory,
+    source: workflowsSource,
+  },
   {
     key: 'foundation',
     label: '기초',

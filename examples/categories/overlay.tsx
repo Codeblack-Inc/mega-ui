@@ -36,7 +36,7 @@ export function OverlayCategory() {
           open={dialog}
           onClose={() => setDialog(false)}
           title="문서를 삭제할까요?"
-          description="삭제한 문서는 복구할 수 없어요. 계속 진행할지 확인해 주세요."
+          description="삭제한 문서는 복구할 수 없어요."
           size="sm"
           actions={
             <>

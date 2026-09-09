@@ -117,7 +117,7 @@ export function SurfacesCategory() {
               toast({ title: '혜택을 확인했어요', tone: 'success' })
             }
           >
-            확인하기
+            확인했어요
           </Button>
         }
         onDismiss={() => setBanner(false)}

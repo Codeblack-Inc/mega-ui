@@ -25,13 +25,13 @@
     min-height: 34px;
     border-start-start-radius: 0;
     border-end-start-radius: 0;
-    background: var(--mega-brand);
+    background: var(--mega-action-fill);
     color: var(--mega-on-brand);
     box-shadow: inset 1px 0 0 var(--mega-brand-border);
   }
 
   &--danger > .mega-menu > .mega-icon-button {
-    background: var(--mega-danger-fill);
+    background: var(--mega-action-danger-fill);
   }
 
   &--weak > .mega-menu > .mega-icon-button {
@@ -99,7 +99,7 @@
     width: 56px;
     height: 56px;
     border-radius: var(--mega-radius-full);
-    background: var(--mega-brand);
+    background: var(--mega-action-fill);
     color: var(--mega-on-brand);
     box-shadow: var(--mega-shadow-md);
     cursor: pointer;

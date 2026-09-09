@@ -122,6 +122,7 @@ export type {
   MenuLabelProps,
   TooltipProps,
   ToastOptions,
+  ToastHandle,
   ToastProviderProps,
 } from './components/overlay';
 export {

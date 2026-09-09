@@ -299,7 +299,7 @@ export function ExtendedNavigationCategory() {
         description="추가 인증이 필요할 수 있어요."
         action={
           <Button size="sm" variant="text">
-            확인
+            결제 내역 보기
           </Button>
         }
       />

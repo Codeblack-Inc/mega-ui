@@ -15,3 +15,32 @@
 @use 'enterprise';
 @use 'extended-inputs';
 @use 'advanced-patterns';
+
+// Applied last so dense table/split-button variants retain touch-sized targets.
+@media (pointer: coarse), (max-width: 600px) {
+  .mega-button:not(.mega-button--xl),
+  .mega-icon-button,
+  .mega-split-button > .mega-menu > .mega-icon-button,
+  .mega-chip,
+  .mega-tabs__item,
+  .mega-menu__item,
+  .mega-pagination button,
+  .mega-combobox__clear,
+  .mega-combobox__listbox > button {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  .mega-checkbox,
+  .mega-radio,
+  .mega-switch {
+    min-height: 44px;
+  }
+  .mega-combobox > .mega-input {
+    min-height: 44px;
+  }
+  .mega-combobox .mega-combobox__clear {
+    inset-block-start: 0;
+    inset-inline-end: 0;
+  }
+}

@@ -327,7 +327,9 @@ function AdminDashboard() {
           title="안심정산으로 사장님의 내일을 더 든든하게"
           description="정산한도를 최대 1.5배까지 늘릴 수 있어요"
           action={
-            <Button onClick={() => setDetail('안심정산 플랜')}>확인하기</Button>
+            <Button onClick={() => setDetail('안심정산 플랜')}>
+              안심정산 플랜 보기
+            </Button>
           }
           onDismiss={() => setBanner(false)}
         />
@@ -406,6 +408,7 @@ function AdminDashboard() {
             </Menu>
           </div>
           <Tabs
+            id="admin-transactions"
             label="거래 내역"
             variant="underline"
             value={tab}
@@ -415,7 +418,11 @@ function AdminDashboard() {
               { value: 'settlements', label: '정산 보류 내역' },
             ]}
           />
-          <TabPanel active={tab === 'payments'} aria-label="결제 내역">
+          <TabPanel
+            tabsId="admin-transactions"
+            value="payments"
+            active={tab === 'payments'}
+          >
             <div className="admin-table-caption">
               <Text size="xs" tone="muted">
                 오늘 00:00 – 23:59 · 총 {filtered.length}건
@@ -481,7 +488,11 @@ function AdminDashboard() {
               />
             </div>
           </TabPanel>
-          <TabPanel active={tab === 'settlements'} aria-label="정산 보류 내역">
+          <TabPanel
+            tabsId="admin-transactions"
+            value="settlements"
+            active={tab === 'settlements'}
+          >
             <EmptyState
               icon={<ExampleIcon name="receipt" />}
               title="보류 중인 정산이 없어요"

@@ -13,7 +13,10 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "types": ["vite/client", "node"],
-    "paths": { "@mega-ui/react": ["./src/index.ts"] }
+    "paths": {
+      "@mega-ui/react": ["./src/index.ts"],
+      "@mega-ui/react/data-grid": ["./src/data-grid.ts"]
+    }
   },
   "include": ["src", "examples", "vite.config.ts", "vite.docs.config.ts"]
 }

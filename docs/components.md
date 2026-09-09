@@ -1,6 +1,6 @@
 # Mega UI 컴포넌트 API — 0.1.0
 
-`@mega-ui/react`의 공개 런타임 export는 213개입니다. 이 페이지는 핵심 API와 목록·폼·분석 조합을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
+이 페이지는 `@mega-ui/react`의 핵심 API와 목록·폼·분석 조합을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
 별도 명시가 없으면 해당 HTML 요소의 표준 속성, `className`, `style`, React 19 `ref`를 그대로 전달합니다.
 `children`은 ReactNode입니다. 범용 `as`, `asChild`, `sx` API는 제공하지 않습니다(`Text`와 `Amount`만 좁은 `as`를 받습니다).
 
@@ -388,17 +388,17 @@ onClick에서 preventDefault()하면 토글하지 않습니다. 기본 type=butt
 
 ### Tabs (div[role=tablist])
 
-| prop            | 타입                          | 기본값      | 설명                                    |
-| --------------- | ----------------------------- | ----------- | --------------------------------------- |
-| `items`         | `readonly TabItem[]` **필수** | —           |                                         |
-| `label`         | `string` **필수**             | —           | tablist의 `aria-label`                  |
-| `value`         | `string`                      | —           | 지정하면 controlled                     |
-| `defaultValue`  | `string`                      | 첫 item     | uncontrolled 초기값                     |
-| `onValueChange` | `(value: string) => void`     | —           |                                         |
-| `variant`       | `underline \| pill`           | `underline` | underline은 섹션 탭, pill은 알약 선택기 |
-| `size`          | `md \| lg`                    | `md`        | 14 / 16px                               |
+| prop            | 타입                          | 기본값       | 설명                                    |
+| --------------- | ----------------------------- | ------------ | --------------------------------------- |
+| `items`         | `readonly TabItem[]` **필수** | —            |                                         |
+| `label`         | `string` **필수**             | —            | tablist의 `aria-label`                  |
+| `value`         | `string`                      | —            | 지정하면 controlled                     |
+| `defaultValue`  | `string`                      | 첫 활성 item | uncontrolled 초기값                     |
+| `onValueChange` | `(value: string) => void`     | —            |                                         |
+| `variant`       | `underline \| pill`           | `underline`  | underline은 섹션 탭, pill은 알약 선택기 |
+| `size`          | `md \| lg`                    | `md`         | 14 / 16px                               |
 
-`TabItem`은 `{ value: string; label: ReactNode; disabled?: boolean; badge?: ReactNode }`입니다.
+`TabItem`은 `{ value: string; label: ReactNode; disabled?: boolean; badge?: ReactNode; id?: string; panelId?: string }`입니다.
 ←/→/Home/End로 이동하며, WAI-ARIA 자동 활성화 방식이라 포커스 이동이 곧 선택입니다.
 
 ### TabPanel (div[role=tabpanel])
@@ -407,12 +407,13 @@ onClick에서 preventDefault()하면 토글하지 않습니다. 기본 type=butt
 | -------- | ------------------ | ------ | ------------------------------------- |
 | `active` | `boolean` **필수** | —      | false면 `hidden`, true면 `tabIndex=0` |
 
-`id`/`aria-controls` 자동 연결은 하지 않습니다. 필요하면 호출자가 직접 붙입니다.
+Tabs에 고유 `id`를 주고 TabPanel에 같은 `tabsId`와 항목 `value`를 전달하면 탭·패널 ID와 ARIA 속성을 연결합니다. 비활성 패널도 마운트해 연결 대상을 유지하세요. 직접 지정한 DOM `id`/`aria-labelledby`와 TabItem의 `id`/`panelId`가 우선합니다.
 
 ```tsx
 const [tab, setTab] = useState('summary');
 
 <Tabs
+  id="account-tabs"
   label="계좌 정보"
   items={[
     { value: 'summary', label: '요약' },
@@ -421,8 +422,8 @@ const [tab, setTab] = useState('summary');
   value={tab}
   onValueChange={setTab}
 />;
-<TabPanel active={tab === 'summary'}>…</TabPanel>
-<TabPanel active={tab === 'history'}>…</TabPanel>
+<TabPanel tabsId="account-tabs" value="summary" active={tab === 'summary'}>…</TabPanel>
+<TabPanel tabsId="account-tabs" value="history" active={tab === 'history'}>…</TabPanel>
 ```
 
 ### SideNav (nav) · SideNavSection (div) · SideNavItem (a 또는 button)
@@ -561,7 +562,7 @@ JS 위치 계산 없이 `:hover` / `:focus-within`으로만 동작합니다. 툴
 
 ### ToastProvider (div) · useToast()
 
-`useToast()`는 `(options: ToastOptions) => void`를 반환하며, provider 밖에서 호출하면 예외를 던집니다.
+`useToast()`는 `(options: ToastOptions) => ToastHandle`을 반환하며, provider 밖에서 호출하면 예외를 던집니다. 핸들은 `id`, `dismiss()`, `update(options: Partial<ToastOptions>)`를 제공합니다. 각 토스트의 닫기 버튼으로 종료할 수 있고, hover·키보드 포커스 중에는 자동 종료 타이머가 멈춥니다.
 
 | ToastOptions  | 타입                                     | 기본값    | 설명                             |
 | ------------- | ---------------------------------------- | --------- | -------------------------------- |
@@ -722,5 +723,7 @@ function SaveButton() {
 | `MegaIcon`                           | 예제에서 쓰던 공통 SVG 자산을 `name`으로 사용                                   |
 
 ## 조합 레시피
+
+[실무 준비도 보강](./readiness.md)에 Combobox 필수 선택·reset, 날짜 범위, Tabs 연결, Toast 제어와 실행 가능한 상태 예제를 정리했습니다.
 
 목록 CRUD는 `FilterBar + ActiveFilters + DataGrid + DataPagination + Drawer`, 폼은 `FormErrorSummary + FormSection + FormActions`, 결제는 `SelectionCard + Amount + DescriptionList + Timeline`을 조합합니다. 실제 동작 예제는 사용자 관리·드라이브·설정·결제 화면에 있습니다. Markdown 편집기, 댓글·멘션, 저장된 필터, 승인 흐름 등 보고서 6절의 후보는 제품 수요가 생길 때 이 조합에서 반복되는 부분만 승격합니다.

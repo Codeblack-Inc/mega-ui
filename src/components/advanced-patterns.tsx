@@ -41,8 +41,11 @@ export function BarChart({
   className = '',
   ...props
 }: BarChartProps) {
-  const values = data.map((item) => Math.max(0, finite(item.value)));
+  const values = data.map((item) => finite(item.value));
   const max = Math.max(0, ...values);
+  const min = Math.min(0, ...values);
+  const span = max - min || 1;
+  const zero = (-min / span) * 100;
   return (
     <figure
       {...props}
@@ -57,10 +60,19 @@ export function BarChart({
             <li key={`${item.label}-${index}`} data-tone={item.tone}>
               <span className="mega-bar-chart__label">{item.label}</span>
               <span className="mega-bar-chart__track" aria-hidden="true">
+                <i
+                  style={
+                    orientation === 'vertical'
+                      ? { bottom: `${zero}%` }
+                      : { left: `${zero}%` }
+                  }
+                />
                 <span
                   style={
                     {
-                      '--mega-chart-value': `${max ? (values[index]! / max) * 100 : 0}%`,
+                      '--mega-chart-value': `${(Math.abs(values[index]!) / span) * 100}%`,
+                      [orientation === 'vertical' ? 'bottom' : 'left']:
+                        `${((Math.min(0, values[index]!) - min) / span) * 100}%`,
                     } as CSSProperties
                   }
                 />
@@ -135,11 +147,14 @@ export function LineChart({
               {data.at(-1)?.label}
             </text>
           </svg>
-          <p className="mega-visually-hidden">
-            {data
-              .map((item) => `${item.label} ${formatValue(finite(item.value))}`)
-              .join(', ')}
-          </p>
+          <dl className="mega-line-chart__values">
+            {data.map((item, index) => (
+              <div key={`${item.label}-${index}`}>
+                <dt>{item.label}</dt>
+                <dd>{formatValue(finite(item.value))}</dd>
+              </div>
+            ))}
+          </dl>
         </>
       ) : (
         <Text tone="muted">{emptyMessage}</Text>
@@ -396,7 +411,7 @@ export function NotificationList({
                         variant="text"
                         onClick={() => onRead(item.id)}
                       >
-                        확인
+                        읽음으로 표시
                       </Button>
                     ) : null
                   }

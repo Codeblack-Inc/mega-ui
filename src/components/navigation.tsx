@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import type {
   ComponentPropsWithRef,
   HTMLAttributes,
@@ -14,6 +14,8 @@ export interface TabItem {
   disabled?: boolean;
   /** Rendered after the label (count, dot, "N"). */
   badge?: ReactNode;
+  id?: string;
+  panelId?: string;
 }
 
 export interface TabsProps extends Omit<
@@ -42,13 +44,21 @@ export function Tabs({
   variant = 'underline',
   size = 'md',
   label,
+  id,
+  onKeyDown,
   className = '',
   ...props
 }: TabsProps) {
+  const generatedId = useId();
   const [internal, setInternal] = useState(
-    () => defaultValue ?? items[0]?.value ?? '',
+    () => defaultValue ?? items.find((item) => !item.disabled)?.value ?? '',
   );
-  const selected = value ?? internal;
+  const requested = value ?? internal;
+  const selected = items.some(
+    (item) => item.value === requested && !item.disabled,
+  )
+    ? requested
+    : items.find((item) => !item.disabled)?.value;
 
   const select = (next: string) => {
     if (value === undefined) setInternal(next);
@@ -57,6 +67,8 @@ export function Tabs({
 
   // Automatic activation: moving focus also selects, per the WAI-ARIA tabs pattern.
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    onKeyDown?.(event);
+    if (event.defaultPrevented) return;
     if (!NAV_KEYS.includes(event.key)) return;
     const tabs = [
       ...event.currentTarget.querySelectorAll<HTMLButtonElement>(
@@ -80,6 +92,7 @@ export function Tabs({
   return (
     <div
       {...props}
+      id={id}
       role="tablist"
       aria-label={label}
       aria-orientation="horizontal"
@@ -93,6 +106,10 @@ export function Tabs({
             key={item.value}
             type="button"
             role="tab"
+            id={item.id ?? `${id ?? generatedId}-tab-${item.value}`}
+            aria-controls={
+              item.panelId ?? (id ? `${id}-panel-${item.value}` : undefined)
+            }
             aria-selected={active}
             tabIndex={active ? 0 : -1}
             disabled={item.disabled}
@@ -112,12 +129,26 @@ export function Tabs({
 
 export interface TabPanelProps extends ComponentPropsWithRef<'div'> {
   active: boolean;
+  /** Match the Tabs id and the item's value. */
+  tabsId?: string;
+  value?: string;
 }
 
-/** ponytail: no id/aria-controls wiring — the consumer owns ids if it needs them. */
-export function TabPanel({ active, className = '', ...props }: TabPanelProps) {
+export function TabPanel({
+  active,
+  tabsId,
+  value,
+  className = '',
+  ...props
+}: TabPanelProps) {
   return (
     <div
+      id={
+        tabsId && value !== undefined ? `${tabsId}-panel-${value}` : undefined
+      }
+      aria-labelledby={
+        tabsId && value !== undefined ? `${tabsId}-tab-${value}` : undefined
+      }
       {...props}
       role="tabpanel"
       hidden={!active}

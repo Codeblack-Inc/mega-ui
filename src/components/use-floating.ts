@@ -9,12 +9,16 @@ export function useFloating(
   useLayoutEffect(() => {
     if (!open) return;
     const place = () => {
-      const trigger = root.current?.firstElementChild as HTMLElement | null;
+      const trigger = (root.current?.querySelector(
+        '[data-mega-floating-anchor]',
+      ) ?? root.current?.firstElementChild) as HTMLElement | null;
       const popup = root.current?.querySelector<HTMLElement>(
         '[data-mega-floating]',
       );
       if (!trigger || !popup) return;
       const anchor = trigger.getBoundingClientRect();
+      if (popup.hasAttribute('data-mega-match-anchor'))
+        popup.style.width = `${anchor.width}px`;
       const box = popup.getBoundingClientRect();
       const gap = 8;
       const preferredLeft =
@@ -51,9 +55,15 @@ export function useFloating(
       });
     };
     place();
+    const observer = new ResizeObserver(place);
+    const popup = root.current?.querySelector<HTMLElement>(
+      '[data-mega-floating]',
+    );
+    if (popup) observer.observe(popup);
     addEventListener('resize', place);
     addEventListener('scroll', place, true);
     return () => {
+      observer.disconnect();
       removeEventListener('resize', place);
       removeEventListener('scroll', place, true);
     };

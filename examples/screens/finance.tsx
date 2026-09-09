@@ -100,7 +100,7 @@ export function TransferExample() {
             items={[
               { label: '받는 사람' },
               { label: '금액', disabled: !to },
-              { label: '확인', disabled: !to || !amount },
+              { label: '송금 정보 확인', disabled: !to || !amount },
             ]}
           />
 
@@ -680,6 +680,7 @@ function CardBenefits() {
         </Stack>
       </div>
       <Tabs
+        id="card-information"
         label="카드 정보"
         value={tab}
         onValueChange={setTab}
@@ -689,7 +690,11 @@ function CardBenefits() {
           { value: 'settings', label: '설정' },
         ]}
       />
-      <TabPanel active={tab === 'benefits'} aria-label="혜택">
+      <TabPanel
+        tabsId="card-information"
+        value="benefits"
+        active={tab === 'benefits'}
+      >
         <Stack gap={5}>
           <Grid minItemWidth={220} gap={3}>
             {benefits.map((b) => (
@@ -725,7 +730,11 @@ function CardBenefits() {
           />
         </Stack>
       </TabPanel>
-      <TabPanel active={tab === 'history'} aria-label="이용내역">
+      <TabPanel
+        tabsId="card-information"
+        value="history"
+        active={tab === 'history'}
+      >
         <Card>
           <Table aria-label="카드 이용 내역">
             <TableHead>
@@ -759,7 +768,11 @@ function CardBenefits() {
           </Table>
         </Card>
       </TabPanel>
-      <TabPanel active={tab === 'settings'} aria-label="설정">
+      <TabPanel
+        tabsId="card-information"
+        value="settings"
+        active={tab === 'settings'}
+      >
         <Card padding="lg">
           <Stack gap={4}>
             <Switch label="해외 결제 허용" name="overseas" defaultChecked />

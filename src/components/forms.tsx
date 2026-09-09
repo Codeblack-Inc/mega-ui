@@ -14,6 +14,7 @@ import {
   type InputProps,
   type ChipProps,
 } from './controls';
+import { useFloating } from './use-floating';
 
 export interface AutoCompleteProps extends Omit<InputProps, 'list' | 'type'> {
   suggestions: readonly string[];
@@ -78,15 +79,22 @@ export function Combobox({
   renderOption,
   name,
   disabled,
+  required,
+  readOnly,
+  onFocus,
+  onBlur,
+  onKeyDown,
+  ref: forwardedRef,
   className = '',
   ...props
 }: ComboboxProps) {
   const id = useId();
   const root = useRef<HTMLDivElement>(null);
+  const input = useRef<HTMLInputElement>(null);
   const [internalValue, setInternalValue] = useState(defaultValue);
   const [internalQuery, setInternalQuery] = useState('');
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(-1);
   const selectedValue = value ?? internalValue;
   const selected = options.find((option) => option.value === selectedValue);
   const search = (query ?? internalQuery).trim().toLocaleLowerCase();
@@ -97,10 +105,41 @@ export function Combobox({
     if (query === undefined) setInternalQuery(next);
     onQueryChange?.(next);
   };
+  const available = !loading && !error && !disabled && !readOnly;
+  useFloating(root, open);
+  useEffect(() => {
+    input.current?.setCustomValidity(
+      required && !selectedValue ? '목록에서 항목을 선택해 주세요.' : '',
+    );
+  }, [required, selectedValue]);
+  useEffect(() => {
+    if (disabled || readOnly) setOpen(false);
+  }, [disabled, readOnly]);
+  useEffect(() => {
+    const form = input.current?.form;
+    const reset = (event: Event) =>
+      queueMicrotask(() => {
+        if (event.defaultPrevented) return;
+        if (value === undefined) setInternalValue(defaultValue);
+        if (query === undefined) setInternalQuery('');
+        setOpen(false);
+        setActive(-1);
+      });
+    form?.addEventListener('reset', reset);
+    return () => form?.removeEventListener('reset', reset);
+  }, [defaultValue, value, query, props.form]);
+  useEffect(() => {
+    if (open && available)
+      document
+        .getElementById(`${id}-${active}`)
+        ?.scrollIntoView({ block: 'nearest' });
+  }, [active, open, available, id]);
   const select = (option: ComboboxOption) => {
+    if (!available || option.disabled) return;
     if (value === undefined) setInternalValue(option.value);
     onValueChange?.(option.value);
-    setQuery(option.label);
+    setQuery('');
+    setActive(-1);
     setOpen(false);
   };
   const message = loading ? '불러오는 중…' : (error ?? emptyMessage);
@@ -113,42 +152,82 @@ export function Combobox({
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
     >
-      {name ? <input type="hidden" name={name} value={selectedValue} /> : null}
+      {name ? (
+        <input
+          type="hidden"
+          name={name}
+          form={props.form}
+          disabled={disabled}
+          value={selectedValue}
+        />
+      ) : null}
       <Input
         {...props}
+        ref={(node) => {
+          input.current = node;
+          if (typeof forwardedRef === 'function') forwardedRef(node);
+          else if (forwardedRef) forwardedRef.current = node;
+        }}
+        data-mega-floating-anchor=""
         disabled={disabled}
+        readOnly={readOnly}
+        aria-required={required || undefined}
         role="combobox"
         aria-autocomplete="list"
         aria-expanded={open}
         aria-controls={`${id}-listbox`}
         aria-activedescendant={
-          open && filtered[active] ? `${id}-${active}` : undefined
+          open && available && filtered[active] ? `${id}-${active}` : undefined
         }
         value={
           open
             ? (query ?? internalQuery)
             : (selected?.label ?? query ?? internalQuery)
         }
-        onFocus={() => setOpen(true)}
+        onFocus={(event) => {
+          onFocus?.(event);
+          if (!event.defaultPrevented && !readOnly) setOpen(true);
+        }}
+        onBlur={onBlur}
         onChange={(event) => {
+          if (value === undefined) setInternalValue('');
+          onValueChange?.('');
           setQuery(event.currentTarget.value);
-          setActive(0);
+          setActive(-1);
           setOpen(true);
         }}
         onKeyDown={(event) => {
-          if (event.key === 'Escape') setOpen(false);
+          onKeyDown?.(event);
+          if (
+            event.defaultPrevented ||
+            event.nativeEvent.isComposing ||
+            event.keyCode === 229 ||
+            readOnly
+          )
+            return;
+          if (event.key === 'Escape' && open) {
+            event.preventDefault();
+            event.stopPropagation();
+            setOpen(false);
+          }
+          if (!available) {
+            if (event.key === 'Enter' && open) event.preventDefault();
+            return;
+          }
           if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
             setOpen(true);
-            setActive((current) =>
-              Math.max(
-                0,
-                Math.min(
-                  filtered.length - 1,
-                  current + (event.key === 'ArrowDown' ? 1 : -1),
-                ),
-              ),
+            const enabled = filtered.flatMap((option, index) =>
+              option.disabled ? [] : [index],
             );
+            const at = enabled.indexOf(active);
+            const next =
+              event.key === 'ArrowDown'
+                ? (at + 1) % enabled.length
+                : at < 0
+                  ? enabled.length - 1
+                  : (at - 1 + enabled.length) % enabled.length;
+            setActive(enabled[next] ?? -1);
           }
           if (
             event.key === 'Enter' &&
@@ -161,7 +240,7 @@ export function Combobox({
           }
         }}
       />
-      {clearable && selectedValue && !disabled ? (
+      {clearable && selectedValue && !disabled && !readOnly ? (
         <button
           type="button"
           className="mega-combobox__clear"
@@ -170,6 +249,8 @@ export function Combobox({
             if (value === undefined) setInternalValue('');
             onValueChange?.('');
             setQuery('');
+            setActive(-1);
+            input.current?.focus();
           }}
         >
           ×
@@ -179,6 +260,9 @@ export function Combobox({
         <div
           id={`${id}-listbox`}
           role="listbox"
+          aria-label={props['aria-label'] ?? '선택 항목'}
+          data-mega-floating=""
+          data-mega-match-anchor=""
           className="mega-combobox__listbox"
           aria-busy={loading || undefined}
         >
@@ -189,6 +273,7 @@ export function Combobox({
                 key={option.value}
                 type="button"
                 role="option"
+                tabIndex={-1}
                 aria-selected={option.value === selectedValue}
                 disabled={option.disabled}
                 data-active={index === active || undefined}

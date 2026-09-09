@@ -1,0 +1,201 @@
+@import 'react-data-grid/lib/styles.css';
+
+.mega-pro-grid {
+  display: grid;
+  min-width: 0;
+  gap: var(--mega-space-3);
+  color: var(--mega-text);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.mega-pro-grid__canvas {
+  --rdg-color: var(--mega-text);
+  --rdg-background-color: var(--mega-surface);
+  --rdg-header-background-color: var(--mega-fill-solid);
+  --rdg-header-draggable-background-color: var(--mega-hover);
+  --rdg-row-hover-background-color: var(--mega-hover);
+  --rdg-row-selected-background-color: var(--mega-brand-soft);
+  --rdg-row-selected-hover-background-color: var(--mega-brand-soft);
+  --rdg-border-color: var(--mega-border);
+  --rdg-summary-border-color: var(--mega-border-strong);
+  --rdg-selection-color: var(--mega-brand);
+  --rdg-font-size: 13px;
+  border-radius: var(--mega-radius-sm);
+  font-family: inherit;
+}
+.mega-pro-grid__canvas button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.mega-pro-grid__canvas button:focus-visible {
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
+}
+.mega-pro-grid__canvas .mega-checkbox {
+  min-height: 24px;
+}
+.mega-pro-grid__canvas .mega-checkbox input {
+  width: 18px;
+  height: 18px;
+}
+.mega-pro-grid__toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--mega-space-2);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.mega-pro-grid__toolbar > .mega-input {
+  width: min(100%, 240px);
+}
+.mega-pro-grid__toolbar > .mega-select {
+  width: auto;
+  max-width: 220px;
+}
+.mega-pro-grid__panel {
+  min-width: 0;
+  margin: 0;
+  padding: var(--mega-space-4);
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-sm);
+  background: var(--mega-surface);
+}
+.mega-pro-grid__panel legend {
+  padding-inline: var(--mega-space-2);
+  font-weight: 600;
+}
+.mega-pro-grid__panel ul {
+  padding-inline-start: 20px;
+}
+.mega-pro-grid__columns {
+  display: grid;
+  gap: var(--mega-space-3);
+  margin-block-end: var(--mega-space-3);
+}
+.mega-pro-grid__columns > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--mega-space-2);
+}
+.mega-pro-grid__columns > div > .mega-checkbox:first-child {
+  min-width: 140px;
+}
+.mega-pro-grid__columns .mega-select {
+  width: 130px;
+}
+.mega-pro-grid__columns .mega-input {
+  width: 100px;
+}
+.mega-pro-grid__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--mega-space-3);
+  flex-wrap: wrap;
+}
+.mega-pro-grid__help {
+  margin: 0;
+  color: var(--mega-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.mega-pro-grid__message {
+  min-height: 24px;
+  color: var(--mega-muted);
+}
+.mega-pro-grid__range {
+  background-color: var(--mega-brand-soft);
+  box-shadow: inset 0 0 0 1px var(--mega-brand);
+}
+.mega-pro-grid__dirty {
+  border-block-end: 2px solid var(--mega-brand);
+}
+.mega-pro-grid__invalid {
+  outline: 2px solid var(--mega-danger);
+  outline-offset: -2px;
+}
+.mega-pro-grid__editor {
+  height: 100%;
+  line-height: normal;
+  position: relative;
+}
+.mega-pro-grid__editor input,
+.mega-pro-grid__editor select {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 8px;
+  border: 2px solid var(--mega-brand);
+  outline: 0;
+  background: var(--mega-surface);
+  color: var(--mega-text);
+  font: inherit;
+}
+.mega-pro-grid__editor [aria-invalid='true'] {
+  border-color: var(--mega-danger);
+}
+.mega-pro-grid__editor > span[role='alert'] {
+  position: fixed;
+  z-index: 10;
+  max-width: 320px;
+  padding: 8px;
+  border: 1px solid var(--mega-danger);
+  background: var(--mega-surface);
+  color: var(--mega-danger);
+  box-shadow: var(--mega-shadow-sm);
+}
+.mega-pro-grid__errors,
+.mega-pro-grid__notice {
+  margin: 0;
+  padding: var(--mega-space-3);
+  background: var(--mega-fill);
+  border-radius: var(--mega-radius-sm);
+}
+.mega-pro-grid__errors {
+  padding-inline-start: 32px;
+  color: var(--mega-danger);
+}
+.mega-pro-grid__empty {
+  grid-column: 1 / -1;
+  padding: var(--mega-space-6);
+  text-align: center;
+  color: var(--mega-muted);
+}
+
+/* One body track avoids per-browser CSS Grid track limits without limiting row count. */
+.mega-pro-grid__canvas[data-large] {
+  grid-template-rows: 44px var(--mega-pro-body-height) var(
+      --mega-pro-summary-height
+    ) !important;
+  grid-auto-rows: 0;
+}
+.mega-pro-grid__canvas[data-large]
+  > [role='row'][aria-rowindex]:not([aria-rowindex='1']):not(.rdg-summary-row) {
+  grid-row: 2 !important;
+  align-self: start;
+  grid-template-rows: var(--mega-pro-row-height);
+  height: var(--mega-pro-row-height);
+  margin-block-start: var(--mega-pro-row-top);
+}
+.mega-pro-grid__canvas[data-large] > .rdg-summary-row {
+  grid-row: 3 !important;
+  grid-template-rows: 40px;
+}
+.mega-pro-grid__canvas[data-large] > .rdg-cell-drag-handle {
+  grid-row: 2 !important;
+  align-self: start;
+  margin-block-start: calc(
+    var(--mega-pro-active-top) + var(--mega-pro-row-height) - 8px
+  );
+}
+.mega-pro-grid__canvas[data-large]
+  > div:not([role]):not([data-measuring-cell-key]):not(.rdg-cell-drag-handle) {
+  display: none;
+}

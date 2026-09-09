@@ -700,6 +700,14 @@ export function DataGrid<Row extends object>({
       ArrowLeft: [0, -1],
       ArrowRight: [0, 1],
     };
+    if (
+      event.defaultPrevented ||
+      event.nativeEvent.isComposing ||
+      (event.target as HTMLElement).closest(
+        'input, textarea, select, [contenteditable="true"]',
+      )
+    )
+      return;
     const offset = offsets[event.key];
     if (!offset) return;
     event.preventDefault();

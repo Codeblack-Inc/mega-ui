@@ -2,6 +2,8 @@
 
 대용량·업무 데이터 화면을 위한 최소 API입니다. 모든 컴포넌트는 시맨틱 HTML과 기존 Mega UI 토큰을 사용하며 외부 데이터 그리드 의존성이 없습니다.
 
+전문 기능이 필요한 그리드는 별도 진입점의 [DataGridPro](./data-grid.md)를 사용합니다. 아래 표의 `DataGrid`는 기존 경량 API이며, `DataGridPro`의 편집·필터·그룹·집계·트리·범위 작업·일괄 저장과 구분합니다.
+
 ## 공통 열 모델
 
 `DataTable`, `VirtualTable`, `EditableTable`, `TreeTable`, `DataGrid`, `DataExplorer`는 `DataColumn<Row>`를 공유합니다.

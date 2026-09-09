@@ -45,6 +45,7 @@ export function NavigationCategory() {
           밑줄 탭과 알약 탭으로 화면 안의 흐름을 나눠요.
         </Text>
         <Tabs
+          id="catalog-transactions"
           label="내역 종류"
           variant="underline"
           value={tab}
@@ -55,16 +56,24 @@ export function NavigationCategory() {
             { value: 'settlement', label: '정산' },
           ]}
         />
-        <TabPanel active aria-label="선택한 내역">
-          <Text size="sm">
-            {tab === 'all'
-              ? '모든 내역을 확인해요.'
-              : tab === 'payments'
-                ? '결제 내역을 확인해요.'
-                : '정산 내역을 확인해요.'}
-          </Text>
-        </TabPanel>
+        {['all', 'payments', 'settlement'].map((value) => (
+          <TabPanel
+            key={value}
+            active={tab === value}
+            tabsId="catalog-transactions"
+            value={value}
+          >
+            <Text size="sm">
+              {tab === 'all'
+                ? '모든 내역을 확인해요.'
+                : tab === 'payments'
+                  ? '결제 내역을 확인해요.'
+                  : '정산 내역을 확인해요.'}
+            </Text>
+          </TabPanel>
+        ))}
         <Tabs
+          id="catalog-stock"
           label="주식 정보"
           variant="pill"
           value={pill}
@@ -74,13 +83,20 @@ export function NavigationCategory() {
             { value: 'order', label: '호가' },
           ]}
         />
-        <TabPanel active aria-label="선택한 주식 정보">
-          <Text size="sm" tone="muted">
-            {pill === 'chart'
-              ? '가격의 흐름을 확인하는 차트 화면이에요.'
-              : '구매와 판매 가격을 확인하는 호가 화면이에요.'}
-          </Text>
-        </TabPanel>
+        {['chart', 'order'].map((value) => (
+          <TabPanel
+            key={value}
+            active={pill === value}
+            tabsId="catalog-stock"
+            value={value}
+          >
+            <Text size="sm" tone="muted">
+              {pill === 'chart'
+                ? '가격의 흐름을 확인하는 차트 화면이에요.'
+                : '구매와 판매 가격을 확인하는 호가 화면이에요.'}
+            </Text>
+          </TabPanel>
+        ))}
       </Stack>
     ),
     SideNav: (

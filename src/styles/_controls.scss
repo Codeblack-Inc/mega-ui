@@ -73,10 +73,10 @@
     color: var(--mega-on-brand);
   }
   &--primary {
-    background: var(--mega-brand);
+    background: var(--mega-action-fill);
   }
   &--danger {
-    background: var(--mega-danger-fill);
+    background: var(--mega-action-danger-fill);
   }
   &--weak {
     background: var(--mega-brand-soft);

@@ -356,9 +356,15 @@ export interface ToastOptions {
 
 type ToastRecord = ToastOptions & { id: number; leaving?: boolean };
 
-const ToastContext = createContext<((options: ToastOptions) => void) | null>(
-  null,
-);
+export interface ToastHandle {
+  id: number;
+  dismiss: () => void;
+  update: (options: Partial<ToastOptions>) => void;
+}
+
+const ToastContext = createContext<
+  ((options: ToastOptions) => ToastHandle) | null
+>(null);
 
 export function useToast() {
   const toast = useContext(ToastContext);
@@ -376,11 +382,6 @@ export function ToastProvider({
   ...props
 }: ToastProviderProps) {
   const [items, setItems] = useState<ToastRecord[]>([]);
-  const toast = useCallback(
-    (options: ToastOptions) =>
-      setItems((list) => [...list, { ...options, id: (toastId += 1) }]),
-    [],
-  );
   const dismiss = useCallback(
     (id: number) =>
       setItems((list) =>
@@ -393,6 +394,21 @@ export function ToastProvider({
   const remove = useCallback(
     (id: number) => setItems((list) => list.filter((item) => item.id !== id)),
     [],
+  );
+  const toast = useCallback(
+    (options: ToastOptions): ToastHandle => {
+      const id = ++toastId;
+      setItems((list) => [...list, { ...options, id }]);
+      return {
+        id,
+        dismiss: () => dismiss(id),
+        update: (next) =>
+          setItems((list) =>
+            list.map((item) => (item.id === id ? { ...item, ...next } : item)),
+          ),
+      };
+    },
+    [dismiss],
   );
 
   return (
@@ -426,16 +442,49 @@ function ToastItem({
   onExited: (id: number) => void;
 }) {
   const { id, leaving, duration = 3000 } = toast;
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const remaining = useRef(duration);
   useEffect(() => {
-    if (leaving || !Number.isFinite(duration) || duration <= 0) return;
-    const timer = setTimeout(() => onDismiss(id), duration);
+    remaining.current = duration;
+  }, [duration]);
+  useEffect(() => {
+    if (
+      leaving ||
+      hovered ||
+      focused ||
+      !Number.isFinite(duration) ||
+      duration <= 0
+    )
+      return;
+    const started = Date.now();
+    const timer = setTimeout(
+      () => onDismiss(id),
+      Math.max(0, remaining.current),
+    );
+    return () => {
+      clearTimeout(timer);
+      remaining.current -= Date.now() - started;
+    };
+  }, [id, duration, leaving, hovered, focused, onDismiss]);
+  useEffect(() => {
+    if (!leaving) return;
+    // CSS may be disabled by a consumer; removal must not depend on animationend.
+    const timer = setTimeout(() => onExited(id), 400);
     return () => clearTimeout(timer);
-  }, [id, duration, leaving, onDismiss]);
+  }, [leaving, id, onExited]);
 
   return (
     <div
       className={`mega-toast mega-toast--${toast.tone ?? 'neutral'}`}
       data-leaving={leaving || undefined}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setFocused(false);
+      }}
       onAnimationEnd={(event) => {
         if (leaving && event.target === event.currentTarget) onExited(id);
       }}
@@ -460,6 +509,13 @@ function ToastItem({
           {toast.action.label}
         </Button>
       ) : null}
+      <IconButton
+        label={`${toast.title} 알림 닫기`}
+        size="sm"
+        onClick={() => onDismiss(id)}
+      >
+        {CloseIcon}
+      </IconButton>
     </div>
   );
 }
