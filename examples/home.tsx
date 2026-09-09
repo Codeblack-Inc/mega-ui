@@ -81,7 +81,7 @@ function Section({
         </Stack>
         {more ? (
           <a className="home-section__more" href={more.href}>
-            {more.label} →
+            {more.label} <ExampleIcon name="arrow" />
           </a>
         ) : null}
       </div>

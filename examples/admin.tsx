@@ -314,7 +314,7 @@ function AdminDashboard() {
               size="sm"
               onClick={() => setDetail('가맹점 고객센터')}
             >
-              고객센터 바로가기 →
+              고객센터 바로가기 <ExampleIcon name="arrow" />
             </Button>
           </div>
         </div>
@@ -519,7 +519,7 @@ function AdminDashboard() {
               size="xs"
               onClick={() => setDetail('메가 비즈니스 카드')}
             >
-              혜택 알아보기 →
+              혜택 알아보기 <ExampleIcon name="arrow" />
             </Button>
           </div>
         </Card>

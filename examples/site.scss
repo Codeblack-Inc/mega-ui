@@ -101,13 +101,9 @@ a {
   padding: 32px 24px 48px;
   scroll-margin-top: 60px;
 
-  &:focus {
-    outline: none;
-  }
-
   .mega-page-header {
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 }
 
@@ -176,17 +172,19 @@ a {
 
 // `?full=1`: the example alone, no docs chrome.
 .docs-full {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   min-height: 100vh;
   padding: 24px;
   box-sizing: border-box;
-  &:focus {
-    outline: none;
-  }
   &__back {
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-end;
+    gap: 4px;
+    flex: 0 0 auto;
+    margin-top: auto;
     padding: 8px 14px;
     border-radius: var(--mega-radius-full);
     background: var(--mega-surface);
@@ -195,6 +193,18 @@ a {
     font-size: 13px;
     font-weight: 600;
     text-decoration: none;
+    transition:
+      background-color var(--mega-duration) var(--mega-ease),
+      color var(--mega-duration) var(--mega-ease),
+      box-shadow var(--mega-duration) var(--mega-ease);
+    &:hover {
+      background: var(--mega-fill-solid);
+      color: var(--mega-text);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--mega-brand);
+      outline-offset: 2px;
+    }
   }
 }
 
@@ -255,6 +265,9 @@ a {
 }
 
 .home-section__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   flex-shrink: 0;
   color: var(--mega-brand-strong);
   font-size: 14px;
@@ -263,6 +276,16 @@ a {
   &:hover {
     text-decoration: underline;
   }
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.pair-note-arrow {
+  display: inline-flex;
+  margin-inline: 4px;
+  vertical-align: -0.15em;
 }
 
 .home .mega-grid > .mega-card {

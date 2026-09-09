@@ -205,6 +205,16 @@
   border: 0;
   border-radius: var(--mega-radius-full);
   box-shadow: var(--mega-shadow-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--mega-duration) var(--mega-ease),
+    transform var(--mega-duration-fast) var(--mega-ease);
+  &:hover {
+    background: var(--mega-brand-strong);
+  }
+  &:active {
+    transform: translateY(1px);
+  }
 }
 
 .mega-popover {

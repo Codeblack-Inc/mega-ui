@@ -292,7 +292,7 @@
     align-items: center;
     gap: 6px;
     max-width: 100%;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     padding: 4px 8px;
     border-radius: var(--mega-radius-xs);
     background: var(--mega-brand-soft);

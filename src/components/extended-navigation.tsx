@@ -17,6 +17,7 @@ import type {
   ReactNode,
 } from 'react';
 import { Button } from './controls';
+import { MegaIcon } from './icons';
 import { Dialog, Menu, type DialogProps, type MenuProps } from './overlay';
 import { ProgressBar, Result, type ResultProps } from './patterns';
 import { SideNav } from './navigation';
@@ -437,7 +438,7 @@ export function BackToTop({
         });
       }}
     >
-      ↑
+      <MegaIcon name="arrowUp" width={20} height={20} />
     </button>
   );
 }

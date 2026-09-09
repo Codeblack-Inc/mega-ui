@@ -72,6 +72,11 @@ test('dense controls keep checkmarks visible and short labels intact', () => {
     /\[aria-checked='mixed'\][\s\S]*inset: 50% auto auto 50%/,
   );
   assert.match(styles['_typography.scss'], /word-break: keep-all/);
+  assert.match(styles['_typography.scss'], /overflow-wrap: break-word/);
+  assert.doesNotMatch(
+    componentStyles.map(([, source]) => source).join('\n'),
+    /overflow-wrap:\s*anywhere/,
+  );
   assert.match(
     styles['_patterns.scss'],
     /&__controls > label > span[\s\S]*white-space: nowrap/,

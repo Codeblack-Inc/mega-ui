@@ -8,6 +8,7 @@ import {
   Button,
   CodeBlock,
   Container,
+  MegaIcon,
   PageHeader,
   SideNav,
   SideNavSection,
@@ -112,10 +113,11 @@ export default function App() {
       <ThemeProvider className="docs-app" theme={dark ? 'dark' : 'light'}>
         <ToastProvider>
           <main id="main" tabIndex={-1} className="docs-full">
-            <a className="docs-full__back" href={`#${page.id}`}>
-              ← 문서로 돌아가기
-            </a>
             <page.Component key={page.id} />
+            <a className="docs-full__back" href={`#${page.id}`}>
+              <MegaIcon name="chevronLeft" width={14} height={14} />
+              문서로 돌아가기
+            </a>
           </main>
         </ToastProvider>
       </ThemeProvider>

@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { Card, Chip, Heading, Stack, Text } from '@mega-ui/react';
+import { Card, Chip, Heading, MegaIcon, Stack, Text } from '@mega-ui/react';
 
 /** Card grid shared by every category page, plus the quick-scan chip row. */
 export function CategoryCards({
@@ -129,7 +129,11 @@ export function PairNote({
   return (
     <>
       <code>{name}</code>
-      {copy} → <a href={`#components/${category}?to=${name}`}>{name}</a>
+      {copy}
+      <span className="pair-note-arrow" aria-hidden="true">
+        <MegaIcon name="arrow" width={14} height={14} />
+      </span>
+      <a href={`#components/${category}?to=${name}`}>{name}</a>
     </>
   );
 }

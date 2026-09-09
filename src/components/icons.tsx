@@ -11,6 +11,7 @@ const paths = {
   settings:
     'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2',
   arrow: 'M5 12h14m-6-6 6 6-6 6',
+  arrowUp: 'M12 19V5m-6 6 6-6 6 6',
   chevronLeft: 'm16 4-8 8 8 8',
   chevronRight: 'm8 4 8 8-8 8',
   heart: 'M12 21 3 12C-2 4 8 0 12 7c4-7 14-3 9 5z',
