@@ -19,6 +19,7 @@ const runtimeValues = new Set([
   '--mega-chart-value',
   '--mega-scheduler-columns',
   '--mega-scheduler-hour',
+  '--mega-sheet-row',
 ]);
 const styles = Object.fromEntries(componentStyles);
 

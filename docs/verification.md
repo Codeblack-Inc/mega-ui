@@ -52,6 +52,16 @@ Playwright의 Chromium·Firefox·WebKit과 Vite 개발 서버에서 `/#diagram?f
 노드 60개 예제 전환은 Chromium 59ms, Firefox 59ms, WebKit 44ms였습니다.
 실제 스크린 리더 낭독, 모바일 하드웨어 터치, OS IME 조합 입력은 확인하지 않았습니다.
 
+## SpreadsheetPro 확인 · 2026-09-09
+
+Playwright의 Chromium·Firefox·WebKit과 Vite 개발 서버에서 `/#spreadsheet?full=1`을 확인했습니다.
+셀 입력과 수식 재계산, 순환 참조 표시, 실행 취소, 범위 비우기, 채우기 손잡이의 등차수열과 수식 이동,
+탭 구분 붙여넣기, 선택 범위 정렬, 셀 병합·해제, 행 필터, 시트 전환·추가·삭제,
+CSV·xlsx 내려받기와 xlsx 다시 읽기, 저장 실패 뒤 내용 보존과 재시도, 브라우저 저장본 재열기를 확인했습니다.
+라이트 1440px과 다크 390px 화면에서 가로 넘침 없음과 행 가상화를 확인했습니다.
+500행 예제 전환은 Chromium 67ms, Firefox 48ms, WebKit 56ms였습니다.
+실제 스크린 리더 낭독, 모바일 하드웨어 터치, OS IME 조합 입력은 확인하지 않았습니다.
+
 ## 검증 한계
 
 브라우저 확장의 파일 URL 접근 권한이 꺼져 있어 실제 로컬 파일 선택 자동화는 제한됐습니다. 파일 선택 대화상자 호출까지 확인했고, FilePreview는 메모리 샘플로 확인했습니다. 실제 PDF 파일 렌더·업로드 드롭은 수동 확인이 남아 있습니다. 서버 업로드는 컴포넌트 범위가 아닙니다.

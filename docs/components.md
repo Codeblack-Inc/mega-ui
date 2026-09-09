@@ -738,6 +738,13 @@ function SaveButton() {
 `@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.
 
+## SpreadsheetPro
+
+`SpreadsheetPro`와 `SpreadsheetData`·`SpreadsheetSheet`·`SpreadsheetCell`·`SpreadsheetFormat`·`SpreadsheetAction`,
+`validateSpreadsheet`·`updateSpreadsheet`·`evaluateSpreadsheet`·`formatCellValue`·`shiftFormula`·`fillEdits`·
+`pasteEdits`·`sheetToCsv`·`parseDelimited`·`spreadsheetToXlsx`·`xlsxToSpreadsheet`와 셀 주소 도우미는 기본 진입점에서 제공합니다.
+[API](./spreadsheet.md)를 참조하세요. 문자열 셀만 필요하면 기존 `Spreadsheet`를 사용합니다.
+
 ## DiagramEditor
 
 `DiagramEditor`와 `DiagramData`·`DiagramInput`·`DiagramNode`·`DiagramPort`·`DiagramEdge`·`DiagramRule`·`DiagramAction`,

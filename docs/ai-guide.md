@@ -81,6 +81,14 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 컴포넌트 카탈로그의 `#components/professional`에서 그리드·편집기·차트 데모와 API를 함께 찾을 수 있습니다.
 단일 계열의 간단한 표시에는 기존 `BarChart`·`LineChart`·`Sparkline`을 계속 사용합니다.
 
+**시트·수식**
+
+`SpreadsheetPro`는 수식과 여러 시트를 다루는 스프레드시트입니다. [SpreadsheetPro API](./spreadsheet.md)를 먼저 읽습니다.
+`value`와 `onChange`로 제어하며 셀은 사용자가 입력한 원문을 그대로 저장하고 `evaluateSpreadsheet`가 값을 계산합니다.
+지원 함수와 오류(`#DIV/0!`·`#VALUE!`·`#REF!`·`#NAME?`·`#순환!`)는 문서의 목록이 전부입니다. 날짜 함수와 배열 수식은 없습니다.
+정렬은 수식이 있는 범위를 거부하고, xlsx는 값·수식·병합·틀 고정만 주고받습니다. 엑셀 전체 호환으로 설명하지 마세요.
+단순한 문자열 격자에는 기존 `Spreadsheet`를, 서버 데이터 표에는 `DataGridPro`를 사용합니다.
+
 **다이어그램·흐름도**
 
 `DiagramEditor`는 노드·포트·연결을 편집하는 SVG 캔버스입니다. [DiagramEditor API](./diagram.md)를 먼저 읽습니다.

@@ -54,7 +54,7 @@ test('professional components appear in the catalog and search opens live demos'
 }) => {
   await page.goto('/#components/foundation');
   await expect(
-    page.getByRole('link', { name: '전문 업무 컴포넌트 8', exact: true }),
+    page.getByRole('link', { name: '전문 업무 컴포넌트 9', exact: true }),
   ).toBeVisible();
   for (const name of [
     'DataGridPro',
@@ -65,6 +65,7 @@ test('professional components appear in the catalog and search opens live demos'
     'TaskBoard',
     'SchedulerPro',
     'DiagramEditor',
+    'SpreadsheetPro',
   ]) {
     await page.getByRole('button', { name: '글로벌 검색 열기' }).click();
     const search = page

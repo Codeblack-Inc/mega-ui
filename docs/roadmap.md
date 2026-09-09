@@ -103,7 +103,19 @@ Charts의 구현 범위는 아래와 같습니다.
 [API와 검증 범위](./diagram.md), `/#diagram?full=1`, 전문 컴포넌트 카탈로그,
 `tests/diagram.test.mjs`·`tests/browser/diagram.spec.ts`가 근거입니다.
 노드를 피해 가는 경로 계산, PNG 변환, 그룹·서브그래프, 실시간 협업은 구현하지 않았습니다.
-실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도이며, 다음 전문 영역은 Spreadsheet입니다.
+실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도입니다.
+
+### 일곱 번째 구현: SpreadsheetPro
+
+`SpreadsheetPro`에 범위 선택·복사·붙여넣기·자동 채우기, 참조·범위·다른 시트 참조를 다루는 수식 엔진과
+의존성 순서 재계산·순환 오류, 셀 형식·병합·틀 고정, 정렬과 행 필터, 여러 시트, 실행 취소,
+CSV·xlsx 반입과 반출을 구현했습니다. xlsx 압축은 브라우저의 `CompressionStream`·`DecompressionStream`을
+사용해 추가 의존성 없이 처리합니다. 활성 셀에 항상 입력 요소를 두어 한글 IME 조합 입력을 첫 글자부터 받습니다.
+[API와 검증 범위](./spreadsheet.md), `/#spreadsheet?full=1`, 전문 컴포넌트 카탈로그,
+`tests/spreadsheet.test.mjs`·`tests/browser/spreadsheet.spec.ts`가 근거입니다.
+xlsx는 값·수식·병합·틀 고정만 주고받으며 셀 서식·차트·도형과 엑셀 전체 호환은 제공하지 않습니다.
+날짜 함수·배열 수식·이름 정의·조건부 서식·행 열 삽입도 구현하지 않았습니다.
+실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도이며, 남은 전문 영역은 PDF Viewer입니다.
 
 ### 전문 기능 완료 기준
 

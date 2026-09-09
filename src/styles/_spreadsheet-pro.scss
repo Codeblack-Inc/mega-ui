@@ -1,0 +1,281 @@
+// SpreadsheetPro: a dense grid sheet. Headers and frozen panes stay put with
+// sticky positioning, the selection carries the accent, errors read in danger.
+.mega-spreadsheet {
+  --mega-sheet-row: 28px;
+  min-width: 0;
+  display: grid;
+  gap: var(--mega-space-3);
+  color: var(--mega-text);
+  font-family: var(--mega-font);
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--mega-space-3) var(--mega-space-4);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  &__toolbar h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--mega-text-strong);
+  }
+  &__toolbar p,
+  &__hint {
+    margin: 2px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--mega-text-secondary);
+  }
+  &__hint {
+    font-size: 12px;
+    color: var(--mega-muted);
+  }
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-2);
+    flex-wrap: wrap;
+  }
+  &__save {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-1);
+  }
+  &__save > span {
+    padding-inline: var(--mega-space-2) var(--mega-space-1);
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--mega-muted);
+  }
+  &__save[data-dirty] > span {
+    color: var(--mega-warning);
+    font-weight: 500;
+  }
+  &__file {
+    position: relative;
+    cursor: pointer;
+  }
+  &__file input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &__file:focus-within {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: 2px;
+  }
+
+  // ---- name box and formula bar
+  &__bar {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-2);
+    flex-wrap: wrap;
+  }
+  &__name {
+    min-width: 64px;
+    padding: 0 var(--mega-space-2);
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--mega-text-secondary);
+  }
+  &__formula {
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+  &__formula .mega-input {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  &__filter {
+    flex: 0 1 180px;
+  }
+
+  // ---- grid
+  &__scroller {
+    overflow: auto;
+    max-height: min(560px, 60dvh);
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-md);
+    background: var(--mega-surface);
+    overscroll-behavior: contain;
+  }
+  &__grid {
+    position: relative;
+    display: block;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+  &__grid:focus-visible {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: -2px;
+  }
+  &__head,
+  &__row {
+    display: flex;
+    height: var(--mega-sheet-row);
+    background: var(--mega-surface);
+  }
+  &__head {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 4;
+  }
+  &__corner,
+  &__colhead,
+  &__rowhead {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    background: var(--mega-fill);
+    border-inline-end: 1px solid var(--mega-border);
+    border-block-end: 1px solid var(--mega-border);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--mega-text-secondary);
+    user-select: none;
+    cursor: pointer;
+  }
+  &__corner,
+  &__rowhead {
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 3;
+    width: 52px;
+  }
+  &__corner {
+    z-index: 5;
+    cursor: default;
+  }
+  &__colhead[data-selected],
+  &__rowhead[data-selected] {
+    background: var(--mega-brand-soft);
+    color: var(--mega-brand-strong);
+  }
+  &__cell {
+    position: relative;
+    flex: none;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    border-inline-end: 1px solid var(--mega-border);
+    border-block-end: 1px solid var(--mega-border);
+    background: var(--mega-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: cell;
+  }
+  &__cell > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__cell[data-align='center'] {
+    justify-content: center;
+  }
+  &__cell[data-align='end'] {
+    justify-content: end;
+  }
+  &__cell[data-bold] {
+    font-weight: 600;
+  }
+  &__cell[data-error] {
+    color: var(--mega-danger);
+  }
+  &__cell[data-cover] {
+    background: var(--mega-surface);
+  }
+  &__cell[data-selected] {
+    background: var(--mega-brand-soft);
+  }
+  &__cell[data-filling] {
+    box-shadow: inset 0 0 0 1px var(--mega-brand-border);
+  }
+  &__cell[data-focus] {
+    box-shadow: inset 0 0 0 2px var(--mega-brand);
+    background: var(--mega-surface);
+    z-index: 2;
+  }
+  // The active cell always holds an input so IME composition has somewhere to land.
+  // It stays invisible until the value changes, letting the formatted text show through.
+  &__editor {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 0 5px;
+    border: 0;
+    background: transparent;
+    color: transparent;
+    caret-color: transparent;
+    font: inherit;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  &__editor:focus {
+    outline: none;
+  }
+  &__editor[data-editing] {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: -2px;
+    background: var(--mega-surface);
+    color: var(--mega-text-strong);
+    caret-color: var(--mega-brand);
+    z-index: 1;
+  }
+  // Kept inside the cell box: the cell clips its overflow, so a negative offset
+  // would leave part of the handle unclickable.
+  &__handle {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    width: 9px;
+    height: 9px;
+    background: var(--mega-brand);
+    border: 1px solid var(--mega-surface);
+    border-radius: 2px;
+    cursor: crosshair;
+    z-index: 3;
+  }
+
+  // ---- sheet tabs
+  &__sheets {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-1);
+    flex-wrap: wrap;
+  }
+  &__sheet {
+    padding: 6px var(--mega-space-3);
+    font: inherit;
+    font-size: 13px;
+    color: var(--mega-text-secondary);
+    background: var(--mega-fill);
+    border: 0;
+    border-radius: var(--mega-radius-sm) var(--mega-radius-sm) 0 0;
+    cursor: pointer;
+  }
+  &__sheet[aria-selected='true'] {
+    color: var(--mega-brand-strong);
+    background: var(--mega-brand-soft);
+    font-weight: 600;
+  }
+  &__notes {
+    margin: 0;
+    padding-inline-start: var(--mega-space-4);
+    font-size: 13px;
+    color: var(--mega-text-secondary);
+  }
+}
+@media (max-width: 600px) {
+  .mega-spreadsheet__scroller {
+    max-height: min(420px, 55dvh);
+  }
+  .mega-spreadsheet__formula {
+    flex: 1 1 100%;
+  }
+}

@@ -1,6 +1,7 @@
 import taskBoardSource from './screens/task-board.tsx?raw';
 import schedulerSource from './screens/scheduler.tsx?raw';
 import diagramSource from './screens/diagram.tsx?raw';
+import spreadsheetSource from './screens/spreadsheet.tsx?raw';
 import chartsSource from './screens/charts.tsx?raw';
 const LazyChartsExample = lazy(() =>
   import('./screens/charts').then((module) => ({
@@ -45,6 +46,7 @@ function DataGridExampleRoute() {
 }
 import { SchedulerExample } from './screens/scheduler';
 import { DiagramExample } from './screens/diagram';
+import { SpreadsheetExample } from './screens/spreadsheet';
 import { categories } from './catalog';
 import { DashboardExample, SettingsExample, PaymentExample } from './recipes';
 import { AdminExample } from './admin';
@@ -341,6 +343,16 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: DiagramExample,
         source: diagramSource,
+      },
+      {
+        id: 'spreadsheet',
+        label: '전문 시트',
+        title: '수식으로 정산까지 끝내는 시트',
+        description:
+          '수식·범위 채우기·병합·틀 고정·정렬과 CSV·xlsx 반출입을 갖춘 스프레드시트예요.',
+        wide: true,
+        Component: SpreadsheetExample,
+        source: spreadsheetSource,
       },
       {
         id: 'order-operations',
