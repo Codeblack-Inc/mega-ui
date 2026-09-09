@@ -9,6 +9,9 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      '@mega-ui/react/text-editor': fileURLToPath(
+        new URL('./src/text-editor.ts', import.meta.url),
+      ),
       '@mega-ui/react/data-grid': fileURLToPath(
         new URL('./src/data-grid.ts', import.meta.url),
       ),

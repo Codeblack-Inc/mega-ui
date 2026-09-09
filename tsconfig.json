@@ -15,7 +15,8 @@
     "types": ["vite/client", "node"],
     "paths": {
       "@mega-ui/react": ["./src/index.ts"],
-      "@mega-ui/react/data-grid": ["./src/data-grid.ts"]
+      "@mega-ui/react/data-grid": ["./src/data-grid.ts"],
+      "@mega-ui/react/text-editor": ["./src/text-editor.ts"]
     }
   },
   "include": ["src", "examples", "vite.config.ts", "vite.docs.config.ts"]

@@ -1,3 +1,16 @@
+import textEditorSource from './screens/text-editor.tsx?raw';
+const LazyTextEditorExample = lazy(() =>
+  import('./screens/text-editor').then((module) => ({
+    default: module.TextEditorExample,
+  })),
+);
+function TextEditorExampleRoute() {
+  return (
+    <Suspense fallback={<p role="status">편집기를 불러오고 있어요.</p>}>
+      <LazyTextEditorExample />
+    </Suspense>
+  );
+}
 import { lazy, Suspense, type ComponentType } from 'react';
 import dataGridSource from './screens/data-grid.tsx?raw';
 const LazyDataGridExample = lazy(() =>
@@ -250,6 +263,15 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: UserManagementExample,
         source: withIcons(workSource),
+      },
+      {
+        id: 'text-editor',
+        label: '텍스트 편집기',
+        title: '팀 운영 문서 편집',
+        description: '문서 서식과 링크를 편집하고 브라우저에 저장해요.',
+        wide: true,
+        Component: TextEditorExampleRoute,
+        source: textEditorSource,
       },
       {
         id: 'data-grid-pro',

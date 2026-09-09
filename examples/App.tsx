@@ -21,7 +21,7 @@ import {
   TopBarLink,
 } from '@mega-ui/react';
 import { categories } from './catalog';
-import { ComponentSearch } from './component-search';
+import { GlobalSearch } from './component-search';
 import { GalleryPage } from './gallery';
 import { HomePage } from './home';
 import {
@@ -139,6 +139,7 @@ export default function App() {
       <ThemeProvider className="docs-app" theme={dark ? 'dark' : 'light'}>
         <ToastProvider>
           <main id="main" tabIndex={-1} className="docs-full">
+            <GlobalSearch floating />
             <page.Component key={page.id} />
             <a className="docs-full__back" href={`#${page.id}`}>
               <MegaIcon name="chevronLeft" width={14} height={14} />
@@ -174,14 +175,17 @@ export default function App() {
             </a>
           }
           actions={
-            <Button
-              variant="secondary"
-              size="sm"
-              aria-pressed={dark}
-              onClick={toggleDark}
-            >
-              {dark ? '라이트 모드' : '다크 모드'}
-            </Button>
+            <>
+              <GlobalSearch />
+              <Button
+                variant="secondary"
+                size="sm"
+                aria-pressed={dark}
+                onClick={toggleDark}
+              >
+                {dark ? '라이트 모드' : '다크 모드'}
+              </Button>
+            </>
           }
         >
           <TopBarLink href={`#${HOME}`} active={active === HOME}>
@@ -199,7 +203,6 @@ export default function App() {
           className="docs-shell"
           sidebar={
             <Stack gap={4} className="docs-sidebar">
-              <ComponentSearch />
               {isExample ? (
                 <SideNav label="화면 예제 탐색">
                   <SideNavSection>

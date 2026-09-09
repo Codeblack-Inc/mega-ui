@@ -1,72 +1,85 @@
-import { useState } from 'react';
-import { Button, Input, Text } from '@mega-ui/react';
+import { useEffect, useState } from 'react';
+import { Button, CommandPalette, MegaIcon } from '@mega-ui/react';
 import { categories } from './catalog';
+import { docs, examples } from './routes';
 
-export function ComponentSearch() {
-  const [query, setQuery] = useState('');
-  const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-  const results = terms.length
-    ? categories.flatMap((category) =>
-        category.names
-          .filter((name) => {
-            const text =
-              `${name} ${category.label} ${category.description}`.toLocaleLowerCase();
-            return terms.every((term) => text.includes(term));
-          })
-          .map((name) => ({ name, category })),
+const destinations = [
+  ...categories.flatMap((category) =>
+    category.names.map((name) => ({
+      id: `${category.key}-${name}`,
+      label: name,
+      description: `컴포넌트 · ${category.label}`,
+      keywords: category.description,
+      href: `#components/${category.key}?to=${encodeURIComponent(name)}`,
+    })),
+  ),
+  ...examples.map((route) => ({
+    id: route.id,
+    label: route.label,
+    description: `화면 예제 · ${route.title}`,
+    keywords: `${route.id} ${route.description}`,
+    href: `#${route.id}`,
+  })),
+  ...docs.map((doc) => ({
+    id: doc.href,
+    label: doc.label,
+    description: `문서 · ${doc.description}`,
+    href: doc.href,
+  })),
+];
+
+export function GlobalSearch({ floating = false }: { floating?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const mac = /Mac|iPhone|iPad/.test(navigator.platform);
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.isComposing ||
+        event.repeat ||
+        event.altKey ||
+        event.shiftKey
       )
-    : [];
-
+        return;
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        if (!open && document.querySelector('dialog[open]')) return;
+        event.preventDefault();
+        setOpen((value) => !value);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [open]);
   return (
-    <section className="docs-search" role="search" aria-label="컴포넌트 검색">
-      <label htmlFor="component-search">컴포넌트 검색</label>
-      <Input
-        id="component-search"
-        type="search"
-        placeholder="이름 또는 분류 검색"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === 'Escape' && !event.nativeEvent.isComposing) {
-            setQuery('');
-          }
+    <>
+      <Button
+        className={`docs-search-trigger${floating ? ' docs-search-trigger--floating' : ''}`}
+        variant="secondary"
+        size="sm"
+        aria-label="글로벌 검색 열기"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-keyshortcuts="Meta+K Control+K"
+        onClick={(event) => {
+          event.currentTarget.focus();
+          setOpen(true);
         }}
-        aria-describedby="component-search-status"
-        aria-controls="component-search-results"
+      >
+        <MegaIcon name="search" width={16} height={16} />
+        검색 <kbd>{mac ? '⌘ K' : 'Ctrl K'}</kbd>
+      </Button>
+      <CommandPalette
+        open={open}
+        onClose={() => setOpen(false)}
+        label="글로벌 검색"
+        description="컴포넌트·화면 예제·문서의 이름과 설명을 검색해요. ↑↓ 이동 · Enter 열기 · Esc 닫기"
+        commands={destinations.map((item) => ({
+          ...item,
+          onSelect: () => {
+            location.href = item.href;
+          },
+        }))}
       />
-      <Text id="component-search-status" size="xs" tone="muted" role="status">
-        {terms.length
-          ? results.length
-            ? `검색 결과 ${results.length}건`
-            : '검색 결과가 없어요. 다른 이름이나 분류로 검색해 보세요.'
-          : '예: Button, 버튼, 입력'}
-      </Text>
-      {query ? (
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => {
-            setQuery('');
-            document.getElementById('component-search')?.focus();
-          }}
-        >
-          검색어 지우기
-        </Button>
-      ) : null}
-      <ul id="component-search-results" hidden={!results.length}>
-        {results.map(({ name, category }) => (
-          <li key={`${category.key}-${name}`}>
-            <a
-              href={`#components/${category.key}?to=${encodeURIComponent(name)}`}
-            >
-              <span>{name}</span>
-              <Text as="span" size="xs" tone="muted">
-                {category.label}
-              </Text>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </section>
+    </>
   );
 }

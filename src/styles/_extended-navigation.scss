@@ -173,12 +173,24 @@
     flex-direction: column;
     gap: var(--mega-space-1);
     margin-top: var(--mega-space-3);
+    max-height: min(420px, 45dvh);
+    overflow-y: auto;
+    > p {
+      margin: 0;
+      color: var(--mega-muted);
+      font-size: 13px;
+    }
+  }
+  &__description {
+    display: block;
+    color: var(--mega-muted);
+    font-size: 12px;
   }
   &__list button {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    min-height: 36px;
+    min-height: 44px;
     padding: var(--mega-space-2) var(--mega-space-3);
     color: var(--mega-text);
     text-align: left;

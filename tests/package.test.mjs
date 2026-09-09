@@ -84,6 +84,10 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
     readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
   );
   assert.deepEqual(Object.keys(pkg.dependencies), [
+    '@tiptap/core',
+    '@tiptap/pm',
+    '@tiptap/react',
+    '@tiptap/starter-kit',
     'qrcode-generator',
     'react-data-grid',
   ]);

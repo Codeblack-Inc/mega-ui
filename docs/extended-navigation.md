@@ -28,4 +28,6 @@ This file documents names added by `extended-navigation.tsx`. Existing exports r
 | Skeleton, Result                               | existing exports                                                    |
 | ErrorState                                     | danger-tone `Result`                                                |
 
-Ceilings: `ContextMenu`, `Popover`, and `HoverCard` use simple local positioning; consumers needing viewport collision detection or portals should compose the existing primitives with their positioning solution. `CommandPalette` filters labels only; hierarchical commands and async search belong to the product layer.
+`CommandPalette` commands accept `id`, `label`, `onSelect`, optional `description`, `keywords`, `shortcut`, and `disabled`. Search matches all whitespace-separated terms against labels, descriptions, and keywords without case sensitivity. Opening resets the query; arrows move between enabled commands, Enter in the input executes the first enabled match, and Escape closes the dialog. IME composition does not execute commands. The docs site reuses this component for top-bar global search (⌘K / Ctrl+K), covering component names, screen examples, and document titles/descriptions—not document full text.
+
+Ceilings: `ContextMenu`, `Popover`, and `HoverCard` use simple local positioning; consumers needing viewport collision detection or portals should compose the existing primitives with their positioning solution. Hierarchical commands and async search belong to the product layer.

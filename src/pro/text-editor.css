@@ -1,0 +1,55 @@
+.mega-text-editor {
+  display: grid;
+  gap: var(--mega-space-3);
+  min-width: 0;
+  color: var(--mega-text);
+  font: inherit;
+}
+.mega-text-editor__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mega-space-2);
+}
+.mega-text-editor__tools .mega-input {
+  width: min(100%, 320px);
+}
+.mega-text-editor [contenteditable] {
+  min-height: 280px;
+  max-height: 640px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding: var(--mega-space-4);
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-sm);
+  background: var(--mega-surface);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.mega-text-editor [contenteditable]:focus-visible {
+  outline: 2px solid var(--mega-brand);
+  outline-offset: 2px;
+}
+.mega-text-editor [aria-pressed='true'] {
+  background: var(--mega-brand-soft);
+  color: var(--mega-brand);
+}
+.mega-text-editor .tiptap a {
+  color: var(--mega-brand);
+  text-decoration: underline;
+}
+.mega-text-editor .tiptap pre {
+  white-space: pre-wrap;
+  background: var(--mega-fill-solid);
+  padding: var(--mega-space-3);
+}
+.mega-text-editor .tiptap blockquote {
+  border-inline-start: 3px solid var(--mega-border-strong);
+  margin-inline: 0;
+  padding-inline-start: var(--mega-space-4);
+}
+@media (pointer: coarse) {
+  .mega-text-editor button {
+    min-height: 44px;
+  }
+}

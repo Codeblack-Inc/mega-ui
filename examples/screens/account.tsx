@@ -690,15 +690,7 @@ export function NotificationCenterExample() {
         ]}
       />
       <NotificationList
-        items={visible.map((item) => ({
-          ...item,
-          tone:
-            item.kind === 'benefit'
-              ? ('success' as const)
-              : item.kind === 'notice'
-                ? ('neutral' as const)
-                : ('info' as const),
-        }))}
+        items={visible}
         onRead={(id) => markRead(Number(id))}
         onReadAll={() =>
           setItems((list) => list.map((item) => ({ ...item, read: true })))

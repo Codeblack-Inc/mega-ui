@@ -58,6 +58,13 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 `@mega-ui/react/data-grid.css`를 함께 로드합니다. 기존 `DataGrid`/`DataColumn` API와
 호환된다고 가정하지 마세요. 저장 서버는 권한·트랜잭션·원본 버전 검증을 수행해야 합니다.
 
+**리치 텍스트 문서**
+
+`@mega-ui/react/text-editor`의 `TextEditor`는 별도 진입점입니다. [API와 제한](./text-editor.md)을 먼저 읽고
+기본 CSS와 `@mega-ui/react/text-editor.css`를 함께 로드합니다. `defaultValue`는 최초 JSON이며
+변경은 `onChange`, 저장 확정은 비동기 `onSave`로 연결합니다. 문서 교체는 미저장 변경을 확인한 뒤 재마운트합니다.
+표·이미지·Markdown 변환은 아직 제공하지 않습니다.
+
 **공통**
 
 강조 안내는 `Banner`, 인라인 경고는 `Alert`, 일시적 완료 알림은 `useToast()`입니다.

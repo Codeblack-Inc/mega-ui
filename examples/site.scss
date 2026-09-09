@@ -46,41 +46,21 @@ a {
   z-index: 3;
 }
 
-.docs-search {
-  display: grid;
-  gap: 8px;
-  min-width: 0;
-
-  > label {
-    font-weight: 600;
+.docs-search-trigger {
+  kbd {
+    font: inherit;
+    font-size: 11px;
+    color: var(--mega-muted);
   }
-
-  > p {
-    margin: 0;
+  &--floating {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 3;
   }
-
-  > ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    max-height: 320px;
-    overflow-y: auto;
-  }
-
-  a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 44px;
-    padding: 8px;
-    border-radius: var(--mega-radius-sm);
-    overflow-wrap: anywhere;
-    text-decoration: none;
-
-    &:hover,
-    &:focus-visible {
-      background: var(--mega-surface);
-      color: var(--mega-brand-strong);
+  @media (max-width: 600px) {
+    kbd {
+      display: none;
     }
   }
 }

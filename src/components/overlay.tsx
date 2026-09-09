@@ -91,7 +91,8 @@ export function Dialog({
       // Escape fires `cancel` then `close`; only `close` reports upwards, and
       // only when the parent still believes the dialog is open.
       onClose={() => {
-        if (open) onClose();
+        // A queued close event may arrive after the dialog has reopened.
+        if (open && !ref.current?.open) onClose();
       }}
       onClick={(event) => {
         if (dismissible && event.target === event.currentTarget) onClose();

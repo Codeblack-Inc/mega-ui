@@ -724,6 +724,8 @@ function SaveButton() {
 
 ## 조합 레시피
 
+`NotificationList`는 안 읽은 항목을 제목 앞 작은 점과 굵기로 구분하고, 보조 기술에는 ‘안 읽음’을 전달합니다. 기본 배경은 읽음 여부와 관계없이 중립색이며, 업무상 상태색이 필요하면 항목의 `tone`을 명시하세요.
+
 [실무 준비도 보강](./readiness.md)에 Combobox 필수 선택·reset, 날짜 범위, Tabs 연결, Toast 제어와 실행 가능한 상태 예제를 정리했습니다.
 
 목록 CRUD는 `FilterBar + ActiveFilters + DataGrid + DataPagination + Drawer`, 폼은 `FormErrorSummary + FormSection + FormActions`, 결제는 `SelectionCard + Amount + DescriptionList + Timeline`을 조합합니다. 실제 동작 예제는 사용자 관리·드라이브·설정·결제 화면에 있습니다. Markdown 편집기, 댓글·멘션, 저장된 필터, 승인 흐름 등 보고서 6절의 후보는 제품 수요가 생길 때 이 조합에서 반복되는 부분만 승격합니다.

@@ -322,6 +322,8 @@ export interface CommandPaletteProps extends Omit<
     id: string;
     label: string;
     shortcut?: string;
+    description?: string;
+    keywords?: string;
     disabled?: boolean;
     onSelect: () => void;
   }[];
@@ -337,11 +339,17 @@ export function CommandPalette({
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (props.open) inputRef.current?.focus();
+    if (props.open) {
+      setQuery('');
+      inputRef.current?.focus();
+    }
   }, [props.open]);
-  const items = commands.filter((command) =>
-    command.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
-  );
+  const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  const items = commands.filter((command) => {
+    const text =
+      `${command.label} ${command.description ?? ''} ${command.keywords ?? ''}`.toLocaleLowerCase();
+    return terms.every((term) => text.includes(term));
+  });
   const focusCommand = (key: string) => {
     const buttons = Array.from(
       listRef.current?.querySelectorAll<HTMLButtonElement>(
@@ -376,17 +384,33 @@ export function CommandPalette({
         type="search"
         autoFocus
         aria-label="명령 검색"
+        placeholder="이름 또는 키워드 검색"
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         onKeyDown={(event) => {
-          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+          if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            onClose();
+          } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
             focusCommand(event.key);
+          } else if (event.key === 'Enter') {
+            event.preventDefault();
+            const first = items.find((item) => !item.disabled);
+            if (first) {
+              first.onSelect();
+              onClose();
+            }
           }
         }}
       />
       <div ref={listRef} className="mega-command-palette__list">
-        {items.length === 0 && <p role="status">일치하는 명령이 없어요.</p>}
+        <p role="status">
+          {items.length
+            ? `검색 결과 ${items.length}건`
+            : '검색 결과가 없어요. 다른 키워드로 검색해 보세요.'}
+        </p>
         {items.map((command) => (
           <button
             key={command.id}
@@ -397,13 +421,22 @@ export function CommandPalette({
               onClose();
             }}
             onKeyDown={(event) => {
+              if (event.nativeEvent.isComposing || event.keyCode === 229)
+                return;
               if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
                 event.preventDefault();
                 focusCommand(event.key);
               }
             }}
           >
-            <span>{command.label}</span>
+            <span>
+              {command.label}
+              {command.description ? (
+                <small className="mega-command-palette__description">
+                  {command.description}
+                </small>
+              ) : null}
+            </span>
             {command.shortcut ? <kbd>{command.shortcut}</kbd> : null}
           </button>
         ))}

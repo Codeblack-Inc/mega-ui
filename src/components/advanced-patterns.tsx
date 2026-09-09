@@ -397,8 +397,15 @@ export function NotificationList({
                 <Notification
                   key={item.id}
                   data-read={item.read || undefined}
-                  tone={item.tone}
-                  title={item.title}
+                  tone={item.tone ?? 'neutral'}
+                  title={
+                    <>
+                      {!item.read ? (
+                        <span className="mega-visually-hidden">안 읽음: </span>
+                      ) : null}
+                      {item.title}
+                    </>
+                  }
                   description={item.description}
                   action={
                     item.read ? (

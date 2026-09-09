@@ -205,8 +205,28 @@
     display: grid;
     gap: var(--mega-space-2);
   }
-  .mega-notification:not([data-read]) {
-    box-shadow: inset 3px 0 0 var(--mega-brand);
+  .mega-notification {
+    padding-inline-start: calc(var(--mega-space-4) + 14px);
+
+    > strong {
+      position: relative;
+      font-weight: 500;
+    }
+
+    &:not([data-read]) > strong {
+      font-weight: 600;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: -14px;
+        top: 0.5em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--mega-brand-strong);
+      }
+    }
   }
 }
 
