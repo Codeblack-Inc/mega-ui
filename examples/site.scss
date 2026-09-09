@@ -751,3 +751,7 @@ a {
     font-size: 13px;
   }
 }
+
+.professional-category .catalog-showcase {
+  grid-template-columns: minmax(0, 1fr);
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Card, Chip, Heading, MegaIcon, Stack, Text } from '@mega-ui/react';
 
 /** Card grid shared by every category page, plus the quick-scan chip row. */
@@ -18,6 +18,7 @@ export function CategoryCards({
   /** One-line cross-link shown under the card title (alias / extended-version notes). */
   notes?: Record<string, ReactNode>;
 }) {
+  const didScroll = useRef(false);
   const [active, setActive] = useState(order[0] ?? '');
   const cardOf = (name: string) =>
     Object.keys(groups).find((id) => groups[id]?.includes(name)) ?? name;
@@ -35,6 +36,14 @@ export function CategoryCards({
       { rootMargin: '-80px 0px -70% 0px' },
     );
     cards.forEach((card) => observer.observe(card));
+    // Lazy categories mount after the route effect has already tried to scroll.
+    const target = new URLSearchParams(location.hash.split('?')[1]).get('to');
+    if (target && !didScroll.current) {
+      document
+        .getElementById(cardOf(target))
+        ?.scrollIntoView({ block: 'start' });
+      didScroll.current = true;
+    }
     return () => observer.disconnect();
   }, [order]);
 

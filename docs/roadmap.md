@@ -22,23 +22,23 @@
 
 참조한 [PrimeUI Pro 공식 소개](https://primeuipro.dev/)는 확인일 기준 Scheduler·Text Editor·Charts·Task Board를 공개 기능으로, PDF Viewer·Diagram·Grid·Gantt를 출시 예정으로 구분합니다. 해당 소개에서 Spreadsheet의 공개 상태는 확인하지 못했습니다. 아래 목표는 사용자 요구와 Mega UI의 업무 활용 기준이며, 경쟁 제품 전체 기능을 직접 검증한 대조표는 아닙니다.
 
-| 영역        | 현재 구현                                                         | 정식 지원 목표                                                                                                                                               |
-| ----------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Scheduler   | 날짜별 시간순 목록, 일정 클릭                                     | 일·주·월·리소스 뷰, 생성·수정·삭제, 드래그 이동·기간 조절, 겹침 배치, 반복과 개별 예외, 시간대·DST, 업무 시간·예약 충돌 검증, 일정 가져오기·내보내기         |
-| Text Editor | TextEditor: 표·이미지·블록·Markdown·JSON 저장/복원                | 문단·서식·목록·링크·표·이미지·블록 편집, Markdown 변환, 붙여넣기 정제, 한글 IME, undo/redo, 문서 직렬화·복원, 저장 실패 시 내용 보존                         |
-| Charts      | BarChart·LineChart·Sparkline의 기본 단일 계열 표현                | 다중 계열·축·범례·툴팁, 막대·선·영역·원형·산점·히트맵·트리맵·금융 차트, 확대·이동·구간 선택, 결측·음수·시간축 처리, 데이터 대체 표현, 이미지·데이터 내보내기 |
-| Task Board  | Kanban의 열·카드 표시와 인접 열 이동 버튼                         | 열·카드 생성·편집·삭제, 열 안/사이 드래그 정렬, 키보드 이동, swimlane, WIP 제한, 필터·담당자·기한, 사용자 카드 렌더링, 순서·상태 저장과 복원                 |
-| Data Grid   | 별도 DataGridPro에 편집·검증·범위·그룹·트리·가상화·서버 저장 통합 | 정렬·필터·편집·선택·가상화의 통합, 열 크기·순서·고정·숨김, 범위 선택·복사·붙여넣기, 그룹·집계·트리, 서버 조회·페이지 연결, 검증·취소·일괄 저장, CSV 내보내기 |
-| Gantt Chart | 날짜 범위의 작업 막대와 진행률 표시                               | 작업 계층·마일스톤, 이동·기간 조절, FS/SS/FF/SF 의존성·지연, 순환 검증, 작업 달력, 일정 재계산·critical path, 기준 일정·리소스, 확대·내보내기                |
-| Diagram     | 범용 편집기 없음; OrganizationChart는 계층 목록                   | 노드·포트·엣지 생성·연결·편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·엣지 경로, undo/redo, 직렬화·복원·내보내기                      |
-| Spreadsheet | 문자열 셀 편집과 방향키 이동                                      | 범위 선택·복사·붙여넣기·자동 채우기, 수식·참조·재계산·순환 오류, 셀 형식·병합·고정, 정렬·필터, 여러 시트, undo/redo, CSV/XLSX 반입·반출                      |
-| PDF Viewer  | 브라우저 내장 PDF object와 열기 링크                              | 일관된 페이지 렌더링·탐색·썸네일·확대·회전, 검색·텍스트 선택, 주석·양식 입력·서명 표시, 변경 저장·재열기·인쇄·다운로드, 암호·손상 문서 오류 처리             |
+| 영역        | 현재 구현                                                          | 정식 지원 목표                                                                                                                                               |
+| ----------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Scheduler   | 날짜별 시간순 목록, 일정 클릭                                      | 일·주·월·리소스 뷰, 생성·수정·삭제, 드래그 이동·기간 조절, 겹침 배치, 반복과 개별 예외, 시간대·DST, 업무 시간·예약 충돌 검증, 일정 가져오기·내보내기         |
+| Text Editor | TextEditor: 표·이미지·블록·Markdown·JSON 저장/복원                 | 문단·서식·목록·링크·표·이미지·블록 편집, Markdown 변환, 붙여넣기 정제, 한글 IME, undo/redo, 문서 직렬화·복원, 저장 실패 시 내용 보존                         |
+| Charts      | CartesianChart 막대·선·영역·누적·구간 탐색, PieChart 원형·도넛·CSV | 다중 계열·축·범례·툴팁, 막대·선·영역·원형·산점·히트맵·트리맵·금융 차트, 확대·이동·구간 선택, 결측·음수·시간축 처리, 데이터 대체 표현, 이미지·데이터 내보내기 |
+| Task Board  | Kanban의 열·카드 표시와 인접 열 이동 버튼                          | 열·카드 생성·편집·삭제, 열 안/사이 드래그 정렬, 키보드 이동, swimlane, WIP 제한, 필터·담당자·기한, 사용자 카드 렌더링, 순서·상태 저장과 복원                 |
+| Data Grid   | 별도 DataGridPro에 편집·검증·범위·그룹·트리·가상화·서버 저장 통합  | 정렬·필터·편집·선택·가상화의 통합, 열 크기·순서·고정·숨김, 범위 선택·복사·붙여넣기, 그룹·집계·트리, 서버 조회·페이지 연결, 검증·취소·일괄 저장, CSV 내보내기 |
+| Gantt Chart | 날짜 범위의 작업 막대와 진행률 표시                                | 작업 계층·마일스톤, 이동·기간 조절, FS/SS/FF/SF 의존성·지연, 순환 검증, 작업 달력, 일정 재계산·critical path, 기준 일정·리소스, 확대·내보내기                |
+| Diagram     | 범용 편집기 없음; OrganizationChart는 계층 목록                    | 노드·포트·엣지 생성·연결·편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·엣지 경로, undo/redo, 직렬화·복원·내보내기                      |
+| Spreadsheet | 문자열 셀 편집과 방향키 이동                                       | 범위 선택·복사·붙여넣기·자동 채우기, 수식·참조·재계산·순환 오류, 셀 형식·병합·고정, 정렬·필터, 여러 시트, undo/redo, CSV/XLSX 반입·반출                      |
+| PDF Viewer  | 브라우저 내장 PDF object와 열기 링크                               | 일관된 페이지 렌더링·탐색·썸네일·확대·회전, 검색·텍스트 선택, 주석·양식 입력·서명 표시, 변경 저장·재열기·인쇄·다운로드, 암호·손상 문서 오류 처리             |
 
 현재 구현 근거: [업무 데이터](../src/components/enterprise.tsx), [차트](../src/components/advanced-patterns.tsx), [PDFViewer](../src/components/media-ai.tsx), [공개 API](../src/index.ts).
 
 ### 구현 원칙과 순서
 
-기존 토큰·컨트롤·제어형 상태 패턴은 재사용합니다. 수식, 문서 편집, PDF 렌더링, 일정 계산처럼 검증 비용이 큰 기능은 전용 엔진 재사용을 우선 검토합니다. 엔진 선택 시 실제 필수 기능, 재배포 라이선스, React 19 호환성, 한글 입력, 접근성, 번들·worker 구성을 작은 동작 예제로 검증합니다. 첫 Data Grid에는 MIT 라이선스의 `react-data-grid@7.0.0-beta.61`을 도입했습니다. 나머지 영역의 엔진은 아직 결정하지 않았습니다.
+기존 토큰·컨트롤·제어형 상태 패턴은 재사용합니다. 수식, 문서 편집, PDF 렌더링, 일정 계산처럼 검증 비용이 큰 기능은 전용 엔진 재사용을 우선 검토합니다. 엔진 선택 시 실제 필수 기능, 재배포 라이선스, React 19 호환성, 한글 입력, 접근성, 번들·worker 구성을 작은 동작 예제로 검증합니다. 첫 Data Grid에는 MIT 라이선스의 `react-data-grid@7.0.0-beta.61`을 도입했습니다. Charts 첫 범위는 SVG를 사용하며, 나머지 영역의 엔진은 아직 결정하지 않았습니다.
 
 전문 기능을 사용하는 화면에서만 필요한 엔진을 로드하도록 구성합니다. 현재 가벼운 API의 동작을 바꿀 경우 호환 경로를 제공하고, 무거운 엔진을 기본 진입점에 일괄 추가하지 않습니다. 저장·권한·협업 서버는 소비 앱과 연결하되, 변경 요청·저장 중·실패·재시도·복원 흐름은 공식 예제에서 끝까지 검증합니다.
 
@@ -56,7 +56,18 @@
 [기능별 상태와 API](./text-editor.md), `/#text-editor?full=1` 예제, JSON 검증과 브라우저 회귀 검사를 제공합니다.
 문단·서식·목록·링크·표·이미지·블록 이동/복제/삭제·Markdown 변환·붙여넣기 정제·undo/redo·저장과 복원을 구현했습니다.
 기능 구현과 실기기 검증 상태는 구분합니다. 실제 OS IME·스크린 리더 검증은 남아 있으며,
-전문 기능의 다음 구현 대상은 Charts입니다.
+Charts의 첫 범위 구현은 아래와 같습니다.
+
+### 세 번째 구현: Charts 첫 범위
+
+`@mega-ui/react/charts`에 다중 계열 `CartesianChart`와 `createChartCsv`를 추가했습니다.
+공통 축·범례·툴팁, 음수·결측, 키보드 탐색, 전체 데이터 표·CSV를 제공합니다.
+[API·기능별 상태·검증 한계](./charts.md), `/#charts?full=1`의 판매 채널 손익 예제와
+`tests/charts.test.mjs`·`tests/browser/charts.spec.ts`가 구현 근거입니다.
+영역·누적 막대·누적 영역·원형·도넛과 범주 구간 확대·축소·이동을 보강했습니다.
+산점·히트맵·트리맵·금융 차트, 시간축·드래그 줌과 이미지 내보내기는 남아 있습니다.
+세 전문 영역은 컴포넌트 카탈로그 `#components/professional`과 글로벌 검색에도 등록했습니다.
+Charts 전체 완료로 표시하지 않습니다.
 
 ### 전문 기능 완료 기준
 
@@ -80,10 +91,15 @@
 
 - 폼: AutoComplete, CheckboxGroup, DatePicker, FloatLabel, IconField, IftaLabel, InputColor, InputGroup, InputMask, InputNumber, InputOtp, InputPassword, InputTags, KeyFilter, Knob, Label, Listbox, Rating, Slider, ToggleButton 및 기존 API 별칭 4종
 
+## 내비게이션 ref 전달 구현
+
+`SideNavItem`·`NavRailItem`은 `href` 유무에 맞춰 링크·버튼 ref와 네이티브 속성을 전달합니다.
+[공개 API](./components.md#sidenav-nav--sidenavsection-div--sidenavitem-a-또는-button)와
+`examples/readiness.tsx`의 실제 DOM ref·포커스·해제 회귀 검사로 범위를 확인합니다.
+
 ## 남은 과제
 
 - 중복 컴포넌트 통합: 이름만 다른 짝(InputPassword/PasswordInput, InputNumber/NumberInput, InputMask/MaskInput, InputOtp/OTPInput, InputColor/ColorInput, AutoComplete/Autocomplete, DatePicker/DateInput, Field/FormField)은 현재 별칭 export이고, Radio/RadioGroup, IconField/SearchInput은 확장판입니다. 다음 메이저에서 한 이름으로 합치고 별칭은 deprecated 처리합니다. FileUpload/Dropzone/FilePreview/PDFViewer도 파일 컴포넌트 하나로 정리합니다.
-- `SideNavItem`/`NavRailItem`은 `a`/`button`을 모두 렌더링하느라 ref를 전달하지 않습니다.
 - Menu와 Tooltip은 위치 계산을 하지 않아 뷰포트 경계에서 잘릴 수 있습니다.
 - Table은 표 구조를 제공하고 DataTable/DataGrid/VirtualTable이 정렬·선택·고정 높이 가상 스크롤을 담당합니다. 서버 데이터 요청은 소비 앱의 몫입니다.
 

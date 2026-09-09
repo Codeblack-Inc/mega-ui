@@ -1,3 +1,16 @@
+import chartsSource from './screens/charts.tsx?raw';
+const LazyChartsExample = lazy(() =>
+  import('./screens/charts').then((module) => ({
+    default: module.ChartsExample,
+  })),
+);
+function ChartsExampleRoute() {
+  return (
+    <Suspense fallback={<p role="status">차트를 불러오고 있어요.</p>}>
+      <LazyChartsExample />
+    </Suspense>
+  );
+}
 import textEditorSource from './screens/text-editor.tsx?raw';
 const LazyTextEditorExample = lazy(() =>
   import('./screens/text-editor').then((module) => ({
@@ -263,6 +276,16 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: UserManagementExample,
         source: withIcons(workSource),
+      },
+      {
+        id: 'charts',
+        label: '다중 계열 차트',
+        title: '판매 채널별 손익 비교',
+        description:
+          '막대·선 차트로 값을 비교하고 전체 데이터 표와 CSV를 살펴봐요.',
+        wide: true,
+        Component: ChartsExampleRoute,
+        source: chartsSource,
       },
       {
         id: 'text-editor',

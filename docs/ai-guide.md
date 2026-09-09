@@ -66,6 +66,16 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 표·이미지·블록 편집과 Markdown/JSON 반입·반출을 제공합니다. `exportTextEditorMarkdown`의 `warnings`를 표시하고,
 병합 셀·너비 등 원본 구조 보관에는 JSON을 사용합니다. 파일 이미지 512KB·문서 1M UTF-16 상한을 확인하세요.
 
+**다중 계열 분석 차트**
+
+막대·선·영역·누적 비교, 구간 확대·이동, 축·범례·키보드 값 탐색에는 `@mega-ui/react/charts`의 `CartesianChart`를 사용합니다.
+[API와 제한](./charts.md)을 먼저 읽고 기본 CSS와 `@mega-ui/react/charts.css`를 로드합니다.
+`labels`와 각 `series.values`의 길이를 맞추고, 결측은 `null`로 전달합니다. 범주는 등간격이며 시간축이 아닙니다.
+최대 200개 항목·6개 계열을 지원하며 전체 데이터 표와 CSV는 숨긴 계열도 포함합니다.
+양수 비율의 원형·도넛은 같은 진입점의 `PieChart`를 사용하며 음수 입력은 거부합니다.
+컴포넌트 카탈로그의 `#components/professional`에서 그리드·편집기·차트 데모와 API를 함께 찾을 수 있습니다.
+단일 계열의 간단한 표시에는 기존 `BarChart`·`LineChart`·`Sparkline`을 계속 사용합니다.
+
 **공통**
 
 강조 안내는 `Banner`, 인라인 경고는 `Alert`, 일시적 완료 알림은 `useToast()`입니다.

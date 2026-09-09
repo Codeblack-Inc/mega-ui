@@ -437,7 +437,9 @@ const [tab, setTab] = useState('summary');
 | `SideNavItem`    | `active` | `boolean`         | —      | `aria-current="page"`                |
 | `SideNavItem`    | `href`   | `string`          | —      | 있으면 `a`, 없으면 `button`으로 렌더 |
 
-`SideNavItem`은 `ref`를 전달하지 않습니다(`a`와 `button` 두 타입을 하나로 표현할 수 없어서).
+`href`가 있으면 `HTMLAnchorElement` ref와 `target`·`rel`·`download` 등 링크 속성을,
+없으면 `HTMLButtonElement` ref와 `disabled`·`name`·`value` 등 버튼 속성을 전달합니다.
+버튼의 기본 `type`은 `button`이며 재정의할 수 있습니다. `href=""`도 링크로 렌더링합니다.
 
 ### NavRail (nav) · NavRailItem (a 또는 button)
 
@@ -449,7 +451,8 @@ const [tab, setTab] = useState('summary');
 | `NavRailItem` | `active` | `boolean`            | —      | `aria-current="page"`       |
 | `NavRailItem` | `href`   | `string`             | —      | 있으면 `a`, 없으면 `button` |
 
-`children`을 받지 않습니다. 라벨은 `label`로만 지정합니다. `ref`는 전달하지 않습니다.
+`children`을 받지 않습니다. 라벨은 `label`로만 지정합니다.
+`SideNavItem`과 동일하게 `href` 유무에 맞는 ref와 네이티브 속성을 전달합니다.
 
 ### TopBar (header) · TopBarLink (a)
 
@@ -729,3 +732,8 @@ function SaveButton() {
 [실무 준비도 보강](./readiness.md)에 Combobox 필수 선택·reset, 날짜 범위, Tabs 연결, Toast 제어와 실행 가능한 상태 예제를 정리했습니다.
 
 목록 CRUD는 `FilterBar + ActiveFilters + DataGrid + DataPagination + Drawer`, 폼은 `FormErrorSummary + FormSection + FormActions`, 결제는 `SelectionCard + Amount + DescriptionList + Timeline`을 조합합니다. 실제 동작 예제는 사용자 관리·드라이브·설정·결제 화면에 있습니다. Markdown 편집기, 댓글·멘션, 저장된 필터, 승인 흐름 등 보고서 6절의 후보는 제품 수요가 생길 때 이 조합에서 반복되는 부분만 승격합니다.
+
+## 다중 계열 Charts (별도 진입점)
+
+`@mega-ui/react/charts`의 `CartesianChart`·`PieChart`와 `createChartCsv`는
+[Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.

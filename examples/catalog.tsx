@@ -1,4 +1,17 @@
-import type { ComponentType } from 'react';
+import { lazy, Suspense, type ComponentType } from 'react';
+import professionalSource from './categories/professional.tsx?raw';
+const LazyProfessionalCategory = lazy(() =>
+  import('./categories/professional').then((module) => ({
+    default: module.ProfessionalCategory,
+  })),
+);
+function ProfessionalCategoryRoute() {
+  return (
+    <Suspense fallback={<p role="status">전문 컴포넌트를 불러오고 있어요.</p>}>
+      <LazyProfessionalCategory />
+    </Suspense>
+  );
+}
 import { WorkflowsCategory, workflowNames } from './categories/workflows';
 import workflowsSource from './workflow-demos.tsx?raw';
 import { FoundationCategory, foundationNames } from './categories/foundation';
@@ -48,6 +61,21 @@ export interface Category {
 }
 
 export const categories: Category[] = [
+  {
+    key: 'professional',
+    label: '그리드·편집기·차트',
+    description:
+      '전문 데이터 그리드, 리치 텍스트 편집기와 다중 계열 차트를 사용해 봐요.',
+    names: [
+      'DataGridPro',
+      'TextEditor',
+      'CartesianChart',
+      'PieChart',
+      'ChartPro',
+    ],
+    Component: ProfessionalCategoryRoute,
+    source: professionalSource,
+  },
   {
     key: 'workflows',
     label: '실무 상태·조합',

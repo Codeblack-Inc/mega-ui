@@ -8,7 +8,8 @@ for (const selector of [
   '.mega-text-editor',
   '.mega-text-editor__panel',
   '.mega-pro-grid',
+  '.mega-cartesian-chart',
 ]) {
   assert.ok(css.includes(selector), `Production CSS missing ${selector}`);
 }
-console.log('Production editor and data grid CSS verified.');
+console.log('Production editor, data grid and charts CSS verified.');

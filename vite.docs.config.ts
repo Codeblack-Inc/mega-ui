@@ -9,6 +9,12 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      '@mega-ui/react/charts.css': fileURLToPath(
+        new URL('./src/pro/charts.css', import.meta.url),
+      ),
+      '@mega-ui/react/charts': fileURLToPath(
+        new URL('./src/charts.ts', import.meta.url),
+      ),
       '@mega-ui/react/text-editor.css': fileURLToPath(
         new URL('./src/pro/text-editor.css', import.meta.url),
       ),

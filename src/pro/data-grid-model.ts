@@ -1,3 +1,4 @@
+import { quoteDelimitedCell as quote } from '../internal/delimited.ts';
 import type { Column, SortColumn } from 'react-data-grid';
 
 export type GridSummary = Record<string, string | number>;
@@ -332,15 +333,6 @@ export function parseGridClipboard(text: string): string[][] {
   if (rows.some((r) => r.length !== width))
     throw new Error('붙여넣을 행의 열 수를 맞춰 주세요.');
   return rows;
-}
-function quote(value: unknown, delimiter: string, safe: boolean): string {
-  let text = String(value ?? '');
-  // Spreadsheet applications interpret these prefixes as formulas, even in quoted CSV.
-  if (safe && typeof value !== 'number' && /^[\s\uFEFF]*[=+\-@]/.test(text))
-    text = `'${text}`;
-  return text.includes(delimiter) || /["\r\n]/.test(text)
-    ? `"${text.replaceAll('"', '""')}"`
-    : text;
 }
 export const formatGridClipboard = (cells: readonly (readonly unknown[])[]) =>
   cells

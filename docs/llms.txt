@@ -19,6 +19,7 @@ Installing this package alone does not configure a consumer project’s AI instr
 - [Extended inputs](./extended-inputs.md): Actions, input variants and selection.
 - [Extended navigation](./extended-navigation.md): Navigation, overlays and feedback.
 - [Professional DataGridPro](./data-grid.md): Separate @mega-ui/react/data-grid entry; transactional editing, range clipboard, virtualization, grouping, trees, server pagination, CSV and tested limits.
+- [Charts](./charts.md): Separate @mega-ui/react/charts entry; bar/line/area and stacking, pie/donut, category range zoom, legend, keyboard lookup, missing values, table and CSV. Catalog: #components/professional.
 - [Enterprise](./enterprise.md): Data tables, grids, planning, spreadsheets and explicit scope limits.
 - [AI guide](./ai-guide.md): Which component to use for what, required wiring (Field, Toast, Dialog, Tabs), limitations.
 - [Design direction](./design-direction.md): Measured basis, palette, radius ladder, control ladder, type roles, component specs.

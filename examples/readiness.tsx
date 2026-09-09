@@ -1,5 +1,5 @@
 // Run with npm run dev, then open /readiness.html. No browser test dependency.
-import { type ReactNode } from 'react';
+import { createRef, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import {
@@ -8,6 +8,8 @@ import {
   DataGrid,
   DateRangePicker,
   MultiSelect,
+  NavRailItem,
+  SideNavItem,
   TabPanel,
   Tabs,
   ToastProvider,
@@ -82,6 +84,84 @@ const options = [
   { value: 'b', label: '김민준' },
   { value: 'c', label: '이서연' },
 ];
+await test('Navigation items forward native refs, focus and attributes', async () => {
+  const sideButton = createRef<HTMLButtonElement>();
+  const sideLink = createRef<HTMLAnchorElement>();
+  const railButton = createRef<HTMLButtonElement>();
+  const railLink = createRef<HTMLAnchorElement>();
+  let clicks = 0;
+  await mount(
+    <form>
+      <SideNavItem ref={sideButton} active onClick={() => clicks++}>
+        홈
+      </SideNavItem>
+      <SideNavItem ref={sideLink} href="" target="_blank" rel="noreferrer">
+        문서
+      </SideNavItem>
+      <NavRailItem
+        ref={(node) => {
+          railButton.current = node;
+          return () => {
+            railButton.current = null;
+          };
+        }}
+        icon="설정"
+        label="설정"
+        disabled
+        name="section"
+        value="settings"
+        onClick={() => clicks++}
+      />
+      <NavRailItem
+        ref={(node) => {
+          railLink.current = node;
+        }}
+        href="#reports"
+        icon="리포트"
+        label="리포트"
+        download="report.html"
+      />
+    </form>,
+  );
+  assert(sideButton.current instanceof HTMLButtonElement, 'side button ref');
+  assert(sideLink.current instanceof HTMLAnchorElement, 'empty href link ref');
+  assert(railButton.current instanceof HTMLButtonElement, 'rail callback ref');
+  assert(
+    railLink.current instanceof HTMLAnchorElement,
+    'rail link callback ref',
+  );
+  assert(sideButton.current?.type === 'button', 'default must not submit form');
+  assert(
+    sideButton.current?.getAttribute('aria-current') === 'page',
+    'active semantics',
+  );
+  assert(
+    sideLink.current?.target === '_blank' &&
+      sideLink.current.rel === 'noreferrer',
+    'native link attributes',
+  );
+  assert(railLink.current?.download === 'report.html', 'download attribute');
+  assert(
+    railButton.current?.disabled &&
+      railButton.current.name === 'section' &&
+      railButton.current.value === 'settings',
+    'native button attributes',
+  );
+  for (const ref of [sideButton, sideLink, railLink]) {
+    ref.current?.focus();
+    assert(
+      document.activeElement === ref.current,
+      'ref focus did not reach DOM',
+    );
+  }
+  sideButton.current?.click();
+  railButton.current?.click();
+  assert(clicks === 1, 'disabled button dispatched click');
+  await mount(null);
+  for (const ref of [sideButton, sideLink, railButton, railLink]) {
+    assert(ref.current === null, 'unmount did not clear ref');
+  }
+});
 await test('Combobox disabled / required / selection / IME / reset', async () => {
   await mount(
     <form>

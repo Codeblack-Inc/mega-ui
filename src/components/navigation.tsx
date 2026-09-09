@@ -1,10 +1,5 @@
 import { useId, useState } from 'react';
-import type {
-  ComponentPropsWithRef,
-  HTMLAttributes,
-  KeyboardEvent,
-  ReactNode,
-} from 'react';
+import type { ComponentPropsWithRef, KeyboardEvent, ReactNode } from 'react';
 
 // ---------- Tabs ----------
 
@@ -193,20 +188,20 @@ export function SideNavSection({
   );
 }
 
-export interface SideNavItemProps extends HTMLAttributes<HTMLElement> {
+type NavigationItemNativeProps =
+  | (ComponentPropsWithRef<'a'> & { href: string })
+  | (ComponentPropsWithRef<'button'> & { href?: undefined });
+
+export type SideNavItemProps = NavigationItemNativeProps & {
   /** 20px inline SVG. */
   icon?: ReactNode;
   badge?: ReactNode;
   active?: boolean;
-  href?: string;
-}
-
-/** ponytail: no ref forwarding — one Ref type cannot cover both <a> and <button>. */
+};
 export function SideNavItem({
   icon,
   badge,
   active,
-  href,
   className = '',
   children,
   ...props
@@ -223,16 +218,15 @@ export function SideNavItem({
     </>
   );
   const shared = {
-    ...props,
     'aria-current': active ? ('page' as const) : undefined,
     className: `mega-side-nav__item ${className}`,
   };
-  return href === undefined ? (
-    <button {...shared} type="button">
+  return props.href === undefined ? (
+    <button type="button" {...props} {...shared}>
       {inner}
     </button>
   ) : (
-    <a {...shared} href={href}>
+    <a {...props} {...shared}>
       {inner}
     </a>
   );
@@ -254,23 +248,19 @@ export function NavRail({ label, className = '', ...props }: NavRailProps) {
   );
 }
 
-export interface NavRailItemProps extends Omit<
-  HTMLAttributes<HTMLElement>,
-  'children'
-> {
+export type NavRailItemProps = (
+  | (Omit<ComponentPropsWithRef<'a'>, 'children'> & { href: string })
+  | (Omit<ComponentPropsWithRef<'button'>, 'children'> & { href?: undefined })
+) & {
   /** 24px inline SVG. */
   icon: ReactNode;
   label: string;
   active?: boolean;
-  href?: string;
-}
-
-/** ponytail: no ref forwarding — see SideNavItem. */
+};
 export function NavRailItem({
   icon,
   label,
   active,
-  href,
   className = '',
   ...props
 }: NavRailItemProps) {
@@ -283,16 +273,15 @@ export function NavRailItem({
     </>
   );
   const shared = {
-    ...props,
     'aria-current': active ? ('page' as const) : undefined,
     className: `mega-nav-rail__item ${className}`,
   };
-  return href === undefined ? (
-    <button {...shared} type="button">
+  return props.href === undefined ? (
+    <button type="button" {...props} {...shared}>
       {inner}
     </button>
   ) : (
-    <a {...shared} href={href}>
+    <a {...props} {...shared}>
       {inner}
     </a>
   );
