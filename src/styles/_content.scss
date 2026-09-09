@@ -45,6 +45,7 @@
     padding-left: var(--mega-space-4);
   }
   summary {
+    box-sizing: border-box;
     cursor: pointer;
     padding: var(--mega-space-3);
     min-height: 44px;
@@ -56,6 +57,7 @@
     border-bottom: 1px solid var(--mega-border);
   }
   summary {
+    box-sizing: border-box;
     cursor: pointer;
     min-height: 44px;
     padding: var(--mega-space-4);

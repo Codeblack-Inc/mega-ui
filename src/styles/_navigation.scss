@@ -81,6 +81,7 @@
 .mega-side-nav {
   display: flex;
   flex-direction: column;
+  gap: var(--mega-space-2);
   width: 100%;
   min-width: 0;
   &__section {
@@ -90,20 +91,23 @@
   }
   &__title {
     margin: 0;
-    padding: 20px 12px 6px;
+    padding: 12px 12px 6px;
     font-size: 13px;
     line-height: 1.5;
     font-weight: 500;
     letter-spacing: -0.01em;
     color: var(--mega-muted);
   }
+  &__section:first-child > &__title {
+    padding-top: 4px;
+  }
   &__item {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
-    min-height: 34px;
-    padding: 5px 12px;
+    min-height: 36px;
+    padding: 6px 12px;
     border: 0;
     border-radius: var(--mega-radius-sm);
     background: transparent;
@@ -111,21 +115,28 @@
     line-height: 1.45;
     font-weight: 500;
     letter-spacing: -0.01em;
-    color: var(--mega-text);
+    color: var(--mega-text-secondary);
     text-align: start;
     text-decoration: none;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color var(--mega-duration) var(--mega-ease);
+    transition:
+      color var(--mega-duration) var(--mega-ease),
+      background-color var(--mega-duration) var(--mega-ease);
     &:hover {
       background: var(--mega-hover);
+      color: var(--mega-text);
     }
     &:active {
       background: var(--mega-press);
     }
     &[aria-current='page'] {
       background: var(--mega-fill);
+      color: var(--mega-text-strong);
       font-weight: 600;
+      .mega-side-nav__icon {
+        color: var(--mega-text-strong);
+      }
     }
   }
   &__icon {
@@ -135,6 +146,8 @@
     justify-content: center;
     width: 20px;
     height: 20px;
+    color: var(--mega-icon);
+    transition: color var(--mega-duration) var(--mega-ease);
     svg {
       width: 100%;
       height: 100%;
@@ -215,7 +228,7 @@
 .mega-top-bar {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
   height: 60px;
   padding: 0 24px;
   background: var(--mega-surface);
@@ -224,11 +237,13 @@
     display: flex;
     flex-shrink: 0;
     align-items: center;
+    gap: 8px;
+    color: var(--mega-text-strong);
   }
   &__nav {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     min-width: 0;
   }
   &__actions {
@@ -242,10 +257,10 @@
     display: inline-flex;
     align-items: center;
     height: 36px;
-    padding: 8px 12px;
+    padding: 0 12px;
     border-radius: var(--mega-radius-sm);
-    font-size: 14px;
-    line-height: 1.43;
+    font-size: 15px;
+    line-height: 1.4;
     font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--mega-muted);
@@ -258,16 +273,19 @@
       background-color var(--mega-duration) var(--mega-ease);
     &:hover {
       background: var(--mega-hover);
-      color: var(--mega-text-secondary);
+      color: var(--mega-text);
+    }
+    &:active {
+      background: var(--mega-press);
     }
     &[aria-current='page'] {
-      color: var(--mega-text);
+      color: var(--mega-text-strong);
     }
   }
 }
 @media (max-width: 720px) {
   .mega-top-bar {
-    gap: 8px;
+    gap: 12px;
     padding: 0 16px;
   }
   .mega-top-bar__nav {

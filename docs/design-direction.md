@@ -93,7 +93,7 @@ Heading은 항상 700입니다. 본문 15px, 캡션 13px이 기본 조합이고,
   숫자 열은 tabular-nums에 우측 정렬이고, 상승·하락 색은 시세 토큰을 씁니다.
 - **Tabs**: 항목 14px에 8×12px 여백, `size="lg"`는 16px. underline은 선택 항목 아래 2px 브랜드 선,
   pill은 36px 높이에 반지름 10px 알약입니다.
-- **SideNav**: 항목 34px / 15px, 섹션 제목 13px muted. **NavRail**: 항목 56px에 24px 아이콘과 11px 캡션.
+- **SideNav**: 항목 36px / 15px, 섹션 제목 13px muted, 활성 항목은 fill 배경에 text-strong. **NavRail**: 항목 56px에 24px 아이콘과 11px 캡션.
 - **TopBar**: 높이 60px, 좌우 24px 여백, 링크 36px.
 - **Dialog**: 최대 너비 400 / 560 / 800px, 반지름 20px, `--mega-shadow-lg`. 600px 이하에서 `sheet`는 하단에 붙습니다.
 - **Stat**: 값 20 / 24 / 28px 굵기 700, 라벨 13px muted, 변화율 12px에 삼각형 아이콘.
