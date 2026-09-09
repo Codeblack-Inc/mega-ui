@@ -1,0 +1,321 @@
+// ---------- 상품 목록 ----------
+.shop-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px;
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-bg);
+}
+.shop-filters {
+  position: sticky;
+  top: 76px;
+  align-self: start;
+}
+.shop-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.shop-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  .mega-input:first-child {
+    flex: 1 1 220px;
+  }
+}
+.shop-filter-button {
+  display: none;
+}
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+.shop-thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--mega-radius-md);
+  background: linear-gradient(135deg, var(--mega-brand-soft), var(--mega-fill));
+  color: var(--mega-brand);
+  > svg {
+    width: 48px;
+    height: 48px;
+  }
+  &[data-tone='yellow'] {
+    background: linear-gradient(
+      135deg,
+      var(--mega-warning-soft),
+      var(--mega-fill)
+    );
+    color: var(--mega-warning);
+  }
+  &[data-tone='purple'] {
+    background: linear-gradient(
+      135deg,
+      var(--mega-purple-soft),
+      var(--mega-fill)
+    );
+    color: var(--mega-purple);
+  }
+}
+.shop-like {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: var(--mega-muted);
+  &[aria-pressed='true'] {
+    color: var(--mega-danger);
+  }
+}
+.shop-pagination {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+@media (max-width: 1100px) {
+  .shop-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .shop-filters {
+    display: none;
+  }
+  .shop-filter-button {
+    display: inline-flex;
+  }
+}
+@media (max-width: 720px) {
+  .shop-layout {
+    padding: 16px;
+  }
+}
+
+// ---------- 주문 상세 ----------
+.order .mega-description-list strong {
+  color: var(--mega-text-strong);
+}
+
+// ---------- 랜딩 페이지 ----------
+.landing {
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-bg);
+  word-break: keep-all;
+}
+.landing-topbar {
+  position: static;
+  border-bottom: 1px solid var(--mega-border);
+}
+.landing-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--mega-radius-sm);
+    background: var(--mega-brand);
+    color: var(--mega-on-brand);
+  }
+}
+.landing-hero {
+  padding: 72px 24px 48px;
+  text-align: center;
+  .mega-heading {
+    line-height: 1.3;
+  }
+  .mega-text {
+    max-width: 36em;
+  }
+}
+.landing-section {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.landing-feature-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-brand-soft);
+  color: var(--mega-brand-strong);
+}
+.landing-quote {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.landing-plan {
+  height: 100%;
+  &--highlight {
+    border-color: var(--mega-brand);
+    box-shadow: 0 0 0 1px var(--mega-brand);
+  }
+  .mega-list {
+    padding-left: 20px;
+    color: var(--mega-text-secondary);
+    font-size: 14px;
+  }
+}
+.landing-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  border-top: 1px solid var(--mega-border);
+}
+.landing-top {
+  position: static;
+}
+@media (max-width: 720px) {
+  .landing-hero {
+    padding: 48px 16px 32px;
+  }
+  .landing-section {
+    padding: 16px;
+  }
+}
+
+// ---------- AI 어시스턴트 ----------
+.assist-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  min-height: 640px;
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-bg);
+}
+.assist-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 12px;
+  border-right: 1px solid var(--mega-border);
+  background: var(--mega-surface);
+}
+.assist-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+}
+.assist-chat {
+  flex: 1;
+}
+.assist-activity {
+  padding: 12px 16px;
+}
+@media (max-width: 1100px) {
+  .assist-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .assist-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--mega-border);
+    .mega-side-nav {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+    .mega-side-nav__section {
+      flex-direction: row;
+      flex-shrink: 0;
+    }
+  }
+}
+@media (max-width: 720px) {
+  .assist-main {
+    padding: 16px;
+  }
+}
+
+// ---------- 모바일 앱 홈 ----------
+.mobile-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 390px;
+  height: 760px;
+  margin: 0 auto;
+  border: 8px solid var(--mega-text-strong);
+  border-radius: 40px;
+  background: var(--mega-bg);
+  overflow: hidden;
+  box-shadow: var(--mega-shadow-lg);
+}
+.mobile-screen {
+  flex: 1;
+  min-height: 0;
+  padding: 44px 16px 24px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.mobile-nav {
+  flex-shrink: 0;
+  padding-bottom: 12px;
+}
+.mobile-quick {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.mobile-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 4px;
+  border: 0;
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-surface);
+  color: var(--mega-text);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  > svg {
+    color: var(--mega-brand);
+  }
+  &:hover {
+    background: var(--mega-fill);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: 2px;
+  }
+}
+.mobile-frame .mega-carousel .mega-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+@media (max-width: 420px) {
+  .mobile-frame {
+    border-width: 4px;
+    border-radius: 24px;
+    height: 680px;
+  }
+}
+
+// ---------- 상태 화면 모음 ----------
+.states .mega-card {
+  min-width: 0;
+}

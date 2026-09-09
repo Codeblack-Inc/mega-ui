@@ -407,10 +407,14 @@
   overflow-x: auto;
   text-align: center;
 
+  // Centered rows clip their left edge once they overflow, so the row grows
+  // to its content instead and the wrapper scrolls.
   ul {
     display: flex;
     justify-content: center;
     gap: var(--mega-space-4);
+    width: max-content;
+    min-width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;

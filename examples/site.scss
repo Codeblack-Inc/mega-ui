@@ -1,3 +1,8 @@
+@use 'screens/finance';
+@use 'screens/account';
+@use 'screens/work';
+@use 'screens/commerce';
+
 // ---------- Docs site shell: TopBar + AppShell + SideNav from the library ----------
 body {
   margin: 0;
@@ -201,7 +206,7 @@ a {
         flex-shrink: 0;
         gap: 4px;
       }
-      .mega-side-nav__section:last-child {
+      .docs-sidebar__docs {
         display: none;
       }
       .mega-side-nav__item {

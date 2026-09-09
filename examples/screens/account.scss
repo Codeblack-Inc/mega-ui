@@ -1,0 +1,102 @@
+// ---------- 로그인 / 회원가입: 좁은 카드 하나 ----------
+.login,
+.signup {
+  width: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+}
+
+.login__mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-brand);
+  color: var(--mega-on-brand);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.login__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  .mega-separator {
+    flex: 1;
+  }
+}
+
+.login__social {
+  display: flex;
+  gap: 8px;
+  > .mega-button {
+    flex: 1;
+  }
+}
+
+// ---------- 마이페이지 ----------
+.profile__hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+.profile__who {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.profile__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding-top: 20px;
+  > .mega-stat + .mega-stat {
+    border-left: 1px solid var(--mega-border);
+    padding-left: 16px;
+  }
+}
+
+.profile .mega-list-row .example-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 0;
+}
+
+// ---------- 알림센터 ----------
+.notif__item {
+  transition: opacity var(--mega-duration-fast) var(--mega-ease);
+  &:not(.is-unread) {
+    opacity: 0.6;
+  }
+}
+
+// ---------- 보안 ----------
+.security__qr {
+  padding: 16px;
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-fill);
+}
+
+@media (max-width: 720px) {
+  .profile__hero {
+    flex-wrap: wrap;
+  }
+  .profile__stats {
+    grid-template-columns: 1fr;
+    > .mega-stat + .mega-stat {
+      border-left: 0;
+      padding-left: 0;
+      border-top: 1px solid var(--mega-border);
+      padding-top: 12px;
+    }
+  }
+  .login__social {
+    flex-direction: column;
+  }
+}

@@ -20,17 +20,26 @@ import {
   TopBarLink,
 } from '@mega-ui/react';
 import { categories } from './catalog';
+import { GalleryPage } from './gallery';
 import { HomePage } from './home';
-import { componentCount, docs, examples, routes } from './routes';
+import {
+  componentCount,
+  docs,
+  exampleGroups,
+  examples,
+  routes,
+} from './routes';
 import '../src/styles/index.scss';
 import './site.scss';
 
 const HOME = 'home';
+const GALLERY = 'examples';
 
 /** Hash aliases keep older links (#components, #forms) pointing at a real page. */
 function resolveRoute(hash: string) {
   const id = hash.replace(/^#/, '');
   if (!id || id === HOME) return HOME;
+  if (id === GALLERY) return GALLERY;
   if (id === 'components') return 'components/foundation';
   if (id === 'forms') return 'components/inputs';
   return routes.some((route) => route.id === id) ? id : null;
@@ -57,7 +66,8 @@ export default function App() {
   }, [active]);
 
   const page = routes.find((route) => route.id === active);
-  const isExample = examples.some((item) => item.id === active);
+  const isExample =
+    active === GALLERY || examples.some((item) => item.id === active);
   const isComponent = active.startsWith('components/');
 
   return (
@@ -92,7 +102,7 @@ export default function App() {
           <TopBarLink href="#components/foundation" active={isComponent}>
             컴포넌트
           </TopBarLink>
-          <TopBarLink href="#dashboard" active={isExample}>
+          <TopBarLink href={`#${GALLERY}`} active={isExample}>
             화면 예제
           </TopBarLink>
           <TopBarLink href="./getting-started.md">시작하기</TopBarLink>
@@ -101,40 +111,56 @@ export default function App() {
           className="docs-shell"
           sidebar={
             <Stack gap={4} className="docs-sidebar">
-              <SideNav label="문서 탐색">
-                <SideNavSection title="컴포넌트">
-                  {categories.map((category) => (
+              {isExample ? (
+                <SideNav label="화면 예제 탐색">
+                  <SideNavSection>
                     <SideNavItem
-                      key={category.key}
-                      href={`#components/${category.key}`}
-                      active={active === `components/${category.key}`}
-                      badge={
-                        <Badge tone="brand">{category.names.length}</Badge>
-                      }
+                      href={`#${GALLERY}`}
+                      active={active === GALLERY}
+                      badge={<Badge tone="brand">{examples.length}</Badge>}
                     >
-                      {category.label}
+                      모든 화면
                     </SideNavItem>
+                  </SideNavSection>
+                  {exampleGroups.map((group) => (
+                    <SideNavSection key={group.key} title={group.label}>
+                      {group.items.map((item) => (
+                        <SideNavItem
+                          key={item.id}
+                          href={`#${item.id}`}
+                          active={active === item.id}
+                        >
+                          {item.label}
+                        </SideNavItem>
+                      ))}
+                    </SideNavSection>
                   ))}
-                </SideNavSection>
-                <SideNavSection title="화면 예제">
-                  {examples.map((item) => (
-                    <SideNavItem
-                      key={item.id}
-                      href={`#${item.id}`}
-                      active={active === item.id}
-                    >
-                      {item.label}
-                    </SideNavItem>
-                  ))}
-                </SideNavSection>
-                <SideNavSection title="문서">
-                  {docs.map((doc) => (
-                    <SideNavItem key={doc.href} href={doc.href}>
-                      {doc.label}
-                    </SideNavItem>
-                  ))}
-                </SideNavSection>
-              </SideNav>
+                </SideNav>
+              ) : (
+                <SideNav label="문서 탐색">
+                  <SideNavSection title="컴포넌트">
+                    {categories.map((category) => (
+                      <SideNavItem
+                        key={category.key}
+                        href={`#components/${category.key}`}
+                        active={active === `components/${category.key}`}
+                        badge={
+                          <Badge tone="brand">{category.names.length}</Badge>
+                        }
+                      >
+                        {category.label}
+                      </SideNavItem>
+                    ))}
+                  </SideNavSection>
+                  <SideNavSection title="문서" className="docs-sidebar__docs">
+                    {docs.map((doc) => (
+                      <SideNavItem key={doc.href} href={doc.href}>
+                        {doc.label}
+                      </SideNavItem>
+                    ))}
+                  </SideNavSection>
+                </SideNav>
+              )}
             </Stack>
           }
         >
@@ -146,11 +172,15 @@ export default function App() {
             {page ? (
               <PageView
                 page={page}
-                crumb={isExample ? '화면 예제' : '컴포넌트'}
+                crumb={
+                  isExample
+                    ? { label: '화면 예제', href: `#${GALLERY}` }
+                    : { label: '컴포넌트', href: '#components/foundation' }
+                }
               />
             ) : (
               <Container>
-                <HomePage />
+                {active === GALLERY ? <GalleryPage /> : <HomePage />}
               </Container>
             )}
           </main>
@@ -174,7 +204,7 @@ function PageView({
   crumb,
 }: {
   page: (typeof routes)[number];
-  crumb: string;
+  crumb: { label: string; href: string };
 }) {
   const Frame = page.wide ? 'div' : Container;
   const Example = page.Component;
@@ -183,7 +213,7 @@ function PageView({
       <Stack gap={5}>
         <Breadcrumb label="현재 위치">
           <BreadcrumbItem href={`#${HOME}`}>홈</BreadcrumbItem>
-          <BreadcrumbItem>{crumb}</BreadcrumbItem>
+          <BreadcrumbItem href={crumb.href}>{crumb.label}</BreadcrumbItem>
           <BreadcrumbItem current>{page.label}</BreadcrumbItem>
         </Breadcrumb>
         <PageHeader

@@ -14,7 +14,7 @@ import {
   Text,
 } from '@mega-ui/react';
 import { categories } from './catalog';
-import { componentCount, docs, examples } from './routes';
+import { componentCount, docs, exampleGroups, examples } from './routes';
 
 const exportCount = Object.keys(Mega).length;
 
@@ -97,7 +97,7 @@ export function HomePage() {
           <LinkButton href="#components/foundation" size="lg">
             컴포넌트 둘러보기
           </LinkButton>
-          <LinkButton href="#dashboard" variant="secondary" size="lg">
+          <LinkButton href="#examples" variant="secondary" size="lg">
             화면 예제 보기
           </LinkButton>
           <LinkButton href="./getting-started.md" variant="text" size="lg">
@@ -210,26 +210,36 @@ export function HomePage() {
         title="화면 예제"
         description="컴포넌트만 조합해 만든 실제 화면이에요. 소스 코드를 그대로 가져다 쓸 수 있어요."
       >
-        <Grid minItemWidth={260} gap={4}>
-          {examples.map((item, index) => (
-            <Card key={item.id} variant="outlined" padding="lg">
+        <Grid minItemWidth={220} gap={4}>
+          {exampleGroups.map((group) => (
+            <Card key={group.key} variant="outlined" padding="lg">
               <Stack gap={3} className="home-card">
-                <Text size="xs" tone="brand" weight="semibold">
-                  EXAMPLE / {String(index + 1).padStart(2, '0')}
-                </Text>
-                <Heading level={3} size="sm">
-                  {item.title}
-                </Heading>
+                <Stack direction="row" justify="between" align="center">
+                  <Heading level={3} size="sm">
+                    {group.label}
+                  </Heading>
+                  <Badge tone="brand">{group.items.length}</Badge>
+                </Stack>
                 <Text size="sm" tone="secondary">
-                  {item.description}
+                  {group.description}
                 </Text>
-                <LinkButton href={`#${item.id}`} variant="weak" size="sm">
-                  {item.label} 열기
+                <Text size="sm" tone="muted">
+                  {group.items.map((item) => item.label).join(' · ')}
+                </Text>
+                <LinkButton
+                  href={`#${group.items[0]?.id ?? 'examples'}`}
+                  variant="weak"
+                  size="sm"
+                >
+                  첫 화면 열기
                 </LinkButton>
               </Stack>
             </Card>
           ))}
         </Grid>
+        <LinkButton href="#examples" variant="secondary" size="md">
+          모든 화면 예제 보기 · {examples.length}개
+        </LinkButton>
       </Section>
 
       <Section

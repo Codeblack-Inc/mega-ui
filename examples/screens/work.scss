@@ -1,0 +1,255 @@
+// ---------- 업무 화면 공통 ----------
+.users-layout,
+.board-layout,
+.cal-layout,
+.org-layout,
+.drive-layout {
+  padding: 24px;
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-bg);
+  font-size: 14px;
+  .mega-card {
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-xl);
+    box-shadow: none;
+  }
+}
+
+.users-heading,
+.board-heading,
+.cal-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+// ---------- 사용자 관리 ----------
+.users-card {
+  padding: 0;
+}
+.users-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--mega-border);
+  .mega-input {
+    flex: 1 1 200px;
+  }
+}
+.users-chips {
+  display: flex;
+  gap: 6px;
+}
+.users-bulk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  background: var(--mega-brand-soft);
+}
+.users-grid {
+  overflow-x: auto;
+  .mega-table__cell,
+  .mega-table__header-cell {
+    white-space: nowrap;
+  }
+}
+.users-name,
+.org-name,
+.drive-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    color: var(--mega-brand);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mega-brand);
+    outline-offset: 2px;
+    border-radius: var(--mega-radius-2xs);
+  }
+}
+.users-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-top: 1px solid var(--mega-border);
+}
+
+// ---------- 프로젝트 보드 ----------
+.board-kanban {
+  overflow-x: auto;
+}
+.board-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.board-card {
+  overflow-x: auto;
+}
+
+// ---------- 일정 관리 ----------
+.cal-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+}
+.cal-list > .mega-list-row + .mega-list-row {
+  border-top: 1px solid var(--mega-border);
+}
+
+// ---------- 조직도 ----------
+.org-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.org-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  align-items: start;
+}
+.org-chart {
+  overflow-x: auto;
+}
+.org-members .mega-table {
+  width: 100%;
+  .mega-table__cell {
+    white-space: nowrap;
+  }
+}
+
+// ---------- 파일 드라이브 ----------
+.drive-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
+}
+.drive-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.drive-storage {
+  padding: 0 8px;
+}
+.drive-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.drive-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  .mega-input {
+    flex: 1 1 200px;
+  }
+}
+.drive-table {
+  .mega-table__cell {
+    white-space: nowrap;
+  }
+  .mega-table__cell:first-child {
+    white-space: normal;
+    min-width: 200px;
+  }
+}
+.drive-name svg {
+  flex-shrink: 0;
+  color: var(--mega-brand);
+}
+.drive-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.drive-tile {
+  padding: 0;
+  &__button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    padding: 16px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    &:hover {
+      background: var(--mega-hover);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--mega-brand);
+      outline-offset: -2px;
+    }
+  }
+  &__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 8px;
+    border-radius: var(--mega-radius-md);
+    background: var(--mega-brand-soft);
+    color: var(--mega-brand-strong);
+  }
+}
+
+@media (max-width: 1100px) {
+  .cal-body,
+  .org-body,
+  .drive-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .org-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .drive-side {
+    .mega-side-nav {
+      flex-direction: row;
+      overflow-x: auto;
+    }
+    .mega-side-nav__item {
+      white-space: nowrap;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .users-layout,
+  .board-layout,
+  .cal-layout,
+  .org-layout,
+  .drive-layout {
+    padding: 16px;
+  }
+  .org-stats {
+    grid-template-columns: 1fr;
+  }
+}
