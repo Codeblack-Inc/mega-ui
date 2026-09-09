@@ -10,7 +10,6 @@ import {
   ButtonGroup,
   Card,
   Checkbox,
-  EmptyState,
   Field,
   FormActions,
   FormDescription,
@@ -28,7 +27,7 @@ import {
   Menu,
   MenuItem,
   MenuSeparator,
-  Notification,
+  NotificationList,
   PageHeader,
   ProgressBar,
   QRCode,
@@ -657,7 +656,6 @@ export function NotificationCenterExample() {
     setItems((list) =>
       list.map((item) => (item.id === id ? { ...item, read: true } : item)),
     );
-  const groups = ['오늘', '어제', '이전'] as const;
   return (
     <Stack gap={5} className="notif">
       <PageHeader
@@ -665,18 +663,6 @@ export function NotificationCenterExample() {
         headingLevel={2}
         description={
           unread() ? `읽지 않은 알림이 ${unread()}개 있어요` : '모두 확인했어요'
-        }
-        actions={
-          <Button
-            variant="weak"
-            size="sm"
-            disabled={!unread()}
-            onClick={() =>
-              setItems((list) => list.map((item) => ({ ...item, read: true })))
-            }
-          >
-            모두 읽음
-          </Button>
         }
       />
       <Tabs
@@ -703,63 +689,22 @@ export function NotificationCenterExample() {
           },
         ]}
       />
-      {visible.length === 0 ? (
-        <Card>
-          <EmptyState
-            icon={<ExampleIcon name="bell" />}
-            title="알림이 없어요"
-            description="새로운 소식이 오면 여기에 모아둘게요."
-          />
-        </Card>
-      ) : (
-        groups
-          .filter((group) => visible.some((item) => item.group === group))
-          .map((group) => (
-            <Stack key={group} gap={2}>
-              <Text size="sm" tone="muted" weight="semibold">
-                {group}
-              </Text>
-              {visible
-                .filter((item) => item.group === group)
-                .map((item) => (
-                  <Notification
-                    key={item.id}
-                    className={
-                      item.read ? 'notif__item' : 'notif__item is-unread'
-                    }
-                    tone={
-                      item.kind === 'benefit'
-                        ? 'success'
-                        : item.kind === 'notice'
-                          ? 'neutral'
-                          : 'info'
-                    }
-                    title={item.title}
-                    description={item.description}
-                    action={
-                      item.read ? (
-                        <span
-                          className="notif__read"
-                          role="img"
-                          aria-label="읽음"
-                        >
-                          <ExampleIcon name="check" />
-                        </span>
-                      ) : (
-                        <Button
-                          size="sm"
-                          variant="text"
-                          onClick={() => markRead(item.id)}
-                        >
-                          확인
-                        </Button>
-                      )
-                    }
-                  />
-                ))}
-            </Stack>
-          ))
-      )}
+      <NotificationList
+        items={visible.map((item) => ({
+          ...item,
+          tone:
+            item.kind === 'benefit'
+              ? ('success' as const)
+              : item.kind === 'notice'
+                ? ('neutral' as const)
+                : ('info' as const),
+        }))}
+        onRead={(id) => markRead(Number(id))}
+        onReadAll={() =>
+          setItems((list) => list.map((item) => ({ ...item, read: true })))
+        }
+        emptyMessage="새로운 알림이 없어요."
+      />
       <Card>
         <Stack gap={3}>
           <Heading size="sm">알림 수신 설정</Heading>

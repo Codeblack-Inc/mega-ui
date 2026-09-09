@@ -49,7 +49,6 @@ test('extended checklist names are public and simple equivalents share implement
     ['FormField', 'Field'],
     ['FormLabel', 'Label'],
     ['Autocomplete', 'AutoComplete'],
-    ['Combobox', 'AutoComplete'],
   ])
     assert.equal(ui[alias], ui[original], alias);
 });
@@ -182,6 +181,19 @@ test('composed controls expose labels, native controls and constrained ranges', 
         startName: 'start',
         endName: 'end',
         startProps: { min: '2026-01-01' },
+        presets: [{ label: 'Today', start: '2026-09-09', end: '2026-09-09' }],
+      }),
+      h(ui.Combobox, {
+        name: 'owner',
+        defaultValue: 'kim',
+        options: [{ label: 'Kim', value: 'kim', description: 'Design' }],
+      }),
+      h(ui.MultiSelect, {
+        label: 'Teams',
+        name: 'teams',
+        defaultValue: ['dev'],
+        options: [{ label: 'Development', value: 'dev' }],
+        maxSelected: 2,
       }),
       h(ui.RangeSlider, {
         label: 'Budget',
@@ -211,6 +223,10 @@ test('composed controls expose labels, native controls and constrained ranges', 
   assert.match(html, /<summary aria-label="Quick actions">/);
   assert.match(html, /aria-live="polite">Copy code/);
   assert.match(html, /href="\/settings"/);
+  assert.match(html, />Today<\/button>/);
+  assert.match(html, /role="combobox"/);
+  assert.match(html, /type="hidden" name="owner" value="kim"/);
+  assert.match(html, /1개 선택/);
   assert.match(
     html,
     /<input(?=[^>]*name="start")(?=[^>]*min="2026-01-01")(?=[^>]*type="date")[^>]*>/,

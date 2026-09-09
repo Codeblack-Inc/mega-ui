@@ -13,6 +13,7 @@ import {
   IconButton,
   ListRow,
   Separator,
+  Sparkline,
   Stack,
   Stat,
   Table,
@@ -311,27 +312,15 @@ export function MarketExample() {
                     direction: index.direction as 'up' | 'down',
                   }}
                 />
-                <svg
-                  className={`market-spark market-spark--${index.direction}`}
-                  viewBox="0 0 180 40"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M0 28H180"
-                    stroke="var(--mega-border-strong)"
-                    strokeDasharray="3 3"
-                  />
-                  <path
-                    d={
-                      index.direction === 'up'
-                        ? 'M1 35 10 30 20 33 28 21 35 26 43 20 50 28 58 24 66 9 74 18 82 12 90 16 98 8 106 15 114 10 122 14 130 4 138 8 146 5 155 12 165 7 179 3'
-                        : 'M1 3 10 8 20 4 28 16 35 12 43 20 50 15 58 30 66 25 74 28 82 34 90 25 98 28 106 17 114 21 122 13 130 19 138 24 146 22 155 28 165 23 179 25'
-                    }
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  />
-                </svg>
+                <Sparkline
+                  className="market-spark"
+                  values={
+                    index.direction === 'up'
+                      ? [8, 12, 10, 18, 15, 21, 19, 28]
+                      : [28, 24, 26, 19, 21, 15, 17, 11]
+                  }
+                  direction={index.direction as 'up' | 'down'}
+                />
               </div>
             ))}
           </div>

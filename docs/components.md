@@ -1,6 +1,6 @@
 # Mega UI 컴포넌트 API — 0.1.0
 
-`@mega-ui/react`의 공개 named export는 204개입니다. 이 페이지는 핵심 API와 목록·폼 조합 7종을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
+`@mega-ui/react`의 공개 런타임 export는 213개입니다. 이 페이지는 핵심 API와 목록·폼·분석 조합을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
 별도 명시가 없으면 해당 HTML 요소의 표준 속성, `className`, `style`, React 19 `ref`를 그대로 전달합니다.
 `children`은 ReactNode입니다. 범용 `as`, `asChild`, `sx` API는 제공하지 않습니다(`Text`와 `Amount`만 좁은 `as`를 받습니다).
 
@@ -709,6 +709,18 @@ function SaveButton() {
 | `description` | `ReactNode`          | —      |                           |
 | `action`      | `ReactNode`          | —      | 다음 행동 버튼            |
 
-## 후속 확장
+## 분석·업무 패턴
 
-차트와 파일별 업로드 상태, 알림 목록은 [컴포넌트 확장 보고서](./component-gap-report.md)의 후속 순서로 남아 있습니다.
+| API                                  | 핵심 동작                                                                       |
+| ------------------------------------ | ------------------------------------------------------------------------------- |
+| `BarChart`, `LineChart`, `Sparkline` | 데이터 배열로 SVG/CSS 차트를 생성하고 빈 값·같은 값·비정상 숫자를 안전하게 처리 |
+| `FileUploadList`                     | pending/uploading/complete/error, 진행률, 취소·재시도·제거                      |
+| `NotificationList`                   | 날짜 그룹, 읽음·모두 읽음, 빈 목록, 더 보기                                     |
+| `SelectionCard`                      | 네이티브 radio/checkbox 기반 카드 선택                                          |
+| `DetailSection`                      | `FormSection`과 같은 구현을 재사용                                              |
+| `InlineEdit`                         | Enter 저장, Escape 취소, 비동기 실패 시 입력 보존                               |
+| `MegaIcon`                           | 예제에서 쓰던 공통 SVG 자산을 `name`으로 사용                                   |
+
+## 조합 레시피
+
+목록 CRUD는 `FilterBar + ActiveFilters + DataGrid + DataPagination + Drawer`, 폼은 `FormErrorSummary + FormSection + FormActions`, 결제는 `SelectionCard + Amount + DescriptionList + Timeline`을 조합합니다. 실제 동작 예제는 사용자 관리·드라이브·설정·결제 화면에 있습니다. Markdown 편집기, 댓글·멘션, 저장된 필터, 승인 흐름 등 보고서 6절의 후보는 제품 수요가 생길 때 이 조합에서 반복되는 부분만 승격합니다.

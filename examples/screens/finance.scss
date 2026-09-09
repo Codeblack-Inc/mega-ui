@@ -51,60 +51,6 @@
   justify-content: space-between;
   gap: 16px;
 }
-.report-bars {
-  display: grid;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  > li {
-    display: grid;
-    gap: 6px;
-  }
-}
-.report-bar {
-  height: 10px;
-  border-radius: var(--mega-radius-full);
-  background: var(--mega-fill);
-  overflow: hidden;
-  > span {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: var(--mega-brand);
-    transition: width var(--mega-duration) var(--mega-ease);
-  }
-  &[data-tone='teal'] > span {
-    background: var(--mega-teal);
-  }
-  &[data-tone='purple'] > span {
-    background: var(--mega-purple);
-  }
-  &[data-tone='warning'] > span {
-    background: var(--mega-warning);
-  }
-  &[data-tone='neutral'] > span {
-    background: var(--mega-fill-strong);
-  }
-}
-.report-chart {
-  display: block;
-  width: 100%;
-  max-width: 320px;
-  height: auto;
-  &__track {
-    fill: var(--mega-fill);
-  }
-  &__bar {
-    fill: var(--mega-brand);
-  }
-  text {
-    fill: var(--mega-muted);
-    font-size: 11px;
-    font-family: var(--mega-font);
-  }
-}
-
 // ---------- 카드 혜택·관리 ----------
 .cardb-hero {
   display: grid;

@@ -14,6 +14,7 @@ import {
   PageHeader,
   ProgressBar,
   Result,
+  SelectionCard,
   SegmentedControl,
   Select,
   Separator,
@@ -302,16 +303,24 @@ export function PaymentExample() {
             trailing={<Text>58,000원</Text>}
           />
           <Separator />
-          <SegmentedControl
-            label="결제 수단"
-            name="payment-method"
-            options={[
-              { label: '카드', value: 'card' },
-              { label: '계좌', value: 'account' },
-            ]}
-            value={method}
-            onValueChange={setMethod}
-          />
+          <Stack direction="row" gap={2}>
+            <SelectionCard
+              name="payment-method"
+              value="card"
+              title="카드"
+              description="신용·체크카드"
+              checked={method === 'card'}
+              onChange={() => setMethod('card')}
+            />
+            <SelectionCard
+              name="payment-method"
+              value="account"
+              title="계좌"
+              description="실시간 계좌이체"
+              checked={method === 'account'}
+              onChange={() => setMethod('account')}
+            />
+          </Stack>
           <Field
             label={method === 'card' ? '카드사' : '은행'}
             htmlFor="payment-provider"

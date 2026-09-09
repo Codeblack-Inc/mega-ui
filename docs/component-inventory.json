@@ -279,8 +279,8 @@
   {
     "name": "Combobox",
     "category": "Selection",
-    "status": "reused",
-    "implementation": "AutoComplete"
+    "status": "added",
+    "implementation": "Combobox"
   },
   {
     "name": "TreeSelect",

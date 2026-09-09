@@ -199,6 +199,47 @@
   }
 }
 
+.mega-date-range-picker__presets {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: var(--mega-space-2);
+  flex-wrap: wrap;
+}
+
+.mega-multi-select {
+  display: grid;
+  gap: var(--mega-space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  > legend {
+    margin-block-end: var(--mega-space-2);
+    font-weight: 600;
+  }
+  &__summary,
+  &__chips {
+    display: flex;
+    align-items: center;
+    gap: var(--mega-space-2);
+    flex-wrap: wrap;
+  }
+  &__summary {
+    justify-content: space-between;
+    color: var(--mega-muted);
+    font-size: 13px;
+  }
+  &__options {
+    display: grid;
+    gap: var(--mega-space-2);
+    max-height: 240px;
+    overflow: auto;
+    padding: var(--mega-space-3);
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-md);
+  }
+}
+
 @media (max-width: 600px) {
   .mega-date-range-picker,
   .mega-range-slider {

@@ -13,7 +13,12 @@ const componentStyles = readdirSync(stylesDir)
 const definedTokens = new Set(
   [...tokens.matchAll(/(--mega-[\w-]+)\s*:/g)].map((match) => match[1]),
 );
-const runtimeValues = new Set(['--mega-gap', '--mega-grid-min']);
+const runtimeValues = new Set([
+  '--mega-gap',
+  '--mega-grid-min',
+  '--mega-chart-value',
+]);
+const styles = Object.fromEntries(componentStyles);
 
 test('design contract keeps core Toss-inspired tokens stable', () => {
   assert.match(tokens, /--mega-font:\s*'Pretendard Variable', Pretendard/);
@@ -55,4 +60,24 @@ test('component styles reject known visual-language violations', () => {
   assert.doesNotMatch(css, /font-weight:\s*(?:800|900)\b/);
   assert.doesNotMatch(css, /filter:\s*(?:brightness|contrast)\(/);
   assert.doesNotMatch(css, /:disabled[^{}]*\{[^{}]*opacity:\s*0\./);
+});
+
+test('dense controls keep checkmarks visible and short labels intact', () => {
+  assert.match(
+    styles['_controls.scss'],
+    /\.mega-checkbox--square input[\s\S]*&:checked::after[\s\S]*background: var\(--mega-on-brand\)/,
+  );
+  assert.match(
+    styles['_controls.scss'],
+    /\[aria-checked='mixed'\][\s\S]*inset: 50% auto auto 50%/,
+  );
+  assert.match(styles['_typography.scss'], /word-break: keep-all/);
+  assert.match(
+    styles['_patterns.scss'],
+    /&__controls > label > span[\s\S]*white-space: nowrap/,
+  );
+  assert.match(
+    styles['_enterprise.scss'],
+    /\.mega-data-grid \.mega-checkbox input[\s\S]*width: 20px/,
+  );
 });

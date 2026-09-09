@@ -149,7 +149,16 @@
 
 .mega-data-grid .mega-checkbox,
 .mega-data-explorer .mega-checkbox {
+  align-items: center;
   min-height: 32px;
+}
+
+.mega-data-grid .mega-checkbox input {
+  width: 20px;
+  height: 20px;
+  &::after {
+    mask-size: 13px;
+  }
 }
 
 .mega-kanban {

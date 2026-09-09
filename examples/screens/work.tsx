@@ -17,12 +17,14 @@ import {
   DataTable,
   DatePicker,
   DescriptionList,
+  DetailSection,
   Dialog,
   Drawer,
   Dropzone,
   EmptyState,
   Field,
   FilterBar,
+  FileUploadList,
   FormActions,
   FormSection,
   Gantt,
@@ -31,6 +33,7 @@ import {
   HoverCard,
   IconButton,
   Input,
+  InlineEdit,
   Kanban,
   ListRow,
   Menu,
@@ -63,6 +66,7 @@ import {
   Tree,
   useToast,
   type DataColumn,
+  type FileUploadItem,
   type KanbanColumn,
 } from '@mega-ui/react';
 import { ExampleIcon } from '../icons';
@@ -1393,9 +1397,18 @@ export function DriveExample() {
   const [sort, setSort] = useState<'name' | 'size'>('name');
   const [detail, setDetail] = useState<Doc | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [uploads, setUploads] = useState<FileUploadItem[]>([
+    {
+      id: 'upload-demo-error',
+      name: '분기 보고서.pdf',
+      size: 2_400_000,
+      status: 'error',
+      error: '네트워크 연결을 확인해 주세요.',
+    },
+  ]);
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const addFiles = (files: File[]) =>
+  const addFiles = (files: File[]) => {
     setDocs((list) => [
       ...files.map((file) => ({
         id: `f-${file.name}-${file.size}`,
@@ -1409,6 +1422,15 @@ export function DriveExample() {
       })),
       ...list,
     ]);
+    setUploads(
+      files.map((file) => ({
+        id: `f-${file.name}-${file.size}`,
+        name: file.name,
+        size: file.size,
+        status: 'complete',
+      })),
+    );
+  };
 
   const visible = docs
     .filter((doc) => doc.name.includes(query))
@@ -1515,6 +1537,23 @@ export function DriveExample() {
             onDragLeave={() => setDragging(false)}
             onDrop={() => setDragging(false)}
             onFilesChange={addFiles}
+          />
+        ) : null}
+        {uploads.length ? (
+          <FileUploadList
+            items={uploads}
+            onRetry={(id) =>
+              setUploads((items) =>
+                items.map((item) =>
+                  item.id === id
+                    ? { ...item, status: 'complete', error: undefined }
+                    : item,
+                ),
+              )
+            }
+            onRemove={(id) =>
+              setUploads((items) => items.filter((item) => item.id !== id))
+            }
           />
         ) : null}
         {section !== 'mine' ? (
@@ -1635,23 +1674,39 @@ export function DriveExample() {
         }
       >
         {detail ? (
-          <DescriptionList
-            items={[
-              {
-                term: '종류',
-                description: {
-                  folder: '폴더',
-                  doc: '문서',
-                  image: '이미지',
-                  sheet: '스프레드시트',
-                }[detail.kind],
-              },
-              { term: '소유자', description: detail.owner },
-              { term: '수정일', description: detail.modified },
-              { term: '크기', description: formatSize(detail.size) },
-              { term: '위치', description: '내 드라이브 / 프로젝트' },
-            ]}
-          />
+          <Stack gap={5}>
+            <InlineEdit
+              label="파일 이름"
+              value={detail.name}
+              onSave={(name) => {
+                setDocs((items) =>
+                  items.map((item) =>
+                    item.id === detail.id ? { ...item, name } : item,
+                  ),
+                );
+                setDetail({ ...detail, name });
+              }}
+            />
+            <DetailSection title="파일 정보">
+              <DescriptionList
+                items={[
+                  {
+                    term: '종류',
+                    description: {
+                      folder: '폴더',
+                      doc: '문서',
+                      image: '이미지',
+                      sheet: '스프레드시트',
+                    }[detail.kind],
+                  },
+                  { term: '소유자', description: detail.owner },
+                  { term: '수정일', description: detail.modified },
+                  { term: '크기', description: formatSize(detail.size) },
+                  { term: '위치', description: '내 드라이브 / 프로젝트' },
+                ]}
+              />
+            </DetailSection>
+          </Stack>
         ) : null}
       </Drawer>
     </div>

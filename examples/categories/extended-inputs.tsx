@@ -81,6 +81,7 @@ export function ExtendedInputsCategory() {
   const [phone, setPhone] = useState('010');
   const [range, setRange] = useState<[number, number]>([20, 70]);
   const [plan, setPlan] = useState('basic');
+  const [selectedTeams, setSelectedTeams] = useState(['design', 'development']);
   const [dates, setDates] = useState({
     start: '2026-09-09',
     end: '2026-09-12',
@@ -195,6 +196,10 @@ export function ExtendedInputsCategory() {
           endName="tripEnd"
           startProps={{ value: dates.start, max: dates.end }}
           endProps={{ value: dates.end, min: dates.start }}
+          presets={[
+            { label: '오늘', start: '2026-09-09', end: '2026-09-09' },
+            { label: '최근 7일', start: '2026-09-03', end: '2026-09-09' },
+          ]}
           onValueChange={setDates}
         />
         <Text size="sm" tone="muted">
@@ -260,16 +265,13 @@ export function ExtendedInputsCategory() {
     ),
     MultiSelect: (
       <MultiSelect
-        aria-label="참여 팀"
-        defaultValue={['design', 'development']}
-        size={3}
-      >
-        {teams.map((team) => (
-          <option key={team.value} value={team.value} disabled={team.disabled}>
-            {team.label}
-          </option>
-        ))}
-      </MultiSelect>
+        label="참여 팀"
+        name="teams"
+        options={teams}
+        value={selectedTeams}
+        onValueChange={setSelectedTeams}
+        maxSelected={2}
+      />
     ),
     Autocomplete: (
       <Autocomplete
@@ -281,7 +283,10 @@ export function ExtendedInputsCategory() {
     Combobox: (
       <Combobox
         aria-label="담당자 검색"
-        suggestions={['김민준', '이서연', '박지훈']}
+        options={['김민준', '이서연', '박지훈'].map((label) => ({
+          label,
+          value: label,
+        }))}
         placeholder="이름 검색"
       />
     ),

@@ -6,6 +6,7 @@ import {
   Avatar,
   Badge,
   Banner,
+  BarChart,
   BottomCTA,
   Button,
   Card,
@@ -18,6 +19,7 @@ import {
   Grid,
   Heading,
   ListRow,
+  LineChart,
   PageHeader,
   ProgressBar,
   RadioGroup,
@@ -537,65 +539,25 @@ export function SpendingReportExample() {
 
       <Grid minItemWidth={300} gap={5}>
         <Card padding="lg">
-          <Stack gap={4}>
-            <Heading size="md">카테고리별 소비</Heading>
-            <ul className="report-bars">
-              {data.categories.map((c) => (
-                <li key={c.name}>
-                  <Stack direction="row" justify="between">
-                    <Text as="span" size="sm">
-                      {c.name}
-                    </Text>
-                    <Text as="span" size="sm" numeric>
-                      {won(c.value)}
-                    </Text>
-                  </Stack>
-                  <div className="report-bar" data-tone={c.tone}>
-                    <span
-                      style={{ width: `${(c.value / data.total) * 100}%` }}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </Stack>
+          <BarChart
+            label="카테고리별 소비"
+            data={data.categories.map((category) => ({
+              label: category.name,
+              value: category.value,
+            }))}
+            formatValue={won}
+          />
         </Card>
         <Card padding="lg">
           <Stack gap={4}>
-            <Heading size="md">요일별 소비</Heading>
-            <svg
-              className="report-chart"
-              viewBox="0 0 280 120"
-              role="img"
-              aria-label={`요일별 소비: ${data.weekly
-                .map((v, i) => `${days[i]} ${v}천원`)
-                .join(', ')}`}
-            >
-              {data.weekly.map((v, i) => {
-                const h = (v / maxWeek) * 90;
-                return (
-                  <g key={i} transform={`translate(${i * 40 + 8} 0)`}>
-                    <rect
-                      className="report-chart__track"
-                      y={5}
-                      width={24}
-                      height={90}
-                      rx={6}
-                    />
-                    <rect
-                      className="report-chart__bar"
-                      y={95 - h}
-                      width={24}
-                      height={h}
-                      rx={6}
-                    />
-                    <text x={12} y={114} textAnchor="middle">
-                      {days[i]}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
+            <LineChart
+              label="요일별 소비"
+              data={data.weekly.map((value, index) => ({
+                label: days[index]!,
+                value,
+              }))}
+              formatValue={(value) => `${value}천원`}
+            />
             <Text size="sm" tone="muted">
               {days[data.weekly.indexOf(maxWeek)]}요일에 가장 많이 썼어요
             </Text>

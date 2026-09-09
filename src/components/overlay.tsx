@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useFloating } from './use-floating';
 import type {
   ComponentPropsWithRef,
   KeyboardEvent as ReactKeyboardEvent,
@@ -137,17 +138,29 @@ export interface MenuProps extends Omit<
   trigger: MenuTrigger;
   children: ReactNode;
   align?: 'start' | 'end';
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function Menu({
   trigger,
   align = 'start',
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
   className = '',
   children,
   ...props
 }: MenuProps) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const open = controlledOpen ?? internalOpen;
   const ref = useRef<HTMLDivElement>(null);
+  useFloating(ref, open, align);
+  const setOpen = (next: boolean) => {
+    if (controlledOpen === undefined) setInternalOpen(next);
+    onOpenChange?.(next);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -204,12 +217,13 @@ export function Menu({
         'aria-expanded': open,
         onClick: (event) => {
           trigger.props.onClick?.(event);
-          setOpen((value) => !value);
+          setOpen(!open);
         },
       })}
       {open ? (
         <div
           role="menu"
+          data-mega-floating=""
           className="mega-menu__popup"
           data-align={align}
           // ponytail: any click inside the popup closes it — items are buttons,
@@ -298,18 +312,31 @@ export function Tooltip({
   placement = 'top',
   className = '',
   children,
+  ref: forwardedRef,
   ...props
 }: TooltipProps) {
   const id = useId();
+  const ref = useRef<HTMLSpanElement>(null);
+  useFloating(ref, true, 'center', placement);
   return (
     <span
       {...props}
+      ref={(node) => {
+        ref.current = node;
+        if (typeof forwardedRef === 'function') forwardedRef(node);
+        else if (forwardedRef) forwardedRef.current = node;
+      }}
       className={`mega-tooltip mega-tooltip--${placement} ${className}`}
     >
       {isValidElement<{ 'aria-describedby'?: string }>(children)
         ? cloneElement(children, { 'aria-describedby': id })
         : children}
-      <span role="tooltip" id={id} className="mega-tooltip__bubble">
+      <span
+        role="tooltip"
+        id={id}
+        data-mega-floating=""
+        className="mega-tooltip__bubble"
+      >
         {content}
       </span>
     </span>

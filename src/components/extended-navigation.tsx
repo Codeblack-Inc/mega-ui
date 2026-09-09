@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useFloating } from './use-floating';
 import type {
   ComponentPropsWithRef,
   CSSProperties,
@@ -448,17 +449,29 @@ export interface PopoverProps extends Omit<
   trigger: Trigger;
   children: ReactNode;
   label: string;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 export function Popover({
   trigger,
   children,
   label,
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
   className = '',
   onKeyDown,
   ...props
 }: PopoverProps) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const open = controlledOpen ?? internalOpen;
   const ref = useRef<HTMLDivElement>(null);
+  useFloating(ref, open);
+  const setOpen = (next: boolean) => {
+    if (controlledOpen === undefined) setInternalOpen(next);
+    onOpenChange?.(next);
+  };
   const dismiss = (returnFocus = false) => {
     setOpen(false);
     if (returnFocus)
@@ -495,12 +508,13 @@ export function Popover({
         onClick: (event: MouseEvent) => {
           trigger.props.onClick?.(event);
           if (event.defaultPrevented) return;
-          setOpen((current) => !current);
+          setOpen(!open);
         },
       })}
       {open ? (
         <div
           role="dialog"
+          data-mega-floating=""
           aria-label={label}
           tabIndex={-1}
           className="mega-popover__content"
@@ -526,13 +540,21 @@ export function HoverCard({
   onMouseEnter,
   onFocusCapture,
   onKeyDown,
+  ref: forwardedRef,
   ...props
 }: HoverCardProps) {
   const id = useId();
   const [dismissed, setDismissed] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+  useFloating(ref, true, 'center', 'top');
   return (
     <span
       {...props}
+      ref={(node) => {
+        ref.current = node;
+        if (typeof forwardedRef === 'function') forwardedRef(node);
+        else if (forwardedRef) forwardedRef.current = node;
+      }}
       className={`mega-hover-card ${className}`}
       data-dismissed={dismissed || undefined}
       onMouseEnter={(event) => {
@@ -553,7 +575,12 @@ export function HoverCard({
       {isValidElement<{ 'aria-describedby'?: string }>(trigger)
         ? cloneElement(trigger, { 'aria-describedby': id })
         : trigger}
-      <span id={id} role="tooltip" className="mega-hover-card__content">
+      <span
+        id={id}
+        role="tooltip"
+        data-mega-floating=""
+        className="mega-hover-card__content"
+      >
         {children}
       </span>
     </span>

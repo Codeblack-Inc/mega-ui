@@ -174,6 +174,7 @@ export type {
 } from './components/patterns';
 export {
   AutoComplete,
+  Combobox,
   CheckboxGroup,
   DatePicker,
   FloatLabel,
@@ -196,6 +197,8 @@ export {
 } from './components/forms';
 export type {
   AutoCompleteProps,
+  ComboboxProps,
+  ComboboxOption,
   CheckboxGroupProps,
   DatePickerProps,
   FloatLabelProps,
@@ -222,3 +225,5 @@ export * from './components/media-ai';
 export * from './components/extended-navigation';
 export * from './components/enterprise';
 export * from './components/extended-inputs';
+export * from './components/advanced-patterns';
+export * from './components/icons';

@@ -460,11 +460,13 @@
     background: var(--mega-brand);
     border-color: var(--mega-brand);
     &::after {
+      inset: 50% auto auto 50%;
       width: 10px;
       height: 2px;
       border-radius: 1px;
       background: var(--mega-on-brand);
       mask: none;
+      transform: translate(-50%, -50%);
     }
   }
 }
@@ -472,6 +474,10 @@
   border-radius: var(--mega-radius-2xs);
   &::after {
     background: transparent;
+  }
+  &:checked::after,
+  &[aria-checked='mixed']::after {
+    background: var(--mega-on-brand);
   }
 }
 .mega-radio input {

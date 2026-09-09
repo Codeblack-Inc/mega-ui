@@ -3,17 +3,17 @@
 목표는 사내 웹 대부분을 라이브러리 조합으로 구현하는 것입니다. 아래 순서는 제안이며,
 실제 제품 화면의 반복 빈도와 요구를 기준으로 우선순위를 조정합니다.
 
-| 단계              | 범위                                                                                    | 상태   |
-| ----------------- | --------------------------------------------------------------------------------------- | ------ |
-| 0. 기반           | 빌드/타입/CSS 배포, 197개 export, 토스 실측 토큰(light/dark), 25개 화면 예제, AI 가이드 | 구현됨 |
-| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                               | 구현됨 |
-| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                              | 구현됨 |
-| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner       | 구현됨 |
-| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                          | 구현됨 |
-| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                  | 구현됨 |
-| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                              | 구현됨 |
-| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                        | 예정   |
-| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                         | 예정   |
+| 단계              | 범위                                                                                           | 상태   |
+| ----------------- | ---------------------------------------------------------------------------------------------- | ------ |
+| 0. 기반           | 빌드/타입/CSS 배포, 213개 런타임 export, 토스 실측 토큰(light/dark), 28개 화면 예제, AI 가이드 | 구현됨 |
+| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                                      | 구현됨 |
+| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                                     | 구현됨 |
+| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner              | 구현됨 |
+| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                                 | 구현됨 |
+| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                         | 구현됨 |
+| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                     | 구현됨 |
+| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                               | 예정   |
+| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                | 예정   |
 
 ## 구현됨 상세
 

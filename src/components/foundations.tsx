@@ -283,17 +283,23 @@ export interface AppShellProps extends BoxProps {
   header?: ReactNode;
   sidebar?: ReactNode;
   footer?: ReactNode;
+  independentScroll?: boolean;
 }
 export function AppShell({
   header,
   sidebar,
   footer,
+  independentScroll = false,
   children,
   className = '',
   ...props
 }: AppShellProps) {
   return (
-    <Box {...props} className={`mega-app-shell ${className}`}>
+    <Box
+      {...props}
+      className={`mega-app-shell ${className}`}
+      data-independent-scroll={independentScroll || undefined}
+    >
       {header && <header>{header}</header>}
       <div className="mega-app-shell__body">
         {sidebar && <aside>{sidebar}</aside>}

@@ -115,6 +115,7 @@ test('new form controls preserve native semantics, names and constraints', () =>
   );
   const list = html.match(/list="([^"]+)"/)[1];
   assert.ok(html.includes(`datalist id="${list}"`));
+  assert.match(html, /class="[^"]*mega-autocomplete/);
   assert.match(html, /min="2026-01-01"[^>]*type="date"/);
   assert.match(html, /min="1" max="9" step="2" type="number"/);
   assert.match(html, /type="color"/);

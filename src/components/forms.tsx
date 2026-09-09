@@ -19,17 +19,198 @@ export interface AutoCompleteProps extends Omit<InputProps, 'list' | 'type'> {
   suggestions: readonly string[];
 }
 /** Native suggestions allow free text; selection is not restricted to the list. */
-export function AutoComplete({ suggestions, ...props }: AutoCompleteProps) {
+export function AutoComplete({
+  suggestions,
+  className = '',
+  ...props
+}: AutoCompleteProps) {
   const list = useId();
   return (
     <>
-      <Input {...props} type="text" list={list} />
+      <Input
+        {...props}
+        className={`mega-autocomplete ${className}`}
+        type="text"
+        list={list}
+      />
       <datalist id={list}>
         {suggestions.map((value) => (
           <option key={value} value={value} />
         ))}
       </datalist>
     </>
+  );
+}
+
+export interface ComboboxOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+  description?: ReactNode;
+}
+export interface ComboboxProps extends Omit<
+  InputProps,
+  'value' | 'defaultValue' | 'onChange' | 'type'
+> {
+  options: readonly ComboboxOption[];
+  value?: string;
+  defaultValue?: string;
+  query?: string;
+  onQueryChange?: (query: string) => void;
+  onValueChange?: (value: string) => void;
+  loading?: boolean;
+  error?: ReactNode;
+  emptyMessage?: ReactNode;
+  clearable?: boolean;
+  renderOption?: (option: ComboboxOption) => ReactNode;
+}
+export function Combobox({
+  options,
+  value,
+  defaultValue = '',
+  query,
+  onQueryChange,
+  onValueChange,
+  loading = false,
+  error,
+  emptyMessage = '검색 결과가 없어요.',
+  clearable = true,
+  renderOption,
+  name,
+  disabled,
+  className = '',
+  ...props
+}: ComboboxProps) {
+  const id = useId();
+  const root = useRef<HTMLDivElement>(null);
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const [internalQuery, setInternalQuery] = useState('');
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const selectedValue = value ?? internalValue;
+  const selected = options.find((option) => option.value === selectedValue);
+  const search = (query ?? internalQuery).trim().toLocaleLowerCase();
+  const filtered = options.filter((option) =>
+    option.label.toLocaleLowerCase().includes(search),
+  );
+  const setQuery = (next: string) => {
+    if (query === undefined) setInternalQuery(next);
+    onQueryChange?.(next);
+  };
+  const select = (option: ComboboxOption) => {
+    if (value === undefined) setInternalValue(option.value);
+    onValueChange?.(option.value);
+    setQuery(option.label);
+    setOpen(false);
+  };
+  const message = loading ? '불러오는 중…' : (error ?? emptyMessage);
+
+  return (
+    <div
+      ref={root}
+      className={`mega-combobox ${className}`}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+    >
+      {name ? <input type="hidden" name={name} value={selectedValue} /> : null}
+      <Input
+        {...props}
+        disabled={disabled}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open}
+        aria-controls={`${id}-listbox`}
+        aria-activedescendant={
+          open && filtered[active] ? `${id}-${active}` : undefined
+        }
+        value={
+          open
+            ? (query ?? internalQuery)
+            : (selected?.label ?? query ?? internalQuery)
+        }
+        onFocus={() => setOpen(true)}
+        onChange={(event) => {
+          setQuery(event.currentTarget.value);
+          setActive(0);
+          setOpen(true);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') setOpen(false);
+          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            setOpen(true);
+            setActive((current) =>
+              Math.max(
+                0,
+                Math.min(
+                  filtered.length - 1,
+                  current + (event.key === 'ArrowDown' ? 1 : -1),
+                ),
+              ),
+            );
+          }
+          if (
+            event.key === 'Enter' &&
+            open &&
+            filtered[active] &&
+            !filtered[active].disabled
+          ) {
+            event.preventDefault();
+            select(filtered[active]);
+          }
+        }}
+      />
+      {clearable && selectedValue && !disabled ? (
+        <button
+          type="button"
+          className="mega-combobox__clear"
+          aria-label="선택 해제"
+          onClick={() => {
+            if (value === undefined) setInternalValue('');
+            onValueChange?.('');
+            setQuery('');
+          }}
+        >
+          ×
+        </button>
+      ) : null}
+      {open ? (
+        <div
+          id={`${id}-listbox`}
+          role="listbox"
+          className="mega-combobox__listbox"
+          aria-busy={loading || undefined}
+        >
+          {!loading && !error && filtered.length ? (
+            filtered.map((option, index) => (
+              <button
+                id={`${id}-${index}`}
+                key={option.value}
+                type="button"
+                role="option"
+                aria-selected={option.value === selectedValue}
+                disabled={option.disabled}
+                data-active={index === active || undefined}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => select(option)}
+              >
+                {renderOption?.(option) ?? (
+                  <>
+                    <span>{option.label}</span>
+                    {option.description ? (
+                      <small>{option.description}</small>
+                    ) : null}
+                  </>
+                )}
+              </button>
+            ))
+          ) : (
+            <span role="status">{message}</span>
+          )}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

@@ -1,7 +1,7 @@
 # Mega UI
 
 회사 웹을 **컴포넌트 조합으로 만드는** React UI 라이브러리입니다.
-React 19 · TypeScript · SCSS · Vite. 요청 목록 150종을 포함한 197개 공개 export를 제공하며,
+React 19 · TypeScript · SCSS · Vite. 요청 목록 150종을 포함한 213개 런타임 export를 제공하며,
 색·치수·타입 스케일은 토스 웹 제품에서 실측한 값에 맞췄습니다. Tailwind, CSS-in-JS, 별도 상태 관리, 모노레포 도구를 사용하지 않습니다.
 
 ## 실행
@@ -73,7 +73,7 @@ tests/              빌드 산출물에 대한 Node 기본 테스트
 - **SCSS + CSS 변수**: SCSS로 스타일을 분리하고, `--mega-*` 변수로 브랜드와 테마를 변경합니다. 소비 앱에 Sass 설치는 필요 없습니다.
 - **단일 패키지**: 현재는 라이브러리와 문서 사이트만 있어 npm 하나로 관리합니다. 독립 배포 단위가 생기면 workspace를 도입합니다.
 - **조합 우선**: 레이아웃 → 기본 컴포넌트 → 반복 패턴 → 화면 예제로 확장합니다. 모든 화면을 하나의 거대한 설정 객체로 표현하지 않습니다.
-- **브라우저 기본 동작**: 폼은 네이티브 요소, 모달은 네이티브 `<dialog>`의 `showModal()`을 사용합니다. Combobox는 네이티브 datalist이며, Popover는 로컬 배치로 viewport 충돌 자동 보정은 제공하지 않습니다.
+- **브라우저 기본 동작**: 폼은 네이티브 요소, 모달은 네이티브 `<dialog>`의 `showModal()`을 사용합니다. AutoComplete는 native datalist, Combobox는 제어 가능한 listbox를 사용하며 Menu와 Popover는 viewport 경계에 맞춰 위치를 보정합니다.
 - **문서 우선 AI 지원**: `llms.txt`는 문서 인덱스이며 MCP 서버가 아닙니다. 현재 가이드로 사용법을 전달하고, 실제 검색/조회 수요가 생기면 같은 문서를 제공하는 MCP를 추가합니다.
 
 ## 문서

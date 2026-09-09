@@ -1,6 +1,7 @@
 import {
   useEffect,
   useId,
+  useRef,
   useState,
   type ComponentPropsWithRef,
   type MouseEventHandler,
@@ -8,6 +9,8 @@ import {
 } from 'react';
 import {
   Button,
+  Checkbox,
+  Chip,
   Field,
   IconButton,
   Input,
@@ -339,6 +342,8 @@ export interface DateRangePickerProps extends Omit<
   endName: string;
   startProps?: DateRangePartProps;
   endProps?: DateRangePartProps;
+  presets?: readonly { label: string; start: string; end: string }[];
+  error?: ReactNode;
   onValueChange?: (value: { start: string; end: string }) => void;
 }
 
@@ -350,11 +355,15 @@ export function DateRangePicker({
   endName,
   startProps,
   endProps,
+  presets = [],
+  error,
   onValueChange,
   className = '',
+  ref,
   ...props
 }: DateRangePickerProps) {
   const id = useId();
+  const groupRef = useRef<HTMLFieldSetElement>(null);
   const report = (field: HTMLInputElement) => {
     const group = field.closest('fieldset');
     onValueChange?.({
@@ -368,8 +377,44 @@ export function DateRangePicker({
   };
 
   return (
-    <fieldset {...props} className={`mega-date-range-picker ${className}`}>
+    <fieldset
+      {...props}
+      ref={(node) => {
+        groupRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      }}
+      className={`mega-date-range-picker ${className}`}
+      aria-describedby={error ? `${id}-error` : props['aria-describedby']}
+    >
       <legend>{label}</legend>
+      {presets.length ? (
+        <div className="mega-date-range-picker__presets">
+          {presets.map((preset) => (
+            <Button
+              key={`${preset.label}-${preset.start}-${preset.end}`}
+              type="button"
+              size="sm"
+              variant="weak"
+              onClick={() => {
+                const start = groupRef.current?.querySelector<HTMLInputElement>(
+                  '[data-mega-range-start]',
+                );
+                const end = groupRef.current?.querySelector<HTMLInputElement>(
+                  '[data-mega-range-end]',
+                );
+                if (start && startProps?.value === undefined)
+                  start.value = preset.start;
+                if (end && endProps?.value === undefined)
+                  end.value = preset.end;
+                onValueChange?.({ start: preset.start, end: preset.end });
+              }}
+            >
+              {preset.label}
+            </Button>
+          ))}
+        </div>
+      ) : null}
       <label htmlFor={startProps?.id ?? `${id}-start`}>
         <span>{startLabel}</span>
         <DatePicker
@@ -377,6 +422,7 @@ export function DateRangePicker({
           id={startProps?.id ?? `${id}-start`}
           name={startName}
           data-mega-range-start=""
+          max={startProps?.max ?? endProps?.value?.toString()}
           onChange={(event) => {
             startProps?.onChange?.(event);
             if (!event.defaultPrevented) report(event.currentTarget);
@@ -390,12 +436,14 @@ export function DateRangePicker({
           id={endProps?.id ?? `${id}-end`}
           name={endName}
           data-mega-range-end=""
+          min={endProps?.min ?? startProps?.value?.toString()}
           onChange={(event) => {
             endProps?.onChange?.(event);
             if (!event.defaultPrevented) report(event.currentTarget);
           }}
         />
       </label>
+      {error ? <FormError id={`${id}-error`}>{error}</FormError> : null}
     </fieldset>
   );
 }
@@ -584,9 +632,129 @@ export function RadioGroup({
   );
 }
 
-export type MultiSelectProps = Omit<ListboxProps, 'multiple'>;
+export interface MultiSelectOption {
+  label: string;
+  value: string;
+  disabled?: boolean;
+}
+export interface SearchableMultiSelectProps extends Omit<
+  ComponentPropsWithRef<'fieldset'>,
+  'children' | 'defaultValue' | 'onChange'
+> {
+  label: string;
+  name: string;
+  options: readonly MultiSelectOption[];
+  value?: readonly string[];
+  defaultValue?: readonly string[];
+  onValueChange?: (value: string[]) => void;
+  searchable?: boolean;
+  maxSelected?: number;
+  searchLabel?: string;
+  clearLabel?: string;
+}
+export type MultiSelectProps =
+  Omit<ListboxProps, 'multiple'> | SearchableMultiSelectProps;
+
+function SearchableMultiSelect({
+  label,
+  name,
+  options,
+  value,
+  defaultValue = [],
+  onValueChange,
+  searchable = true,
+  maxSelected = Infinity,
+  searchLabel = '옵션 검색',
+  clearLabel = '전체 해제',
+  className = '',
+  ...props
+}: SearchableMultiSelectProps) {
+  const [internal, setInternal] = useState([...defaultValue]);
+  const [query, setQuery] = useState('');
+  const selected = [...(value ?? internal)];
+  const visible = options.filter((option) =>
+    option.label.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+  );
+  const update = (next: string[]) => {
+    if (value === undefined) setInternal(next);
+    onValueChange?.(next);
+  };
+  return (
+    <fieldset {...props} className={`mega-multi-select ${className}`}>
+      <legend>{label}</legend>
+      {selected.map((item) => (
+        <input key={item} type="hidden" name={name} value={item} />
+      ))}
+      <div className="mega-multi-select__summary">
+        <span>{selected.length}개 선택</span>
+        {selected.length ? (
+          <Button
+            type="button"
+            size="sm"
+            variant="text"
+            onClick={() => update([])}
+          >
+            {clearLabel}
+          </Button>
+        ) : null}
+      </div>
+      {selected.length ? (
+        <div className="mega-multi-select__chips">
+          {selected.map((item) => (
+            <Chip
+              key={item}
+              size="sm"
+              aria-label={`${options.find((option) => option.value === item)?.label ?? item} 선택 해제`}
+              onClick={() => update(selected.filter((value) => value !== item))}
+            >
+              {options.find((option) => option.value === item)?.label ?? item} ×
+            </Chip>
+          ))}
+        </div>
+      ) : null}
+      {searchable ? (
+        <Input
+          type="search"
+          aria-label={searchLabel}
+          placeholder={searchLabel}
+          value={query}
+          onChange={(event) => setQuery(event.currentTarget.value)}
+        />
+      ) : null}
+      <div className="mega-multi-select__options">
+        {visible.map((option) => {
+          const checked = selected.includes(option.value);
+          return (
+            <Checkbox
+              key={option.value}
+              shape="square"
+              checked={checked}
+              disabled={
+                option.disabled || (!checked && selected.length >= maxSelected)
+              }
+              onChange={() =>
+                update(
+                  checked
+                    ? selected.filter((item) => item !== option.value)
+                    : [...selected, option.value],
+                )
+              }
+            >
+              {option.label}
+            </Checkbox>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 export function MultiSelect(props: MultiSelectProps) {
-  return <Listbox {...props} multiple />;
+  return 'options' in props ? (
+    <SearchableMultiSelect {...props} />
+  ) : (
+    <Listbox {...props} multiple />
+  );
 }
 
 export interface TreeSelectOption {
@@ -647,7 +815,6 @@ export function TreeSelect({ groups, ...props }: TreeSelectProps) {
 
 export {
   AutoComplete as Autocomplete,
-  AutoComplete as Combobox,
   DatePicker as DateInput,
   Field as FormField,
   InputColor as ColorInput,
@@ -660,7 +827,6 @@ export {
 
 export type {
   AutoCompleteProps as AutocompleteProps,
-  AutoCompleteProps as ComboboxProps,
   DatePickerProps as DateInputProps,
   FieldProps as FormFieldProps,
   InputColorProps as ColorInputProps,

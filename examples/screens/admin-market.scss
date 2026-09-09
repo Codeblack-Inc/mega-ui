@@ -364,16 +364,8 @@
   }
 }
 .market-spark {
-  display: block;
-  width: 100%;
-  height: 45px;
+  max-width: none;
   margin-top: 16px;
-  &--up {
-    color: var(--mega-up);
-  }
-  &--down {
-    color: var(--mega-down);
-  }
 }
 .market-tabs {
   overflow-x: auto;

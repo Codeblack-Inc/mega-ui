@@ -1,5 +1,9 @@
 @use 'icons';
 
+.mega-autocomplete::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
 .mega-choice-group,
 .mega-rating {
   display: flex;
@@ -318,5 +322,60 @@
   }
   .mega-knob circle.mega-knob__value {
     stroke: Highlight;
+  }
+}
+.mega-combobox {
+  position: relative;
+
+  > .mega-input {
+    width: 100%;
+    padding-inline-end: 40px;
+  }
+  &__clear {
+    position: absolute;
+    inset-block-start: 7px;
+    inset-inline-end: 8px;
+    border: 0;
+    background: transparent;
+    color: var(--mega-muted);
+    cursor: pointer;
+    font: inherit;
+  }
+  &__listbox {
+    position: absolute;
+    z-index: 20;
+    inset-block-start: calc(100% + var(--mega-space-1));
+    inset-inline: 0;
+    display: grid;
+    max-height: 240px;
+    overflow: auto;
+    padding: var(--mega-space-1);
+    border: 1px solid var(--mega-border);
+    border-radius: var(--mega-radius-md);
+    background: var(--mega-surface-raised);
+    box-shadow: var(--mega-shadow-md);
+  }
+  &__listbox > button {
+    display: grid;
+    gap: var(--mega-space-1);
+    padding: var(--mega-space-2) var(--mega-space-3);
+    border: 0;
+    border-radius: var(--mega-radius-sm);
+    background: transparent;
+    color: var(--mega-text);
+    cursor: pointer;
+    font: inherit;
+    text-align: start;
+  }
+  &__listbox > button[data-active],
+  &__listbox > button:hover {
+    background: var(--mega-fill-hover);
+  }
+  &__listbox small,
+  &__listbox > [role='status'] {
+    color: var(--mega-muted);
+  }
+  &__listbox > [role='status'] {
+    padding: var(--mega-space-3);
   }
 }

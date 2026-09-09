@@ -78,6 +78,17 @@
   flex: 1;
   min-width: 0;
 }
+.mega-app-shell[data-independent-scroll] {
+  height: 100dvh;
+  overflow: hidden;
+  > .mega-app-shell__body {
+    min-height: 0;
+  }
+  > .mega-app-shell__body > aside,
+  > .mega-app-shell__body > .mega-app-shell__content {
+    overflow: auto;
+  }
+}
 @media (max-width: 600px) {
   .mega-app-shell__body {
     flex-direction: column;

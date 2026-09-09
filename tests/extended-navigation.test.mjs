@@ -54,8 +54,17 @@ test('extended components preserve native and ARIA semantics on the server', () 
       }),
       h(
         ui.Popover,
-        { label: 'More', trigger: h('button', null, 'More') },
+        {
+          label: 'More',
+          defaultOpen: true,
+          trigger: h('button', null, 'More'),
+        },
         'Content',
+      ),
+      h(
+        ui.Menu,
+        { defaultOpen: true, trigger: h('button', null, 'Actions') },
+        h(ui.MenuItem, null, 'Edit'),
       ),
       h(ui.CommandPalette, {
         open: false,
@@ -73,6 +82,8 @@ test('extended components preserve native and ARIA semantics on the server', () 
   assert.match(html, /data-progress="2\/2"/);
   assert.match(html, /aria-label="Primary"/);
   assert.match(html, /aria-haspopup="dialog"/);
+  assert.match(html, /role="dialog"[^>]*aria-label="More"/);
+  assert.match(html, /role="menu"/);
   assert.match(html, /role="progressbar"[^>]*aria-valuenow="25"/);
   assert.match(html, /role="status"[^>]*aria-label="로딩 중"/);
   assert.match(html, /mega-result--danger/);

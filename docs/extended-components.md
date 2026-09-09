@@ -21,7 +21,7 @@
 | ScrollArea                   | 필수 `label`, `maxHeight` 기본 320. 키보드로 포커스·스크롤 가능                                                        |
 | SplitPane                    | `first`, `second`, 필수 `label`, defaultSize 50%, min 15/max 85. 네이티브 슬라이더로 비율 조절; 모바일에서는 세로 배치 |
 | ResizablePanel               | 필수 `label`, direction horizontal/vertical/both. 브라우저 resize 핸들 또는 패널 포커스 후 방향키로 16px 조절          |
-| AppShell                     | `header`, `sidebar`, `footer`, children. 중첩 main을 만들지 않으며 소비 앱이 main 제공                                 |
+| AppShell                     | `header`, `sidebar`, `footer`, children, `independentScroll`. 중첩 main을 만들지 않으며 소비 앱이 main 제공            |
 | PageLayout                   | `header`, `footer`, children을 section 안에 세로 배치                                                                  |
 
 ## 콘텐츠
