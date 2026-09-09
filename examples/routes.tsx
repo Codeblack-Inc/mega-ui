@@ -1,3 +1,4 @@
+import taskBoardSource from './screens/task-board.tsx?raw';
 import chartsSource from './screens/charts.tsx?raw';
 const LazyChartsExample = lazy(() =>
   import('./screens/charts').then((module) => ({
@@ -86,6 +87,16 @@ import {
   SettlementReconciliationExample,
 } from './screens/operations';
 import operationsSource from './screens/operations.tsx?raw';
+import {
+  ContractReviewExample,
+  SupportConsoleExample,
+} from './screens/workbench';
+import workbenchSource from './screens/workbench.tsx?raw';
+import {
+  AnalyticsWorkbenchExample,
+  InventoryIntakeExample,
+} from './screens/analytics';
+import analyticsSource from './screens/analytics.tsx?raw';
 
 /** Size of the requested component list this library set out to cover. */
 export const componentCount = 150;
@@ -339,13 +350,13 @@ export const exampleGroups: ExampleGroup[] = [
       },
       {
         id: 'board',
-        label: '프로젝트 보드',
-        title: '보드·목록·타임라인, 하나의 프로젝트',
+        label: '작업 보드',
+        title: '카드·구획·작업 제한을 다루는 팀 보드',
         description:
-          '칸반으로 옮기고, 표로 정렬하고, 간트로 일정을 살펴보는 협업 화면이에요.',
+          '카드와 열을 편집하고, 드래그로 정렬하고, 저장한 보드를 다시 불러와요.',
         wide: true,
         Component: ProjectBoardExample,
-        source: withIcons(workSource),
+        source: taskBoardSource,
       },
       {
         id: 'calendar',
@@ -376,6 +387,54 @@ export const exampleGroups: ExampleGroup[] = [
         wide: true,
         Component: DriveExample,
         source: withIcons(workSource),
+      },
+    ],
+  },
+  {
+    key: 'workbench',
+    label: '복합 워크스페이스',
+    description:
+      '분할 화면, 중첩 조건, 대량 편집처럼 한 화면에서 여러 흐름을 다루는 예제예요.',
+    items: [
+      {
+        id: 'support-console',
+        label: '문의 콘솔',
+        title: '키보드로 훑는 고객 문의 콘솔',
+        description:
+          '분할 화면, 1,240건 가상 목록, 우클릭 메뉴, 명령 팔레트, 낙관적 저장과 되돌리기를 담았어요.',
+        wide: true,
+        Component: SupportConsoleExample,
+        source: withIcons(workbenchSource),
+      },
+      {
+        id: 'analytics-workbench',
+        label: '분석 워크벤치',
+        title: '중첩 조건으로 12,000건 뜯어보기',
+        description:
+          'AND·OR 중첩 쿼리 빌더, 차원 선택, 피벗·차트·원본 표를 세그먼트로 저장해요.',
+        wide: true,
+        Component: AnalyticsWorkbenchExample,
+        source: withIcons(analyticsSource),
+      },
+      {
+        id: 'inventory-intake',
+        label: '입고 시트',
+        title: '붙여넣고 검증하는 입고 등록',
+        description:
+          '스프레드시트 편집, 셀 단위 검증, 대량 붙여넣기, 부분 실패 저장과 되돌리기예요.',
+        wide: true,
+        Component: InventoryIntakeExample,
+        source: withIcons(analyticsSource),
+      },
+      {
+        id: 'contract-review',
+        label: '계약 검토',
+        title: '원문·코멘트·승인을 한 화면에서',
+        description:
+          'PDF 원문과 버전 비교, 코멘트 스레드, 반려 사유 검증과 승인 단계를 담았어요.',
+        wide: true,
+        Component: ContractReviewExample,
+        source: withIcons(workbenchSource),
       },
     ],
   },

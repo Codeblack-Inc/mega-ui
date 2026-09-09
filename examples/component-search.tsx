@@ -9,7 +9,7 @@ const destinations = [
       id: `${category.key}-${name}`,
       label: name,
       description: `컴포넌트 · ${category.label}`,
-      keywords: category.description,
+      keywords: `${category.description} ${name === 'TaskBoard' ? 'Kanban 칸반 작업 보드' : ''}`,
       href: `#components/${category.key}?to=${encodeURIComponent(name)}`,
     })),
   ),

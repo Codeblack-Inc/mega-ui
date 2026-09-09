@@ -7,7 +7,6 @@ import {
   DataTable,
   EditableTable,
   Gantt,
-  Kanban,
   OrganizationChart,
   PivotTable,
   PropertyGrid,
@@ -18,7 +17,6 @@ import {
   TreeTable,
   VirtualTable,
   type DataColumn,
-  type KanbanColumn,
 } from '@mega-ui/react';
 import { CategoryCards } from './shell';
 
@@ -30,7 +28,6 @@ export const enterpriseNames = [
   'PivotTable',
   'PropertyGrid',
   'DataGrid',
-  'Kanban',
   'Calendar',
   'Scheduler',
   'Gantt',
@@ -79,21 +76,6 @@ export function EnterpriseCategory() {
     ['제품', '수량', '단가'],
     ['베이직', 12, 19000],
     ['프로', 7, 39000],
-  ]);
-  const [board, setBoard] = useState<KanbanColumn[]>([
-    {
-      id: 'todo',
-      title: '할 일',
-      cards: [
-        { id: 'k1', title: '접근성 검토', description: '키보드 흐름 확인' },
-      ],
-    },
-    {
-      id: 'doing',
-      title: '진행 중',
-      cards: [{ id: 'k2', title: '테이블 문서화' }],
-    },
-    { id: 'done', title: '완료', cards: [] },
   ]);
 
   const demos: Record<(typeof enterpriseNames)[number], ReactNode> = {
@@ -215,31 +197,6 @@ export function EnterpriseCategory() {
           onSelectionChange={setSelectedRows}
         />
       </Stack>
-    ),
-    Kanban: (
-      <div className="demo-overflow">
-        <Kanban
-          columns={board}
-          onMove={(cardId, from, to) =>
-            setBoard((columns) => {
-              const card = columns
-                .find((column) => column.id === from)
-                ?.cards.find((item) => item.id === cardId);
-              if (!card) return columns;
-              return columns.map((column) =>
-                column.id === from
-                  ? {
-                      ...column,
-                      cards: column.cards.filter((item) => item.id !== cardId),
-                    }
-                  : column.id === to
-                    ? { ...column, cards: [...column.cards, card] }
-                    : column,
-              );
-            })
-          }
-        />
-      </div>
     ),
     Calendar: (
       <Calendar

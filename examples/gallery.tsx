@@ -20,7 +20,7 @@ export function GalleryPage() {
     <Stack gap={6}>
       <PageHeader
         title="컴포넌트만으로 만든 실제 화면"
-        description="금융, 계정, 업무, 커머스, AI까지. 소스 코드를 그대로 복사해 시작하세요."
+        description="금융, 계정, 업무, 복합 워크스페이스, 커머스, AI까지. 소스 코드를 그대로 복사해 시작하세요."
         actions={<Badge tone="brand">전체 {examples.length}개</Badge>}
       />
       <Stack direction="row" gap={2} wrap role="group" aria-label="분야 필터">

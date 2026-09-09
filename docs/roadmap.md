@@ -3,18 +3,18 @@
 목표는 사내 웹 대부분을 라이브러리 조합으로 구현하는 것입니다. 아래 순서는 제안이며,
 실제 제품 화면의 반복 빈도와 요구를 기준으로 우선순위를 조정합니다.
 
-| 단계              | 범위                                                                                                 | 상태                                         |
-| ----------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| 0. 기반           | 빌드/타입/CSS 배포, 213개 런타임 export, 토스 실측 토큰(light/dark), 28개 화면 예제, AI 가이드       | 구현됨                                       |
-| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                                            | 구현됨                                       |
-| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                                           | 구현됨                                       |
-| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner                    | 구현됨                                       |
-| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                                       | 구현됨                                       |
-| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                               | 구현됨                                       |
-| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                           | 구현됨                                       |
-| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                                     | 예정                                         |
-| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                      | 예정                                         |
-| 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Gantt Chart, Diagram, Spreadsheet, PDF Viewer | DataGridPro · Text Editor · Charts 기능 구현 |
+| 단계              | 범위                                                                                                 | 상태                                                     |
+| ----------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 0. 기반           | 빌드/타입/CSS 배포, 213개 런타임 export, 토스 실측 토큰(light/dark), 28개 화면 예제, AI 가이드       | 구현됨                                                   |
+| 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                                            | 구현됨                                                   |
+| 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                                           | 구현됨                                                   |
+| 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner                    | 구현됨                                                   |
+| 2b. 확장 입력     | Combobox (datalist), FileUpload (파일 선택 UI)                                                       | 구현됨                                                   |
+| 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                               | 구현됨                                                   |
+| 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                           | 구현됨                                                   |
+| 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                                     | 예정                                                     |
+| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                      | 예정                                                     |
+| 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Gantt Chart, Diagram, Spreadsheet, PDF Viewer | DataGridPro · Text Editor · Charts · TaskBoard 기능 구현 |
 
 ## 전문 업무 기능 지원 목표
 
@@ -27,7 +27,7 @@
 | Scheduler   | 날짜별 시간순 목록, 일정 클릭                                        | 일·주·월·리소스 뷰, 생성·수정·삭제, 드래그 이동·기간 조절, 겹침 배치, 반복과 개별 예외, 시간대·DST, 업무 시간·예약 충돌 검증, 일정 가져오기·내보내기         |
 | Text Editor | TextEditor: 표·이미지·블록·Markdown·JSON 저장/복원                   | 문단·서식·목록·링크·표·이미지·블록 편집, Markdown 변환, 붙여넣기 정제, 한글 IME, undo/redo, 문서 직렬화·복원, 저장 실패 시 내용 보존                         |
 | Charts      | ChartPro 전체 목표 유형·시간/이중 축·드래그 탐색·표·PNG/SVG/CSV 구현 | 다중 계열·축·범례·툴팁, 막대·선·영역·원형·산점·히트맵·트리맵·금융 차트, 확대·이동·구간 선택, 결측·음수·시간축 처리, 데이터 대체 표현, 이미지·데이터 내보내기 |
-| Task Board  | Kanban의 열·카드 표시와 인접 열 이동 버튼                            | 열·카드 생성·편집·삭제, 열 안/사이 드래그 정렬, 키보드 이동, swimlane, WIP 제한, 필터·담당자·기한, 사용자 카드 렌더링, 순서·상태 저장과 복원                 |
+| Task Board  | TaskBoard CRUD·정렬·구획·WIP·필터·저장/JSON, Kanban 통합             | 열·카드 생성·편집·삭제, 열 안/사이 드래그 정렬, 키보드 이동, swimlane, WIP 제한, 필터·담당자·기한, 사용자 카드 렌더링, 순서·상태 저장과 복원                 |
 | Data Grid   | 별도 DataGridPro에 편집·검증·범위·그룹·트리·가상화·서버 저장 통합    | 정렬·필터·편집·선택·가상화의 통합, 열 크기·순서·고정·숨김, 범위 선택·복사·붙여넣기, 그룹·집계·트리, 서버 조회·페이지 연결, 검증·취소·일괄 저장, CSV 내보내기 |
 | Gantt Chart | 날짜 범위의 작업 막대와 진행률 표시                                  | 작업 계층·마일스톤, 이동·기간 조절, FS/SS/FF/SF 의존성·지연, 순환 검증, 작업 달력, 일정 재계산·critical path, 기준 일정·리소스, 확대·내보내기                |
 | Diagram     | 범용 편집기 없음; OrganizationChart는 계층 목록                      | 노드·포트·엣지 생성·연결·편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·엣지 경로, undo/redo, 직렬화·복원·내보내기                      |
@@ -71,6 +71,14 @@ Charts의 구현 범위는 아래와 같습니다.
 세 전문 영역은 컴포넌트 카탈로그 `#components/professional`과 글로벌 검색에도 등록했습니다.
 로드맵에 명시한 Charts 기능을 구현했습니다. `tests/chart-pro.test.mjs`와 `tests/browser/chart-pro.spec.ts`에서
 유형·데이터 검증·DST·실제 포인터 조작·내보내기를 검사합니다. 실제 스크린 리더와 실기기 터치의 수동 검증은 별도로 남습니다.
+
+### 네 번째 구현: TaskBoard
+
+`TaskBoard`에 열·카드·구획 CRUD, Pointer Events 드래그/키보드 정렬, WIP 제한, 검색·담당자·기한,
+사용자 카드 렌더링과 버전 1 JSON 저장/복원을 구현했습니다. 저장 실패·재시도·저장 중 편집·실행 취소를 처리합니다.
+기존 Kanban 마크업/스타일과 프로젝트 보드의 중복 구현은 제거하고, Kanban은 호환 어댑터만 남겼습니다.
+[API와 검증 범위](./task-board.md), `/#board?full=1`, 전문 컴포넌트 카탈로그, 모델·브라우저 검사가 근거입니다.
+실제 스크린 리더·모바일 하드웨어·OS IME의 수동 검증은 별도이며, 다음 전문 영역은 Scheduler입니다.
 
 ### 전문 기능 완료 기준
 

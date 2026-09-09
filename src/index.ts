@@ -228,3 +228,18 @@ export * from './components/enterprise';
 export * from './components/extended-inputs';
 export * from './components/advanced-patterns';
 export * from './components/icons';
+
+export { TaskBoard, type TaskBoardProps } from './components/task-board';
+export {
+  validateTaskBoard,
+  updateTaskBoard,
+  serializeTaskBoard,
+  parseTaskBoard,
+  isTaskBoardDate,
+  type TaskBoardData,
+  type TaskBoardCard,
+  type TaskBoardColumn,
+  type TaskBoardLane,
+  type TaskBoardAssignee,
+  type TaskBoardAction,
+} from './components/task-board-model';

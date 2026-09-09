@@ -1,3 +1,4 @@
+import { TaskBoardDemo } from '../screens/task-board';
 import { ChartProDemo } from '../chart-pro-demos';
 import { useState } from 'react';
 import { Checkbox, Select, Stack, Text } from '@mega-ui/react';
@@ -42,8 +43,15 @@ export function ProfessionalCategory() {
           'CartesianChart',
           'PieChart',
           'ChartPro',
+          'TaskBoard',
         ]}
         notes={{
+          TaskBoard: (
+            <>
+              <a href="./task-board.md">작업 보드 API</a> ·{' '}
+              <a href="#board?full=1">작업 보드 전체 예제 열기</a>
+            </>
+          ),
           ChartPro: (
             <>
               <a href="./charts.md">전문 차트 API</a> ·{' '}
@@ -76,6 +84,7 @@ export function ProfessionalCategory() {
           ),
         }}
         demos={{
+          TaskBoard: <TaskBoardDemo />,
           ChartPro: <ChartProDemo />,
           PieChart: (
             <Stack gap={3}>

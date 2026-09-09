@@ -249,7 +249,12 @@ function SupportConsole() {
     setPendingTicket(null);
     if (!target) return;
     setDraft('');
-    setIndex(Math.max(0, rows.findIndex((row) => row.id === target.id)));
+    setIndex(
+      Math.max(
+        0,
+        rows.findIndex((row) => row.id === target.id),
+      ),
+    );
   };
 
   /** 낙관적 상태 변경. 세 번째 요청마다 거절되고 이전 상태로 되돌립니다. */
@@ -274,7 +279,8 @@ function SupportConsole() {
         return;
       }
       toast({
-        title: `${ticket.id} 상태를 ${next}로 저장했어요`,
+        title: `${ticket.id} 상태를 저장했어요`,
+        description: `${next} 상태로 바꿨어요.`,
         tone: 'success',
       });
     }, 600);
@@ -592,11 +598,14 @@ function SupportConsole() {
                         key={status}
                         onSelect={() => changeStatus(current, status)}
                       >
-                        {status}로 바꾸기
+                        {status} 상태로 바꾸기
                       </MenuItem>
                     ))}
                   </Menu>
-                  <Button size="sm" onClick={() => changeStatus(current, '완료')}>
+                  <Button
+                    size="sm"
+                    onClick={() => changeStatus(current, '완료')}
+                  >
                     완료 처리
                   </Button>
                 </Stack>
@@ -618,7 +627,11 @@ function SupportConsole() {
                 value={tab}
                 onValueChange={setTab}
               />
-              <TabPanel tabsId="cs-tabs" value="thread" active={tab === 'thread'}>
+              <TabPanel
+                tabsId="cs-tabs"
+                value="thread"
+                active={tab === 'thread'}
+              >
                 <Chat label={`${current.id} 대화`} className="cs-thread">
                   {thread.map((message) => (
                     <MessageBubble
@@ -635,7 +648,9 @@ function SupportConsole() {
                       key={reply.id}
                       author="상담사 정민지"
                       side="end"
-                      time={sending.includes(reply.id) ? '보내는 중' : reply.time}
+                      time={
+                        sending.includes(reply.id) ? '보내는 중' : reply.time
+                      }
                     >
                       {reply.text}
                     </MessageBubble>
@@ -722,8 +737,13 @@ function SupportConsole() {
                   >
                     메모 저장
                   </Button>
-                  <Text size="sm" tone={memo === savedMemo ? 'muted' : 'danger'}>
-                    {memo === savedMemo ? '저장된 메모예요' : '저장하지 않은 변경이 있어요'}
+                  <Text
+                    size="sm"
+                    tone={memo === savedMemo ? 'muted' : 'danger'}
+                  >
+                    {memo === savedMemo
+                      ? '저장된 메모예요'
+                      : '저장하지 않은 변경이 있어요'}
                   </Text>
                 </Stack>
               </TabPanel>
@@ -731,7 +751,8 @@ function SupportConsole() {
           ) : (
             <Card className="cs-panel" padding="sm">
               <Text tone="muted">
-                검색 결과가 없어요. 검색어를 지우면 전체 문의를 다시 볼 수 있어요.
+                검색 결과가 없어요. 검색어를 지우면 전체 문의를 다시 볼 수
+                있어요.
               </Text>
             </Card>
           )
@@ -988,14 +1009,16 @@ function ContractReview() {
       ...items,
     ]);
     toast({
-      title: `${approvalSteps[step]?.label}을 승인했어요`,
+      title: `${approvalSteps[step]?.label} 단계를 승인했어요`,
       tone: 'success',
     });
   };
 
   const reject = () => {
     if (rejectReason.trim().length < 10) {
-      setRejectError('반려 사유를 10자 이상 적어 주세요. 작성자에게 그대로 전달돼요.');
+      setRejectError(
+        '반려 사유를 10자 이상 적어 주세요. 작성자에게 그대로 전달돼요.',
+      );
       return;
     }
     setRejectError('');
@@ -1042,9 +1065,15 @@ function ContractReview() {
           <Text size="sm" tone="muted">
             연 48,000,000원 · 12개월 · 자동 갱신(거절 통보 60일 전)
           </Text>
-          <Button size="sm" onClick={approve}>
-            {approvalSteps[step]?.label} 승인
-          </Button>
+          {step < approvalSteps.length - 1 ? (
+            <Button size="sm" onClick={approve}>
+              승인하고 다음 단계로
+            </Button>
+          ) : (
+            <Text size="sm" tone="muted">
+              마지막 단계예요. 서명 요청 보내기로 마무리해요.
+            </Text>
+          )}
         </Stack>
       </Card>
       <SplitPane
@@ -1078,7 +1107,11 @@ function ContractReview() {
                   PDF예요.
                 </Text>
                 {contractDiff.map((row) => (
-                  <div key={row.id} className="ct-diff__row" data-kind={row.kind}>
+                  <div
+                    key={row.id}
+                    className="ct-diff__row"
+                    data-kind={row.kind}
+                  >
                     <div>
                       <Text size="xs" tone="muted">
                         v2
@@ -1099,7 +1132,16 @@ function ContractReview() {
                 className="ct-pdf"
                 src={pdfUrl}
                 label={`표준 용역 계약서 ${version} 영문본`}
-              />
+              >
+                <Stack gap={2}>
+                  <Text size="sm">
+                    이 브라우저에서는 PDF를 바로 열지 못해요.
+                  </Text>
+                  <a href={pdfUrl} download="contract-v3.pdf">
+                    계약서 내려받기
+                  </a>
+                </Stack>
+              </PDFViewer>
             ) : (
               <Text tone="muted" role="status">
                 문서를 준비하고 있어요.
@@ -1113,7 +1155,11 @@ function ContractReview() {
               id="ct-tabs"
               label="검토 패널"
               items={[
-                { value: 'comments', label: '코멘트', badge: open || undefined },
+                {
+                  value: 'comments',
+                  label: '코멘트',
+                  badge: open || undefined,
+                },
                 { value: 'history', label: '승인 이력' },
                 { value: 'files', label: '첨부' },
               ]}
@@ -1181,7 +1227,10 @@ function ContractReview() {
               </Popover>
               <ul className="ct-comments">
                 {comments.map((comment) => (
-                  <li key={comment.id} data-resolved={comment.resolved || undefined}>
+                  <li
+                    key={comment.id}
+                    data-resolved={comment.resolved || undefined}
+                  >
                     <Stack direction="row" gap={2} align="center" wrap>
                       <Text as="span" size="sm" weight="semibold">
                         {comment.author}

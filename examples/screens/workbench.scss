@@ -1,0 +1,299 @@
+/* 고객 문의 콘솔 · 계약 검토 · 분석 워크벤치 · 입고 시트 */
+
+.cs-screen,
+.ct-screen,
+.bi-screen,
+.stock-screen {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  padding: 24px;
+  border-block: 1px solid var(--mega-border);
+  background: var(--mega-bg);
+  font-size: 14px;
+  .mega-card {
+    border: 1px solid var(--mega-border);
+    box-shadow: none;
+  }
+}
+
+.cs-kpis,
+.bi-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.bi-kpis {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.cs-split,
+.ct-split {
+  min-width: 0;
+}
+.cs-panel,
+.ct-panel {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+  height: 100%;
+}
+
+/* 문의 목록 */
+.cs-list__head {
+  display: grid;
+  gap: 8px;
+  padding: 4px 4px 0;
+}
+.cs-list__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 4px 4px;
+}
+.cs-list .mega-virtual-table {
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+}
+.cs-list td {
+  vertical-align: middle;
+}
+.cs-list tr:has(.cs-row[aria-current]) {
+  background: var(--mega-brand-soft);
+}
+.cs-row {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.cs-row__subject {
+  overflow: hidden;
+  color: var(--mega-text-strong);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cs-row__meta {
+  color: var(--mega-text-secondary);
+  font-size: 12px;
+}
+.cs-row[aria-current] .cs-row__subject {
+  color: var(--mega-brand-strong);
+}
+
+/* 문의 상세 */
+.cs-detail__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cs-customer {
+  border-bottom: 1px dashed var(--mega-border);
+  color: var(--mega-text-strong);
+  font-weight: 600;
+}
+.cs-thread {
+  max-height: 260px;
+  overflow-y: auto;
+}
+.cs-macros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 계약 검토 */
+.ct-flow {
+  display: grid;
+  gap: 12px;
+}
+.ct-doc__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ct-pdf {
+  width: 100%;
+  height: 460px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+  background: var(--mega-fill);
+}
+.ct-diff {
+  display: grid;
+  gap: 10px;
+}
+.ct-diff__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+}
+.ct-diff__row[data-kind='changed'] {
+  border-color: var(--mega-warning);
+}
+.ct-diff__row[data-kind='added'] {
+  border-color: var(--mega-success);
+}
+.ct-diff__row[data-kind='removed'] {
+  border-color: var(--mega-danger);
+}
+.ct-comments {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ct-comments li {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+}
+.ct-comments li[data-resolved] {
+  background: var(--mega-grey-50);
+}
+.ct-quote {
+  border-left: 2px solid var(--mega-border);
+  padding-left: 8px;
+}
+
+/* 분석 워크벤치 */
+.bi-segments {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.bi-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.bi-builder,
+.bi-result {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  align-content: start;
+}
+.bi-controls {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.bi-group {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+}
+.bi-group[data-depth='1'] {
+  background: var(--mega-grey-50);
+}
+.bi-group legend {
+  color: var(--mega-text-secondary);
+  font-size: 12px;
+}
+.bi-nodes {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bi-condition {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.2fr) auto;
+  gap: 6px;
+  align-items: center;
+}
+.bi-pivot,
+.bi-explorer {
+  overflow-x: auto;
+}
+
+/* 입고 시트 */
+.stock-card {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.stock-sheet {
+  overflow: auto;
+  max-height: 420px;
+  border: 1px solid var(--mega-border);
+  border-radius: var(--mega-radius-md);
+}
+.stock-sheet input {
+  min-width: 120px;
+}
+.stock-errors {
+  display: grid;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.stock-errors li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.stock-item {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .cs-screen,
+  .ct-screen,
+  .bi-screen,
+  .stock-screen {
+    padding: 16px;
+  }
+  .cs-kpis,
+  .bi-kpis,
+  .bi-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bi-layout,
+  .stock-item,
+  .ct-diff__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bi-condition {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .cs-thread {
+    max-height: 220px;
+  }
+  .ct-pdf {
+    height: 320px;
+  }
+}

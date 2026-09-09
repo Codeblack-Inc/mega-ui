@@ -29,7 +29,7 @@ const columns = [
 | 111  | `PivotTable`        | `rowKey`, `columnKey`, `valueKey`, `sum`/`count`/`average` 집계               | 다중 차원·사용자 정의 수식 엔진 없음                   |
 | 112  | `PropertyGrid`      | `items`, 항목별 `editable`, `onValueChange`                                   | 값 타입별 전용 편집기는 직접 `value`로 합성            |
 | 113  | `DataGrid`          | 행 다중 선택, 부분 선택, 제어형/비제어형 정렬, 방향키 셀 이동                 | 클립보드·범위 선택 없음                                |
-| 114  | `Kanban`            | 열/카드 렌더, `onMove(cardId, from, to)` 이동 요청                            | 드래그앤드롭 대신 키보드 접근 가능한 이동 버튼 사용    |
+| 114  | `Kanban`            | `TaskBoard`에 위임하는 deprecated 호환 API                                    | 신규 보드는 [TaskBoard](./task-board.md) 사용          |
 | 115  | `Calendar`          | `month`, `events`, `selectedDate`, `onDateSelect`; 6주 달력                   | 반복 일정·시간대 계산 없음                             |
 | 116  | `Scheduler`         | 날짜별 시간순 `appointments`, 클릭 콜백                                       | 겹침 레이아웃과 리소스 용량 계산 없음                  |
 | 117  | `Gantt`             | `start`/`end` 날짜를 실제 범위에 배치, `progress`, 선택적 범위                | dependency/critical-path 계산 없음                     |
@@ -42,3 +42,5 @@ const columns = [
 편집·이동 컴포넌트는 원본 데이터를 직접 바꾸지 않습니다. 콜백에서 애플리케이션 상태를 갱신하면 새 props가 다시 렌더됩니다. `TreeTable`과 `DataGrid`의 선택/확장은 controlled props를 생략할 때만 내부 상태를 사용합니다. DataTable/DataGrid의 `sort`와 `onSortChange`로 서버 정렬 상태를 연결하고, `manual`이면 전달된 페이지를 다시 정렬하거나 검색하지 않습니다. DataGrid의 전체 선택은 현재 전달된 행만 더하거나 빼므로 다른 서버 페이지의 선택 ID를 보존합니다. `VirtualTable`의 유효하지 않은 viewport·행 높이는 안전한 기본값으로 돌아가며, `Gantt`의 유효하지 않은 진행률은 0%로 표시합니다. `Spreadsheet`는 셀 경계의 좌우 방향키 또는 `Alt+방향키`로 셀을 이동하므로 셀 안의 텍스트 커서 이동을 방해하지 않습니다.
 
 고정 행 높이로 충분하지 않거나 수식·critical path·서버 쿼리처럼 도메인 엔진이 필요한 시점에만 전용 엔진을 연결하세요.
+
+`TaskBoard`는 Kanban의 단일 후속 구현입니다. 열·카드 CRUD, 드래그/키보드 정렬, 구획·카드 제한·필터·JSON·저장 복원은 [TaskBoard API](./task-board.md)를 참조하세요.

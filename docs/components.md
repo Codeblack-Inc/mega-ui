@@ -737,3 +737,9 @@ function SaveButton() {
 
 `@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.
+
+## TaskBoard
+
+`TaskBoard`와 `TaskBoardData`·`TaskBoardCard`·`TaskBoardColumn`·`TaskBoardLane`·`TaskBoardAssignee`·`TaskBoardAction`,
+`validateTaskBoard`·`updateTaskBoard`·`serializeTaskBoard`·`parseTaskBoard`·`isTaskBoardDate`는 기본 진입점에서 제공합니다.
+[API](./task-board.md)를 참조하세요. 기존 `Kanban`은 단일 구현에 위임하는 deprecated 호환 래퍼입니다.

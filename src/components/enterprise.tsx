@@ -1,3 +1,4 @@
+import { TaskBoard } from './task-board';
 import {
   useMemo,
   useState,
@@ -5,7 +6,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { Checkbox, IconButton, Input } from './controls';
+import { Checkbox, Input } from './controls';
 import {
   Table,
   TableBody,
@@ -858,79 +859,61 @@ export interface KanbanProps extends BoxProps {
   onMove?: (cardId: string, fromColumnId: string, toColumnId: string) => void;
   label?: string;
 }
+/** @deprecated Use TaskBoard. This adapter retains the legacy callback and ReactNode content. */
 export function Kanban({
   columns,
   onMove,
   label = '칸반 보드',
-  className = '',
   ...props
 }: KanbanProps) {
+  const cards = columns.flatMap((column) =>
+    column.cards.map((card) => ({ ...card, columnId: column.id })),
+  );
   return (
-    <div
+    <TaskBoard
       {...props}
-      className={`mega-kanban ${className}`}
-      role="region"
-      aria-label={label}
-    >
-      {columns.map((column, columnIndex) => (
-        <section
-          key={column.id}
-          className="mega-kanban__column"
-          aria-labelledby={`mega-kanban-${column.id}`}
-        >
-          <h3 id={`mega-kanban-${column.id}`}>
-            {column.title}
-            <span>{column.cards.length}</span>
-          </h3>
-          <ul>
-            {column.cards.map((card) => (
-              <li key={card.id}>
-                <strong>{card.title}</strong>
-                {card.description ? <p>{card.description}</p> : null}
-                {onMove && columns.length > 1 ? (
-                  <div className="mega-kanban__actions">
-                    {columnIndex > 0 ? (
-                      <IconButton
-                        size="sm"
-                        onClick={() =>
-                          onMove(
-                            card.id,
-                            column.id,
-                            columns[columnIndex - 1]!.id,
-                          )
-                        }
-                        label={`${String(card.title)} 이전 열로 이동`}
-                      >
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="m15 6-6 6 6 6" />
-                        </svg>
-                      </IconButton>
-                    ) : null}
-                    {columnIndex < columns.length - 1 ? (
-                      <IconButton
-                        size="sm"
-                        onClick={() =>
-                          onMove(
-                            card.id,
-                            column.id,
-                            columns[columnIndex + 1]!.id,
-                          )
-                        }
-                        label={`${String(card.title)} 다음 열로 이동`}
-                      >
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="m9 6 6 6-6 6" />
-                        </svg>
-                      </IconButton>
-                    ) : null}
-                  </div>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
+      label={label}
+      editable={false}
+      allowReorder={false}
+      showTools={false}
+      value={{
+        version: 1,
+        lanes: [],
+        assignees: [],
+        columns: columns.map((column) => ({
+          id: column.id,
+          title: typeof column.title === 'string' ? column.title : column.id,
+        })),
+        cards: cards.map((card) => ({
+          id: card.id,
+          title: typeof card.title === 'string' ? card.title : card.id,
+          columnId: card.columnId,
+        })),
+      }}
+      renderColumnTitle={(column) =>
+        columns.find((item) => item.id === column.id)?.title
+      }
+      renderCard={(card) => {
+        const source = cards.find((item) => item.id === card.id);
+        return (
+          <>
+            <strong>{source?.title}</strong>
+            {source?.description && <div>{source.description}</div>}
+          </>
+        );
+      }}
+      onChange={
+        onMove
+          ? (_next, action) => {
+              if (action.type === 'move-card') {
+                const card = cards.find((item) => item.id === action.id);
+                if (card && card.columnId !== action.columnId)
+                  onMove(card.id, card.columnId, action.columnId);
+              }
+            }
+          : undefined
+      }
+    />
   );
 }
 

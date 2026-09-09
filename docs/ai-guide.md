@@ -81,6 +81,14 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 컴포넌트 카탈로그의 `#components/professional`에서 그리드·편집기·차트 데모와 API를 함께 찾을 수 있습니다.
 단일 계열의 간단한 표시에는 기존 `BarChart`·`LineChart`·`Sparkline`을 계속 사용합니다.
 
+**작업 보드**
+
+`TaskBoard`는 기존 Kanban의 편집·이동 구현을 통합한 API입니다. [TaskBoard API](./task-board.md)를 먼저 읽습니다.
+`value`와 `onChange`로 제어하며 `onSave`가 있으면 저장 중·실패·재시도를 제공합니다.
+열·카드·구획·담당자·기한을 버전 1 데이터로 전달하고 `parseTaskBoard`로 반입을 검증합니다.
+열의 카드 제한은 필터와 구획에 관계없이 전체 카드 수에 적용합니다. 카드가 있는 열 삭제는 다른 열로 이동해야 합니다.
+새 코드에 deprecated `Kanban`을 추가하지 마세요. 카탈로그의 전문 업무 컴포넌트 → TaskBoard를 사용합니다.
+
 **공통**
 
 강조 안내는 `Banner`, 인라인 경고는 `Alert`, 일시적 완료 알림은 `useToast()`입니다.

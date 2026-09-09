@@ -1,6 +1,5 @@
 // ---------- 업무 화면 공통 ----------
 .users-layout,
-.board-layout,
 .cal-layout,
 .org-layout,
 .drive-layout {
@@ -16,7 +15,6 @@
 }
 
 .users-heading,
-.board-heading,
 .cal-heading {
   display: flex;
   align-items: center;
@@ -65,19 +63,6 @@
     border-radius: var(--mega-radius-2xs);
   }
 }
-// ---------- 프로젝트 보드 ----------
-.board-kanban {
-  overflow-x: auto;
-}
-.board-meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.board-card {
-  overflow-x: auto;
-}
-
 // ---------- 일정 관리 ----------
 .cal-body {
   display: grid;
@@ -239,7 +224,6 @@
 
 @media (max-width: 720px) {
   .users-layout,
-  .board-layout,
   .cal-layout,
   .org-layout,
   .drive-layout {

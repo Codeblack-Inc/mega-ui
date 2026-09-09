@@ -63,15 +63,15 @@ export interface Category {
 export const categories: Category[] = [
   {
     key: 'professional',
-    label: '그리드·편집기·차트',
-    description:
-      '전문 데이터 그리드, 리치 텍스트 편집기와 다중 계열 차트를 사용해 봐요.',
+    label: '전문 업무 컴포넌트',
+    description: '그리드·편집기·차트·작업 보드를 사용해 봐요.',
     names: [
       'DataGridPro',
       'TextEditor',
       'CartesianChart',
       'PieChart',
       'ChartPro',
+      'TaskBoard',
     ],
     Component: ProfessionalCategoryRoute,
     source: professionalSource,

@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import {
   Avatar,
-  AvatarGroup,
   ActiveFilters,
   Badge,
   Breadcrumb,
@@ -14,7 +13,6 @@ import {
   BulkActionBar,
   DataGrid,
   DataPagination,
-  DataTable,
   DatePicker,
   DescriptionList,
   DetailSection,
@@ -27,14 +25,12 @@ import {
   FileUploadList,
   FormActions,
   FormSection,
-  Gantt,
   Grid,
   Heading,
   HoverCard,
   IconButton,
   Input,
   InlineEdit,
-  Kanban,
   ListRow,
   Menu,
   MenuItem,
@@ -46,7 +42,6 @@ import {
   SearchInput,
   SegmentedControl,
   Select,
-  Sheet,
   SideNav,
   SideNavItem,
   SideNavSection,
@@ -58,8 +53,6 @@ import {
   TableHead,
   TableHeaderCell,
   TableRow,
-  TabPanel,
-  Tabs,
   Text,
   TimePicker,
   ToastProvider,
@@ -67,7 +60,6 @@ import {
   useToast,
   type DataColumn,
   type FileUploadItem,
-  type KanbanColumn,
 } from '@mega-ui/react';
 import { ExampleIcon } from '../icons';
 
@@ -480,307 +472,7 @@ function UserManagement() {
 
 // ---------- 프로젝트 보드 ----------
 
-type Task = {
-  id: string;
-  title: string;
-  owner: string;
-  priority: '높음' | '보통' | '낮음';
-  column: string;
-  start: string;
-  end: string;
-  progress: number;
-};
-
-const columnTitles: Record<string, string> = {
-  backlog: '백로그',
-  todo: '할 일',
-  doing: '진행 중',
-  done: '완료',
-};
-
-const seedTasks: Task[] = [
-  [
-    '디자인 토큰 정리',
-    '이하늘',
-    '높음',
-    'done',
-    '2026-09-01',
-    '2026-09-05',
-    100,
-  ],
-  [
-    '버튼 접근성 검토',
-    '김메가',
-    '보통',
-    'done',
-    '2026-09-03',
-    '2026-09-08',
-    100,
-  ],
-  [
-    '테이블 정렬 구현',
-    '박바다',
-    '높음',
-    'doing',
-    '2026-09-07',
-    '2026-09-14',
-    60,
-  ],
-  [
-    '다크 모드 대비 점검',
-    '최서준',
-    '보통',
-    'doing',
-    '2026-09-09',
-    '2026-09-16',
-    30,
-  ],
-  [
-    '문서 사이트 개편',
-    '이하늘',
-    '높음',
-    'doing',
-    '2026-09-10',
-    '2026-09-24',
-    20,
-  ],
-  [
-    '차트 컴포넌트 설계',
-    '오민준',
-    '보통',
-    'todo',
-    '2026-09-15',
-    '2026-09-26',
-    0,
-  ],
-  [
-    '폼 검증 메시지 통일',
-    '정유진',
-    '낮음',
-    'todo',
-    '2026-09-17',
-    '2026-09-22',
-    0,
-  ],
-  ['릴리스 노트 작성', '김메가', '낮음', 'todo', '2026-09-28', '2026-09-30', 0],
-  [
-    '모바일 내비게이션 실험',
-    '한지우',
-    '보통',
-    'backlog',
-    '2026-10-01',
-    '2026-10-10',
-    0,
-  ],
-  [
-    '성능 측정 자동화',
-    '박바다',
-    '낮음',
-    'backlog',
-    '2026-10-05',
-    '2026-10-15',
-    0,
-  ],
-].map(([title, owner, priority, column, start, end, progress], index) => ({
-  id: `t${index + 1}`,
-  title: title as string,
-  owner: owner as string,
-  priority: priority as Task['priority'],
-  column: column as string,
-  start: start as string,
-  end: end as string,
-  progress: progress as number,
-}));
-
-const priorityTone = {
-  높음: 'danger',
-  보통: 'warning',
-  낮음: 'neutral',
-} as const;
-
-const taskColumns: DataColumn<Task>[] = [
-  { key: 'title', header: '작업', sortable: true },
-  { key: 'owner', header: '담당', sortable: true },
-  {
-    key: 'priority',
-    header: '우선순위',
-    sortable: true,
-    render: (_, task) => (
-      <Badge tone={priorityTone[task.priority]}>{task.priority}</Badge>
-    ),
-  },
-  {
-    key: 'column',
-    header: '상태',
-    sortable: true,
-    value: (task) => columnTitles[task.column],
-  },
-  { key: 'end', header: '마감', sortable: true },
-  {
-    key: 'progress',
-    header: '진행률',
-    numeric: true,
-    value: (t) => `${t.progress}%`,
-  },
-];
-
-export function ProjectBoardExample() {
-  const [tasks, setTasks] = useState(seedTasks);
-  const [view, setView] = useState('board');
-  const [adding, setAdding] = useState(false);
-
-  const board: KanbanColumn[] = Object.entries(columnTitles).map(
-    ([id, title]) => ({
-      id,
-      title,
-      cards: tasks
-        .filter((task) => task.column === id)
-        .map((task) => ({
-          id: task.id,
-          title: task.title,
-          description: (
-            <span className="board-meta">
-              <Badge tone={priorityTone[task.priority]}>{task.priority}</Badge>
-              <Avatar name={task.owner} size="xs" /> {task.owner}
-            </span>
-          ),
-        })),
-    }),
-  );
-
-  return (
-    <div className="board-layout">
-      <div className="board-heading">
-        <Stack gap={1}>
-          <Text size="sm" tone="brand" weight="semibold">
-            MEGA UI 2.0
-          </Text>
-          <Heading size="xl">디자인 시스템 개편</Heading>
-        </Stack>
-        <Stack direction="row" gap={3} align="center" wrap>
-          <AvatarGroup max={3}>
-            {['김메가', '이하늘', '박바다', '최서준', '오민준'].map((name) => (
-              <Avatar key={name} name={name} size="sm" />
-            ))}
-          </AvatarGroup>
-          <Tabs
-            id="project-views"
-            label="보기 방식"
-            variant="pill"
-            value={view}
-            onValueChange={setView}
-            items={[
-              { value: 'board', label: '보드' },
-              { value: 'list', label: '목록' },
-              { value: 'timeline', label: '타임라인' },
-            ]}
-          />
-          <Button
-            leading={<ExampleIcon name="plus" />}
-            onClick={() => setAdding(true)}
-          >
-            할 일 추가
-          </Button>
-        </Stack>
-      </div>
-      <TabPanel tabsId="project-views" value="board" active={view === 'board'}>
-        <Kanban
-          label="작업 보드"
-          className="board-kanban"
-          columns={board}
-          onMove={(cardId, _from, to) =>
-            setTasks((list) =>
-              list.map((task) =>
-                task.id === cardId
-                  ? {
-                      ...task,
-                      column: to,
-                      progress: to === 'done' ? 100 : task.progress,
-                    }
-                  : task,
-              ),
-            )
-          }
-        />
-      </TabPanel>
-      <TabPanel tabsId="project-views" value="list" active={view === 'list'}>
-        <Card className="board-card">
-          <DataTable
-            label="작업 목록"
-            rows={tasks}
-            columns={taskColumns}
-            getRowId={(task) => task.id}
-            filterable
-            initialSort={{ key: 'end', direction: 'asc' }}
-          />
-        </Card>
-      </TabPanel>
-      <TabPanel
-        tabsId="project-views"
-        value="timeline"
-        active={view === 'timeline'}
-      >
-        <Card className="board-card">
-          <Gantt
-            label="작업 일정"
-            rangeStart="2026-09-01"
-            rangeEnd="2026-10-15"
-            tasks={tasks.map((task) => ({
-              id: task.id,
-              title: task.title,
-              start: task.start,
-              end: task.end,
-              progress: task.progress,
-            }))}
-          />
-        </Card>
-      </TabPanel>
-
-      <Sheet open={adding} onClose={() => setAdding(false)} title="할 일 추가">
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            const form = new FormData(event.currentTarget);
-            setTasks((list) => [
-              ...list,
-              {
-                id: `t${Date.now()}`,
-                title: String(form.get('title')),
-                owner: '김메가',
-                priority: '보통',
-                column: String(form.get('column')),
-                start: '2026-09-20',
-                end: '2026-09-30',
-                progress: 0,
-              },
-            ]);
-            setAdding(false);
-          }}
-        >
-          <Stack gap={4}>
-            <Field label="작업 이름" htmlFor="task-title" required>
-              <Input id="task-title" name="title" required autoFocus />
-            </Field>
-            <Field label="상태" htmlFor="task-column">
-              <Select id="task-column" name="column" defaultValue="todo">
-                {Object.entries(columnTitles).map(([id, title]) => (
-                  <option key={id} value={id}>
-                    {title}
-                  </option>
-                ))}
-              </Select>
-            </Field>
-            <Button type="submit" size="lg" fullWidth>
-              추가하기
-            </Button>
-          </Stack>
-        </form>
-      </Sheet>
-    </div>
-  );
-}
-
-// ---------- 일정 관리 ----------
+export { TaskBoardExample as ProjectBoardExample } from './task-board';
 
 type Event = {
   id: string;

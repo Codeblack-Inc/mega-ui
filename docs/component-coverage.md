@@ -131,7 +131,7 @@
 | 111  | PivotTable           | Complex Data / Enterprise | 추가                        |
 | 112  | PropertyGrid         | Complex Data / Enterprise | 추가                        |
 | 113  | DataGrid             | Complex Data / Enterprise | 추가                        |
-| 114  | Kanban               | Complex Data / Enterprise | 추가                        |
+| 114  | Kanban               | Complex Data / Enterprise | TaskBoard 호환 래퍼         |
 | 115  | Calendar             | Complex Data / Enterprise | 추가                        |
 | 116  | Scheduler            | Complex Data / Enterprise | 추가                        |
 | 117  | Gantt                | Complex Data / Enterprise | 추가                        |

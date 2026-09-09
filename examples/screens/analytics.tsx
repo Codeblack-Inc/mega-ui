@@ -61,24 +61,21 @@ const productGroups = ['의류', '가전', '식품', '리빙'];
 const quarters = ['2026-Q1', '2026-Q2', '2026-Q3'];
 const grades = ['VIP', '일반', '신규'];
 
-const salesRows: SalesRow[] = Array.from({ length: 12000 }, (_, index) => ({
-  주문번호: `OD-${String(700000 + index)}`,
-  '판매 채널': channels[index % channels.length]!,
-  지역: regions[index % regions.length]!,
-  상품군: productGroups[(index >> 1) % productGroups.length]!,
-  분기: quarters[(index >> 2) % quarters.length]!,
-  '고객 등급': grades[index % grades.length]!,
-  매출: 18000 + ((index * 3719) % 940000),
-  '주문 수': 1 + (index % 9),
-  '신규 고객': index % 5 === 0 ? 1 : 0,
-}));
+/** 12,000행은 모듈 로드가 아니라 화면이 열릴 때 만듭니다. */
+const buildSalesRows = (): SalesRow[] =>
+  Array.from({ length: 12000 }, (_, index) => ({
+    주문번호: `OD-${String(700000 + index)}`,
+    '판매 채널': channels[index % 4]!,
+    상품군: productGroups[Math.floor(index / 4) % 4]!,
+    지역: regions[Math.floor(index / 16) % 5]!,
+    분기: quarters[Math.floor(index / 80) % 3]!,
+    '고객 등급': grades[Math.floor(index / 240) % 3]!,
+    매출: 18000 + ((index * 3719) % 940000),
+    '주문 수': 1 + (index % 9),
+    '신규 고객': index % 5 === 0 ? 1 : 0,
+  }));
 
-type DimensionKey =
-  | '판매 채널'
-  | '지역'
-  | '상품군'
-  | '분기'
-  | '고객 등급';
+type DimensionKey = '판매 채널' | '지역' | '상품군' | '분기' | '고객 등급';
 type MeasureKey = '매출' | '주문 수' | '신규 고객';
 
 const dimensionGroups = [
@@ -102,14 +99,14 @@ const dimensionGroups = [
   },
 ];
 
-const filterFields: { value: string; label: string; numeric?: boolean }[] = [
+const filterFields = [
   { value: '판매 채널', label: '판매 채널' },
   { value: '지역', label: '지역' },
   { value: '상품군', label: '상품군' },
   { value: '분기', label: '분기' },
   { value: '고객 등급', label: '고객 등급' },
-  { value: '매출', label: '매출', numeric: true },
-  { value: '주문 수', label: '주문 수', numeric: true },
+  { value: '매출', label: '매출' },
+  { value: '주문 수', label: '주문 수' },
 ];
 
 const operators = [
@@ -140,7 +137,11 @@ type QueryNode = Condition | QueryGroup;
 let nodeSeq = 0;
 const nextId = () => `q${(nodeSeq += 1)}`;
 
-const condition = (field: string, operator: Operator, value: string): Condition => ({
+const condition = (
+  field: string,
+  operator: Operator,
+  value: string,
+): Condition => ({
   kind: 'condition',
   id: nextId(),
   field,
@@ -155,7 +156,7 @@ const group = (join: 'AND' | 'OR', items: QueryNode[]): QueryGroup => ({
 });
 
 const matchCondition = (row: SalesRow, node: Condition) => {
-  const raw = (row as Record<string, unknown>)[node.field];
+  const raw = row[node.field as keyof SalesRow];
   if (typeof raw === 'number') {
     const target = Number(node.value);
     if (!Number.isFinite(target)) return true;
@@ -263,19 +264,18 @@ export function AnalyticsWorkbenchExample() {
 
 function AnalyticsWorkbench() {
   const toast = useToast();
+  const salesRows = useMemo(buildSalesRows, []);
   const [segments, setSegments] = useState(defaultSegments);
   const [segmentId, setSegmentId] = useState('s1');
   const [config, setConfig] = useState<Segment>(defaultSegments[0]!);
   const [baseline, setBaseline] = useState(() =>
     JSON.stringify(defaultSegments[0]),
   );
-  const [range, setRange] = useState({ start: '2026-07-01', end: '2026-09-30' });
-  const [visibleColumns, setVisibleColumns] = useState([
-    '주문번호',
-    '판매 채널',
-    '지역',
-    '매출',
-  ]);
+  const [range, setRange] = useState({
+    start: '2026-07-01',
+    end: '2026-09-30',
+  });
+  const [series, setSeries] = useState<string[]>([]);
   const [pendingSegment, setPendingSegment] = useState<Segment | null>(null);
 
   const dirty = JSON.stringify(config) !== baseline;
@@ -284,7 +284,7 @@ function AnalyticsWorkbench() {
     const started = performance.now();
     const matched = salesRows.filter((row) => matchNode(row, config.query));
     return { rows: matched, elapsed: Math.round(performance.now() - started) };
-  }, [config.query]);
+  }, [salesRows, config.query]);
 
   const total = useMemo(
     () => rows.reduce((sum, row) => sum + row[config.measure], 0),
@@ -303,6 +303,16 @@ function AnalyticsWorkbench() {
   }, [rows, config.rowDimension, config.measure]);
 
   const sample = rows.slice(0, 200);
+  const seriesOptions = chartData.map((item) => ({
+    label: item.label,
+    value: item.label,
+  }));
+  const activeSeries = series.filter((value) =>
+    seriesOptions.some((option) => option.value === value),
+  );
+  const visibleChart = activeSeries.length
+    ? chartData.filter((item) => activeSeries.includes(item.label))
+    : chartData;
 
   const explorerColumns: DataColumn<SalesRow>[] = [
     { key: '주문번호', header: '주문번호' },
@@ -317,7 +327,7 @@ function AnalyticsWorkbench() {
       numeric: true,
       render: (value) => `${Number(value).toLocaleString('ko-KR')}원`,
     },
-  ].filter((column) => visibleColumns.includes(column.key));
+  ];
 
   const applySegment = (segment: Segment, force = false) => {
     if (dirty && !force) {
@@ -432,8 +442,8 @@ function AnalyticsWorkbench() {
             ]}
           />
           <Text size="xs" tone="muted">
-            기간은 예제 데이터의 분기 값과 따로 계산해요. 조건에 반영하려면
-            분기 조건을 함께 넣어 주세요.
+            기간은 예제 데이터의 분기 값과 따로 계산해요. 조건에 반영하려면 분기
+            조건을 함께 넣어 주세요.
           </Text>
         </Card>
         <div className="bi-result">
@@ -538,47 +548,36 @@ function AnalyticsWorkbench() {
                   label={`${config.rowDimension}별 ${config.measure} 피벗`}
                 />
               </Card>
-              <Card padding="sm">
+              <Card padding="sm" className="bi-chart">
+                <MultiSelect
+                  label="차트에 표시할 항목"
+                  name="bi-series"
+                  options={seriesOptions}
+                  value={activeSeries}
+                  onValueChange={setSeries}
+                  emptyMessage="이 차원에는 표시할 항목이 없어요."
+                />
+                <Text size="xs" tone="muted">
+                  선택하지 않으면 전체 항목을 보여줘요.
+                </Text>
                 <BarChart
                   label={`${config.rowDimension}별 ${config.measure} 합계`}
-                  data={chartData}
+                  data={visibleChart}
                   orientation="horizontal"
                   formatValue={(value) => value.toLocaleString('ko-KR')}
+                  emptyMessage="선택한 항목이 없어요. 전체 항목을 보려면 선택을 지워 주세요."
                 />
               </Card>
               <Card padding="sm" className="bi-explorer">
-                <Stack direction="row" gap={3} align="center" wrap>
-                  <Heading level={2} size="sm">
-                    원본 표본 200행
-                  </Heading>
-                  <MultiSelect
-                    label="표시할 열"
-                    name="bi-columns"
-                    options={[
-                      { label: '주문번호', value: '주문번호' },
-                      { label: '판매 채널', value: '판매 채널' },
-                      { label: '지역', value: '지역' },
-                      { label: '상품군', value: '상품군' },
-                      { label: '분기', value: '분기' },
-                      { label: '고객 등급', value: '고객 등급' },
-                      { label: '매출', value: '매출' },
-                    ]}
-                    value={visibleColumns}
-                    onValueChange={setVisibleColumns}
-                  />
-                </Stack>
-                {explorerColumns.length ? (
-                  <DataExplorer
-                    label="조건을 통과한 원본 데이터"
-                    rows={sample}
-                    columns={explorerColumns}
-                    getRowId={(row) => row.주문번호}
-                  />
-                ) : (
-                  <Text tone="muted" role="status">
-                    표시할 열을 하나 이상 선택해 주세요.
-                  </Text>
-                )}
+                <Heading level={2} size="sm">
+                  원본 표본 200행
+                </Heading>
+                <DataExplorer
+                  label="조건을 통과한 원본 데이터"
+                  rows={sample}
+                  columns={explorerColumns}
+                  getRowId={(row) => row.주문번호}
+                />
               </Card>
             </>
           ) : (
@@ -739,7 +738,10 @@ function QueryGroupEditor({
           onClick={() =>
             onChange({
               ...node,
-              items: [...node.items, group('OR', [condition('지역', 'eq', '')])],
+              items: [
+                ...node.items,
+                group('OR', [condition('지역', 'eq', '')]),
+              ],
             })
           }
         >
@@ -767,7 +769,8 @@ const PASTE_LIMIT = 200;
 const SERVER_LIMIT = 500;
 
 const validators: ((value: string) => string)[] = [
-  (value) => (/^SKU-\d{5}$/.test(value) ? '' : 'SKU-12345 형식으로 적어 주세요.'),
+  (value) =>
+    /^SKU-\d{5}$/.test(value) ? '' : 'SKU-12345 형식으로 적어 주세요.',
   (value) => (value.trim() ? '' : '품목 이름을 적어 주세요.'),
   (value) =>
     /^\d+$/.test(value) && Number(value) > 0
@@ -789,10 +792,24 @@ const initialSheet = Array.from({ length: 10 }, (_, row) =>
   row < 6
     ? [
         `SKU-${String(10230 + row)}`,
-        ['면 티셔츠', '무선 이어폰', '현미 5kg', '유리컵 4입', '캠핑 의자', '핸드크림'][row]!,
+        [
+          '면 티셔츠',
+          '무선 이어폰',
+          '현미 5kg',
+          '유리컵 4입',
+          '캠핑 의자',
+          '핸드크림',
+        ][row]!,
         String([120, 640, 80, 240, 45, 310][row]),
         String([12800, 79000, 21500, 9800, 54000, 7400][row]),
-        ['2027-03-31', '2029-01-31', '2026-11-30', '2030-12-31', '2029-06-30', '2027-08-31'][row]!,
+        [
+          '2027-03-31',
+          '2029-01-31',
+          '2026-11-30',
+          '2030-12-31',
+          '2029-06-30',
+          '2027-08-31',
+        ][row]!,
         warehouses[row % warehouses.length]!,
       ]
     : Array.from({ length: 6 }, () => ''),
@@ -808,31 +825,101 @@ interface StockNode {
 
 const stockTree: TreeTableNode<StockNode>[] = [
   {
-    row: { id: 'w-seoul', name: '서울 물류센터', onHand: 4820, safety: 3600, state: '정상' },
+    row: {
+      id: 'w-seoul',
+      name: '서울 물류센터',
+      onHand: 4820,
+      safety: 3600,
+      state: '정상',
+    },
     children: [
       {
-        row: { id: 'w-seoul-a', name: 'A구역 · 의류', onHand: 2140, safety: 1800, state: '정상' },
+        row: {
+          id: 'w-seoul-a',
+          name: 'A구역 · 의류',
+          onHand: 2140,
+          safety: 1800,
+          state: '정상',
+        },
         children: [
-          { row: { id: 'sku-10230', name: 'SKU-10230 면 티셔츠', onHand: 1240, safety: 900, state: '정상' } },
-          { row: { id: 'sku-10233', name: 'SKU-10233 유리컵 4입', onHand: 900, safety: 900, state: '보충 임박' } },
+          {
+            row: {
+              id: 'sku-10230',
+              name: 'SKU-10230 면 티셔츠',
+              onHand: 1240,
+              safety: 900,
+              state: '정상',
+            },
+          },
+          {
+            row: {
+              id: 'sku-10233',
+              name: 'SKU-10233 유리컵 4입',
+              onHand: 900,
+              safety: 900,
+              state: '보충 임박',
+            },
+          },
         ],
       },
       {
-        row: { id: 'w-seoul-b', name: 'B구역 · 가전', onHand: 2680, safety: 1800, state: '정상' },
+        row: {
+          id: 'w-seoul-b',
+          name: 'B구역 · 가전',
+          onHand: 2680,
+          safety: 1800,
+          state: '정상',
+        },
         children: [
-          { row: { id: 'sku-10231', name: 'SKU-10231 무선 이어폰', onHand: 2680, safety: 1800, state: '정상' } },
+          {
+            row: {
+              id: 'sku-10231',
+              name: 'SKU-10231 무선 이어폰',
+              onHand: 2680,
+              safety: 1800,
+              state: '정상',
+            },
+          },
         ],
       },
     ],
   },
   {
-    row: { id: 'w-busan', name: '부산 물류센터', onHand: 1360, safety: 1900, state: '보충 필요' },
+    row: {
+      id: 'w-busan',
+      name: '부산 물류센터',
+      onHand: 1360,
+      safety: 1900,
+      state: '보충 필요',
+    },
     children: [
       {
-        row: { id: 'w-busan-a', name: 'A구역 · 식품', onHand: 1360, safety: 1900, state: '보충 필요' },
+        row: {
+          id: 'w-busan-a',
+          name: 'A구역 · 식품',
+          onHand: 1360,
+          safety: 1900,
+          state: '보충 필요',
+        },
         children: [
-          { row: { id: 'sku-10232', name: 'SKU-10232 현미 5kg', onHand: 620, safety: 1200, state: '보충 필요' } },
-          { row: { id: 'sku-10235', name: 'SKU-10235 핸드크림', onHand: 740, safety: 700, state: '정상' } },
+          {
+            row: {
+              id: 'sku-10232',
+              name: 'SKU-10232 현미 5kg',
+              onHand: 620,
+              safety: 1200,
+              state: '보충 필요',
+            },
+          },
+          {
+            row: {
+              id: 'sku-10235',
+              name: 'SKU-10235 핸드크림',
+              onHand: 740,
+              safety: 700,
+              state: '정상',
+            },
+          },
         ],
       },
     ],
@@ -847,9 +934,24 @@ interface SafetyRow {
 }
 
 const initialSafety: SafetyRow[] = [
-  { id: 'sku-10230', name: 'SKU-10230 면 티셔츠', safety: '900', leadTime: '5' },
-  { id: 'sku-10231', name: 'SKU-10231 무선 이어폰', safety: '1800', leadTime: '12' },
-  { id: 'sku-10232', name: 'SKU-10232 현미 5kg', safety: '1200', leadTime: '3' },
+  {
+    id: 'sku-10230',
+    name: 'SKU-10230 면 티셔츠',
+    safety: '900',
+    leadTime: '5',
+  },
+  {
+    id: 'sku-10231',
+    name: 'SKU-10231 무선 이어폰',
+    safety: '1800',
+    leadTime: '12',
+  },
+  {
+    id: 'sku-10232',
+    name: 'SKU-10232 현미 5kg',
+    safety: '1200',
+    leadTime: '3',
+  },
 ];
 
 export function InventoryIntakeExample() {
@@ -873,7 +975,10 @@ function InventoryIntake() {
   const [resetOpen, setResetOpen] = useState(false);
   const [tab, setTab] = useState('sheet');
   const [safety, setSafety] = useState(initialSafety);
-  const [item, setItem] = useState({ 담당자: '정민지', 검수: '샘플 검수' });
+  const [item, setItem] = useState<Record<string, string>>({
+    담당자: '정민지',
+    검수: '샘플 검수',
+  });
   const sheetRef = useRef<HTMLDivElement>(null);
 
   const filled = cells.filter((row) => row.some((cell) => cell.trim()));
@@ -900,10 +1005,10 @@ function InventoryIntake() {
     );
   };
 
-  /* ponytail: 셀 이동은 Spreadsheet가 붙이는 aria-label(A1 형식)로 찾습니다.
-     전용 focus API가 생기면 그걸로 바꿉니다. */
+  /* ponytail: 셀 이동은 Spreadsheet가 만드는 aria-label(열 라벨 + 행 번호)로
+     찾습니다. 전용 focus API가 생기면 그걸로 바꿉니다. */
   const focusCell = (row: number, column: number) => {
-    const name = `${String.fromCharCode(65 + column)}${row + 1}`;
+    const name = `${sheetHeaders[column]}${row + 1}`;
     sheetRef.current
       ?.querySelector<HTMLInputElement>(`input[aria-label="${name}"]`)
       ?.focus();
@@ -926,7 +1031,10 @@ function InventoryIntake() {
 
   const applyPaste = () => {
     const parsed = pasteRows.map((row) =>
-      Array.from({ length: sheetHeaders.length }, (_, index) => row[index] ?? ''),
+      Array.from(
+        { length: sheetHeaders.length },
+        (_, index) => row[index] ?? '',
+      ),
     );
     setSnapshot(cells);
     setCells(pasteMode === 'replace' ? parsed : [...filled, ...parsed]);
@@ -948,9 +1056,7 @@ function InventoryIntake() {
     }
     setSaving(true);
     window.setTimeout(() => {
-      const rejected = filled.filter(
-        (row) => Number(row[2]) > SERVER_LIMIT,
-      );
+      const rejected = filled.filter((row) => Number(row[2]) > SERVER_LIMIT);
       const accepted = filled.length - rejected.length;
       setSnapshot(cells);
       setSaving(false);
@@ -1011,7 +1117,15 @@ function InventoryIntake() {
       key: 'state',
       header: '상태',
       render: (value) => (
-        <Badge tone={value === '보충 필요' ? 'danger' : value === '보충 임박' ? 'warning' : 'success'}>
+        <Badge
+          tone={
+            String(value) === '보충 필요'
+              ? 'danger'
+              : String(value) === '보충 임박'
+                ? 'warning'
+                : 'success'
+          }
+        >
           {String(value)}
         </Badge>
       ),
@@ -1038,7 +1152,11 @@ function InventoryIntake() {
         id="stock-tabs"
         label="재고 작업"
         items={[
-          { value: 'sheet', label: '입고 시트', badge: errors.length || undefined },
+          {
+            value: 'sheet',
+            label: '입고 시트',
+            badge: errors.length || undefined,
+          },
           { value: 'tree', label: '재고 계층' },
           { value: 'item', label: '품목 속성' },
         ]}
@@ -1047,81 +1165,90 @@ function InventoryIntake() {
       />
       <TabPanel tabsId="stock-tabs" value="sheet" active={tab === 'sheet'}>
         <Card padding="sm" className="stock-card">
-          <Stack direction="row" gap={3} align="center" wrap>
-            <Text size="sm" weight="semibold">
-              입력한 행 {filled.length}개
-            </Text>
-            <Badge tone={errors.length ? 'danger' : 'success'}>
-              {errors.length ? `검증 오류 ${errors.length}건` : '검증 통과'}
-            </Badge>
-            {savedCount ? (
-              <Badge tone="neutral">직전 저장 {savedCount}행</Badge>
-            ) : null}
-            {snapshot ? (
-              <Button size="sm" variant="text" onClick={undo}>
-                되돌리기
-              </Button>
-            ) : null}
-          </Stack>
-          {errors.length ? (
-            <Alert tone="danger" role="alert">
+          <form
+            id="stock-intake"
+            onSubmit={(event) => {
+              event.preventDefault();
+              save();
+            }}
+          >
+            <Stack direction="row" gap={3} align="center" wrap>
               <Text size="sm" weight="semibold">
-                고쳐야 할 셀 {errors.length}개
+                입력한 행 {filled.length}개
               </Text>
-              <ul className="stock-errors">
-                {errors.slice(0, 6).map((error) => (
-                  <li key={`${error.rowIndex}-${error.columnIndex}`}>
-                    <Button
-                      size="xs"
-                      variant="text"
-                      onClick={() =>
-                        focusCell(error.rowIndex, error.columnIndex)
-                      }
-                    >
-                      {error.rowIndex + 1}행 {sheetHeaders[error.columnIndex]}
-                    </Button>
-                    <Text as="span" size="sm">
-                      {error.message}
-                    </Text>
-                  </li>
-                ))}
-              </ul>
-              {errors.length > 6 ? (
-                <Text size="sm">
-                  나머지 {errors.length - 6}개는 셀을 고치면 이어서 보여요.
-                </Text>
+              <Badge tone={errors.length ? 'danger' : 'success'}>
+                {errors.length ? `검증 오류 ${errors.length}건` : '검증 통과'}
+              </Badge>
+              {savedCount ? (
+                <Badge tone="neutral">직전 저장 {savedCount}행</Badge>
               ) : null}
-            </Alert>
-          ) : null}
-          <div ref={sheetRef} className="stock-sheet">
-            <Spreadsheet
-              label="입고 시트"
-              cells={cells}
-              columnLabels={sheetHeaders}
-              onCellChange={setCell}
+              {snapshot ? (
+                <Button size="sm" variant="text" onClick={undo}>
+                  되돌리기
+                </Button>
+              ) : null}
+            </Stack>
+            {errors.length ? (
+              <Alert tone="danger" role="alert">
+                <Text size="sm" weight="semibold">
+                  고쳐야 할 셀 {errors.length}개
+                </Text>
+                <ul className="stock-errors">
+                  {errors.slice(0, 6).map((error) => (
+                    <li key={`${error.rowIndex}-${error.columnIndex}`}>
+                      <Button
+                        size="xs"
+                        variant="text"
+                        onClick={() =>
+                          focusCell(error.rowIndex, error.columnIndex)
+                        }
+                      >
+                        {error.rowIndex + 1}행 {sheetHeaders[error.columnIndex]}
+                      </Button>
+                      <Text as="span" size="sm">
+                        {error.message}
+                      </Text>
+                    </li>
+                  ))}
+                </ul>
+                {errors.length > 6 ? (
+                  <Text size="sm">
+                    나머지 {errors.length - 6}개는 셀을 고치면 이어서 보여요.
+                  </Text>
+                ) : null}
+              </Alert>
+            ) : null}
+            <div ref={sheetRef} className="stock-sheet">
+              <Spreadsheet
+                label="입고 시트"
+                cells={cells}
+                columnLabels={sheetHeaders}
+                onCellChange={setCell}
+              />
+            </div>
+            <Text size="xs" tone="muted">
+              한 번에 {SERVER_LIMIT}개를 넘는 입고 수량은 승인 대상이라 저장에서
+              빠지고 시트에 남아요.
+            </Text>
+            <FormActions
+              dirty={dirty}
+              saving={saving}
+              disabled={errors.length > 0 || filled.length === 0}
+              submitLabel="입고 저장"
+              cancelLabel="변경 되돌리기"
+              onCancel={undo}
+              status={
+                errors.length
+                  ? '오류를 고치면 저장할 수 있어요'
+                  : dirty
+                    ? '저장하지 않은 변경이 있어요'
+                    : '변경 사항이 없어요'
+              }
+              statusTone={
+                errors.length ? 'danger' : dirty ? 'warning' : 'neutral'
+              }
             />
-          </div>
-          <Text size="xs" tone="muted">
-            한 번에 {SERVER_LIMIT}개를 넘는 입고 수량은 승인 대상이라 저장에서
-            빠지고 시트에 남아요.
-          </Text>
-          <FormActions
-            dirty={dirty}
-            saving={saving}
-            disabled={errors.length > 0 || filled.length === 0}
-            submitLabel="입고 저장"
-            cancelLabel="변경 되돌리기"
-            onCancel={undo}
-            status={
-              errors.length
-                ? '오류를 고치면 저장할 수 있어요'
-                : dirty
-                  ? '저장하지 않은 변경이 있어요'
-                  : '변경 사항이 없어요'
-            }
-            statusTone={errors.length ? 'danger' : dirty ? 'warning' : 'neutral'}
-            onClick={save}
-          />
+          </form>
         </Card>
       </TabPanel>
       <TabPanel tabsId="stock-tabs" value="tree" active={tab === 'tree'}>
