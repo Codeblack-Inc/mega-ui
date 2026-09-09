@@ -494,3 +494,48 @@ test('visible keyboard order, interactive controls and blocked pointer drops pre
   await expect(board.getByRole('alert')).toContainText('제한');
   await expect(board.locator('[data-board-card]')).toHaveCount(6);
 });
+
+test('drag cancellation restores focus, boundaries announce and empty slots show an insertion line', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  const board = await open(page);
+  const handle = board.locator('[data-card-handle="task-6"]');
+  await handle.click();
+  await expect(handle).toBeFocused();
+  await handle.press('Alt+ArrowUp');
+  await expect(
+    board.locator('.mega-visually-hidden[role="status"]'),
+  ).toHaveText('이미 첫 번째 카드예요.');
+  await handle.press('Alt+ArrowLeft');
+  await expect(
+    board.locator('.mega-visually-hidden[role="status"]'),
+  ).toHaveText('이미 첫 번째 열이에요.');
+  const start = await handle.boundingBox();
+  await page.mouse.move(start!.x + 10, start!.y + 10);
+  await page.mouse.down();
+  await page.mouse.move(640, 120, { steps: 10 });
+  await page.mouse.up();
+  await expect(handle).toBeFocused();
+  await expect(
+    board.locator('.mega-visually-hidden[role="status"]'),
+  ).toHaveText('이동을 취소했어요.');
+  const source = await handle.boundingBox();
+  const destination = await board
+    .locator('[data-column-id="review"][data-lane-id=""]')
+    .boundingBox();
+  await page.mouse.move(source!.x + 10, source!.y + 10);
+  await page.mouse.down();
+  await page.mouse.move(destination!.x + 90, source!.y + 10, { steps: 10 });
+  await expect(page.locator('.mega-task-board__drag-preview')).toContainText(
+    '리뷰 · 미분류에 놓기',
+  );
+  const marker = board.locator('ul[data-drop-end]');
+  await expect(marker).toHaveCount(1);
+  expect(
+    await marker.evaluate((node) => getComputedStyle(node, '::after').height),
+  ).toBe('3px');
+  await page.keyboard.press('Escape');
+  await page.mouse.up();
+  await expect(handle).toBeFocused();
+});
