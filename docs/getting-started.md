@@ -6,6 +6,20 @@
 소비 프로젝트에서 `npm install /absolute/path/to/mega-ui-react-0.1.0.tgz`로 설치하세요.
 React 19와 React DOM 19가 필요합니다.
 
+설치가 끌어오는 런타임 의존성은 React뿐입니다. 무거운 엔진은 각각 하나의 서브경로에만 붙어 있고,
+선택적 peer dependency이므로 그 서브경로를 쓰는 프로젝트만 설치합니다.
+
+| 서브경로                     | 함께 설치할 패키지                                                                                                                       |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `@mega-ui/react` (루트)      | 없음                                                                                                                                     |
+| `@mega-ui/react/data-grid`   | `react-data-grid`                                                                                                                        |
+| `@mega-ui/react/charts`      | `echarts`                                                                                                                                |
+| `@mega-ui/react/text-editor` | `@tiptap/react` `@tiptap/core` `@tiptap/pm` `@tiptap/starter-kit` `@tiptap/extension-image` `@tiptap/extension-table` `@tiptap/markdown` |
+| `@mega-ui/react/pdf-viewer`  | `pdfjs-dist`                                                                                                                             |
+
+설치하지 않고 해당 서브경로를 import하면 번들러가 빌드 단계에서 빠진 패키지 이름과 함께 실패합니다.
+버전은 이 패키지의 `peerDependencies`에 적힌 범위를 따르세요.
+
 ```tsx
 import { Container, Grid, Card, Heading, Text } from '@mega-ui/react';
 import '@mega-ui/react/styles.css';

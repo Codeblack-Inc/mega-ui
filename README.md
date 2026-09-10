@@ -58,8 +58,11 @@ export function Welcome() {
 기본 서체는 Pretendard입니다. 폰트 파일은 번들하지 않으므로 소비 앱에서 직접 불러오세요.
 불러오는 방법은 [시작하기](docs/getting-started.md)의 폰트 절에 있습니다.
 
-React와 React DOM은 peer dependency로 외부화합니다. QR 인코딩에는 `qrcode-generator`, 전문 그리드에는 `react-data-grid`를 사용합니다.
+설치가 끌어오는 런타임 의존성은 React뿐입니다. 무거운 엔진(`react-data-grid`, `echarts`, `@tiptap/*`, `pdfjs-dist`)은
+각각 하나의 서브경로에만 붙어 있고 선택적 peer dependency이므로, 그 서브경로를 쓰는 프로젝트만 설치합니다.
+서브경로별로 필요한 패키지는 [시작하기](docs/getting-started.md)의 표에 있습니다.
 전문 그리드는 `@mega-ui/react/data-grid`와 `@mega-ui/react/data-grid.css`로 별도 로드합니다.
+QR 인코딩용 `qrcode-generator`는 번들에 포함하며, 쓰지 않으면 트리셰이킹으로 빠집니다.
 ESM만 제공하며, React 19.2 이상을 지원합니다. React 18과 CommonJS는 현재 지원 대상으로 검증하지 않았습니다.
 
 새 컴포넌트의 디자인 규칙과 자동 검사 범위는 [디자인 계약](docs/design-contract.md)에 있습니다.

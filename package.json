@@ -57,28 +57,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "npm run lint:ux && npm run typecheck && npm run format:check && npm test && npm run build:docs",
-    "prepack": "npm run build",
     "test:browser": "playwright test",
-    "lint:ux": "node docs/check-ux-writing.mjs src examples"
+    "lint:ux": "node docs/check-ux-writing.mjs src examples",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.63.0",
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react": "^6.1.1",
-    "prettier": "^3.9.6",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "sass": "^1.104.0",
-    "typescript": "^7.0.2",
-    "vite": "^8.2.2"
-  },
-  "dependencies": {
     "@tiptap/core": "3.31.3",
     "@tiptap/extension-image": "3.31.3",
     "@tiptap/extension-table": "3.31.3",
@@ -88,7 +71,64 @@
     "@tiptap/starter-kit": "3.31.3",
     "echarts": "^6.1.0",
     "pdfjs-dist": "^6.3.289",
+    "react": "^19.2.0",
+    "react-data-grid": "7.0.0-beta.61",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tiptap/core": "3.31.3",
+    "@tiptap/extension-image": "3.31.3",
+    "@tiptap/extension-table": "3.31.3",
+    "@tiptap/markdown": "3.31.3",
+    "@tiptap/pm": "3.31.3",
+    "@tiptap/react": "3.31.3",
+    "@tiptap/starter-kit": "3.31.3",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "echarts": "^6.1.0",
+    "pdfjs-dist": "^6.3.289",
+    "prettier": "^3.9.6",
     "qrcode-generator": "^2.0.4",
-    "react-data-grid": "7.0.0-beta.61"
+    "react": "^19.2.8",
+    "react-data-grid": "7.0.0-beta.61",
+    "react-dom": "^19.2.8",
+    "sass": "^1.104.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  },
+  "peerDependenciesMeta": {
+    "@tiptap/core": {
+      "optional": true
+    },
+    "@tiptap/extension-image": {
+      "optional": true
+    },
+    "@tiptap/extension-table": {
+      "optional": true
+    },
+    "@tiptap/markdown": {
+      "optional": true
+    },
+    "@tiptap/pm": {
+      "optional": true
+    },
+    "@tiptap/react": {
+      "optional": true
+    },
+    "@tiptap/starter-kit": {
+      "optional": true
+    },
+    "echarts": {
+      "optional": true
+    },
+    "pdfjs-dist": {
+      "optional": true
+    },
+    "react-data-grid": {
+      "optional": true
+    }
   }
 }

@@ -83,7 +83,10 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
   const pkg = JSON.parse(
     readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
   );
-  assert.deepEqual(Object.keys(pkg.dependencies), [
+  // Installing the package must pull nothing but React: the heavy engines
+  // belong to one subpath entry each and stay optional peers.
+  assert.equal(pkg.dependencies, undefined);
+  assert.deepEqual(Object.keys(pkg.peerDependenciesMeta), [
     '@tiptap/core',
     '@tiptap/extension-image',
     '@tiptap/extension-table',
@@ -93,9 +96,14 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
     '@tiptap/starter-kit',
     'echarts',
     'pdfjs-dist',
-    'qrcode-generator',
     'react-data-grid',
   ]);
+  for (const [name, meta] of Object.entries(pkg.peerDependenciesMeta)) {
+    assert.equal(meta.optional, true, name);
+    assert.ok(pkg.peerDependencies[name], name);
+  }
+  assert.equal(pkg.peerDependenciesMeta.react, undefined);
+  assert.equal(pkg.peerDependenciesMeta['react-dom'], undefined);
   assert.deepEqual(pkg.sideEffects, ['**/*.css', '**/*.scss']);
   for (const path of [
     'dist/index.d.ts',
@@ -117,6 +125,14 @@ test('CSS, declarations, docs and package metadata are available to consumers', 
     readFileSync(new URL('../dist/index.d.ts', import.meta.url), 'utf8'),
     /\.scss/,
   );
+  const entry = readFileSync(
+    new URL('../dist/index.js', import.meta.url),
+    'utf8',
+  );
+  const bare = [
+    ...entry.matchAll(/(?:from|import)\s*\(?\s*["']([^."'][^"']*)["']/g),
+  ].map((match) => match[1]);
+  assert.deepEqual([...new Set(bare)].sort(), ['react', 'react/jsx-runtime']);
 });
 
 test('selection patterns preserve accessible names, native form values and disabled options', () => {
