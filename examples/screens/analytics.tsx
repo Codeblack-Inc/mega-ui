@@ -55,7 +55,7 @@ interface SalesRow {
   '신규 고객': number;
 }
 
-const channels = ['자사몰', '스마트스토어', '쿠팡', '29CM'];
+const channels = ['자사몰', '한빛몰', '누리마켓', '온다샵'];
 const regions = ['서울', '경기', '부산', '대구', '광주'];
 const productGroups = ['의류', '가전', '식품', '리빙'];
 const quarters = ['2026-Q1', '2026-Q2', '2026-Q3'];
@@ -238,8 +238,8 @@ const defaultSegments: Segment[] = [
     id: 's3',
     name: '신규 고객 유입',
     query: group('OR', [
-      condition('판매 채널', 'eq', '쿠팡'),
-      condition('판매 채널', 'eq', '29CM'),
+      condition('판매 채널', 'eq', '누리마켓'),
+      condition('판매 채널', 'eq', '온다샵'),
     ]),
     rowDimension: '판매 채널',
     columnDimension: '고객 등급',

@@ -591,7 +591,7 @@ export function LandingExample() {
             회사 웹을 위한 UI
           </Heading>
           <Text size="lg" tone="secondary">
-            실측한 디자인 토큰 위에 만든 React 컴포넌트로 같은 언어로 화면을
+            하나의 디자인 토큰 위에 만든 React 컴포넌트로 같은 언어로 화면을
             만들어요.
           </Text>
           <Stack direction="row" gap={2} wrap justify="center">
@@ -776,7 +776,7 @@ const cannedReplies: [string, string][] = [
   ],
   [
     '카드',
-    '이번 달 메가카드 실적은 48만 원으로 혜택 기준 50만 원까지 2만 원 남았어요. 다음 결제는 카드로 하면 좋겠어요.',
+    '이번 달 메가카드 실적은 48만 원으로 혜택 기준 50만 원까지 2만 원 남았어요.',
   ],
 ];
 const fallbackReply =
@@ -1103,8 +1103,8 @@ export function MobileHomeExample() {
             </Card>
             <Card>
               {[
-                ['삼성전자', 72800, -1.22],
-                ['SOXL', 166093, 5.48],
+                ['한빛전자', 72800, -1.22],
+                ['메가 반도체 3X', 166093, 5.48],
               ].map(([name, price, change]) => (
                 <ListRow
                   key={String(name)}
@@ -1333,11 +1333,11 @@ export function StatesExample() {
             description: '모든 계좌와 카드 잔액을 한 화면에서 봐요.',
           },
           {
-            title: '송금은 3초면 충분해요',
+            title: '송금은 간단하게',
             description: '받는 사람을 고르고 금액만 입력하면 끝이에요.',
           },
           {
-            title: '혜택은 놓치지 마세요',
+            title: '맞춤 혜택 소식',
             description: '나에게 맞는 혜택을 매일 골라 드려요.',
           },
         ]}

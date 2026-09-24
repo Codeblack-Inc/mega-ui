@@ -104,14 +104,14 @@ const demos: Record<(typeof dataNames)[number], ReactNode> = {
   Avatar: (
     <Stack direction="row" gap={3} align="center" wrap>
       <Avatar name="김메가" size="lg" />
-      <Avatar name="이토스" shape="rounded" />
+      <Avatar name="이하나" shape="rounded" />
       <Avatar name="박하늘" size="sm" />
       <Avatar name="정바다" size="xs" />
     </Stack>
   ),
   AvatarGroup: (
     <AvatarGroup max={3}>
-      {['김메가', '이토스', '박하늘', '정바다', '오여름'].map((name) => (
+      {['김메가', '이하나', '박하늘', '정바다', '오여름'].map((name) => (
         <Avatar key={name} name={name} />
       ))}
     </AvatarGroup>

@@ -8,7 +8,7 @@ import {
 export interface ButtonProps extends ComponentPropsWithRef<'button'> {
   variant?:
     'primary' | 'weak' | 'secondary' | 'outline' | 'ghost' | 'text' | 'danger';
-  /** TDS PC ladder: xs 24 · sm 28 · md 34 · lg 40, plus xl 56 for mobile CTAs. */
+  /** Desktop ladder: xs 24 · sm 28 · md 34 · lg 40, plus xl 56 for mobile CTAs. */
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
   fullWidth?: boolean;
@@ -115,7 +115,7 @@ export function Chip({
 }
 
 type FieldSkin = {
-  /** outline: TDS desktop text field. box: TDS mobile grey box field. */
+  /** outline: desktop text field. box: mobile grey box field. */
   variant?: 'outline' | 'box';
   size?: 'sm' | 'md' | 'lg';
 };
@@ -176,7 +176,7 @@ export interface CheckboxProps extends Omit<
 > {
   /** Omit to render the box alone (give the input an aria-label). */
   children?: ReactNode;
-  /** Square box (form checkbox) instead of the Toss circle check (agreement lists). */
+  /** Square box (form checkbox) instead of the circle check (agreement lists). */
   shape?: 'circle' | 'square';
   indeterminate?: boolean;
 }

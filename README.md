@@ -2,7 +2,7 @@
 
 회사 웹을 **컴포넌트 조합으로 만드는** React UI 라이브러리입니다.
 React 19.2+ · TypeScript · SCSS · Vite. 요청 목록 150종과 실무 조합 컴포넌트를 제공하며,
-색·치수·타입 스케일은 토스 웹 제품에서 실측한 값에 맞췄습니다. Tailwind, CSS-in-JS, 별도 상태 관리, 모노레포 도구를 사용하지 않습니다.
+색·치수·타입 스케일은 Mega UI가 정한 디자인 토큰을 따릅니다. Tailwind, CSS-in-JS, 별도 상태 관리, 모노레포 도구를 사용하지 않습니다.
 
 ## 실행
 
@@ -98,4 +98,4 @@ tests/              빌드 산출물에 대한 Node 기본 테스트
 
 빌드 설정 참고: [Vite library mode](https://vite.dev/guide/build.html#library-mode), [Sass CSS 변수와 Sass 변수의 차이](https://sass-lang.com/documentation/variables/).
 
-실측 기준과 토큰·치수 사다리는 [디자인 방향](docs/design-direction.md)에 정리했습니다. 공식 TDS 패키지나 API 호환 구현은 아닙니다.
+토큰·치수 사다리는 [디자인 방향](docs/design-direction.md)에 정리했습니다.

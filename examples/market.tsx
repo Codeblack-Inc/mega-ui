@@ -33,8 +33,8 @@ import { ExampleIcon } from './icons';
 
 const stocks = [
   {
-    name: '윙입푸드(ADR)',
-    symbol: 'WYHG',
+    name: '윙스푸드(ADR)',
+    symbol: 'WSFD',
     price: 6968,
     change: 27.83,
     turnover: 439,
@@ -43,8 +43,8 @@ const stocks = [
     color: '#ba303c',
   },
   {
-    name: 'SOXL',
-    symbol: 'SOXL',
+    name: '메가 반도체 3X',
+    symbol: 'MSX3',
     price: 166093,
     change: 5.48,
     turnover: 339,
@@ -53,8 +53,8 @@ const stocks = [
     color: '#e48b17',
   },
   {
-    name: '삼성전자',
-    symbol: '005930',
+    name: '한빛전자',
+    symbol: '900010',
     price: 72800,
     change: -1.22,
     turnover: 286,
@@ -63,8 +63,8 @@ const stocks = [
     color: '#2867c7',
   },
   {
-    name: '엔비디아',
-    symbol: 'NVDA',
+    name: '누리칩스',
+    symbol: 'NRCP',
     price: 245680,
     change: 3.24,
     turnover: 241,
@@ -73,8 +73,8 @@ const stocks = [
     color: '#629323',
   },
   {
-    name: 'SK하이닉스',
-    symbol: '000660',
+    name: '바로반도체',
+    symbol: '900020',
     price: 198500,
     change: 2.85,
     turnover: 218,
@@ -83,8 +83,8 @@ const stocks = [
     color: '#ca4641',
   },
   {
-    name: 'SOXS',
-    symbol: 'SOXS',
+    name: '메가 반도체 인버스 3X',
+    symbol: 'MSXI',
     price: 59154,
     change: -4.92,
     turnover: 190,
@@ -93,8 +93,8 @@ const stocks = [
     color: '#d99124',
   },
   {
-    name: '아이온큐',
-    symbol: 'IONQ',
+    name: '큐비트랩',
+    symbol: 'QBLB',
     price: 56684,
     change: 6.83,
     turnover: 169,
@@ -103,8 +103,8 @@ const stocks = [
     color: '#7055b8',
   },
   {
-    name: '한전기술',
-    symbol: '052690',
+    name: '한빛에너지기술',
+    symbol: '900030',
     price: 145000,
     change: 18.56,
     turnover: 148,
@@ -113,8 +113,8 @@ const stocks = [
     color: '#d5433a',
   },
   {
-    name: '리게티 컴퓨팅',
-    symbol: 'RGTI',
+    name: '퀀텀웨이브',
+    symbol: 'QWAV',
     price: 22099,
     change: 8.28,
     turnover: 129,
@@ -123,8 +123,8 @@ const stocks = [
     color: '#009d9a',
   },
   {
-    name: '테슬라',
-    symbol: 'TSLA',
+    name: '볼트모터스',
+    symbol: 'VLTM',
     price: 462380,
     change: -2.13,
     turnover: 118,
@@ -133,8 +133,8 @@ const stocks = [
     color: '#ce3947',
   },
   {
-    name: '애플',
-    symbol: 'AAPL',
+    name: '오르빗',
+    symbol: 'ORBT',
     price: 318240,
     change: 0.82,
     turnover: 96,
@@ -143,8 +143,8 @@ const stocks = [
     color: '#737c89',
   },
   {
-    name: 'NAVER',
-    symbol: '035420',
+    name: '누리포털',
+    symbol: '900040',
     price: 234500,
     change: 1.52,
     turnover: 84,
@@ -472,14 +472,14 @@ export function MarketExample() {
                 {
                   name: '반도체',
                   change: 3.37,
-                  description: '엔비디아 · 삼성전자 · SK하이닉스',
+                  description: '누리칩스 · 한빛전자 · 바로반도체',
                 },
                 {
                   name: '양자 컴퓨팅',
                   change: 7.56,
-                  description: '아이온큐 · 리게티 컴퓨팅',
+                  description: '큐비트랩 · 퀀텀웨이브',
                 },
-                { name: '전기차', change: -2.13, description: '테슬라' },
+                { name: '전기차', change: -2.13, description: '볼트모터스' },
               ].map((industry) => (
                 <ListRow
                   key={industry.name}

@@ -58,7 +58,7 @@ const payments = [
     name: '에센셜 코튼 셔츠',
     method: '신용카드',
     amount: 79000,
-    account: '국민은행',
+    account: '한빛은행',
   },
   {
     id: 4,
@@ -74,7 +74,7 @@ const payments = [
     name: '라이트 데일리 백',
     method: '간편결제',
     amount: 42000,
-    account: '국민은행',
+    account: '한빛은행',
   },
   {
     id: 6,
@@ -90,7 +90,7 @@ const payments = [
     name: '스트라이프 티셔츠',
     method: '신용카드',
     amount: 39000,
-    account: '국민은행',
+    account: '한빛은행',
   },
   {
     id: 8,
@@ -106,7 +106,7 @@ const payments = [
     name: '트래블 파우치',
     method: '계좌이체',
     amount: 21000,
-    account: '국민은행',
+    account: '한빛은행',
   },
   {
     id: 10,
@@ -122,7 +122,7 @@ const payments = [
     name: '데일리 양말 세트',
     method: '간편결제',
     amount: 15000,
-    account: '국민은행',
+    account: '한빛은행',
   },
   {
     id: 12,
@@ -390,7 +390,7 @@ function AdminDashboard() {
               }
             >
               <MenuLabel>조회할 정산계좌</MenuLabel>
-              {['전체', '메가뱅크', '국민은행'].map((bank) => (
+              {['전체', '메가뱅크', '한빛은행'].map((bank) => (
                 <MenuItem
                   key={bank}
                   onSelect={() => {

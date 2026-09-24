@@ -2,7 +2,7 @@ import type { ComponentPropsWithRef } from 'react';
 
 export interface HeadingProps extends ComponentPropsWithRef<'h2'> {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
-  /** TDS title roles: sm 17 · md 20 · lg 22 · xl 26 · 2xl 30 */
+  /** Title roles: sm 17 · md 20 · lg 22 · xl 26 · 2xl 30 */
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 }
 
@@ -22,7 +22,7 @@ export function Heading({
 }
 
 export type TextProps = ComponentPropsWithRef<'p'> & {
-  /** TDS body roles: xs 13 · sm 14 · md 15 · lg 17 */
+  /** Body roles: xs 13 · sm 14 · md 15 · lg 17 */
   size?: 'xs' | 'sm' | 'md' | 'lg';
   tone?: 'default' | 'secondary' | 'muted' | 'brand' | 'danger' | 'success';
   weight?: 'regular' | 'medium' | 'semibold' | 'bold';

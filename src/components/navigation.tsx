@@ -21,7 +21,7 @@ export interface TabsProps extends Omit<
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
-  /** underline: TDS section tabs. pill: the 차트·호가 selector. */
+  /** underline: section tabs. pill: the 차트·호가 selector. */
   variant?: 'underline' | 'pill';
   size?: 'md' | 'lg';
   /** aria-label for the tablist. */

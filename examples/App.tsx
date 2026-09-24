@@ -276,8 +276,8 @@ export default function App() {
           <footer className="docs-footer">
             <Container>
               <Text size="sm" tone="muted">
-                Mega UI · 토스의 공개 디자인 패턴을 참고한 자체 구현 ·{' '}
-                {componentCount}개 컴포넌트 · {examples.length}개 화면 예제
+                Mega UI · {componentCount}개 컴포넌트 · {examples.length}개 화면
+                예제
               </Text>
               <Text size="sm" tone="muted" as="span">
                 <a href="./llms.txt">AI 문서 인덱스</a>

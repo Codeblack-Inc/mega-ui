@@ -42,8 +42,8 @@ export function Welcome() {
 
 const principles = [
   {
-    title: '실측한 토큰',
-    body: '색, 치수, 타입 스케일을 토스 웹 제품에서 실측한 값에 맞췄어요. 익숙한 리듬이라 설명 없이도 자연스러워요.',
+    title: '정돈된 토큰',
+    body: '색, 치수, 타입 스케일을 하나의 토큰 체계로 맞췄어요. 익숙한 리듬이라 설명 없이도 자연스러워요.',
   },
   {
     title: '조합 우선',
@@ -100,7 +100,7 @@ export function HomePage() {
           회사 웹을 위한 React UI.
         </Heading>
         <Text size="lg" tone="secondary" className="home-hero__lead">
-          Mega UI는 토스 웹 제품에서 실측한 디자인 토큰 위에 만든 사내 컴포넌트
+          Mega UI는 하나의 디자인 토큰 체계 위에 만든 사내 컴포넌트
           라이브러리예요. 레이아웃부터 데이터 그리드, AI 채팅까지{' '}
           {componentCount}개 컴포넌트를 조합해 같은 언어로 화면을 만들어요.
         </Text>

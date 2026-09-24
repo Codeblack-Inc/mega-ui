@@ -5,7 +5,7 @@
 
 | 단계              | 범위                                                                                                 | 상태                          |
 | ----------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------- |
-| 0. 기반           | 빌드/타입/CSS 배포, 281개 런타임 export, 토스 실측 토큰(light/dark), 39개 화면 예제, AI 가이드       | 구현됨                        |
+| 0. 기반           | 빌드/타입/CSS 배포, 281개 런타임 export, 디자인 토큰(light/dark), 39개 화면 예제, AI 가이드          | 구현됨                        |
 | 1. 상호작용       | Dialog, Tooltip, Menu, Tabs, Toast, Radio                                                            | 구현됨                        |
 | 1b. 확장 상호작용 | Drawer, Popover, Accordion                                                                           | 구현됨                        |
 | 2. 입력/데이터    | Table, Pagination, EmptyState, Skeleton, Stat, Amount, Avatar/AvatarGroup, Banner                    | 구현됨                        |

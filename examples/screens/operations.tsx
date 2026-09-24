@@ -51,9 +51,9 @@ const orderRows: Order[] = Array.from({ length: 47 }, (_, index) => ({
   customer: ['김서윤', '이도현', '박하린', '최준호', '정민지', '한지우'][
     index % 6
   ]!,
-  channel: ['자사몰', '스마트스토어', '쿠팡', '29CM'][index % 4]!,
+  channel: ['자사몰', '한빛몰', '누리마켓', '온다샵'][index % 4]!,
   status: orderStatuses[index % orderStatuses.length]!,
-  carrier: ['CJ대한통운', '한진택배', '롯데택배'][index % 3]!,
+  carrier: ['한빛택배', '누리택배', '바로택배'][index % 3]!,
   amount: 23800 + ((index * 17300) % 310000),
   orderedAt: `09-09 ${String(18 - (index % 9)).padStart(2, '0')}:${String((index * 7) % 60).padStart(2, '0')}`,
   sla: index % 5 === 3 ? '2시간 초과' : `${20 + (index % 8) * 13}분 남음`,
@@ -226,7 +226,7 @@ function OrderOperations() {
               setPage(1);
             }}
           >
-            {['전체 채널', '자사몰', '스마트스토어', '쿠팡', '29CM'].map(
+            {['전체 채널', '자사몰', '한빛몰', '누리마켓', '온다샵'].map(
               (item) => (
                 <option key={item}>{item}</option>
               ),
@@ -240,11 +240,9 @@ function OrderOperations() {
               setPage(1);
             }}
           >
-            {['전체 택배사', 'CJ대한통운', '한진택배', '롯데택배'].map(
-              (item) => (
-                <option key={item}>{item}</option>
-              ),
-            )}
+            {['전체 택배사', '한빛택배', '누리택배', '바로택배'].map((item) => (
+              <option key={item}>{item}</option>
+            ))}
           </Select>
           <Button variant="text" onClick={reset}>
             초기화
@@ -394,7 +392,7 @@ const settlementRows: Settlement[] = Array.from({ length: 34 }, (_, index) => {
   const difference = status === '차이 발생' ? (index % 2 ? -18400 : 32700) : 0;
   return {
     id: `ST-202609-${String(index + 1).padStart(3, '0')}`,
-    partner: ['스마트스토어', '쿠팡', '29CM', '무신사', '카카오쇼핑'][
+    partner: ['한빛몰', '누리마켓', '온다샵', '바로스타일', '메가선물'][
       index % 5
     ]!,
     cycle: `09.${String(1 + (index % 9)).padStart(2, '0')}–09.${String(2 + (index % 9)).padStart(2, '0')}`,
@@ -511,7 +509,7 @@ function SettlementReconciliation() {
       <Alert tone="warning">
         <strong>대사 차이 7건 · 184,900원</strong>
         <br />
-        쿠팡 3건, 스마트스토어 2건, 기타 2건의 확인이 필요합니다.
+        누리마켓 3건, 한빛몰 2건, 기타 2건의 확인이 필요합니다.
       </Alert>
       <div className="ops-kpis ops-kpis--three">
         <Card>
@@ -557,11 +555,11 @@ function SettlementReconciliation() {
           >
             {[
               '전체 파트너',
-              '스마트스토어',
-              '쿠팡',
-              '29CM',
-              '무신사',
-              '카카오쇼핑',
+              '한빛몰',
+              '누리마켓',
+              '온다샵',
+              '바로스타일',
+              '메가선물',
             ].map((item) => (
               <option key={item}>{item}</option>
             ))}

@@ -1,6 +1,6 @@
 @use 'icons';
 
-// ---------- Dialog (TDS centered modal: white, r20, no border, large soft shadow) ----------
+// ---------- Dialog (centered modal: white, r20, no border, large soft shadow) ----------
 .mega-dialog {
   --_max: 560px;
   width: min(calc(100% - 32px), var(--_max));

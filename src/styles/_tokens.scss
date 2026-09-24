@@ -1,5 +1,4 @@
-// Token layers, structured like TDS: base palette (per theme) → semantic (theme-independent).
-// Values are measured from Toss web products; names are Mega UI's own.
+// Token layers: base palette (per theme) → semantic (theme-independent).
 // Fonts are not bundled: consumers load Pretendard.
 :root,
 [data-mega-theme] {
@@ -159,7 +158,7 @@
   --mega-radius-2xl: 24px;
   --mega-radius-full: 999px;
 
-  // ---- elevation (TDS xsmall/small/medium/large) ----
+  // ---- elevation (xs/sm/md/lg) ----
   --mega-shadow-xs: 0 1px 3px 0 var(--mega-shadow-color);
   --mega-shadow-sm: 0 2px 4px 0 var(--mega-shadow-color);
   --mega-shadow-md: 0 12px 40px 4px var(--mega-shadow-color);

@@ -1,6 +1,6 @@
 @use 'icons';
 
-// ---------- Button (TDS PC ladder: 24/28/34/40 + mobile CTA 56) ----------
+// ---------- Button (desktop ladder: 24/28/34/40 + mobile CTA 56) ----------
 .mega-button {
   --_overlay-hover: var(--mega-hover);
   --_overlay-press: var(--mega-press);
@@ -200,7 +200,7 @@
   }
 }
 
-// ---------- Chip (tossinvest filter chips: 13/600, h28, r7, hairline ring) ----------
+// ---------- Chip (filter chips: 13/600, h28, r7, hairline ring) ----------
 .mega-chip {
   display: inline-flex;
   align-items: center;
@@ -250,8 +250,8 @@
 }
 
 // ---------- Text field ----------
-// outline (TDS desktop): white fill, hairline border, brand focus border.
-// box (TDS mobile): grey fill, no border, brand focus ring.
+// outline (desktop): white fill, hairline border, brand focus border.
+// box (mobile): grey fill, no border, brand focus ring.
 .mega-input {
   display: block;
   width: 100%;
@@ -409,7 +409,7 @@
   }
 }
 
-// ---------- Checkbox / Radio (TDS: 47% border, brand hover, circle check) ----------
+// ---------- Checkbox / Radio (47% border, brand hover, circle check) ----------
 .mega-checkbox,
 .mega-radio {
   display: inline-flex;

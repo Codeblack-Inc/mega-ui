@@ -50,9 +50,9 @@ const won = (value: number) => `${value.toLocaleString('ko-KR')}원`;
 // ---------- 송금 플로우 ----------
 const contacts = [
   { name: '김하나', bank: '메가뱅크', account: '110-234-567890' },
-  { name: '이서준', bank: '국민은행', account: '333-01-234567' },
-  { name: '박지우', bank: '카카오뱅크', account: '3333-02-1234567' },
-  { name: '최민준', bank: '신한은행', account: '110-987-654321' },
+  { name: '이서준', bank: '한빛은행', account: '333-01-234567' },
+  { name: '박지우', bank: '바로뱅크', account: '3333-02-1234567' },
+  { name: '최민준', bank: '누리은행', account: '110-987-654321' },
 ];
 const BALANCE = 2_340_000;
 

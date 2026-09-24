@@ -23,7 +23,7 @@ const runtimeValues = new Set([
 ]);
 const styles = Object.fromEntries(componentStyles);
 
-test('design contract keeps core Toss-inspired tokens stable', () => {
+test('design contract keeps core tokens stable', () => {
   assert.match(tokens, /--mega-font:\s*'Pretendard Variable', Pretendard/);
   assert.match(tokens, /--mega-blue-600:\s*#3182f6/);
   assert.match(tokens, /--mega-brand:\s*var\(--mega-blue-600\)/);
@@ -88,4 +88,24 @@ test('dense controls keep checkmarks visible and short labels intact', () => {
     styles['_enterprise.scss'],
     /\.mega-data-grid \.mega-checkbox input[\s\S]*width: 20px/,
   );
+});
+
+test('sources and docs do not name third-party design systems', () => {
+  const root = new URL('../', import.meta.url);
+  const files = ['README.md', 'AGENTS.md', 'src', 'examples', 'docs'].flatMap(
+    (path) =>
+      path.includes('.')
+        ? [path]
+        : readdirSync(new URL(path, root), { recursive: true })
+            .filter((name) =>
+              /\.(?:tsx?|mjs|s?css|md|txt|html|json)$/.test(name),
+            )
+            .map((name) => `${path}/${name}`),
+  );
+  for (const file of files)
+    assert.doesNotMatch(
+      readFileSync(new URL(file, root), 'utf8'),
+      /toss|토스(?!트)|\bTDS\b/i,
+      file,
+    );
 });
