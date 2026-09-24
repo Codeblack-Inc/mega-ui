@@ -78,14 +78,10 @@ a {
   line-height: 1;
 
   &__mark {
-    display: grid;
-    place-items: center;
     width: 30px;
     height: 30px;
-    background: var(--mega-brand);
-    color: var(--mega-on-brand);
-    border-radius: var(--mega-radius-sm);
-    font-size: 22px;
+    flex: none;
+    margin-right: -4px;
   }
 
   &__suffix {

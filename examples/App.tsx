@@ -170,7 +170,8 @@ export default function App() {
           navLabel="사이트 메뉴"
           brand={
             <a className="docs-logo" href={`#${HOME}`}>
-              <span className="docs-logo__mark">m</span>mega
+              <img className="docs-logo__mark" src="./symbol.svg" alt="" />
+              mega
               <span className="docs-logo__suffix">ui</span>
             </a>
           }

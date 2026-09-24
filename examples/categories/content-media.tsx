@@ -33,7 +33,7 @@ import {
   TabPanel,
 } from '@mega-ui/react';
 import { CategoryCards } from './shell';
-import sampleImage from '../../docs/favicon.svg?raw';
+import sampleImage from '../../docs/symbol.svg?raw';
 export const contentMediaNames = [
   'Tag',
   'Status',
