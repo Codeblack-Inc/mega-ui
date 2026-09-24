@@ -69,25 +69,25 @@ a {
 .docs-logo {
   display: flex;
   align-items: center;
-  gap: 6px;
   margin-right: 12px;
   text-decoration: none;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-
-  &__mark {
-    width: 30px;
-    height: 30px;
-    flex: none;
-    margin-right: -4px;
+  img {
+    display: block;
+    width: 126px;
+    height: auto;
   }
 
-  &__suffix {
-    font-weight: 400;
-    color: var(--mega-muted);
-    margin-left: -4px;
+  .docs-logo__dark {
+    display: none;
+  }
+}
+
+[data-mega-theme='dark'] .docs-logo {
+  .docs-logo__light {
+    display: none;
+  }
+  .docs-logo__dark {
+    display: block;
   }
 }
 

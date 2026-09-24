@@ -41,7 +41,7 @@ handle.dismiss();
 
 ## 시각·키보드 보강
 
-- 브랜드색 #3182f6은 유지하고 흰 글자용 버튼 배경은 `--mega-action-fill`과 `--mega-action-danger-fill`로 분리했습니다. 두 색의 일반 텍스트 대비를 자동 검사합니다. SplitButton도 같은 색을 사용합니다.
+- 브랜드색은 현재 mega BI violet #6043d5입니다. 흰 글자용 버튼 배경은 `--mega-action-fill`과 `--mega-action-danger-fill`로 분리했습니다. 두 색의 일반 텍스트 대비를 자동 검사합니다. SplitButton도 같은 색을 사용합니다.
 - 모바일 폭 600px 이하 또는 coarse pointer에서 버튼·아이콘·칩·선택 옵션의 터치 영역을 최소 44px로 확장합니다. 기존 XL 56px은 유지합니다.
 - DataGrid 셀 내부 input/textarea/select/contenteditable의 방향키를 셀 이동이 가로채지 않습니다.
 - BarChart는 음수/양수를 공통 0 기준으로 그리며, LineChart는 날짜별 수치 목록을 눈에 보이게 제공합니다. 단위는 formatValue로 지정하세요. 다중 축·줌·실시간 차트 엔진은 포함하지 않습니다.

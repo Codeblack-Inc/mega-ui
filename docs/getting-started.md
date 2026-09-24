@@ -77,7 +77,7 @@ CSS 변수를 재정의합니다.
 
 1. **기본 팔레트** — 테마마다 값이 바뀌는 원색입니다. `--mega-grey-50` – `--mega-grey-900`, 같은 밝기의 알파 스케일
    `--mega-grey-a50` – `--mega-grey-a900`, 그리고 `--mega-blue-*`, `--mega-red-*`, `--mega-green-*`, `--mega-yellow-*`,
-   `--mega-teal-*`, `--mega-purple-*`. 색상 계열에는 `-a100` 같은 알파 단계도 있습니다.
+   `--mega-teal-*`, `--mega-purple-*`, `--mega-violet-*`. 색상 계열에는 `-a100` 같은 알파 단계도 있습니다.
 2. **표면** — 테마에만 존재하는 값입니다. `--mega-bg`, `--mega-surface`, `--mega-surface-raised`,
    `--mega-dim`, `--mega-shadow-color`, `--mega-shadow-color-weak`.
 3. **시맨틱** — 테마와 무관하게 이름이 고정되고, 값은 1층을 가리킵니다. 컴포넌트는 이 층만 읽습니다.
@@ -112,12 +112,13 @@ Badge는 2xs, Alert·Menu·Toast는 md, Dialog는 xl입니다.
 기본 팔레트를 덮으면 그 색을 쓰는 시맨틱 토큰이 한 번에 따라옵니다. 특정 역할만 바꾸려면 시맨틱 토큰을 직접 덮습니다.
 
 ```css
-/* 1) 팔레트 교체: 브랜드 블루 계열 전체가 바뀝니다 */
+/* 1) 팔레트 교체: 브랜드 violet 계열 전체가 바뀝니다 */
 .company-theme {
-  --mega-blue-600: #2458a6;
-  --mega-blue-700: #1c4680;
-  --mega-blue-a100: rgb(36 88 166 / 9%);
-  --mega-blue-a200: rgb(36 88 166 / 14%);
+  --mega-violet-600: #2458a6;
+  --mega-violet-700: #1c4680;
+  --mega-violet-a100: rgb(36 88 166 / 9%);
+  --mega-violet-a200: rgb(36 88 166 / 14%);
+  --mega-action-fill: #2458a6;
 }
 
 /* 2) 역할만 교체: 버튼 채움색만 바꾸고 링크 색은 유지 */
@@ -136,16 +137,16 @@ Badge는 2xs, Alert·Menu·Toast는 md, Dialog는 xl입니다.
 ### 다크 테마
 
 `data-mega-theme="dark"`를 지정합니다. 다크는 기본 팔레트를 통째로 교체하는 방식이라 시맨틱 층은 그대로 두고,
-예외적으로 `--mega-warning-fill`, `--mega-up`, `--mega-down`만 더 밝은 단계로 다시 가리킵니다.
+예외적으로 `--mega-brand-strong`, `--mega-warning-fill`, `--mega-up`, `--mega-down`만 더 밝은 단계로 다시 가리킵니다.
 따라서 팔레트만 바꾸면 라이트/다크가 함께 갱신됩니다.
 OS 설정 자동 감지와 선택 저장은 소비 앱의 책임입니다. 테마 루트와 같은 요소에서 브랜드 변수를 덮도록 적용 순서를 유지하세요.
 
 ### 대비에 대한 의도적 예외
 
 기본값의 일부 조합은 WCAG AA(4.5:1)에 못 미칩니다.
-보조 문자 `--mega-muted`는 약 61% 알파 회색(≈4.2:1)이고, 흰 배경 위 `#3182f6` primary 버튼은 약 3.7:1입니다.
-엄격한 AA가 필요한 제품은 `--mega-muted`와 `--mega-brand`를 더 진한 값으로 덮어쓰고,
-버튼 글자색과 배경색 대비를 직접 측정해 확인하세요.
+보조 문자 `--mega-muted`는 약 61% 알파 회색(≈4.2:1)입니다. 흰 배경 위 `#6043d5` primary 버튼은 4.5:1 이상입니다.
+엄격한 AA가 필요한 제품은 `--mega-muted`를 더 진한 값으로 덮어쓰고,
+사용하는 글자색과 배경색 대비를 직접 측정해 확인하세요.
 
 ## 데스크톱 vs 모바일
 

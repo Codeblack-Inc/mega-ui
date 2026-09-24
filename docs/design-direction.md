@@ -11,18 +11,19 @@ API 이름, props, 클래스 이름은 모두 Mega UI의 것입니다.
 3층 구조입니다. 자세한 목록은 [시작하기](./getting-started.md)에 있습니다.
 
 - **기본 팔레트**: 테마마다 값이 바뀌는 원색. 회색 `--mega-grey-50` – `--mega-grey-900`과 같은 밝기의 알파 스케일
-  `--mega-grey-a50` – `--mega-grey-a900`, 그리고 blue / red / green / yellow / teal / purple 계열.
+  `--mega-grey-a50` – `--mega-grey-a900`, 그리고 violet / blue / red / green / yellow / teal / purple 계열.
   알파 회색을 따로 둔 이유는 카드·시트 위에 겹쳐도 아래 배경이 비쳐 위계가 유지되기 때문입니다.
 - **표면**: `--mega-bg`, `--mega-surface`, `--mega-surface-raised`, `--mega-dim`, `--mega-shadow-color`.
   라이트에서 배경은 `#f2f4f7`, 표면은 흰색입니다. 다크에서는 `#17171c` / `#202025` / `#2a2b31`입니다.
 - **시맨틱**: 테마와 무관한 이름. 컴포넌트 SCSS는 이 층만 읽습니다.
 
-다크는 기본 팔레트를 통째로 교체하는 방식이고, `--mega-warning-fill`·`--mega-up`·`--mega-down` 세 개만
+다크는 기본 팔레트를 통째로 교체하는 방식이고, `--mega-brand-strong`·`--mega-warning-fill`·`--mega-up`·`--mega-down` 네 개만
 더 밝은 단계로 다시 가리킵니다.
 
 ## 색
 
-- 브랜드 블루는 `#3182f6`(`--mega-blue-600`)입니다. hover/press는 밝기 필터가 아니라 `#2272eb` 단계로 내려갑니다.
+- 공식 [mega BI](https://github.com/Codeblack-Inc/mega-bi)의 mega-ui 브랜드색은 violet `#6043d5`(`--mega-violet-600`)입니다. hover는 `#5137bc`, 버튼 채움색은 `#6043d5`입니다.
+- 파란색 팔레트는 시세 하락 등 의미가 있는 역할에 유지합니다.
 - 상태 문자색은 red `#de2b39` / green `#009467` / yellow `#c95c00` / teal `#288a8a` / purple `#9d2aff`이고,
   채움색은 한 단계 밝은 `#ef3341` / `#1f9d6f` / `#ffbc46`입니다.
   각 계열에는 옅은 배경용 알파 단계(`-a100`, `-a200`)가 있어 tinted 배지·알림에 사용합니다.
@@ -33,9 +34,8 @@ API 이름, props, 클래스 이름은 모두 Mega UI의 것입니다.
 
 기본값의 일부 조합은 WCAG AA(4.5:1)에 못 미칩니다.
 부가 문자 `--mega-muted`는 약 61% 알파 회색으로 흰 배경에서 약 4.2:1이고,
-흰 글자 + `#3182f6` primary 버튼은 약 3.7:1입니다.
-기본 브랜드색과 AA 통과가 충돌하는 지점이라, 라이브러리는 기본색을 유지하고 엄격한 대비는 재정의로 넘겼습니다.
-엄격한 AA가 필요하면 `--mega-muted`와 `--mega-brand`를 더 진한 값으로 덮으세요.
+흰 글자 + `#6043d5` primary 버튼은 4.5:1 이상입니다.
+보조 문자의 AA가 필요한 제품은 `--mega-muted`를 더 진한 값으로 덮으세요.
 
 ## 형태
 

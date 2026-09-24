@@ -233,7 +233,7 @@ export function InputsCategory() {
     ),
     InputColor: (
       <Field label="브랜드 색상" htmlFor="form-color">
-        <InputColor id="form-color" defaultValue="#3182f6" />
+        <InputColor id="form-color" defaultValue="#6043d5" />
       </Field>
     ),
     InputMask: (

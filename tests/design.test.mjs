@@ -26,7 +26,8 @@ const styles = Object.fromEntries(componentStyles);
 test('design contract keeps core tokens stable', () => {
   assert.match(tokens, /--mega-font:\s*'Pretendard Variable', Pretendard/);
   assert.match(tokens, /--mega-blue-600:\s*#3182f6/);
-  assert.match(tokens, /--mega-brand:\s*var\(--mega-blue-600\)/);
+  assert.match(tokens, /--mega-violet-600:\s*#6043d5/);
+  assert.match(tokens, /--mega-brand:\s*var\(--mega-violet-600\)/);
   assert.match(tokens, /--mega-disabled-opacity:\s*0\.3/);
   assert.match(tokens, /--mega-press-overlay:\s*rgb\(0 0 0 \/ 26%\)/);
   assert.match(tokens, /--mega-duration-fast:\s*120ms/);
@@ -43,7 +44,7 @@ test('component styles use defined semantic colors only', () => {
       );
     assert.doesNotMatch(
       css,
-      /var\(--mega-(?:grey|blue|red|green|yellow|teal|purple|white)-(?:a?\d+)/,
+      /var\(--mega-(?:grey|blue|violet|red|green|yellow|teal|purple|white)-(?:a?\d+)/,
       `${name}: use a semantic color token`,
     );
     assert.doesNotMatch(

@@ -101,7 +101,7 @@ export function HomePage() {
           회사 웹을 위한 React UI.
         </Heading>
         <Text size="lg" tone="secondary" className="home-hero__lead">
-          Mega UI는 하나의 디자인 토큰 체계 위에 만든 사내 컴포넌트
+          mega-ui는 하나의 디자인 토큰 체계 위에 만든 오픈소스 컴포넌트
           라이브러리예요. 레이아웃부터 데이터 그리드, AI 채팅까지{' '}
           {componentCount}개 컴포넌트를 조합해 같은 언어로 화면을 만들어요.
         </Text>

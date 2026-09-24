@@ -169,10 +169,13 @@ export default function App() {
           className="docs-topbar"
           navLabel="사이트 메뉴"
           brand={
-            <a className="docs-logo" href={`#${HOME}`}>
-              <img className="docs-logo__mark" src="./symbol.svg" alt="" />
-              mega
-              <span className="docs-logo__suffix">ui</span>
+            <a className="docs-logo" href={`#${HOME}`} aria-label="mega-ui 홈">
+              <img className="docs-logo__light" src="./mega-ui.svg" alt="" />
+              <img
+                className="docs-logo__dark"
+                src="./mega-ui-dark.svg"
+                alt=""
+              />
             </a>
           }
           actions={
@@ -281,6 +284,14 @@ export default function App() {
                 예제
               </Text>
               <Text size="sm" tone="muted" as="span">
+                <a href="https://codeblack-inc.github.io/mega-bi/">
+                  mega 제품군
+                </a>
+                {' · '}
+                <a href="https://github.com/Codeblack-Inc/mega-bi">
+                  브랜드 가이드
+                </a>
+                {' · '}
                 <a href="./llms.txt">AI 문서 인덱스</a>
               </Text>
             </Container>

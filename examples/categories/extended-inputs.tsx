@@ -185,7 +185,7 @@ export function ExtendedInputsCategory() {
         placeholder="검색어를 입력하세요"
       />
     ),
-    ColorInput: <ColorInput aria-label="강조 색상" defaultValue="#3182f6" />,
+    ColorInput: <ColorInput aria-label="강조 색상" defaultValue="#6043d5" />,
     FileInput: <FileInput aria-label="계약서 첨부" accept=".pdf,image/*" />,
     DateInput: <DateInput aria-label="예약일" defaultValue="2026-09-09" />,
     DateRangePicker: (

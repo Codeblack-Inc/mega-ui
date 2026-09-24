@@ -42,6 +42,14 @@
   --mega-blue-a200: rgb(26 122 249 / 14%);
   --mega-blue-a300: rgb(26 122 249 / 27%);
 
+  --mega-violet-300: #b8a8ed;
+  --mega-violet-600: #6043d5;
+  --mega-violet-700: #5137bc;
+  --mega-violet-800: #432d9d;
+  --mega-violet-a100: rgb(96 67 213 / 9%);
+  --mega-violet-a200: rgb(96 67 213 / 14%);
+  --mega-violet-a300: rgb(96 67 213 / 27%);
+
   --mega-red-100: #ffefef;
   --mega-red-200: #fee2e2;
   --mega-red-400: #faa1a0;
@@ -106,24 +114,24 @@
   --mega-disabled-opacity: 0.3;
   --mega-border: var(--mega-grey-a200);
   --mega-border-strong: var(--mega-grey-300);
-  --mega-border-brand-soft: var(--mega-blue-300);
+  --mega-border-brand-soft: var(--mega-violet-300);
   --mega-control: var(--mega-grey-a200);
   --mega-control-hover: var(--mega-grey-a300);
   --mega-control-strong: var(--mega-grey-a500);
   --mega-knob: #ffffff;
 
-  --mega-brand: var(--mega-blue-600);
+  --mega-brand: var(--mega-violet-600);
   // Filled actions need 4.5:1 with white independently of the brand palette.
-  --mega-action-fill: #1b64da;
+  --mega-action-fill: #6043d5;
   --mega-action-danger-fill: #c92232;
-  --mega-brand-hover: var(--mega-blue-700);
-  --mega-brand-strong: var(--mega-blue-800);
+  --mega-brand-hover: var(--mega-violet-700);
+  --mega-brand-strong: var(--mega-violet-800);
   --mega-on-brand: #ffffff;
   --mega-qr-ink: #000000;
   --mega-qr-paper: #ffffff;
-  --mega-brand-soft: var(--mega-blue-a100);
-  --mega-brand-soft-hover: var(--mega-blue-a200);
-  --mega-brand-border: var(--mega-blue-a300);
+  --mega-brand-soft: var(--mega-violet-a100);
+  --mega-brand-soft-hover: var(--mega-violet-a200);
+  --mega-brand-border: var(--mega-violet-a300);
 
   --mega-danger: var(--mega-red-700);
   --mega-danger-fill: var(--mega-red-600);
@@ -224,6 +232,14 @@
   --mega-blue-a200: rgb(72 150 255 / 22%);
   --mega-blue-a300: rgb(60 121 220 / 41%);
 
+  --mega-violet-300: #57459a;
+  --mega-violet-600: #a28df5;
+  --mega-violet-700: #b19dff;
+  --mega-violet-800: #c4b4ff;
+  --mega-violet-a100: rgb(177 157 255 / 14%);
+  --mega-violet-a200: rgb(177 157 255 / 22%);
+  --mega-violet-a300: rgb(177 157 255 / 41%);
+
   --mega-red-100: #3e2429;
   --mega-red-200: #52262d;
   --mega-red-400: #8d222f;
@@ -267,7 +283,7 @@
   --mega-border: rgb(213 223 244 / 16%);
   --mega-warning-fill: var(--mega-yellow-600);
   // tone text on 14% tinted surfaces: all >= 4.5:1
-  --mega-brand-strong: var(--mega-blue-800);
+  --mega-brand-strong: var(--mega-violet-800);
   --mega-danger: #ff7583;
   --mega-success: #2ed19a;
   --mega-teal: #2ec4c5;

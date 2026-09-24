@@ -84,8 +84,8 @@ const cardOrder = [
 
 /** Semantic color tokens from src/styles/_tokens.scss (light values). */
 const colorTokens = [
-  { token: '--mega-brand', hex: '#3182f6', use: '주 동작, 링크, 선택 상태' },
-  { token: '--mega-brand-soft', hex: '#1a7af9 · 9%', use: 'brand 배경 틴트' },
+  { token: '--mega-brand', hex: '#6043d5', use: '주 동작, 링크, 선택 상태' },
+  { token: '--mega-brand-soft', hex: '#6043d5 · 9%', use: 'brand 배경 틴트' },
   { token: '--mega-danger', hex: '#de2b39', use: '오류, 삭제, 상승(주식)' },
   { token: '--mega-success', hex: '#009467', use: '완료, 정상' },
   { token: '--mega-warning', hex: '#c95c00', use: '주의, 대기' },

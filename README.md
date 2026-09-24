@@ -1,8 +1,12 @@
-# Mega UI
+<h1><img src="docs/mega-ui.svg" alt="mega-ui" width="220" /></h1>
+
+[컴포넌트 문서와 화면 예제](https://mega-ui-two.vercel.app/) · [브랜드 가이드와 로고](https://github.com/Codeblack-Inc/mega-bi) · [mega 프로젝트](https://codeblack-inc.github.io/mega-bi/)
 
 회사 웹을 **컴포넌트 조합으로 만드는** React UI 라이브러리입니다.
 React 19.2+ · TypeScript · SCSS · Vite. 요청 목록 150종과 실무 조합 컴포넌트를 제공하며,
 색·치수·타입 스케일은 Mega UI가 정한 디자인 토큰을 따릅니다. Tailwind, CSS-in-JS, 별도 상태 관리, 모노레포 도구를 사용하지 않습니다.
+
+mega-ui는 [mega 오픈소스 제품군](https://codeblack-inc.github.io/mega-bi/)의 UI 라이브러리입니다. 공식 심벌과 워드마크, 색상 사용 기준은 [mega BI 저장소](https://github.com/Codeblack-Inc/mega-bi)에 있습니다. 기본 브랜드 색상은 violet `#6043D5`이며, `--mega-brand` 등 시맨틱 토큰으로 컴포넌트에 적용됩니다. 시세의 하락색처럼 의미가 있는 파란색은 별도 토큰을 사용합니다.
 
 ## 실행
 

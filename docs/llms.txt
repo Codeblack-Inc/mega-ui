@@ -43,7 +43,7 @@ Installing this package alone does not configure a consumer project’s AI instr
 ## Important
 
 Import components from @mega_ui/react and CSS once from @mega_ui/react/styles.css.
-Theme by overriding base palette variables (e.g. --mega-blue-600) or the theme-independent semantic
+Theme by overriding base palette variables (e.g. --mega-violet-600) or the theme-independent semantic
 variables (e.g. --mega-brand, --mega-muted); dark mode is `data-mega-theme="dark"`.
 useToast requires a ToastProvider ancestor. Dialog is controlled via `open` and `onClose`.
 Install from npm with `npm install @mega_ui/react` (ESM only, React 19.2+, every module is marked `'use client'`).

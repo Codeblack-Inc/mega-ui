@@ -8,7 +8,7 @@
 
 - 컴포넌트는 base palette나 색상 리터럴 대신 `--mega-*` 시맨틱 토큰만 사용합니다.
 - 참조하는 모든 토큰은 `_tokens.scss`에 정의되어야 합니다.
-- 기본 폰트는 Pretendard, 브랜드색은 `#3182f6`, disabled opacity는 `0.3`, pressed overlay는 검정 26%입니다.
+- 기본 폰트는 Pretendard, 브랜드색은 `#6043d5`, disabled opacity는 `0.3`, pressed overlay는 검정 26%입니다.
 - 모션 단계는 120/200/320ms이며 brightness filter, 800·900 weight, shimmer, bounce, overshoot, parallax를 금지합니다.
 - 아이콘 데이터 URI처럼 색상 토큰을 쓸 수 없는 구현은 `_icons.scss`에만 둡니다.
 
@@ -30,9 +30,11 @@ CI의 `npm run check`에서 실행됩니다. 문맥적 적절성은 아래 리�
 
 ## 기존 구현 감사 · 2026-09-09
 
+아래 표는 당시 결과입니다. 2026-09-24에 브랜드색을 mega BI의 violet `#6043d5`로 변경했습니다.
+
 | 영역                  | 상태 | 결과                                                                                                                                                                                                                          |
 | --------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 폰트·브랜드·시맨틱 색 | 통과 | Pretendard 우선, `#3182f6` 브랜드 alias, 컴포넌트의 base palette 직접 참조 제거                                                                                                                                               |
+| 폰트·브랜드·시맨틱 색 | 통과 | Pretendard 우선, 당시 `#3182f6` 브랜드 alias, 컴포넌트의 base palette 직접 참조 제거                                                                                                                                          |
 | 숫자·접근성           | 통과 | Amount/Table/Stat tabular nums, 네이티브 폼 의미, focus/reduced-motion/forced-colors 처리                                                                                                                                     |
 | disabled·pressed      | 통과 | 전체 노드 30%, filled button press overlay 26%로 통일                                                                                                                                                                         |
 | 로딩                  | 부분 | shimmer 제거, 버튼을 3-dot loader로 변경. 라벨 fade와 radial highlight는 아직 없음                                                                                                                                            |
