@@ -34,10 +34,14 @@
 }
 
 // 0.01ms, not 0: transitionend/animationend still fire for code that waits on them.
+// Scoped to library markup so a consumer's own animations are left alone.
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  [class*='mega-'],
+  [class*='mega-'] *,
+  [class*='mega-']::before,
+  [class*='mega-']::after,
+  [class*='mega-'] *::before,
+  [class*='mega-'] *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
