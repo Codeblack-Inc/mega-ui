@@ -30,7 +30,7 @@ import {
   type DataTableSort,
   type FileUploadItem,
   type FormSummaryError,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 const pause = () => new Promise<void>((resolve) => setTimeout(resolve, 500));
 

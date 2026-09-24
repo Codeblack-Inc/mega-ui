@@ -1,4 +1,4 @@
-import '@mega-ui/react/text-editor.css';
+import '@mega_ui/react/text-editor.css';
 import { useState } from 'react';
 import {
   Alert,
@@ -7,13 +7,13 @@ import {
   Dialog,
   PageHeader,
   Stack,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import {
   TextEditor,
   parseTextEditorDocument,
   serializeTextEditorDocument,
   type TextEditorDocument,
-} from '@mega-ui/react/text-editor';
+} from '@mega_ui/react/text-editor';
 
 const storageKey = 'mega-ui:text-editor:example:v1';
 const initial: TextEditorDocument = {

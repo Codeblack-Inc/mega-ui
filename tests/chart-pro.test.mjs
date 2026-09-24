@@ -236,7 +236,7 @@ test('professional input boundary rejects invalid and excessive data without mut
 test('ChartPro server rendering keeps the accessible source and safe failure states', async () => {
   const { createElement } = await import('react');
   const { renderToStaticMarkup } = await import('react-dom/server');
-  const { ChartPro } = await import('@mega-ui/react/charts');
+  const { ChartPro } = await import('@mega_ui/react/charts');
   const html = renderToStaticMarkup(
     createElement(ChartPro, { label: '분석', data: { type: 'line', series } }),
   );

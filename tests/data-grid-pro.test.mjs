@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
-import { DataGridPro } from '@mega-ui/react/data-grid';
+import { DataGridPro } from '@mega_ui/react/data-grid';
 import {
   applyGridChanges,
   mergeGridSavedRows,

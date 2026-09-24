@@ -13,7 +13,7 @@
 | 3. 화면 패턴      | SideNav, NavRail, TopBar, Breadcrumb, Chip, IconButton                                               | 구현됨                        |
 | 3b. 확장 패턴     | AppShell, AlertDialog, Chat, AgentActivity                                                           | 구현됨                        |
 | 4. 예제 확장      | 목록/상세/생성/수정, 검색, 권한, 오류, 온보딩, 커머스, 운영 화면                                     | 예정                          |
-| 5. 유통/AI        | 사내 레지스트리, 버전/변경 기록, 문서 검색, MCP resources/tools                                      | 예정                          |
+| 5. 유통/AI        | npm 공개 배포(@mega_ui/react), 버전/변경 기록, 문서 검색, MCP resources/tools                        | npm 배포 완료, 나머지 예정    |
 | 6. 전문 업무 기능 | Scheduler, Text Editor, Charts, Task Board, Data Grid, Diagram, Spreadsheet, PDF Viewer (Gantt 제외) | Gantt 제외 8개 영역 기능 구현 |
 
 ## 전문 업무 기능 지원 목표
@@ -46,13 +46,13 @@
 
 ### 첫 구현: DataGridPro
 
-`@mega-ui/react/data-grid`에 전문 그리드를 구현했습니다. 기존 경량 DataGrid는 유지합니다.
+`@mega_ui/react/data-grid`에 전문 그리드를 구현했습니다. 기존 경량 DataGrid는 유지합니다.
 [API와 지원 범위](./data-grid.md), `/#data-grid-pro?full=1`의 주문 원장 예제와 브라우저 회귀 검사를 제공합니다.
 전체 전문 기능 9종을 완료한 상태는 아닙니다. Text Editor의 표·이미지·블록·Markdown 변환까지 구현했으며 실기기 검증은 남아 있습니다.
 
 ### 두 번째 구현: TextEditor
 
-`@mega-ui/react/text-editor`에 Tiptap 기반 편집기를 추가했습니다.
+`@mega_ui/react/text-editor`에 Tiptap 기반 편집기를 추가했습니다.
 [기능별 상태와 API](./text-editor.md), `/#text-editor?full=1` 예제, JSON 검증과 브라우저 회귀 검사를 제공합니다.
 문단·서식·목록·링크·표·이미지·블록 이동/복제/삭제·Markdown 변환·붙여넣기 정제·undo/redo·저장과 복원을 구현했습니다.
 기능 구현과 실기기 검증 상태는 구분합니다. 실제 OS IME·스크린 리더 검증은 남아 있으며,
@@ -60,7 +60,7 @@ Charts의 구현 범위는 아래와 같습니다.
 
 ### 세 번째 구현: Charts
 
-`@mega-ui/react/charts`에 다중 계열 `CartesianChart`와 `createChartCsv`를 추가했습니다.
+`@mega_ui/react/charts`에 다중 계열 `CartesianChart`와 `createChartCsv`를 추가했습니다.
 공통 축·범례·툴팁, 음수·결측, 키보드 탐색, 전체 데이터 표·CSV를 제공합니다.
 [API·기능별 상태·검증 한계](./charts.md), `/#charts?full=1`의 판매 채널 손익 예제와
 `tests/charts.test.mjs`·`tests/browser/charts.spec.ts`가 구현 근거입니다.
@@ -119,7 +119,7 @@ xlsx는 값·수식·병합·틀 고정만 주고받으며 셀 서식·차트·�
 
 ### 여덟 번째 구현: PdfViewerPro
 
-`@mega-ui/react/pdf-viewer`에 pdf.js 기반 문서 뷰어를 추가했습니다. Apache-2.0 라이선스의 `pdfjs-dist` 6.3을
+`@mega_ui/react/pdf-viewer`에 pdf.js 기반 문서 뷰어를 추가했습니다. Apache-2.0 라이선스의 `pdfjs-dist` 6.3을
 별도 진입점에서만 로드합니다. 쪽 렌더링과 탐색, 썸네일, 확대·쪽 맞춤·회전, 전체 쪽 검색과 텍스트 선택,
 주석 표시와 AcroForm 양식 입력, 서명 칸 표시, 양식 값을 담은 저장·재열기·인쇄·내려받기,
 비밀번호 요구와 손상 파일 오류 처리를 구현했습니다.

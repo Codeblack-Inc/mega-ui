@@ -7,7 +7,7 @@ import {
   TextEditor,
   parseTextEditorDocument,
   serializeTextEditorDocument,
-} from '@mega-ui/react/text-editor';
+} from '@mega_ui/react/text-editor';
 
 test('editor documents round trip and reject unsafe or unsupported input', () => {
   const document = {
@@ -92,7 +92,7 @@ test('editor supports SSR and its engine and CSS stay outside the core entry', (
 
 test('Markdown, table and image data round trip and unsafe imports fail atomically', async () => {
   const { parseTextEditorMarkdown: parse, exportTextEditorMarkdown: exp } =
-    await import('@mega-ui/react/text-editor');
+    await import('@mega_ui/react/text-editor');
   const source =
     '# 제목\n\n**굵게** ++밑줄++ [문서](https://example.com)\n\n| 항목 | 값 |\n| --- | --- |\n| 문서 | 3 |\n\n![설명](https://example.com/a.png)\n\n```js\nconst x = 1;\n```';
   const document = parse(source);
@@ -127,7 +127,7 @@ test('Markdown, table and image data round trip and unsafe imports fail atomical
 
 test('row heights round trip, reject unsafe values and warn about Markdown loss', async () => {
   const { parseTextEditorMarkdown, exportTextEditorMarkdown } =
-    await import('@mega-ui/react/text-editor');
+    await import('@mega_ui/react/text-editor');
   const document = parseTextEditorMarkdown('| 항목 |\n| --- |\n| 문서 |');
   const row = document.content[0].content[0];
   row.attrs.height = 120;

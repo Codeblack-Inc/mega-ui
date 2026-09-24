@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ChartPro, type ChartProData } from '@mega-ui/react/charts';
-import { Select, Stack } from '@mega-ui/react';
+import { ChartPro, type ChartProData } from '@mega_ui/react/charts';
+import { Select, Stack } from '@mega_ui/react';
 
 const points = [
   ['4월', 320],

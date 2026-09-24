@@ -1,13 +1,13 @@
 # SchedulerPro
 
 `SchedulerPro`는 일·주·월·리소스 보기로 일정을 만들고 옮기는 제어형 달력입니다.
-`@mega-ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없고 시간대 계산은 브라우저의 `Intl`을 사용합니다.
+`@mega_ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없고 시간대 계산은 브라우저의 `Intl`을 사용합니다.
 기존 `Scheduler`는 날짜별 목록만 표시하는 가벼운 컴포넌트로 그대로 유지합니다.
 
 ```tsx
 import { useState } from 'react';
-import { SchedulerPro, type SchedulerData } from '@mega-ui/react';
-import '@mega-ui/react/styles.css';
+import { SchedulerPro, type SchedulerData } from '@mega_ui/react';
+import '@mega_ui/react/styles.css';
 
 const initial: SchedulerData = {
   version: 1,

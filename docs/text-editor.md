@@ -1,6 +1,6 @@
 # TextEditor
 
-`@mega-ui/react/text-editor`의 전문 문서 편집기입니다. 로드맵의 문단·서식·목록·링크·표·이미지·블록 편집,
+`@mega_ui/react/text-editor`의 전문 문서 편집기입니다. 로드맵의 문단·서식·목록·링크·표·이미지·블록 편집,
 Markdown 변환, 붙여넣기 정제, undo/redo, 문서 저장·복원을 구현했습니다.
 한글 조합은 엔진 처리와 자동 회귀 검사를 제공하며, 실제 OS 입력기·보조 기술 수동 검증은 별도입니다.
 
@@ -11,9 +11,9 @@ CSS와 엔진은 편집기를 사용하는 화면에서 로드합니다.
 import {
   TextEditor,
   serializeTextEditorDocument,
-} from '@mega-ui/react/text-editor';
-import '@mega-ui/react/styles.css';
-import '@mega-ui/react/text-editor.css';
+} from '@mega_ui/react/text-editor';
+import '@mega_ui/react/styles.css';
+import '@mega_ui/react/text-editor.css';
 
 <TextEditor
   label="운영 문서 본문"

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import * as ui from '@mega-ui/react';
+import * as ui from '@mega_ui/react';
 
 const columns = [
   { key: 'name', header: '이름', sortable: true },

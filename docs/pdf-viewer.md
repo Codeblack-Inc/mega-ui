@@ -1,14 +1,14 @@
 # PdfViewerPro
 
 `PdfViewerPro`는 PDF를 읽고 검색하고 양식을 채우는 뷰어입니다.
-별도 진입점 `@mega-ui/react/pdf-viewer`와 `@mega-ui/react/pdf-viewer.css`로 제공하며,
+별도 진입점 `@mega_ui/react/pdf-viewer`와 `@mega_ui/react/pdf-viewer.css`로 제공하며,
 Apache-2.0 라이선스의 [pdf.js](./pdfjs-license.txt)(`pdfjs-dist` 6.3)를 렌더링 엔진으로 사용합니다.
 기본 진입점에는 포함하지 않으므로 이 화면에서만 엔진을 내려받습니다.
 기존 `PDFViewer`는 브라우저 내장 뷰어를 그대로 쓰는 가벼운 컴포넌트로 유지합니다.
 
 ```tsx
-import { PdfViewerPro } from '@mega-ui/react/pdf-viewer';
-import '@mega-ui/react/pdf-viewer.css';
+import { PdfViewerPro } from '@mega_ui/react/pdf-viewer';
+import '@mega_ui/react/pdf-viewer.css';
 // Vite 기준. 워커 주소는 번들러에 맞게 전달합니다.
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 

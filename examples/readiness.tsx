@@ -14,7 +14,7 @@ import {
   Tabs,
   ToastProvider,
   useToast,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ListWorkflow, SaveWorkflow } from './workflow-demos';
 import '../src/styles/index.scss';
 

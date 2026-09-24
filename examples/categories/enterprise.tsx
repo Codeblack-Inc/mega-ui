@@ -17,7 +17,7 @@ import {
   TreeTable,
   VirtualTable,
   type DataColumn,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { CategoryCards } from './shell';
 
 export const enterpriseNames = [

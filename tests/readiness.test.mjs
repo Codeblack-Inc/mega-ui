@@ -11,7 +11,7 @@ import {
   MultiSelect,
   Tabs,
   TabPanel,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 test('disabled combobox excludes its submitted value; required describes selection', () => {
   const html = render(

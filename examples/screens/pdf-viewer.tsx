@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Alert, Checkbox, PageHeader, Select, Stack } from '@mega-ui/react';
-import { PdfViewerPro } from '@mega-ui/react/pdf-viewer';
-import '@mega-ui/react/pdf-viewer.css';
+import { Alert, Checkbox, PageHeader, Select, Stack } from '@mega_ui/react';
+import { PdfViewerPro } from '@mega_ui/react/pdf-viewer';
+import '@mega_ui/react/pdf-viewer.css';
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
 const files = [

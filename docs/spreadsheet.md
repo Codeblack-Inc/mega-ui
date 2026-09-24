@@ -1,7 +1,7 @@
 # SpreadsheetPro
 
 `SpreadsheetPro`는 수식·범위 편집·여러 시트를 다루는 제어형 스프레드시트입니다.
-`@mega-ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없고,
+`@mega_ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없고,
 xlsx 압축은 브라우저의 `CompressionStream`·`DecompressionStream`을 사용합니다.
 기존 `Spreadsheet`는 문자열 셀만 편집하는 가벼운 컴포넌트로 그대로 유지합니다.
 
@@ -11,8 +11,8 @@ import {
   SpreadsheetPro,
   emptySheet,
   type SpreadsheetData,
-} from '@mega-ui/react';
-import '@mega-ui/react/styles.css';
+} from '@mega_ui/react';
+import '@mega_ui/react/styles.css';
 
 const initial: SpreadsheetData = {
   version: 1,

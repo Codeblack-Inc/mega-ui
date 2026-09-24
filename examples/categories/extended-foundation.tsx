@@ -32,7 +32,7 @@ import {
   TableRow,
   Text,
   Grid,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon, iconNames } from '../icons';
 import { CategoryCards } from './shell';
 export const extendedFoundationNames = [

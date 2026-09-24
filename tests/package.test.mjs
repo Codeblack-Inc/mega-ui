@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import * as ui from '@mega-ui/react';
+import * as ui from '@mega_ui/react';
 
 test('public package exports render without a browser or bundled React', () => {
   assert.ok(Object.keys(ui).length >= 150);

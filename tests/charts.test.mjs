@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup as render } from 'react-dom/server';
-import { CartesianChart, createChartCsv } from '@mega-ui/react/charts';
+import { CartesianChart, createChartCsv } from '@mega_ui/react/charts';
 import { prepareChartData } from '../src/pro/charts-model.ts';
 
 const data = {
@@ -156,7 +156,7 @@ test('stacked geometry separates positive/negative totals and keeps missing valu
 test('ranges clamp invalid input and pie proportions handle zeros, gaps and extreme values', async () => {
   const { normalizeChartRange, preparePieData } =
     await import('../src/pro/charts-model.ts');
-  const { PieChart } = await import('@mega-ui/react/charts');
+  const { PieChart } = await import('@mega_ui/react/charts');
   assert.deepEqual(normalizeChartRange(undefined, 6), [0, 5]);
   assert.deepEqual(normalizeChartRange([-3, 50], 6), [0, 5]);
   assert.deepEqual(normalizeChartRange([4, 2], 6), [4, 4]);

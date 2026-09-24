@@ -1,12 +1,12 @@
 # TaskBoard
 
 `TaskBoard`는 열·카드·구획(swimlane)을 편집하는 제어형 작업 보드입니다.
-`@mega-ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없습니다.
+`@mega_ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없습니다.
 
 ```tsx
 import { useState } from 'react';
-import { TaskBoard, type TaskBoardData } from '@mega-ui/react';
-import '@mega-ui/react/styles.css';
+import { TaskBoard, type TaskBoardData } from '@mega_ui/react';
+import '@mega_ui/react/styles.css';
 
 const initial: TaskBoardData = {
   version: 1,

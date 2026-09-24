@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import * as Mega from '@mega-ui/react';
+import * as Mega from '@mega_ui/react';
 import {
   Badge,
   Card,
@@ -12,7 +12,7 @@ import {
   Stack,
   Stat,
   Text,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { categories } from './catalog';
 import { ExampleIcon } from './icons';
 import { componentCount, docs, exampleGroups, examples } from './routes';
@@ -23,8 +23,8 @@ const installCode = `npm install /absolute/path/to/mega-ui-react-0.1.0.tgz`;
 
 const usageCode = `import {
   Button, Card, Container, Heading, Stack, Text,
-} from '@mega-ui/react';
-import '@mega-ui/react/styles.css'; // 앱 진입점에서 한 번만
+} from '@mega_ui/react';
+import '@mega_ui/react/styles.css'; // 앱 진입점에서 한 번만
 
 export function Welcome() {
   return (

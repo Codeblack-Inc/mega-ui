@@ -9,7 +9,7 @@ import {
   Stack,
   validateScheduler,
   type SchedulerData,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 const monday = '2026-09-07';
 export const schedulerSeed: SchedulerData = {

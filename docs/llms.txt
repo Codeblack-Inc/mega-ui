@@ -18,8 +18,8 @@ Installing this package alone does not configure a consumer project’s AI instr
 - [Foundations, content, media and AI](./extended-components.md): Added primitives, disclosures, QR, uploads, chat.
 - [Extended inputs](./extended-inputs.md): Actions, input variants and selection.
 - [Extended navigation](./extended-navigation.md): Navigation, overlays and feedback.
-- [Professional DataGridPro](./data-grid.md): Separate @mega-ui/react/data-grid entry; transactional editing, range clipboard, virtualization, grouping, trees, server pagination, CSV and tested limits.
-- [Charts](./charts.md): Separate @mega-ui/react/charts entry; bar/line/area and stacking, pie/donut, category range zoom, legend, keyboard lookup, missing values, table and CSV. Catalog: #components/professional.
+- [Professional DataGridPro](./data-grid.md): Separate @mega_ui/react/data-grid entry; transactional editing, range clipboard, virtualization, grouping, trees, server pagination, CSV and tested limits.
+- [Charts](./charts.md): Separate @mega_ui/react/charts entry; bar/line/area and stacking, pie/donut, category range zoom, legend, keyboard lookup, missing values, table and CSV. Catalog: #components/professional.
 - [Enterprise](./enterprise.md): Data tables, grids, planning, spreadsheets and explicit scope limits.
 - [AI guide](./ai-guide.md): Which component to use for what, required wiring (Field, Toast, Dialog, Tabs), limitations.
 - [Design direction](./design-direction.md): Measured basis, palette, radius ladder, control ladder, type roles, component specs.
@@ -42,15 +42,15 @@ Installing this package alone does not configure a consumer project’s AI instr
 
 ## Important
 
-Import components from @mega-ui/react and CSS once from @mega-ui/react/styles.css.
+Import components from @mega_ui/react and CSS once from @mega_ui/react/styles.css.
 Theme by overriding base palette variables (e.g. --mega-blue-600) or the theme-independent semantic
 variables (e.g. --mega-brand, --mega-muted); dark mode is `data-mega-theme="dark"`.
 useToast requires a ToastProvider ancestor. Dialog is controlled via `open` and `onClose`.
-The package has not been published to a registry. Use the locally packed tarball for evaluation.
+Install from npm with `npm install @mega_ui/react` (ESM only, React 19.2+, every module is marked `'use client'`).
 Do not invent undocumented exports or props. This index is documentation, not an MCP endpoint.
 
 - [TaskBoard](./task-board.md): Kanban 통합, 카드·열·구획·WIP·드래그·저장/복원
-- [PdfViewerPro](./pdf-viewer.md): Separate @mega-ui/react/pdf-viewer entry (pdf.js); page rendering, thumbnails, zoom/rotate, search, text selection, AcroForm filling, text/ink/stamp annotations, save/print/download, password and broken-file errors.
+- [PdfViewerPro](./pdf-viewer.md): Separate @mega_ui/react/pdf-viewer entry (pdf.js); page rendering, thumbnails, zoom/rotate, search, text selection, AcroForm filling, text/ink/stamp annotations, save/print/download, password and broken-file errors.
 - [SpreadsheetPro](./spreadsheet.md): 수식 엔진(참조·범위·순환), 범위 선택·채우기·붙여넣기, 셀 형식·병합·틀 고정, 정렬·필터, 여러 시트, CSV·xlsx 반출입
 - [DiagramEditor](./diagram.md): 노드·포트·연결 편집, 연결 제약, 드래그·다중 선택·스냅, 확대·이동·미니맵, 자동 배치·직각 경로, undo/redo, JSON·SVG 내보내기
 - [SchedulerPro](./scheduler.md): 일·주·월·리소스 보기, 반복과 회차 예외, 드래그·키보드 이동, 시간대·DST, 겹침·업무 시간 검증, iCalendar 반출입

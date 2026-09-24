@@ -11,7 +11,7 @@ import {
   parseTaskBoard,
   serializeTaskBoard,
   type TaskBoardData,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 export const taskBoardSeed: TaskBoardData = {
   version: 1,

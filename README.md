@@ -29,16 +29,15 @@ npm pack           # 실제 소비 프로젝트에서 검증할 로컬 패키지
 
 ## 다른 프로젝트에서 사용
 
-현재 npm에 게시하지 않았습니다. `npm pack`으로 생성한 tgz를 소비 프로젝트에서 설치합니다.
-패키지 이름은 임시로 `@mega-ui/react`이며, 사내 레지스트리와 배포 정책을 정하기 전까지 `private: true`로 둡니다.
+React 19와 ESM 번들러(Vite, Next.js 등)가 필요합니다. 모든 모듈에 `'use client'`가 붙어 있어 Next.js App Router에서 그대로 쓸 수 있습니다.
 
 ```sh
-npm install /absolute/path/to/mega-ui-react-0.1.0.tgz
+npm install @mega_ui/react
 ```
 
 ```tsx
-import { Button, Card, Container, Heading, Stack, Text } from '@mega-ui/react';
-import '@mega-ui/react/styles.css'; // 앱 진입점에서 한 번만
+import { Button, Card, Container, Heading, Stack, Text } from '@mega_ui/react';
+import '@mega_ui/react/styles.css'; // 앱 진입점에서 한 번만
 
 export function Welcome() {
   return (
@@ -61,7 +60,7 @@ export function Welcome() {
 설치가 끌어오는 런타임 의존성은 React뿐입니다. 무거운 엔진(`react-data-grid`, `echarts`, `@tiptap/*`, `pdfjs-dist`)은
 각각 하나의 서브경로에만 붙어 있고 선택적 peer dependency이므로, 그 서브경로를 쓰는 프로젝트만 설치합니다.
 서브경로별로 필요한 패키지는 [시작하기](docs/getting-started.md)의 표에 있습니다.
-전문 그리드는 `@mega-ui/react/data-grid`와 `@mega-ui/react/data-grid.css`로 별도 로드합니다.
+전문 그리드는 `@mega_ui/react/data-grid`와 `@mega_ui/react/data-grid.css`로 별도 로드합니다.
 QR 인코딩용 `qrcode-generator`는 번들에 포함하며, 쓰지 않으면 트리셰이킹으로 빠집니다.
 ESM만 제공하며, React 19.2 이상을 지원합니다. React 18과 CommonJS는 현재 지원 대상으로 검증하지 않았습니다.
 
@@ -94,7 +93,7 @@ tests/              빌드 산출물에 대한 Node 기본 테스트
 - [확장 로드맵 및 완료 기준](docs/roadmap.md)
 - [AI 문서 인덱스](docs/llms.txt)
 
-기존 동일 이름 36종을 유지하고, 기존 구현 19종을 새 이름으로 재사용했으며, 95종을 구현·조합했습니다. Spreadsheet 수식 엔진, 반복 일정, Gantt 의존성 계산, 파일 전송 서버·AI 백엔드는 포함하지 않습니다. MCP 서버, 레지스트리 게시, 스크린 리더 전수 검증은 후속 과제입니다.
+기존 동일 이름 36종을 유지하고, 기존 구현 19종을 새 이름으로 재사용했으며, 95종을 구현·조합했습니다. Spreadsheet 수식 엔진, 반복 일정, Gantt 의존성 계산, 파일 전송 서버·AI 백엔드는 포함하지 않습니다. MCP 서버와 스크린 리더 전수 검증은 후속 과제입니다.
 
 빌드 설정 참고: [Vite library mode](https://vite.dev/guide/build.html#library-mode), [Sass CSS 변수와 Sass 변수의 차이](https://sass-lang.com/documentation/variables/).
 

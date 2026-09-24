@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup as render } from 'react-dom/server';
-import * as ui from '@mega-ui/react';
+import * as ui from '@mega_ui/react';
 
 test('P1 patterns render data, states, actions and native selection semantics', () => {
   for (const name of [

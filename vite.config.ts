@@ -14,9 +14,11 @@ export default defineConfig({
       fileName: (_format, name) => `${name}.js`,
     },
     cssCodeSplit: true,
-    sourcemap: true,
     cssTarget: 'esnext',
     rolldownOptions: {
+      // Every chunk holds hooks or event handlers, so RSC frameworks
+      // (Next.js App Router) must treat the whole package as client code.
+      output: { banner: "'use client';" },
       external:
         /^(?:react(?:-dom)?(?:\/.*)?|echarts(?:\/.*)?|react-data-grid|pdfjs-dist(?:\/.*)?|@tiptap\/.*)$/,
     },

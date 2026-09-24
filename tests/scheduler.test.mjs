@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { SchedulerPro } from '@mega-ui/react';
+import { SchedulerPro } from '@mega_ui/react';
 import {
   validateScheduler,
   updateScheduler,

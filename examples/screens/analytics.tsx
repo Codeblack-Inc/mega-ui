@@ -36,7 +36,7 @@ import {
   useToast,
   type DataColumn,
   type TreeTableNode,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from '../icons';
 
 /* ------------------------------------------------------------------ */

@@ -1,4 +1,4 @@
-import '@mega-ui/react/data-grid.css';
+import '@mega_ui/react/data-grid.css';
 import { useEffect, useMemo, useState } from 'react';
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   Select,
   Stack,
   Text,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import {
   DataGridPro,
   defaultGridView,
@@ -17,7 +17,7 @@ import {
   serializeGridView,
   type GridColumn,
   type GridView,
-} from '@mega-ui/react/data-grid';
+} from '@mega_ui/react/data-grid';
 
 type Order = {
   id: string;

@@ -22,7 +22,7 @@ import {
   Switch,
   Text,
   Textarea,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 export function DashboardExample() {
   const [period, setPeriod] = useState('month');

@@ -48,7 +48,7 @@ import {
   VirtualTable,
   VisuallyHidden,
   type DataColumn,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from '../icons';
 
 /* ------------------------------------------------------------------ */

@@ -7,7 +7,7 @@ import {
   PageHeader,
   Stack,
   Text,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { exampleGroups, examples } from './routes';
 
 /** Landing page for every screen example, grouped by product domain. */

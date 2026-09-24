@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, CommandPalette, MegaIcon } from '@mega-ui/react';
+import { Button, CommandPalette, MegaIcon } from '@mega_ui/react';
 import { categories } from './catalog';
 import { docs, examples } from './routes';
 

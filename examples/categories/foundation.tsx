@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Card, Container, Grid, Heading, Stack, Text } from '@mega-ui/react';
+import { Card, Container, Grid, Heading, Stack, Text } from '@mega_ui/react';
 import { CategoryCards } from './shell';
 
 export const foundationNames = [

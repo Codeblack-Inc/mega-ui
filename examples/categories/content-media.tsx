@@ -31,7 +31,7 @@ import {
   Stack,
   Tabs,
   TabPanel,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { CategoryCards } from './shell';
 import sampleImage from '../../docs/symbol.svg?raw';
 export const contentMediaNames = [
@@ -212,7 +212,7 @@ export function ContentMediaCategory() {
     ),
     Code: (
       <Text>
-        패키지는 <Code>@mega-ui/react</Code>로 불러와요.
+        패키지는 <Code>@mega_ui/react</Code>로 불러와요.
       </Text>
     ),
     CodeBlock: (

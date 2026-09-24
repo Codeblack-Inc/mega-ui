@@ -1,5 +1,5 @@
 import { ChartProDemo } from '../chart-pro-demos';
-import '@mega-ui/react/charts.css';
+import '@mega_ui/react/charts.css';
 import { useState } from 'react';
 import {
   Alert,
@@ -12,12 +12,12 @@ import {
   Select,
   Stack,
   Text,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import {
   CartesianChart,
   PieChart,
   type CartesianChartData,
-} from '@mega-ui/react/charts';
+} from '@mega_ui/react/charts';
 
 const monthly: CartesianChartData = {
   labels: ['4월', '5월', '6월', '7월', '8월', '9월'],

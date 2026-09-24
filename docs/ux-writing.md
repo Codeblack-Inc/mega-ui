@@ -103,9 +103,9 @@ CI의 `npm run check`와 `npm test`에서도 실행됩니다.
 소비 프로젝트의 루트 `AGENTS.md` 및 해당 AI 도구의 프로젝트 지침에 다음을 추가하세요.
 
 ```md
-@mega-ui/react로 UI를 작성하기 전에
-node_modules/@mega-ui/react/docs/ai-guide.md와
-node_modules/@mega-ui/react/docs/ux-writing.md를 읽고 반드시 준수한다.
+@mega_ui/react로 UI를 작성하기 전에
+node_modules/@mega_ui/react/docs/ai-guide.md와
+node_modules/@mega_ui/react/docs/ux-writing.md를 읽고 반드시 준수한다.
 문구 검사와 UX 라이팅 의미 검토를 완료하기 전에는 작업을 완료로 보고하지 않는다.
 ```
 
@@ -114,7 +114,7 @@ node_modules/@mega-ui/react/docs/ux-writing.md를 읽고 반드시 준수한다.
 
 ```json
 {
-  "lint:ux": "node node_modules/@mega-ui/react/docs/check-ux-writing.mjs src"
+  "lint:ux": "node node_modules/@mega_ui/react/docs/check-ux-writing.mjs src"
 }
 ```
 

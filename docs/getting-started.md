@@ -2,27 +2,26 @@
 
 ## 설치와 기본 사용
 
-이 패키지는 아직 레지스트리에 게시되지 않았습니다. 저장소에서 `npm ci && npm pack`을 실행한 뒤,
-소비 프로젝트에서 `npm install /absolute/path/to/mega-ui-react-0.1.0.tgz`로 설치하세요.
-React 19와 React DOM 19가 필요합니다.
+`npm install @mega_ui/react`로 설치하세요. React 19와 React DOM 19가 필요합니다.
+ESM 전용 패키지이며, 모든 모듈에 `'use client'`가 붙어 있어 Next.js App Router에서도 그대로 쓸 수 있습니다.
 
 설치가 끌어오는 런타임 의존성은 React뿐입니다. 무거운 엔진은 각각 하나의 서브경로에만 붙어 있고,
 선택적 peer dependency이므로 그 서브경로를 쓰는 프로젝트만 설치합니다.
 
 | 서브경로                     | 함께 설치할 패키지                                                                                                                       |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `@mega-ui/react` (루트)      | 없음                                                                                                                                     |
-| `@mega-ui/react/data-grid`   | `react-data-grid`                                                                                                                        |
-| `@mega-ui/react/charts`      | `echarts`                                                                                                                                |
-| `@mega-ui/react/text-editor` | `@tiptap/react` `@tiptap/core` `@tiptap/pm` `@tiptap/starter-kit` `@tiptap/extension-image` `@tiptap/extension-table` `@tiptap/markdown` |
-| `@mega-ui/react/pdf-viewer`  | `pdfjs-dist`                                                                                                                             |
+| `@mega_ui/react` (루트)      | 없음                                                                                                                                     |
+| `@mega_ui/react/data-grid`   | `react-data-grid`                                                                                                                        |
+| `@mega_ui/react/charts`      | `echarts`                                                                                                                                |
+| `@mega_ui/react/text-editor` | `@tiptap/react` `@tiptap/core` `@tiptap/pm` `@tiptap/starter-kit` `@tiptap/extension-image` `@tiptap/extension-table` `@tiptap/markdown` |
+| `@mega_ui/react/pdf-viewer`  | `pdfjs-dist`                                                                                                                             |
 
 설치하지 않고 해당 서브경로를 import하면 번들러가 빌드 단계에서 빠진 패키지 이름과 함께 실패합니다.
 버전은 이 패키지의 `peerDependencies`에 적힌 범위를 따르세요.
 
 ```tsx
-import { Container, Grid, Card, Heading, Text } from '@mega-ui/react';
-import '@mega-ui/react/styles.css';
+import { Container, Grid, Card, Heading, Text } from '@mega_ui/react';
+import '@mega_ui/react/styles.css';
 
 export function Overview() {
   return (
@@ -193,10 +192,10 @@ loading은 중복 클릭을 막지만 요청 상태나 완료 알림까지 관�
 
 | 진입점                       | 컴포넌트                             | 엔진            | CSS                              |
 | ---------------------------- | ------------------------------------ | --------------- | -------------------------------- |
-| `@mega-ui/react/data-grid`   | DataGridPro                          | react-data-grid | `@mega-ui/react/data-grid.css`   |
-| `@mega-ui/react/text-editor` | TextEditor                           | Tiptap          | `@mega-ui/react/text-editor.css` |
-| `@mega-ui/react/charts`      | ChartPro · CartesianChart · PieChart | Apache ECharts  | `@mega-ui/react/charts.css`      |
-| `@mega-ui/react/pdf-viewer`  | PdfViewerPro                         | pdf.js          | `@mega-ui/react/pdf-viewer.css`  |
+| `@mega_ui/react/data-grid`   | DataGridPro                          | react-data-grid | `@mega_ui/react/data-grid.css`   |
+| `@mega_ui/react/text-editor` | TextEditor                           | Tiptap          | `@mega_ui/react/text-editor.css` |
+| `@mega_ui/react/charts`      | ChartPro · CartesianChart · PieChart | Apache ECharts  | `@mega_ui/react/charts.css`      |
+| `@mega_ui/react/pdf-viewer`  | PdfViewerPro                         | pdf.js          | `@mega_ui/react/pdf-viewer.css`  |
 
 `TaskBoard`·`SchedulerPro`·`DiagramEditor`·`SpreadsheetPro`는 추가 엔진이 없어 기본 진입점과 `styles.css`에 포함합니다.
 

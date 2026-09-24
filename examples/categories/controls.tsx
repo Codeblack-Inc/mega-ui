@@ -16,7 +16,7 @@ import {
   Text,
   ToggleButton,
   useToast,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from '../icons';
 import { CategoryCards, PairNote } from './shell';
 

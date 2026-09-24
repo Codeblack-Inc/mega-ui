@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { TaskBoard, Kanban } from '@mega-ui/react';
+import { TaskBoard, Kanban } from '@mega_ui/react';
 import {
   validateTaskBoard,
   updateTaskBoard,

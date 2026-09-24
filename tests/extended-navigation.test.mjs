@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createElement as h } from 'react';
 import { renderToStaticMarkup as render } from 'react-dom/server';
-import * as ui from '@mega-ui/react';
+import * as ui from '@mega_ui/react';
 
 test('extended navigation, overlay and feedback names are public', () => {
   for (const name of [

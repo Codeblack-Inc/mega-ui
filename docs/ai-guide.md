@@ -12,8 +12,8 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 
 ## 생성 규칙
 
-1. `@mega-ui/react`의 문서화된 공개 export만 사용합니다. [150개 대조표](./component-coverage.md)에서 기존/별칭/확장 API를 확인합니다. 내부 dist 경로를 import하지 않습니다.
-2. 앱 진입점에 `import '@mega-ui/react/styles.css'`를 한 번 추가합니다.
+1. `@mega_ui/react`의 문서화된 공개 export만 사용합니다. [150개 대조표](./component-coverage.md)에서 기존/별칭/확장 API를 확인합니다. 내부 dist 경로를 import하지 않습니다.
+2. 앱 진입점에 `import '@mega_ui/react/styles.css'`를 한 번 추가합니다.
 3. 간격은 `gap` 0–8 토큰, 색·표면은 문서화된 variant/tone을 사용합니다. 임의의 hex를 쓰지 않습니다.
 4. 커스텀 CSS를 추가하기 전에 기존 컴포넌트와 `--mega-*` 시맨틱 토큰으로 해결합니다.
 5. `main`/`nav`/`section`/`form`/`table` 같은 의미 있는 HTML은 그대로 사용합니다.
@@ -53,28 +53,28 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 
 **전문 데이터 그리드**
 
-범위 편집·그룹·집계·가상화·일괄 저장에는 별도 진입점 `@mega-ui/react/data-grid`의
+범위 편집·그룹·집계·가상화·일괄 저장에는 별도 진입점 `@mega_ui/react/data-grid`의
 `DataGridPro`를 사용합니다. [전문 그리드 API](./data-grid.md)를 먼저 읽고 기본 CSS와
-`@mega-ui/react/data-grid.css`를 함께 로드합니다. 기존 `DataGrid`/`DataColumn` API와
+`@mega_ui/react/data-grid.css`를 함께 로드합니다. 기존 `DataGrid`/`DataColumn` API와
 호환된다고 가정하지 마세요. 저장 서버는 권한·트랜잭션·원본 버전 검증을 수행해야 합니다.
 
 **리치 텍스트 문서**
 
-`@mega-ui/react/text-editor`의 `TextEditor`는 별도 진입점입니다. [API와 제한](./text-editor.md)을 먼저 읽고
-기본 CSS와 `@mega-ui/react/text-editor.css`를 함께 로드합니다. `defaultValue`는 최초 JSON이며
+`@mega_ui/react/text-editor`의 `TextEditor`는 별도 진입점입니다. [API와 제한](./text-editor.md)을 먼저 읽고
+기본 CSS와 `@mega_ui/react/text-editor.css`를 함께 로드합니다. `defaultValue`는 최초 JSON이며
 변경은 `onChange`, 저장 확정은 비동기 `onSave`로 연결합니다. 문서 교체는 미저장 변경을 확인한 뒤 재마운트합니다.
 표·이미지·블록 편집과 Markdown/JSON 반입·반출을 제공합니다. `exportTextEditorMarkdown`의 `warnings`를 표시하고,
 병합 셀·너비 등 원본 구조 보관에는 JSON을 사용합니다. 파일 이미지 512KB·문서 1M UTF-16 상한을 확인하세요.
 
 **다중 계열 분석 차트**
 
-전문 분석에는 `@mega-ui/react/charts`의 `ChartPro`를 사용합니다. 막대·선·영역·누적·원형·도넛·산점·히트맵·트리맵·캔들/거래량,
+전문 분석에는 `@mega_ui/react/charts`의 `ChartPro`를 사용합니다. 막대·선·영역·누적·원형·도넛·산점·히트맵·트리맵·캔들/거래량,
 시간/이중 축·드래그 탐색·선택·PNG/SVG/CSV·페이지형 데이터 표를 제공합니다.
 시간축은 오름차순 epoch milliseconds와 명시적인 `timeZone`을 사용하며 최대 10,000개 데이터·20개 계열입니다.
 [ChartPro API](./charts.md#chartpro)를 읽고 유형에 맞는 `ChartProData`를 전달하세요. 원시 ECharts 옵션은 받지 않습니다.
 
-기존 경량 막대·선·영역·누적 비교, 구간 확대·이동, 축·범례·키보드 값 탐색에는 `@mega-ui/react/charts`의 `CartesianChart`를 사용합니다.
-[API와 제한](./charts.md)을 먼저 읽고 기본 CSS와 `@mega-ui/react/charts.css`를 로드합니다.
+기존 경량 막대·선·영역·누적 비교, 구간 확대·이동, 축·범례·키보드 값 탐색에는 `@mega_ui/react/charts`의 `CartesianChart`를 사용합니다.
+[API와 제한](./charts.md)을 먼저 읽고 기본 CSS와 `@mega_ui/react/charts.css`를 로드합니다.
 `labels`와 각 `series.values`의 길이를 맞추고, 결측은 `null`로 전달합니다. 범주는 등간격이며 시간축이 아닙니다.
 최대 200개 항목·6개 계열을 지원하며 전체 데이터 표와 CSV는 숨긴 계열도 포함합니다.
 양수 비율의 원형·도넛은 같은 진입점의 `PieChart`를 사용하며 음수 입력은 거부합니다.
@@ -83,7 +83,7 @@ UI 작업 전 [UX 라이팅 계약](./ux-writing.md)을 읽고 반드시 준수�
 
 **PDF 문서**
 
-`@mega-ui/react/pdf-viewer`의 `PdfViewerPro`로 PDF를 읽고 검색하고 양식을 채웁니다. [API](./pdf-viewer.md)를 먼저 읽습니다.
+`@mega_ui/react/pdf-viewer`의 `PdfViewerPro`로 PDF를 읽고 검색하고 양식을 채웁니다. [API](./pdf-viewer.md)를 먼저 읽습니다.
 `pdf-viewer.css`를 로드하고 `workerSrc`에 pdf.js 워커 주소를 전달합니다. 생략하면 메인 스레드에서 해석합니다.
 `onSave`는 양식 값과 주석을 포함한 PDF 바이트를 받습니다. `editable`이 true면 글자(FreeText)·서명 그리기(Ink)·도장(Stamp) 주석을 만들 수 있습니다.
 문서의 서명 칸은 위치만 표시하며, 그린 서명도 잉크 주석이지 전자서명이 아닙니다. 이렇게 설명하세요.

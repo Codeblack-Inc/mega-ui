@@ -1,13 +1,13 @@
 # DiagramEditor
 
 `DiagramEditor`는 노드·포트·연결을 그리고 편집하는 제어형 다이어그램 편집기입니다.
-`@mega-ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없고 캔버스는 SVG로 그립니다.
+`@mega_ui/react`와 기본 `styles.css`에서 제공합니다. 추가 엔진 의존성은 없고 캔버스는 SVG로 그립니다.
 기존 `OrganizationChart`는 계층 목록 표시용으로 그대로 유지합니다.
 
 ```tsx
 import { useState } from 'react';
-import { DiagramEditor, type DiagramInput } from '@mega-ui/react';
-import '@mega-ui/react/styles.css';
+import { DiagramEditor, type DiagramInput } from '@mega_ui/react';
+import '@mega_ui/react/styles.css';
 
 const initial: DiagramInput = {
   version: 1,

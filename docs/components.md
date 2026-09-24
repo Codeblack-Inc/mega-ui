@@ -1,6 +1,6 @@
 # Mega UI 컴포넌트 API — 0.1.0
 
-이 페이지는 `@mega-ui/react`의 핵심 API와 목록·폼·분석 조합을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
+이 페이지는 `@mega_ui/react`의 핵심 API와 목록·폼·분석 조합을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
 별도 명시가 없으면 해당 HTML 요소의 표준 속성, `className`, `style`, React 19 `ref`를 그대로 전달합니다.
 `children`은 ReactNode입니다. 범용 `as`, `asChild`, `sx` API는 제공하지 않습니다(`Text`와 `Amount`만 좁은 `as`를 받습니다).
 
@@ -735,12 +735,12 @@ function SaveButton() {
 
 ## 다중 계열 Charts (별도 진입점)
 
-`@mega-ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
+`@mega_ui/react/charts`의 `ChartPro`·`CartesianChart`·`PieChart`와 `createChartProCsv`·`createChartCsv`는
 [Charts API](./charts.md)를 참조하세요. 기본 차트 API와 별도로 제공하며 `charts.css`가 필요합니다.
 
 ## PdfViewerPro (별도 진입점)
 
-`@mega-ui/react/pdf-viewer`의 `PdfViewerPro`는 [문서 뷰어 API](./pdf-viewer.md)를 참조하세요.
+`@mega_ui/react/pdf-viewer`의 `PdfViewerPro`는 [문서 뷰어 API](./pdf-viewer.md)를 참조하세요.
 `pdf-viewer.css`와 pdf.js 워커 주소가 필요하며 기본 진입점에는 포함하지 않습니다.
 브라우저 내장 뷰어로 충분하면 기존 `PDFViewer`를 사용합니다.
 

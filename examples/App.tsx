@@ -19,7 +19,7 @@ import {
   ToastProvider,
   TopBar,
   TopBarLink,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { categories } from './catalog';
 import { GlobalSearch } from './component-search';
 import { GalleryPage } from './gallery';

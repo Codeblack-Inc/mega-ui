@@ -11,7 +11,7 @@ import {
   parseSpreadsheet,
   serializeSpreadsheet,
   type SpreadsheetData,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 const cells = (rows: readonly (readonly string[])[], start = 0) => {
   const map: Record<

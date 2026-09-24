@@ -17,7 +17,7 @@ import {
   TableHeaderCell,
   TableRow,
   Text,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { CategoryCards } from './shell';
 import { ExampleIcon } from '../icons';
 

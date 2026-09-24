@@ -21,7 +21,7 @@ import {
   Stack,
   Text,
   Textarea,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { CategoryCards, PairNote } from './shell';
 
 export const inputNames = [

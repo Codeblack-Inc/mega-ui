@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Card, Chip, Heading, MegaIcon, Stack, Text } from '@mega-ui/react';
+import { Card, Chip, Heading, MegaIcon, Stack, Text } from '@mega_ui/react';
 
 /** Card grid shared by every category page, plus the quick-scan chip row. */
 export function CategoryCards({

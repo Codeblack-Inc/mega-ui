@@ -1,16 +1,38 @@
 {
-  "name": "@mega-ui/react",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@mega_ui/react",
+  "version": "1.0.0",
   "description": "Composable React components for company web applications.",
   "type": "module",
-  "license": "UNLICENSED",
-  "engines": {
-    "node": ">=22.12.0"
+  "license": "MIT",
+  "author": "Codeblack Inc.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Codeblack-Inc/mega-ui.git"
   },
+  "homepage": "https://github.com/Codeblack-Inc/mega-ui#readme",
+  "bugs": {
+    "url": "https://github.com/Codeblack-Inc/mega-ui/issues"
+  },
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system",
+    "data-grid",
+    "charts",
+    "rich-text-editor",
+    "pdf-viewer",
+    "typescript"
+  ],
   "files": [
     "dist",
     "docs",
+    "!docs/ui-audit-*.md",
+    "!docs/roadmap.md",
+    "!docs/component-gap-report.md",
+    "!docs/check-ux-writing.mjs",
+    "!docs/*.pdf",
+    "LICENSE",
     "README.md"
   ],
   "main": "./dist/index.js",
@@ -41,15 +63,19 @@
       "types": "./dist/pdf-viewer.d.ts",
       "import": "./dist/pdf-viewer.js"
     },
-    "./pdf-viewer.css": "./dist/pdf-viewer.css"
+    "./pdf-viewer.css": "./dist/pdf-viewer.css",
+    "./package.json": "./package.json"
   },
   "sideEffects": [
     "**/*.css",
     "**/*.scss"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite --config vite.docs.config.ts",
-    "build": "vite build && tsc -p tsconfig.build.json && sass --no-source-map --style=compressed src/styles/index.scss dist/styles.css",
+    "build": "vite build && tsc -p tsconfig.build.json && node scripts/fix-dts-extensions.mjs && sass --no-source-map --style=compressed src/styles/index.scss dist/styles.css",
     "build:docs": "vite build --config vite.docs.config.ts && node tests/docs-build.check.mjs",
     "preview": "vite preview --config vite.docs.config.ts",
     "typecheck": "tsc --noEmit",
@@ -59,7 +85,8 @@
     "check": "npm run lint:ux && npm run typecheck && npm run format:check && npm test && npm run build:docs",
     "test:browser": "playwright test",
     "lint:ux": "node docs/check-ux-writing.mjs src examples",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run check"
   },
   "peerDependencies": {
     "@tiptap/core": "3.31.3",

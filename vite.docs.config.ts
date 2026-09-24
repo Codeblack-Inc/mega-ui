@@ -9,31 +9,31 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@mega-ui/react/charts.css': fileURLToPath(
+      '@mega_ui/react/charts.css': fileURLToPath(
         new URL('./src/pro/charts.css', import.meta.url),
       ),
-      '@mega-ui/react/pdf-viewer.css': fileURLToPath(
+      '@mega_ui/react/pdf-viewer.css': fileURLToPath(
         new URL('./src/pro/pdf-viewer.css', import.meta.url),
       ),
-      '@mega-ui/react/pdf-viewer': fileURLToPath(
+      '@mega_ui/react/pdf-viewer': fileURLToPath(
         new URL('./src/pdf-viewer.ts', import.meta.url),
       ),
-      '@mega-ui/react/charts': fileURLToPath(
+      '@mega_ui/react/charts': fileURLToPath(
         new URL('./src/charts.ts', import.meta.url),
       ),
-      '@mega-ui/react/text-editor.css': fileURLToPath(
+      '@mega_ui/react/text-editor.css': fileURLToPath(
         new URL('./src/pro/text-editor.css', import.meta.url),
       ),
-      '@mega-ui/react/data-grid.css': fileURLToPath(
+      '@mega_ui/react/data-grid.css': fileURLToPath(
         new URL('./src/pro/data-grid.css', import.meta.url),
       ),
-      '@mega-ui/react/text-editor': fileURLToPath(
+      '@mega_ui/react/text-editor': fileURLToPath(
         new URL('./src/text-editor.ts', import.meta.url),
       ),
-      '@mega-ui/react/data-grid': fileURLToPath(
+      '@mega_ui/react/data-grid': fileURLToPath(
         new URL('./src/data-grid.ts', import.meta.url),
       ),
-      '@mega-ui/react': fileURLToPath(
+      '@mega_ui/react': fileURLToPath(
         new URL('./src/index.ts', import.meta.url),
       ),
     },

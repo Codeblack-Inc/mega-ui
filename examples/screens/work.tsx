@@ -60,7 +60,7 @@ import {
   useToast,
   type DataColumn,
   type FileUploadItem,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from '../icons';
 
 // ---------- 사용자 관리 ----------

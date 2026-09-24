@@ -22,7 +22,7 @@ import {
   useToast,
   VirtualTable,
   type DataColumn,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from '../icons';
 
 const money = (value: number) => `${value.toLocaleString('ko-KR')}원`;

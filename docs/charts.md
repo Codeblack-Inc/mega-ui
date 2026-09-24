@@ -1,14 +1,14 @@
 # Charts
 
-`@mega-ui/react/charts`의 **[ChartPro](#chartpro)**는 로드맵 전체 유형·시간/이중 축·드래그 탐색·PNG/SVG/CSV를 제공합니다.
+`@mega_ui/react/charts`의 **[ChartPro](#chartpro)**는 로드맵 전체 유형·시간/이중 축·드래그 탐색·PNG/SVG/CSV를 제공합니다.
 
 기존 `CartesianChart`는 막대·선·영역과 누적 막대·누적 영역을, `PieChart`는 원형·도넛을 제공합니다.
 기존 `BarChart`·`LineChart`·`Sparkline` API는 유지합니다. 기존 SVG 구현과 ChartPro의 Apache ECharts 엔진 모두 기존 컨트롤·색상 토큰을 사용하고, 전용 JS/CSS를 별도 진입점으로 배포합니다.
 
 ```tsx
-import '@mega-ui/react/styles.css';
-import '@mega-ui/react/charts.css';
-import { CartesianChart, createChartCsv } from '@mega-ui/react/charts';
+import '@mega_ui/react/styles.css';
+import '@mega_ui/react/charts.css';
+import { CartesianChart, createChartCsv } from '@mega_ui/react/charts';
 
 const data = {
   labels: ['7월', '8월', '9월'],
@@ -79,7 +79,7 @@ range를 생략하면 내부 상태로 관리하며 최초에는 전체 구간�
 ## PieChart
 
 ```tsx
-import { PieChart } from '@mega-ui/react/charts';
+import { PieChart } from '@mega_ui/react/charts';
 
 <PieChart
   label="판매 채널 비율"
@@ -164,8 +164,8 @@ import {
   ChartPro,
   createChartProCsv,
   type ChartProData,
-} from '@mega-ui/react/charts';
-import '@mega-ui/react/charts.css';
+} from '@mega_ui/react/charts';
+import '@mega_ui/react/charts.css';
 
 const data: ChartProData = {
   type: 'line',

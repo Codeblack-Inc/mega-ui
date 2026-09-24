@@ -28,7 +28,7 @@ import {
   Tooltip,
   TopBar,
   TopBarLink,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from './icons';
 
 const stocks = [

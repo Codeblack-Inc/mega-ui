@@ -58,7 +58,7 @@ import {
   TopBarLink,
   Tour,
   useToast,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 import { ExampleIcon } from '../icons';
 
 // ---------- 상품 목록 ----------

@@ -11,7 +11,7 @@ import {
   serializeDiagram,
   type DiagramInput,
   type DiagramNodeType,
-} from '@mega-ui/react';
+} from '@mega_ui/react';
 
 const node = (
   id: string,

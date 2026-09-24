@@ -15,11 +15,11 @@
     "skipLibCheck": true,
     "types": ["vite/client", "node"],
     "paths": {
-      "@mega-ui/react/charts": ["./src/charts.ts"],
-      "@mega-ui/react": ["./src/index.ts"],
-      "@mega-ui/react/data-grid": ["./src/data-grid.ts"],
-      "@mega-ui/react/text-editor": ["./src/text-editor.ts"],
-      "@mega-ui/react/pdf-viewer": ["./src/pdf-viewer.ts"]
+      "@mega_ui/react/charts": ["./src/charts.ts"],
+      "@mega_ui/react": ["./src/index.ts"],
+      "@mega_ui/react/data-grid": ["./src/data-grid.ts"],
+      "@mega_ui/react/text-editor": ["./src/text-editor.ts"],
+      "@mega_ui/react/pdf-viewer": ["./src/pdf-viewer.ts"]
     }
   },
   "include": ["src", "examples", "vite.config.ts", "vite.docs.config.ts"]

@@ -1,7 +1,7 @@
 # DataGridPro
 
-첫 번째 전문 업무 컴포넌트입니다. `@mega-ui/react/data-grid`에서 가져옵니다.
-기존 `@mega-ui/react`의 `DataGrid`는 가벼운 정렬·선택 API로 유지합니다. 두 컴포넌트는 같은 API가 아닙니다.
+첫 번째 전문 업무 컴포넌트입니다. `@mega_ui/react/data-grid`에서 가져옵니다.
+기존 `@mega_ui/react`의 `DataGrid`는 가벼운 정렬·선택 API로 유지합니다. 두 컴포넌트는 같은 API가 아닙니다.
 
 ## 설치와 기본 사용
 
@@ -11,9 +11,9 @@ React와 엔진은 라이브러리 산출물에서 외부화하며, 기본 진�
 
 ```tsx
 import { useState } from 'react';
-import { DataGridPro, type GridColumn } from '@mega-ui/react/data-grid';
-import '@mega-ui/react/styles.css';
-import '@mega-ui/react/data-grid.css';
+import { DataGridPro, type GridColumn } from '@mega_ui/react/data-grid';
+import '@mega_ui/react/styles.css';
+import '@mega_ui/react/data-grid.css';
 
 type Order = { id: string; customer: string; quantity: number };
 const columns: readonly GridColumn<Order>[] = [
