@@ -249,6 +249,7 @@
     overflow: hidden;
     background: var(--mega-fill-strong);
     border-radius: var(--mega-radius-xs);
+    animation: mega-skeleton-pulse 1.2s ease-in-out infinite alternate;
   }
   &--text &__line {
     border-radius: var(--mega-radius-2xs);
@@ -263,6 +264,19 @@
     height: auto;
     aspect-ratio: 1;
     border-radius: 50%;
+  }
+}
+@keyframes mega-skeleton-pulse {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mega-skeleton__line {
+    animation: none;
   }
 }
 .mega-banner {

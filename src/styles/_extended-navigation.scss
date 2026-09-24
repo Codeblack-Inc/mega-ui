@@ -329,6 +329,9 @@
 }
 .mega-circular-progress {
   display: inline-block;
+  &:not([aria-valuenow]) svg {
+    animation: mega-circular-progress-spin 1.2s linear infinite;
+  }
   svg {
     display: block;
     width: 100%;
@@ -345,6 +348,12 @@
   &__value {
     stroke: var(--mega-brand);
     stroke-linecap: round;
+    transition: stroke-dasharray var(--mega-duration) var(--mega-ease);
+  }
+}
+@keyframes mega-circular-progress-spin {
+  to {
+    transform: rotate(270deg);
   }
 }
 .mega-spinner--standalone {
@@ -365,6 +374,12 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .mega-hover-card__content {
+    transition: none;
+  }
+  .mega-circular-progress svg {
+    animation: none;
+  }
+  .mega-circular-progress__value {
     transition: none;
   }
 }

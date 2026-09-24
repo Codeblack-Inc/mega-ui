@@ -692,6 +692,7 @@ function SaveButton() {
 | `lines`  | `number`                  | `1`    | text에서 여러 줄 생성 |
 
 항상 `aria-hidden`입니다. 로딩 상태 자체는 소비 앱에서 live region이나 `aria-busy`로 알리세요.
+줄은 로딩 중 부드럽게 밝기가 바뀌며, 동작 줄이기 설정에서는 정지합니다.
 
 ### Banner (div)
 
