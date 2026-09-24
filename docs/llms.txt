@@ -1,7 +1,7 @@
 # Mega UI
 
 > React 19.2+ + TypeScript component library with its own design tokens. SCSS with CSS-variable
-> tokens, qrcode-generator for QR encoding, Korean-first documentation. Version 0.1.0, 197 named exports covering the 150-component checklist.
+> tokens, qrcode-generator for QR encoding, Korean-first documentation. Version 1.0.0, 197 named exports covering the 150-component checklist.
 
 ## Required UI writing contract
 

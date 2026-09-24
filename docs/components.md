@@ -1,4 +1,4 @@
-# Mega UI 컴포넌트 API — 0.1.0
+# Mega UI 컴포넌트 API — 1.0.0
 
 이 페이지는 `@mega_ui/react`의 핵심 API와 목록·폼·분석 조합을 설명하며, 나머지 확장 이름은 [150개 대조표](./component-coverage.md)에 연결된 문서에서 확인합니다. 컴포넌트의 props 타입도 함께 export합니다.
 별도 명시가 없으면 해당 HTML 요소의 표준 속성, `className`, `style`, React 19 `ref`를 그대로 전달합니다.

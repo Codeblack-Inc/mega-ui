@@ -1,6 +1,6 @@
 # Mega UI를 사용하는 AI를 위한 가이드
 
-대상 버전: 0.1.0. 먼저 [`components.md`](./components.md)의 실제 export와 props를 확인하세요.
+대상 버전: 1.0.0. 먼저 [`components.md`](./components.md)의 실제 export와 props를 확인하세요.
 이 문서는 패키지 내부 `docs/ai-guide.md`와 예제 사이트 `/ai-guide.md`에서 제공합니다.
 
 ## 필수 UX 라이팅 계약

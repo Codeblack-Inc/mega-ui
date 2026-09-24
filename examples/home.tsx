@@ -16,10 +16,11 @@ import {
 import { categories } from './catalog';
 import { ExampleIcon } from './icons';
 import { componentCount, docs, exampleGroups, examples } from './routes';
+import { version } from '../package.json';
 
 const exportCount = Object.keys(Mega).length;
 
-const installCode = `npm install /absolute/path/to/mega-ui-react-0.1.0.tgz`;
+const installCode = `npm install @mega_ui/react`;
 
 const usageCode = `import {
   Button, Card, Container, Heading, Stack, Text,
@@ -94,7 +95,7 @@ export function HomePage() {
   return (
     <Stack gap={8} className="home">
       <Stack gap={5} align="start" className="home-hero">
-        <Badge tone="brand">v0.1.0 · React 19 · TypeScript · SCSS</Badge>
+        <Badge tone="brand">v{version} · React 19 · TypeScript · SCSS</Badge>
         <Heading level={1} size="2xl">
           익숙해서 쉽고, 단순해서 편안한 <br className="home-hero__br" />
           회사 웹을 위한 React UI.
@@ -134,7 +135,7 @@ export function HomePage() {
 
       <Section
         title="3분 만에 시작하기"
-        description="npm pack으로 만든 tgz를 설치하고, 스타일을 한 번 불러오면 끝이에요."
+        description="npm으로 설치하고, 스타일을 한 번 불러오면 끝이에요."
       >
         <Grid minItemWidth={320} gap={4}>
           <Card variant="outlined" padding="lg">
@@ -149,8 +150,8 @@ export function HomePage() {
               </Stack>
               <CodeBlock code={installCode} language="sh" />
               <Text size="sm" tone="muted">
-                아직 레지스트리에 게시하지 않았어요. 저장소에서 npm ci
-                &amp;&amp; npm pack을 실행해 tgz를 만들어요.
+                React 19가 필요해요. 차트·그리드·에디터·PDF 뷰어는 쓸 때만 엔진
+                패키지를 함께 설치하면 돼요.
               </Text>
             </Stack>
           </Card>
