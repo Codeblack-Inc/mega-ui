@@ -24,6 +24,21 @@
     padding: var(--mega-space-6);
     border-radius: var(--mega-radius-2xl);
   }
+  // Only cards made clickable by the consumer lift; static cards stay put.
+  &:is(a[href], button, [role='button']) {
+    cursor: pointer;
+    transition:
+      box-shadow var(--mega-duration) var(--mega-ease),
+      translate var(--mega-duration) var(--mega-ease-out),
+      background-color var(--mega-duration) var(--mega-ease);
+    &:hover {
+      box-shadow: var(--mega-shadow-md);
+      translate: 0 -1px;
+    }
+    &:active {
+      translate: 0;
+    }
+  }
 }
 
 // Badge: 12/600, h22, r6; weak (soft) by default, solid on demand, red dot for "N"
@@ -39,6 +54,9 @@
   line-height: 1.34;
   font-weight: 600;
   white-space: nowrap;
+  transition:
+    color var(--mega-duration) var(--mega-ease),
+    background-color var(--mega-duration) var(--mega-ease);
   &--neutral {
     color: var(--mega-text-secondary);
     background: var(--mega-fill);
@@ -96,6 +114,7 @@
   font-size: 14px;
   line-height: 1.5;
   overflow-wrap: break-word;
+  animation: mega-fade-in var(--mega-duration) var(--mega-ease);
   &--info {
     color: var(--mega-brand-strong);
     background: var(--mega-brand-soft);

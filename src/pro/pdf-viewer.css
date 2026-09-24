@@ -70,6 +70,7 @@
   padding: var(--mega-space-4);
   background: var(--mega-fill);
   border-radius: var(--mega-radius-md);
+  animation: mega-reveal var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-pdf__password label {
   display: grid;
@@ -110,9 +111,16 @@
   border: 0;
   border-radius: var(--mega-radius-sm);
   cursor: pointer;
+  transition:
+    background-color var(--mega-duration-fast) var(--mega-ease),
+    color var(--mega-duration-fast) var(--mega-ease),
+    transform var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-pdf__thumbnails button:hover {
   background: var(--mega-fill-hover);
+}
+.mega-pdf__thumbnails button:active {
+  transform: scale(0.97);
 }
 .mega-pdf__thumbnails button[aria-current] {
   background: var(--mega-brand-soft);
@@ -218,6 +226,8 @@
   border: 1px solid var(--mega-border);
   border-radius: var(--mega-radius-sm);
   box-shadow: var(--mega-shadow-md);
+  /* Opacity only: pdf.js positions popups itself. */
+  animation: mega-fade-in var(--mega-duration-fast) var(--mega-ease-out);
 }
 @media (max-width: 600px) {
   .mega-pdf__body[data-thumbnails] {
@@ -375,6 +385,7 @@
   border-radius: var(--mega-radius-sm);
   box-shadow: var(--mega-shadow-sm);
   z-index: 100001;
+  animation: mega-fade-in var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-pdf__editors .editToolbar button {
   min-width: 24px;
@@ -387,9 +398,15 @@
   border: 0;
   border-radius: var(--mega-radius-xs);
   cursor: pointer;
+  transition:
+    background-color var(--mega-duration-fast) var(--mega-ease),
+    transform var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-pdf__editors .editToolbar button:hover {
   background: var(--mega-fill-hover);
+}
+.mega-pdf__editors .editToolbar button:active {
+  transform: scale(0.96);
 }
 
 /* pdf.js hides its own toolbars with a `hidden` class and attribute. */

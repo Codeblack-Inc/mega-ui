@@ -169,6 +169,13 @@
   line-height: 1;
   white-space: nowrap;
   list-style: none;
+  transition:
+    background-color var(--mega-duration-fast) var(--mega-ease),
+    color var(--mega-duration-fast) var(--mega-ease),
+    transform var(--mega-duration-fast) var(--mega-ease-out);
+}
+.mega-text-editor__panel summary:active {
+  transform: scale(0.97);
 }
 .mega-text-editor__panel summary::-webkit-details-marker {
   display: none;
@@ -183,6 +190,9 @@
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg);
+  transition:
+    transform var(--mega-duration-fast) var(--mega-ease-out),
+    margin-top var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-text-editor__panel[open] > summary::after {
   transform: rotate(225deg);
@@ -209,6 +219,10 @@
   border-bottom: 1px solid var(--mega-border);
   padding: var(--mega-space-4);
   font-size: 13px;
+}
+/* Keyed on [open] so the enter animation replays on every open. */
+.mega-text-editor__panel[open] > .mega-text-editor__panel-body {
+  animation: mega-pop-in var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-text-editor__panel-body > header {
   display: flex;

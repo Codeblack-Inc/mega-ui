@@ -30,18 +30,18 @@ CI의 `npm run check`에서 실행됩니다. 문맥적 적절성은 아래 리�
 
 ## 기존 구현 감사 · 2026-09-09
 
-| 영역                  | 상태 | 결과                                                                                                  |
-| --------------------- | ---- | ----------------------------------------------------------------------------------------------------- |
-| 폰트·브랜드·시맨틱 색 | 통과 | Pretendard 우선, `#3182f6` 브랜드 alias, 컴포넌트의 base palette 직접 참조 제거                       |
-| 숫자·접근성           | 통과 | Amount/Table/Stat tabular nums, 네이티브 폼 의미, focus/reduced-motion/forced-colors 처리             |
-| disabled·pressed      | 통과 | 전체 노드 30%, filled button press overlay 26%로 통일                                                 |
-| 로딩                  | 부분 | shimmer 제거, 버튼을 3-dot loader로 변경. 라벨 fade와 radial highlight는 아직 없음                    |
-| 모션                  | 통과 | 120/200/320ms 토큰화, dialog/sheet는 320ms ease-out 사용. 반복 loader와 1ms 접근성 종료는 예외        |
-| 타입 역할             | 부분 | 13/14/15/17 body와 17/20/22/26/28–30 heading 제공. display 40/56과 title 18 역할은 없음               |
-| spacing               | 부분 | 4px 기반이지만 현재 public ladder는 4/8/12/16/24/32/48/64이며 20/28/40/80 단계가 없음                 |
-| radius                | 부분 | 6/8/10/12/16/20/24/full을 제공. 새 기준의 4/14/32 단계는 없음                                         |
-| 모바일 컨트롤         | 부분 | XL 56, box input 56, sheet/safe-area 지원. Button L48/S32, checkbox 22 square, switch 44×26과는 다름  |
-| elevation·icon        | 부분 | 모든 shadow는 토큰화됐지만 새 shadow 수치와 완전 일치하지 않음. select data URI는 `currentColor` 불가 |
-| 카피·CTA 위계         | 수동 | 금지 표현은 정적 검사로 차단. 행동 일치·해요체·조건 누락 등 의미는 필수 리뷰                          |
+| 영역                  | 상태 | 결과                                                                                                                                                                                                                          |
+| --------------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 폰트·브랜드·시맨틱 색 | 통과 | Pretendard 우선, `#3182f6` 브랜드 alias, 컴포넌트의 base palette 직접 참조 제거                                                                                                                                               |
+| 숫자·접근성           | 통과 | Amount/Table/Stat tabular nums, 네이티브 폼 의미, focus/reduced-motion/forced-colors 처리                                                                                                                                     |
+| disabled·pressed      | 통과 | 전체 노드 30%, filled button press overlay 26%로 통일                                                                                                                                                                         |
+| 로딩                  | 부분 | shimmer 제거, 버튼을 3-dot loader로 변경. 라벨 fade와 radial highlight는 아직 없음                                                                                                                                            |
+| 모션                  | 통과 | 120/200/320ms 토큰화, dialog/sheet는 320ms ease-out 사용. 버튼·칩 누름 축소, 팝업 등장(`mega-pop-in`), 펼침(`mega-reveal`), 선택 표시(`mega-pop`)를 공통 키프레임으로 적용. 반복 loader와 reduced-motion의 0.01ms 종료는 예외 |
+| 타입 역할             | 부분 | 13/14/15/17 body와 17/20/22/26/28–30 heading 제공. display 40/56과 title 18 역할은 없음                                                                                                                                       |
+| spacing               | 부분 | 4px 기반이지만 현재 public ladder는 4/8/12/16/24/32/48/64이며 20/28/40/80 단계가 없음                                                                                                                                         |
+| radius                | 부분 | 6/8/10/12/16/20/24/full을 제공. 새 기준의 4/14/32 단계는 없음                                                                                                                                                                 |
+| 모바일 컨트롤         | 부분 | XL 56, box input 56, sheet/safe-area 지원. Button L48/S32, checkbox 22 square, switch 44×26과는 다름                                                                                                                          |
+| elevation·icon        | 부분 | 모든 shadow는 토큰화됐지만 새 shadow 수치와 완전 일치하지 않음. select data URI는 `currentColor` 불가                                                                                                                         |
+| 카피·CTA 위계         | 수동 | 금지 표현은 정적 검사로 차단. 행동 일치·해요체·조건 누락 등 의미는 필수 리뷰                                                                                                                                                  |
 
 부분 항목은 기존 API와 화면 밀도를 바꾸는 변경입니다. 해당 surface를 재설계할 때 계약의 목표값으로 수렴시키고, 단순 토큰 교체로 기존 소비 화면을 깨뜨리지 않습니다.

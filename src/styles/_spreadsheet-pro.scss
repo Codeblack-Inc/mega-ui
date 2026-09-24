@@ -154,6 +154,17 @@
     z-index: 5;
     cursor: default;
   }
+  // Headers only: body cells stay transition-free so drag selection and scroll never lag.
+  &__colhead,
+  &__rowhead {
+    transition:
+      background-color var(--mega-duration-fast) var(--mega-ease),
+      color var(--mega-duration-fast) var(--mega-ease);
+  }
+  &__colhead:hover,
+  &__rowhead:hover {
+    background: var(--mega-fill-hover);
+  }
   &__colhead[data-selected],
   &__rowhead[data-selected] {
     background: var(--mega-brand-soft);
@@ -258,6 +269,17 @@
     border: 0;
     border-radius: var(--mega-radius-sm) var(--mega-radius-sm) 0 0;
     cursor: pointer;
+    transition:
+      background-color var(--mega-duration-fast) var(--mega-ease),
+      color var(--mega-duration-fast) var(--mega-ease),
+      transform var(--mega-duration-fast) var(--mega-ease-out);
+  }
+  &__sheet:hover {
+    color: var(--mega-text);
+    background: var(--mega-fill-hover);
+  }
+  &__sheet:active {
+    transform: scale(0.97);
   }
   &__sheet[aria-selected='true'] {
     color: var(--mega-brand-strong);

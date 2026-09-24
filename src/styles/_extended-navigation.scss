@@ -3,6 +3,7 @@
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
+  transition: color var(--mega-duration) var(--mega-ease);
   &:hover {
     color: var(--mega-brand-hover);
   }
@@ -29,6 +30,19 @@
     background: transparent;
     border: 0;
     border-radius: var(--mega-radius-sm);
+    transition:
+      color var(--mega-duration) var(--mega-ease),
+      background-color var(--mega-duration) var(--mega-ease),
+      transform var(--mega-duration-fast) var(--mega-ease-out);
+    &:enabled {
+      cursor: pointer;
+    }
+    &:hover:enabled {
+      background: var(--mega-hover);
+    }
+    &:active:enabled {
+      transform: scale(0.98);
+    }
   }
   &__number {
     display: inline-grid;
@@ -41,6 +55,9 @@
     border-radius: var(--mega-radius-full);
     font-size: 13px;
     font-weight: 600;
+    transition:
+      color var(--mega-duration) var(--mega-ease),
+      background-color var(--mega-duration) var(--mega-ease);
   }
   &__label,
   &__description {
@@ -63,6 +80,7 @@
     .mega-stepper__number {
       color: var(--mega-on-brand);
       background: var(--mega-brand);
+      animation: mega-pop var(--mega-duration) var(--mega-ease-out);
     }
   }
   &__item[data-complete] .mega-stepper__number {
@@ -104,6 +122,7 @@
   border: 1px solid var(--mega-border);
   border-radius: var(--mega-radius-md);
   box-shadow: var(--mega-shadow-md);
+  animation: mega-pop-in var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-navigation-menu {
   display: flex;
@@ -141,6 +160,12 @@
     text-decoration: none;
     background: transparent;
     border: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color var(--mega-duration) var(--mega-ease);
+    &:active:not(:disabled) .mega-bottom-navigation__icon {
+      transform: scale(0.9);
+    }
   }
   &__item[aria-current='page'] {
     color: var(--mega-brand);
@@ -150,6 +175,7 @@
     display: inline-flex;
     width: 20px;
     height: 20px;
+    transition: transform var(--mega-duration-fast) var(--mega-ease-out);
   }
   &__icon > svg {
     width: 100%;
@@ -167,6 +193,10 @@
     background: var(--mega-fill);
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-sm);
+    transition:
+      border-color var(--mega-duration) var(--mega-ease),
+      box-shadow var(--mega-duration) var(--mega-ease),
+      background-color var(--mega-duration) var(--mega-ease);
   }
   &__list {
     display: flex;
@@ -197,6 +227,8 @@
     background: transparent;
     border: 0;
     border-radius: var(--mega-radius-xs);
+    cursor: pointer;
+    transition: background-color var(--mega-duration) var(--mega-ease);
   }
   &__list button:hover:not(:disabled),
   &__list button:focus-visible {
@@ -220,7 +252,7 @@
   cursor: pointer;
   transition:
     background-color var(--mega-duration) var(--mega-ease),
-    transform var(--mega-duration-fast) var(--mega-ease);
+    transform var(--mega-duration-fast) var(--mega-ease-out);
   &:hover {
     background: var(--mega-brand-strong);
   }
@@ -244,6 +276,7 @@
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-md);
     box-shadow: var(--mega-shadow-md);
+    animation: mega-pop-in var(--mega-duration-fast) var(--mega-ease-out);
   }
 }
 .mega-hover-card {
@@ -265,12 +298,17 @@
     opacity: 0;
     pointer-events: none;
     transform: translateX(-50%);
-    transition: opacity var(--mega-duration-fast) var(--mega-ease);
+    // `translate` composes with the inline `transform: none` from use-floating.
+    translate: 0 4px;
+    transition:
+      opacity var(--mega-duration-fast) var(--mega-ease),
+      translate var(--mega-duration-fast) var(--mega-ease-out);
   }
   &:hover &__content,
   &:focus-within &__content {
     opacity: 1;
     pointer-events: auto;
+    translate: 0;
   }
   &[data-dismissed] &__content {
     opacity: 0;
@@ -285,6 +323,23 @@
   border-radius: 0;
   &--start {
     margin: 0 auto 0 0;
+  }
+  // Slide from its edge instead of the dialog's centered scale-in.
+  &[open] {
+    animation-name: mega-drawer-in;
+  }
+  &--start[open] {
+    animation-name: mega-drawer-in-start;
+  }
+}
+@keyframes mega-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes mega-drawer-in-start {
+  from {
+    transform: translateX(-100%);
   }
 }
 .mega-dialog.mega-sheet {
@@ -307,6 +362,7 @@
   border-radius: var(--mega-radius-md);
   font-size: 14px;
   line-height: 1.43;
+  animation: mega-fade-in var(--mega-duration) var(--mega-ease);
   &--success {
     background: var(--mega-success-soft);
   }
@@ -371,17 +427,6 @@
 ):focus-visible {
   outline: 2px solid var(--mega-brand);
   outline-offset: 2px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .mega-hover-card__content {
-    transition: none;
-  }
-  .mega-circular-progress svg {
-    animation: none;
-  }
-  .mega-circular-progress__value {
-    transition: none;
-  }
 }
 @media (forced-colors: active) {
   .mega-context-menu__popup,

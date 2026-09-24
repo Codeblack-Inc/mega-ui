@@ -29,6 +29,10 @@
   color: inherit;
   font: inherit;
   cursor: pointer;
+  transition: transform var(--mega-duration-fast) var(--mega-ease-out);
+}
+.mega-pro-grid__canvas button:active:not(:disabled) {
+  transform: scale(0.96);
 }
 .mega-pro-grid__canvas button:focus-visible {
   outline: 2px solid var(--mega-brand);
@@ -65,6 +69,7 @@
   border: 1px solid var(--mega-border);
   border-radius: var(--mega-radius-sm);
   background: var(--mega-surface);
+  animation: mega-reveal var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-pro-grid__panel legend {
   padding-inline: var(--mega-space-2);
@@ -150,6 +155,7 @@
   background: var(--mega-surface);
   color: var(--mega-danger);
   box-shadow: var(--mega-shadow-sm);
+  animation: mega-fade-in var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-pro-grid__errors,
 .mega-pro-grid__notice {
@@ -157,6 +163,7 @@
   padding: var(--mega-space-3);
   background: var(--mega-fill);
   border-radius: var(--mega-radius-sm);
+  animation: mega-fade-in var(--mega-duration) var(--mega-ease-out);
 }
 .mega-pro-grid__errors {
   padding-inline-start: 32px;

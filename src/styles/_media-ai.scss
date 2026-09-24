@@ -37,10 +37,18 @@
     cursor: pointer;
     overflow: hidden;
     min-height: 44px;
+    transition: transform var(--mega-duration-fast) var(--mega-ease-out);
+    &:active {
+      transform: scale(0.98);
+    }
   }
   img {
     width: 100%;
     aspect-ratio: 4 / 3;
+    transition: scale var(--mega-duration-slow) var(--mega-ease-out);
+  }
+  > button:hover img {
+    scale: 1.03;
   }
 }
 .mega-dropzone {
@@ -51,6 +59,16 @@
   border-radius: var(--mega-radius-lg);
   padding: var(--mega-space-5);
   color: var(--mega-text-secondary);
+  transition:
+    border-color var(--mega-duration) var(--mega-ease),
+    background-color var(--mega-duration) var(--mega-ease);
+  &:not([data-disabled]):is(:hover, :focus-within) {
+    border-color: var(--mega-brand);
+  }
+  &[data-dragging] {
+    border-color: var(--mega-brand);
+    background-color: var(--mega-brand-soft);
+  }
   input {
     max-width: 100%;
     min-height: 44px;
@@ -64,6 +82,12 @@
     padding: var(--mega-space-3);
     margin-right: var(--mega-space-3);
     cursor: pointer;
+    transition:
+      background-color var(--mega-duration) var(--mega-ease),
+      transform var(--mega-duration-fast) var(--mega-ease-out);
+  }
+  input:enabled::file-selector-button:active {
+    transform: scale(0.97);
   }
   &[data-disabled] {
     opacity: var(--mega-disabled-opacity);
@@ -102,6 +126,7 @@
   color: var(--mega-text);
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  animation: mega-message-in var(--mega-duration) var(--mega-ease-out);
   &[data-side='end'] {
     align-self: flex-end;
     background: var(--mega-brand-soft);
@@ -112,6 +137,12 @@
     font-size: 13px;
     color: var(--mega-muted);
     margin-bottom: var(--mega-space-2);
+  }
+}
+@keyframes mega-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 .mega-prompt-input {
@@ -133,6 +164,7 @@
   color: var(--mega-text);
   li {
     padding-block: var(--mega-space-3);
+    animation: mega-reveal var(--mega-duration) var(--mega-ease-out);
   }
   &__status {
     display: inline-flex;
@@ -142,6 +174,7 @@
     color: var(--mega-muted);
     margin-right: var(--mega-space-2);
     font-size: 13px;
+    transition: color var(--mega-duration) var(--mega-ease);
   }
   &__status > svg {
     width: 16px;

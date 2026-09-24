@@ -1,0 +1,46 @@
+// Shared motion primitives. Component partials reference these keyframes by name.
+
+// Floating popups (menu, popover, tooltip, listbox, pickers). use-floating writes
+// inline `transform: none`, so popups animate via keyframes, never a transform transition.
+// ponytail: enter-only, exit needs delayed unmount
+@keyframes mega-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+@keyframes mega-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+// Disclosure content (accordion, collapsible, expanded rows).
+@keyframes mega-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+// Selection indicators (checkbox check, radio dot, badges appearing).
+// Settles without scaling past 1 (see docs/design-contract.md motion rules).
+@keyframes mega-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+// 0.01ms, not 0: transitionend/animationend still fire for code that waits on them.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

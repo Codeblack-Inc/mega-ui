@@ -60,6 +60,9 @@
   &[data-zebra] :where(.mega-table__body > .mega-table__row:nth-child(odd)) {
     background: var(--mega-fill);
   }
+  &__row {
+    transition: background-color var(--mega-duration-fast) var(--mega-ease);
+  }
   & &__row[data-selected] {
     background: var(--mega-brand-soft);
   }
@@ -80,6 +83,9 @@
     color: inherit;
     font: inherit;
     border-radius: var(--mega-radius-2xs);
+    path {
+      transition: opacity var(--mega-duration-fast) var(--mega-ease);
+    }
   }
   &__empty {
     padding: var(--mega-space-7);
@@ -274,11 +280,6 @@
     opacity: 1;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .mega-skeleton__line {
-    animation: none;
-  }
-}
 .mega-banner {
   display: flex;
   flex-wrap: wrap;
@@ -289,6 +290,7 @@
   background: var(--mega-surface);
   color: var(--mega-text-strong);
   box-shadow: var(--mega-shadow-xs);
+  animation: mega-reveal var(--mega-duration) var(--mega-ease-out);
   &__icon {
     display: inline-flex;
     flex: 0 0 28px;
@@ -336,6 +338,7 @@
   gap: var(--mega-space-2);
   padding: var(--mega-space-7) var(--mega-space-4);
   text-align: center;
+  animation: mega-fade-in var(--mega-duration) var(--mega-ease-out);
   &__icon {
     display: inline-flex;
     color: var(--mega-muted);

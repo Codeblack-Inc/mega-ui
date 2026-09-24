@@ -19,6 +19,7 @@
 @use 'spreadsheet-pro';
 @use 'extended-inputs';
 @use 'advanced-patterns';
+@use 'motion';
 
 // Applied last so dense table/split-button variants retain touch-sized targets.
 @media (pointer: coarse), (max-width: 600px) {

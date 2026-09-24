@@ -398,6 +398,12 @@
     border-radius: var(--mega-radius-full);
     cursor: pointer;
     font-variant-numeric: tabular-nums;
+    transition:
+      background-color var(--mega-duration-fast) var(--mega-ease),
+      transform var(--mega-duration-fast) var(--mega-ease-out);
+  }
+  &__day:active {
+    transform: scale(0.96);
   }
   &__day:hover {
     background: var(--mega-fill-hover);
@@ -498,11 +504,8 @@
     border-radius: var(--mega-radius-md);
     box-shadow: var(--mega-shadow-md);
     pointer-events: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mega-scheduler-pro__event {
-    transition: none;
+    // Opacity only: position is an inline transform that follows the pointer.
+    animation: mega-fade-in var(--mega-duration-fast) var(--mega-ease-out);
   }
 }
 @media (max-width: 600px) {

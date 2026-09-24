@@ -98,7 +98,7 @@ Heading은 항상 700입니다. 본문 15px, 캡션 13px이 기본 조합이고,
 
 ## 접근성 처리
 
-- Checkbox·Switch·SegmentedControl은 reduced-motion에서 전환을 끄고, 강제 색상 모드에서는 네이티브 표시나 시스템 색 외곽선으로 대체합니다.
+- 모든 컴포넌트의 전환·애니메이션은 `_motion.scss`의 전역 reduced-motion 규칙으로 0.01ms로 줄어들고, Checkbox·Switch·SegmentedControl은 강제 색상 모드에서는 네이티브 표시나 시스템 색 외곽선으로 대체합니다.
 - 포커스 링은 브랜드색 2px outline에 2px offset으로 통일했습니다.
 - Tabs는 WAI-ARIA 자동 활성화, Menu는 ↓/↑ 이동과 Escape 복귀, Dialog는 네이티브 `showModal()`의 포커스 트랩을 씁니다.
 - 아이콘은 전부 `aria-hidden`이고, 이름은 `label` prop으로 따로 받습니다.

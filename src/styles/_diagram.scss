@@ -108,6 +108,10 @@
     fill: var(--mega-bg);
     stroke: var(--mega-border-strong);
     stroke-width: 1;
+    // Paint only: node position is an SVG transform written on every drag frame.
+    transition:
+      fill var(--mega-duration-fast) var(--mega-ease),
+      stroke var(--mega-duration-fast) var(--mega-ease);
   }
   &__node {
     cursor: grab;
@@ -137,6 +141,7 @@
     stroke: var(--mega-border-strong);
     stroke-width: 1.5;
     cursor: crosshair;
+    transition: stroke var(--mega-duration-fast) var(--mega-ease);
   }
   &__port[data-direction='out'] {
     fill: var(--mega-brand);
@@ -150,6 +155,9 @@
     fill: none;
     stroke: var(--mega-border-strong);
     stroke-width: 1.5;
+    transition:
+      stroke var(--mega-duration-fast) var(--mega-ease),
+      stroke-width var(--mega-duration-fast) var(--mega-ease);
   }
   &__edge-hit {
     fill: none;

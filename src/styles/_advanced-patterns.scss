@@ -47,6 +47,9 @@
       height: 100%;
       border-radius: inherit;
       background: var(--mega-brand);
+      transition:
+        width var(--mega-duration-slow) var(--mega-ease-out),
+        height var(--mega-duration-slow) var(--mega-ease-out);
     }
     > i {
       position: absolute;
@@ -178,6 +181,7 @@
     padding: var(--mega-space-3);
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-md);
+    animation: mega-reveal var(--mega-duration) var(--mega-ease-out);
   }
   &__info {
     display: grid;
@@ -241,6 +245,13 @@
   border-radius: var(--mega-radius-md);
   color: var(--mega-text);
   cursor: pointer;
+  transition:
+    border-color var(--mega-duration-fast) var(--mega-ease),
+    background-color var(--mega-duration-fast) var(--mega-ease),
+    transform var(--mega-duration-fast) var(--mega-ease-out);
+  &:active:not(:has(input:disabled)) {
+    transform: scale(0.99);
+  }
   input {
     position: absolute;
     width: 1px;
@@ -277,6 +288,9 @@
     height: 18px;
     border: 1px solid var(--mega-border-strong);
     border-radius: var(--mega-radius-full);
+    transition:
+      border-width var(--mega-duration-fast) var(--mega-ease-out),
+      border-color var(--mega-duration-fast) var(--mega-ease);
   }
   input:checked ~ &__mark {
     border: 5px solid var(--mega-brand);
@@ -289,6 +303,7 @@
   gap: var(--mega-space-2);
   flex-wrap: wrap;
   > form {
+    animation: mega-fade-in var(--mega-duration-fast) var(--mega-ease-out);
     display: flex;
     align-items: center;
     gap: var(--mega-space-2);
@@ -299,6 +314,7 @@
   }
   > [role='alert'] {
     flex-basis: 100%;
+    animation: mega-reveal var(--mega-duration) var(--mega-ease-out);
   }
 }
 

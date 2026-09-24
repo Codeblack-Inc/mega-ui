@@ -30,6 +30,10 @@
     margin: 0;
     color: var(--mega-muted);
     pointer-events: none;
+    transition:
+      top var(--mega-duration-fast) var(--mega-ease-out),
+      font-size var(--mega-duration-fast) var(--mega-ease-out),
+      color var(--mega-duration) var(--mega-ease);
   }
   > .mega-input {
     min-height: 56px;
@@ -79,6 +83,10 @@
   color: var(--mega-text-secondary);
   font-size: 12px;
   cursor: pointer;
+  transition: transform var(--mega-duration-fast) var(--mega-ease-out);
+  &:active:not(:disabled) {
+    transform: scale(0.96);
+  }
   &:disabled {
     opacity: var(--mega-disabled-opacity);
     cursor: not-allowed;
@@ -226,6 +234,7 @@
     stroke-linecap: round;
     transform: rotate(-90deg);
     transform-origin: center;
+    transition: stroke-dasharray var(--mega-duration-fast) var(--mega-ease-out);
   }
   text {
     fill: var(--mega-text);
@@ -246,6 +255,7 @@
     height: 36px;
     border-radius: 4px;
     color: var(--mega-control);
+    transition: color var(--mega-duration-fast) var(--mega-ease);
     &[data-filled] {
       color: var(--mega-warning-fill);
     }
@@ -254,6 +264,16 @@
       height: 26px;
       background: currentColor;
       mask: icons.$star center / contain no-repeat;
+      transition: transform var(--mega-duration-fast) var(--mega-ease-out);
+    }
+    &:hover > span {
+      transform: scale(1.12);
+    }
+    &:active > span {
+      transform: scale(0.9);
+    }
+    &[data-filled] > span {
+      animation: mega-pop var(--mega-duration) var(--mega-ease-out);
     }
     &:has(:focus-visible) {
       outline: 2px solid var(--mega-brand);
@@ -273,6 +293,9 @@
     opacity: var(--mega-disabled-opacity);
     input {
       cursor: not-allowed;
+    }
+    > label > span {
+      transform: none;
     }
   }
 }
@@ -298,6 +321,7 @@
     background: var(--mega-brand-soft);
     color: var(--mega-brand-strong);
     font-size: 13px;
+    animation: mega-pop-in var(--mega-duration-fast) var(--mega-ease-out);
     button {
       flex-shrink: 0;
       border: 0;
@@ -306,6 +330,10 @@
       color: inherit;
       cursor: pointer;
       font-size: 18px;
+      transition: transform var(--mega-duration-fast) var(--mega-ease-out);
+      &:active:not(:disabled) {
+        transform: scale(0.9);
+      }
       &:disabled {
         opacity: var(--mega-disabled-opacity);
         cursor: not-allowed;
@@ -340,6 +368,10 @@
     color: var(--mega-muted);
     cursor: pointer;
     font: inherit;
+    transition: color var(--mega-duration) var(--mega-ease);
+    &:hover {
+      color: var(--mega-text);
+    }
   }
   &__listbox {
     position: absolute;
@@ -354,6 +386,7 @@
     border-radius: var(--mega-radius-md);
     background: var(--mega-surface-raised);
     box-shadow: var(--mega-shadow-md);
+    animation: mega-pop-in var(--mega-duration-fast) var(--mega-ease-out);
   }
   &__listbox > button {
     display: grid;
@@ -366,6 +399,7 @@
     cursor: pointer;
     font: inherit;
     text-align: start;
+    transition: background-color var(--mega-duration-fast) var(--mega-ease);
   }
   &__listbox > button[data-active],
   &__listbox > button:hover {

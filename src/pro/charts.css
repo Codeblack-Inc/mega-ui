@@ -86,6 +86,7 @@
 }
 .mega-cartesian-chart__category > rect {
   fill: transparent;
+  transition: fill var(--mega-duration-fast) var(--mega-ease);
 }
 .mega-cartesian-chart__category[data-active] > rect {
   fill: var(--mega-fill);
@@ -122,6 +123,10 @@
   cursor: pointer;
   padding-block: var(--mega-space-3);
   min-height: 44px;
+}
+.mega-cartesian-chart__table[open] > :not(summary),
+.mega-chart-pro__table[open] > :not(summary) {
+  animation: mega-reveal var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-cartesian-chart__table caption {
   text-align: start;
@@ -198,6 +203,9 @@
   stroke: var(--mega-surface);
   stroke-width: 2;
   cursor: pointer;
+  transition:
+    stroke var(--mega-duration-fast) var(--mega-ease),
+    stroke-width var(--mega-duration-fast) var(--mega-ease);
 }
 .mega-pie-chart__slice:focus-visible,
 .mega-pie-chart__slice[data-active] {

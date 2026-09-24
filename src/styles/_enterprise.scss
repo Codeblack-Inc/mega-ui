@@ -99,9 +99,16 @@
     background: transparent;
     color: var(--mega-brand);
     cursor: pointer;
+    transition:
+      background-color var(--mega-duration-fast) var(--mega-ease),
+      transform var(--mega-duration-fast) var(--mega-ease-out);
 
     &:hover {
       background: var(--mega-hover);
+    }
+
+    &:active {
+      transform: scale(0.96);
     }
   }
 }
@@ -204,6 +211,9 @@
     color: var(--mega-text);
     cursor: pointer;
     font: inherit;
+    transition:
+      background-color var(--mega-duration-fast) var(--mega-ease),
+      color var(--mega-duration-fast) var(--mega-ease);
 
     &:hover {
       background: var(--mega-hover);
@@ -267,6 +277,7 @@
     background: transparent;
     color: var(--mega-text);
     text-align: start;
+    transition: background-color var(--mega-duration-fast) var(--mega-ease);
 
     &:not(:disabled) {
       cursor: pointer;
@@ -333,6 +344,7 @@
       display: block;
       height: 100%;
       background: var(--mega-brand);
+      transition: width var(--mega-duration-slow) var(--mega-ease-out);
     }
   }
 }
@@ -563,6 +575,7 @@
     padding: var(--mega-space-7);
     color: var(--mega-muted);
     text-align: center;
+    animation: mega-fade-in var(--mega-duration) var(--mega-ease-out);
   }
 }
 

@@ -148,10 +148,12 @@ export function Dropzone({
   className = '',
   children,
   onDragOver,
+  onDragLeave,
   onDrop,
   ...props
 }: DropzoneProps) {
   const [error, setError] = useState('');
+  const [dragging, setDragging] = useState(false);
   const id = useId();
   const receive = (files: File[]) => {
     if (disabled) return;
@@ -188,11 +190,19 @@ export function Dropzone({
       {...props}
       className={`mega-dropzone ${className}`}
       data-disabled={disabled || undefined}
+      data-dragging={(dragging && !disabled) || undefined}
       onDragOver={(e) => {
         onDragOver?.(e);
         if (!e.defaultPrevented) e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={(e) => {
+        onDragLeave?.(e);
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null))
+          setDragging(false);
       }}
       onDrop={(e) => {
+        setDragging(false);
         onDrop?.(e);
         if (e.defaultPrevented) return;
         e.preventDefault();

@@ -97,6 +97,7 @@
     border-inline-end: 1px solid var(--mega-border);
     border-bottom: 1px solid var(--mega-border);
     background: var(--mega-bg);
+    transition: background-color var(--mega-duration-fast) var(--mega-ease);
   }
   &__column[data-drop-target] {
     background: var(--mega-brand-soft);
@@ -147,6 +148,11 @@
     border-radius: var(--mega-radius-md);
     background: var(--mega-surface);
     min-width: 0;
+    // ponytail: border only; drop indicators (box-shadow) stay instant while dragging
+    transition: border-color var(--mega-duration-fast) var(--mega-ease);
+  }
+  &__column li:hover:not([data-dragging]) {
+    border-color: var(--mega-border-strong);
   }
   &__column li[data-dragging] {
     opacity: 0.6;
@@ -184,6 +190,8 @@
     font-size: 13px;
     box-shadow: var(--mega-shadow-md);
     overflow-wrap: break-word;
+    // Opacity only: position is an inline transform that follows the pointer.
+    animation: mega-fade-in var(--mega-duration-fast) var(--mega-ease-out);
   }
   &__drag-preview[data-blocked] {
     border-color: var(--mega-danger);
@@ -230,11 +238,19 @@
     flex-basis: 100%;
     margin-inline-start: 0;
   }
+  // Keyed on [open] so the reveal replays on every open.
+  &__card-actions details[open] > &__move-menu {
+    animation: mega-reveal var(--mega-duration-fast) var(--mega-ease-out);
+  }
   &__card-actions summary {
     cursor: pointer;
     padding-block: var(--mega-space-2);
     font-size: 12px;
     color: var(--mega-text-secondary);
+    transition: color var(--mega-duration-fast) var(--mega-ease);
+  }
+  &__card-actions summary:hover {
+    color: var(--mega-text);
   }
   &__move-menu {
     display: flex;
@@ -264,6 +280,9 @@
     border: 1px solid var(--mega-border);
     border-radius: var(--mega-radius-sm);
     resize: vertical;
+    transition:
+      border-color var(--mega-duration-fast) var(--mega-ease),
+      box-shadow var(--mega-duration-fast) var(--mega-ease);
   }
   &__file {
     display: grid;

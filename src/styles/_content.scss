@@ -68,6 +68,14 @@
     cursor: pointer;
     padding: var(--mega-space-3);
     min-height: 44px;
+    border-radius: var(--mega-radius-sm);
+    transition: background-color var(--mega-duration) var(--mega-ease);
+    &:hover:not([aria-disabled]) {
+      background: var(--mega-hover);
+    }
+  }
+  details[open] > ul {
+    animation: mega-reveal var(--mega-duration) var(--mega-ease-out);
   }
 }
 .mega-accordion {
@@ -85,10 +93,17 @@
   details > div {
     padding: 0 var(--mega-space-4) var(--mega-space-4);
   }
+  details[open] > div {
+    animation: mega-reveal var(--mega-duration) var(--mega-ease-out);
+  }
 }
 .mega-carousel {
   min-width: 0;
   container-type: inline-size;
+  // Slides toggle `hidden`, so the fade replays on every change.
+  [aria-roledescription='slide'] {
+    animation: mega-fade-in var(--mega-duration) var(--mega-ease);
+  }
 }
 .mega-carousel__controls {
   display: grid;
@@ -119,6 +134,9 @@
     border-radius: var(--mega-radius-full);
     background: var(--mega-control);
     cursor: pointer;
+    transition:
+      width var(--mega-duration) var(--mega-ease-out),
+      background-color var(--mega-duration) var(--mega-ease);
   }
 
   button[aria-current] {
