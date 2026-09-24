@@ -267,7 +267,7 @@
       transition: transform var(--mega-duration-fast) var(--mega-ease-out);
     }
     &:hover > span {
-      transform: scale(1.12);
+      transform: scale(1.08);
     }
     &:active > span {
       transform: scale(0.9);
@@ -283,6 +283,8 @@
   input {
     position: absolute;
     inset: 0;
+    // Above the star, whose hover/press transform would otherwise stack over the input.
+    z-index: 1;
     width: 100%;
     height: 100%;
     margin: 0;

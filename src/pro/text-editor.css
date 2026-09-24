@@ -222,7 +222,7 @@
 }
 /* Keyed on [open] so the enter animation replays on every open. */
 .mega-text-editor__panel[open] > .mega-text-editor__panel-body {
-  animation: mega-pop-in var(--mega-duration-fast) var(--mega-ease-out);
+  animation: mega-reveal var(--mega-duration-fast) var(--mega-ease-out);
 }
 .mega-text-editor__panel-body > header {
   display: flex;
